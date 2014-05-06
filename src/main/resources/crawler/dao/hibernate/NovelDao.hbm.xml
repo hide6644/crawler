@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <query name="crawler.dao.NovelDao.getNovelsByCheckedDate">
+<![CDATA[
+from
+ Novel n
+  join fetch n.novelInfo ni
+where
+ deleted=false
+ and n.checkedDate<=:checkedDate
+]]>
+    </query>
+
+    <query name="crawler.dao.NovelDao.getNovelsByUnread">
+<![CDATA[
+select
+ distinct n
+from
+ Novel n
+  join fetch n.novelInfo ni
+  join fetch n.novelChapters nc
+  join fetch nc.novelChapterInfo nci
+where
+ nci.unread=true
+order by
+ n.title
+ ,nc.id
+ ]]>
+    </query>
+
+</hibernate-mapping>
