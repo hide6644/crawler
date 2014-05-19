@@ -2,6 +2,7 @@ package crawler.service.impl;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -247,10 +248,13 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             try {
                 dispNovelUrl = new URL(checkNovel.getUrl());
                 html = new Source(dispNovelUrl);
-            } catch (IOException e) {
+            } catch (FileNotFoundException e) {
                 log.error("[error] url:" + checkNovel.getUrl(), e);
                 checkNovel.setDeleted(true);
                 checkNovel.setUpdateDate(new Date());
+                continue;
+            } catch (IOException e) {
+                log.error("[error] url:" + checkNovel.getUrl(), e);
                 continue;
             }
 
@@ -356,8 +360,11 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
                         try {
                             chapterHtml = new Source(new URL(chapterUrl));
-                        } catch (IOException e) {
+                        } catch (FileNotFoundException e) {
                             log.error("[error] url:" + chapterUrl, e);
+                            continue;
+                        } catch (IOException e) {
+                            log.error("[error] url:" + checkNovel.getUrl(), e);
                             continue;
                         }
 
