@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <!-- ========================= GENERAL DEFINITIONS ========================= -->
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:mail.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- ========================= RESOURCE DEFINITIONS ========================= -->
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>applicationResources</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config />
+
+    <!-- Activates scanning of @Service -->
+    <context:component-scan base-package="crawler.dao,crawler.service,crawler.batch" />
+
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven />
+
+    <!-- =========================== DAO DEFINITIONS ============================ -->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="maxActive" value="10" />
+        <property name="maxWait" value="1000" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="defaultAutoCommit" value="false" />
+        <property name="validationQuery" value="${jdbc.validationQuery}" />
+        <property name="testOnBorrow" value="true" />
+    </bean>
+
+    <bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" destroy-method="destroy">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <!-- Hibernate Search index directory -->
+                <prop key="hibernate.search.default.indexBase">#{systemProperties.app_home}/index</prop>
+            </props>
+            <!-- Turn batching off for better error messages under PostgreSQL -->
+            <!-- hibernate.jdbc.batch_size=0 -->
+        </property>
+    </bean>
+
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <aop:config>
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Manager.*(..))" order="0" />
+    </aop:config>
+
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="*" rollback-for="Throwable" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- ========================== MAIL CONFIGURATION ========================= -->
+
+    <bean id="mailEngine" class="crawler.service.MailEngine">
+        <property name="mailSender" ref="mailSender" />
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <property name="from" value="${mail.default.from}" />
+        <property name="to" value="${mail.default.to}" />
+        <property name="subject" value="${mail.default.subject}" />
+    </bean>
+
+</beans>
