@@ -2,7 +2,6 @@ package crawler.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,8 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
@@ -25,7 +22,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
- * 小説
+ * 小説の情報
  */
 @Entity
 @Table(name = "novel")
@@ -48,15 +45,6 @@ public class Novel extends BaseEntity implements Serializable {
 
     /** 本文 */
     private String body;
-
-    /** 最終確認日時 */
-    private Date checkedDate;
-
-    /** 最終更新日時 */
-    private Date modifiedDate;
-
-    /** 完結フラグ */
-    private boolean finished;
 
     /** 削除フラグ */
     private boolean deleted;
@@ -117,35 +105,6 @@ public class Novel extends BaseEntity implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "checked_date")
-    public Date getCheckedDate() {
-        return checkedDate;
-    }
-
-    public void setCheckedDate(Date checkedDate) {
-        this.checkedDate = checkedDate;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modified_date")
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    @Column
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
     }
 
     @Column

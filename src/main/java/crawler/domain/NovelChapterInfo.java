@@ -20,6 +20,12 @@ import javax.persistence.TemporalType;
 @Table(name = "novel_chapter_info")
 public class NovelChapterInfo extends BaseEntity implements Serializable {
 
+    /** 最終確認日時 */
+    private Date checkedDate;
+
+    /** 最終更新日時 */
+    private Date modifiedDate;
+
     /** 未読フラグ */
     private boolean unread;
 
@@ -28,6 +34,26 @@ public class NovelChapterInfo extends BaseEntity implements Serializable {
 
     /** 小説の章 */
     private NovelChapter novelChapter;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "checked_date")
+    public Date getCheckedDate() {
+        return checkedDate;
+    }
+
+    public void setCheckedDate(Date checkedDate) {
+        this.checkedDate = checkedDate;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modified_date")
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
     @Column
     public boolean isUnread() {

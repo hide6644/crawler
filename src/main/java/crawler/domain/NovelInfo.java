@@ -1,6 +1,7 @@
 package crawler.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
@@ -24,6 +27,15 @@ import org.hibernate.search.annotations.Indexed;
 @Indexed
 public class NovelInfo extends BaseEntity implements Serializable {
 
+    /** 最終確認日時 */
+    private Date checkedDate;
+
+    /** 最終更新日時 */
+    private Date modifiedDate;
+
+    /** 完結フラグ */
+    private boolean finished;
+
     /** キーワード */
     private String keyword;
 
@@ -35,6 +47,35 @@ public class NovelInfo extends BaseEntity implements Serializable {
 
     /** 小説 */
     private Novel novel;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "checked_date")
+    public Date getCheckedDate() {
+        return checkedDate;
+    }
+
+    public void setCheckedDate(Date checkedDate) {
+        this.checkedDate = checkedDate;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modified_date")
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    @Column
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 
     @Column(length = 300)
     @Field
