@@ -10,8 +10,8 @@ from
  Novel n
   join fetch n.novelInfo ni
 where
- deleted=false
- and n.checkedDate<=:checkedDate
+ n.deleted=false
+ and ni.checkedDate<=:checkedDate
 ]]>
     </query>
 

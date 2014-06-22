@@ -29,14 +29,14 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
     public void execute(String[] args) throws MalformedURLException, MessagingException {
         if (args != null && args.length > 0) {
             for (int i = 0; i < args.length; i++) {
-                if (args[i].equals("getReport")) {
-                    novelManager.getReport();
+                if (args[i].equals("sendReport")) {
+                    novelManager.sendReport();
                 } else {
-                    novelManager.create(args[i]);
+                    novelManager.save(args[i]);
                 }
             }
         } else {
-            novelManager.update();
+            novelManager.checkUpdate();
         }
     }
 }

@@ -1,7 +1,6 @@
 package crawler.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
@@ -24,7 +21,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 /**
- * 小説の章
+ * 小説の章の情報
  */
 @Entity
 @Table(name = "novel_chapter")
@@ -40,12 +37,6 @@ public class NovelChapter extends BaseEntity implements Serializable {
 
     /** 本文 */
     private String body;
-
-    /** 最終確認日時 */
-    private Date checkedDate;
-
-    /** 最終更新日時 */
-    private Date modifiedDate;
 
     /** 小説の章の付随情報 */
     private NovelChapterInfo novelChapterInfo;
@@ -83,26 +74,6 @@ public class NovelChapter extends BaseEntity implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "checked_date")
-    public Date getCheckedDate() {
-        return checkedDate;
-    }
-
-    public void setCheckedDate(Date checkedDate) {
-        this.checkedDate = checkedDate;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modified_date")
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "novelChapter", cascade = CascadeType.ALL)
