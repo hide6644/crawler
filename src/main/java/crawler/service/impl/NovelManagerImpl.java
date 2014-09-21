@@ -113,9 +113,14 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             Source chapterHtml = null;
 
             try {
+                wait(1000);
                 chapterHtml = new Source(new URL(chapterUrl));
             } catch (IOException e) {
                 log.error("[error] url:" + chapterUrl, e);
+                continue;
+            } catch (InterruptedException e) {
+                log.error("[error] url:" + chapterUrl, e);
+                continue;
             }
 
             chapterHtml.fullSequentialParse();
@@ -239,12 +244,13 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                             Source chapterHtml = null;
 
                             try {
+                                wait(1000);
                                 chapterHtml = new Source(new URL(chapterUrl));
-                            } catch (FileNotFoundException e) {
+                            } catch (IOException e) {
                                 log.error("[error] url:" + chapterUrl, e);
                                 continue;
-                            } catch (IOException e) {
-                                log.error("[error] url:" + checkNovel.getUrl(), e);
+                            } catch (InterruptedException e) {
+                                log.error("[error] url:" + chapterUrl, e);
                                 continue;
                             }
 
