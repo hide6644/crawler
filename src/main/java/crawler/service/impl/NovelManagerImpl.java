@@ -113,7 +113,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             Source chapterHtml = null;
 
             try {
-                wait(1000);
+                synchronized (this) {
+                    wait(1000);
+                }
                 chapterHtml = new Source(new URL(chapterUrl));
             } catch (IOException e) {
                 log.error("[error] url:" + chapterUrl, e);
@@ -244,7 +246,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                             Source chapterHtml = null;
 
                             try {
-                                wait(1000);
+                                synchronized (this) {
+                                    wait(1000);
+                                }
                                 chapterHtml = new Source(new URL(chapterUrl));
                             } catch (IOException e) {
                                 log.error("[error] url:" + chapterUrl, e);
