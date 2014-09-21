@@ -113,9 +113,14 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             Source chapterHtml = null;
 
             try {
+                wait(1000);
                 chapterHtml = new Source(new URL(chapterUrl));
             } catch (IOException e) {
                 log.error("[error] url:" + chapterUrl, e);
+                continue;
+            } catch (InterruptedException e) {
+                log.error("[error] url:" + chapterUrl, e);
+                continue;
             }
 
             chapterHtml.fullSequentialParse();
@@ -239,12 +244,13 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                             Source chapterHtml = null;
 
                             try {
+                                wait(1000);
                                 chapterHtml = new Source(new URL(chapterUrl));
-                            } catch (FileNotFoundException e) {
+                            } catch (IOException e) {
                                 log.error("[error] url:" + chapterUrl, e);
                                 continue;
-                            } catch (IOException e) {
-                                log.error("[error] url:" + checkNovel.getUrl(), e);
+                            } catch (InterruptedException e) {
+                                log.error("[error] url:" + chapterUrl, e);
                                 continue;
                             }
 
@@ -368,8 +374,10 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             }
 
             pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            pw.println("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">");
-            pw.println("<dl>");
+            pw.println("<html><head>");
+            pw.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
+            pw.println("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no\" />");
+            pw.println("</head><dl>");
 
             for (Novel unreadNovel : unreadNovels) {
                 pw.println("<dt><a href='" + unreadNovel.getUrl() + "'>" + unreadNovel.getTitle() + "</a></dt>");
@@ -393,7 +401,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                 save(unreadNovel);
             }
 
-            pw.println("</dl>");
+            pw.println("</dl></html>");
         } catch (IOException e) {
             log.error("[error] report:", e);
         } finally {
