@@ -124,6 +124,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     @Override
     public T save(T object) {
         getSession().saveOrUpdate(object);
+        getSession().flush();
         return object;
     }
 
@@ -135,6 +136,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     @Override
     public void remove(T object) {
         getSession().delete(object);
+        getSession().flush();
     }
 
     /*

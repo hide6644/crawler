@@ -33,7 +33,7 @@ public class NovelManagerUtil {
      */
     static boolean checkUpdateFrequency(Novel novel) {
         if (novel.getNovelInfo().isFinished()) {
-            if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(new DateTime().minusDays(30))) {
+            if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(new DateTime().minusDays(45))) {
                 log.info("[skip] finished title:" + novel.getTitle());
                 return false;
             }
@@ -48,6 +48,13 @@ public class NovelManagerUtil {
 
         if (new DateTime(novel.getNovelInfo().getModifiedDate()).isBefore(new DateTime().minusDays(14))) {
             if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(new DateTime().minusDays(7))) {
+                log.info("[skip] title:" + novel.getTitle());
+                return false;
+            }
+        }
+
+        if (new DateTime(novel.getNovelInfo().getModifiedDate()).isBefore(new DateTime().minusDays(7))) {
+            if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(new DateTime().minusDays(5))) {
                 log.info("[skip] title:" + novel.getTitle());
                 return false;
             }
