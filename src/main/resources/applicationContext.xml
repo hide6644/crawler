@@ -72,8 +72,6 @@
                 <!-- Hibernate Search index directory -->
                 <prop key="hibernate.search.default.indexBase">#{systemProperties.app_home}/index</prop>
             </props>
-            <!-- Turn batching off for better error messages under PostgreSQL -->
-            <!-- hibernate.jdbc.batch_size=0 -->
         </property>
     </bean>
 
