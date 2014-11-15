@@ -67,7 +67,7 @@
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
-                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
                 <!-- Hibernate Search index directory -->
                 <prop key="hibernate.search.default.indexBase">#{systemProperties.app_home}/index</prop>
