@@ -176,6 +176,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             if (NovelManagerUtil.checkUpdateFrequency(checkNovel)) {
                 URL dispNovelUrl = null;
                 Source html = null;
+                checkNovel = novelDao.get(checkNovel.getId());
 
                 try {
                     dispNovelUrl = new URL(checkNovel.getUrl());
