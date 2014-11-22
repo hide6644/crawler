@@ -23,7 +23,7 @@ import org.hibernate.search.annotations.DocumentId;
 public abstract class BaseEntity {
 
     /** ID */
-    private Integer id;
+    private Long id;
 
     /** 更新回数 */
     private Long version;
@@ -49,7 +49,7 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
     @XmlTransient
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -59,7 +59,7 @@ public abstract class BaseEntity {
      * @param id
      *            ID
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
