@@ -98,7 +98,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
         T entity = (T) byId.load(id);
 
         if (entity == null) {
-            log.warn("Uh oh, '" + this.persistentClass + "' object with id '" + id + "' not found...");
+            log.warn("'" + this.persistentClass + "' object with id '" + id + "' not found...");
             throw new ObjectRetrievalFailureException(this.persistentClass, id);
         }
 
@@ -125,6 +125,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     public T save(T object) {
         getSession().saveOrUpdate(object);
         getSession().flush();
+        getSession().clear();
         return object;
     }
 
