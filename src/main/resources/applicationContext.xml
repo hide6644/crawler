@@ -43,35 +43,42 @@
 
     <!-- =========================== DAO DEFINITIONS ============================ -->
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" />
-        <property name="maxActive" value="10" />
-        <property name="maxWait" value="1000" />
-        <property name="poolPreparedStatements" value="true" />
-        <property name="defaultAutoCommit" value="false" />
-        <property name="validationQuery" value="${jdbc.validationQuery}" />
-        <property name="testOnBorrow" value="true" />
-    </bean>
-
     <bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" destroy-method="destroy">
-        <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
         <property name="hibernateProperties">
             <props>
+                <prop key="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</prop>
+                <prop key="hibernate.hikari.dataSourceClassName">${dataSource.dataSourceClassName}</prop>
+                <prop key="hibernate.hikari.dataSource.url">${dataSource.url}</prop>
+                <prop key="hibernate.hikari.dataSource.user">${dataSource.username}</prop>
+                <prop key="hibernate.hikari.dataSource.password">${dataSource.password}</prop>
+                <prop key="hibernate.hikari.dataSource.cachePrepStmts">${dataSource.cachePrepStmts}</prop>
+                <prop key="hibernate.hikari.dataSource.prepStmtCacheSize">${dataSource.prepStmtCacheSize}</prop>
+                <prop key="hibernate.hikari.dataSource.prepStmtCacheSqlLimit">${dataSource.prepStmtCacheSqlLimit}</prop>
+                <prop key="hibernate.hikari.maximumPoolSize">${dataSource.maximumPoolSize}</prop>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
                 <!-- Hibernate Search index directory -->
                 <prop key="hibernate.search.default.indexBase">#{systemProperties.app_home}/index</prop>
+                <prop key="hibernate.search.default.directory_provider">filesystem</prop>
+                <prop key="hibernate.search.default.locking_strategy">simple</prop>
+                <prop key="hibernate.search.default.exclusive_index_use">true</prop>
+                <prop key="hibernate.search.lucene_version">LUCENE_CURRENT</prop>
+                <prop key="hibernate.search.worker.batch_size">100</prop>
             </props>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>crawler/domain</value>
+            </list>
         </property>
     </bean>
 

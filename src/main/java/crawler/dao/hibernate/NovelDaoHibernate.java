@@ -33,7 +33,7 @@ public class NovelDaoHibernate extends GenericDaoHibernate<Novel, Long> implemen
         Map<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("checkedDate", checkedDate);
 
-        return findByNamedQuery("crawler.dao.NovelDao.getNovelsByCheckedDate", queryParams);
+        return findByNamedQuery(Novel.FIND_BY_CHECKED_DATE, queryParams);
     }
 
     /*
@@ -43,6 +43,6 @@ public class NovelDaoHibernate extends GenericDaoHibernate<Novel, Long> implemen
      */
     @Override
     public List<Novel> getNovelsByUnread() {
-        return findByNamedQuery("crawler.dao.NovelDao.getNovelsByUnread", null);
+        return findByNamedQuery(Novel.FIND_BY_UNREAD, null);
     }
 }

@@ -10,12 +10,11 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.ReaderUtil;
-import org.apache.lucene.util.Version;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
@@ -72,7 +71,7 @@ class HibernateSearchTools {
                 Analyzer analyzer = null;
 
                 if (searchedEntity == null) {
-                    analyzer = new StandardAnalyzer(Version.LUCENE_36);
+                    analyzer = new StandardAnalyzer();
                 } else {
                     analyzer = txtSession.getSearchFactory().getAnalyzer(searchedEntity);
                 }
@@ -82,8 +81,8 @@ class HibernateSearchTools {
                 reader = readerAccessor.open(searchedEntity);
                 Collection<String> fieldNames = new HashSet<String>();
 
-                for (FieldInfo fieldInfo : ReaderUtil.getMergedFieldInfos(reader)) {
-                    if (fieldInfo.isIndexed) {
+                for (FieldInfo fieldInfo : MultiFields.getMergedFieldInfos(reader)) {
+                    if (fieldInfo.isIndexed()) {
                         fieldNames.add(fieldInfo.name);
                     }
                 }
@@ -96,7 +95,7 @@ class HibernateSearchTools {
                     queries[i] = searchTerm;
                 }
 
-                query = MultiFieldQueryParser.parse(Version.LUCENE_36, queries, fnames, analyzer);
+                query = MultiFieldQueryParser.parse(queries, fnames, analyzer);
             } catch (ParseException e) {
                 throw new SearchException(e);
             } finally {
