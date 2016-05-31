@@ -29,6 +29,7 @@ public class MailEngine {
      * @param attachmentFilePath
      *            添付ファイルのパス
      * @throws MessagingException
+     *             {@link MessagingException}
      */
     public void sendReportMail(String attachmentFilePath) throws MessagingException {
         MimeMessage message = ((JavaMailSenderImpl) mailSender).createMimeMessage();

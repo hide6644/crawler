@@ -93,7 +93,7 @@ public interface GenericDao<T, PK extends Serializable> {
      *
      * @param field
      *            対象となる項目
-     * @param max
+     * @param maxCount
      *            ファセットの最大件数
      * @return ファセットのリスト
      */

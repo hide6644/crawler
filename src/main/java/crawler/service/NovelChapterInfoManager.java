@@ -1,7 +1,8 @@
 package crawler.service;
 
-import net.htmlparser.jericho.Element;
+import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterInfo;
+import net.htmlparser.jericho.Element;
 
 /**
  * 小説の章の付随情報を管理する.
@@ -9,12 +10,13 @@ import crawler.domain.NovelChapterInfo;
 public interface NovelChapterInfoManager extends GenericManager<NovelChapterInfo, Long> {
 
     /**
-     * 小説の章のリンクから更新日付を抽出、小説の章の付随情報に設定する.
+     * 小説の章の付随情報を設定する.
      *
-     * @param novelChapterInfo
-     *            小説の章の付随情報
-     * @param chapterElement
-     *            小説の章の部分のhtml要素
+     * @param element
+     *            html element要素
+     * @param novelChapter
+     *            小説の章の情報
+     * @return 小説の章の付随情報
      */
-    public void setModifiedDate(NovelChapterInfo novelChapterInfo, Element chapterElement);
+    public NovelChapterInfo saveNovelChapterInfo(Element element, NovelChapter novelChapter);
 }

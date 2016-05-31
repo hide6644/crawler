@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import crawler.batch.BatchProcess;
 
 /**
- * 各取込処理起動用クラス.
+ * 各取込処理を起動する.
  */
 public class RunBatches {
 
@@ -36,7 +36,7 @@ public class RunBatches {
                 ((BatchProcess) context.getBean("novelProcess")).execute(args);
             }
         } catch (Exception e) {
-            log.error("[error] novelProcess process is not found!:", e);
+            log.error(e);
         } finally {
             if (pmi != null) {
                 pmi.close();

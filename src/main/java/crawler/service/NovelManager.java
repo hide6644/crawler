@@ -10,27 +10,35 @@ import crawler.domain.Novel;
 public interface NovelManager extends GenericManager<Novel, Long> {
 
     /**
-     * 未読小説を取得する.
-     *
-     * @return 未読小説リスト
-     */
-    List<Novel> getNovelsByUnread();
-
-    /**
-     * 小説を保存する.
+     * 小説を新規に保存する.
      *
      * @param url
      *            小説のURL
      */
-    void save(String url);
+    void add(String url);
 
     /**
-     * 小説の更新を確認する.
+     * 更新確認対象の小説一覧のIDを取得する.
      */
-    void checkUpdate();
+    List<Long> getCheckTargetId();
 
     /**
-     * 未読小説の一覧を作成し、メールで送信する.
+     * 小説の更新を確認し、更新があった場合は内容を保存する.
+     *
+     * @param savedNovelId
+     *            小説の情報のID
+     */
+    void checkForUpdatesAndSaveHistory(Long savedNovelId);
+
+    /**
+     * 未読小説の一覧を取得する.
+     *
+     * @return 未読小説の一覧
+     */
+    List<Novel> getUnreadNovels();
+
+    /**
+     * 未読小説の一覧をメールで送信する.
      */
     void sendReport();
 }

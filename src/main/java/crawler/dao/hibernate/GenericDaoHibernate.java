@@ -125,7 +125,6 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     public T save(T object) {
         getSession().saveOrUpdate(object);
         getSession().flush();
-        getSession().clear();
         return object;
     }
 
@@ -247,6 +246,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      *
      * @return DBセッション
      * @throws HibernateException
+     *             {@link HibernateException}
      */
     public Session getSession() throws HibernateException {
         Session sess = getSessionFactory().getCurrentSession();

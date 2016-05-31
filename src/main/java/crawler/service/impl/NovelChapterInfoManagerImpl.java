@@ -2,9 +2,12 @@ package crawler.service.impl;
 
 import net.htmlparser.jericho.Element;
 
+import java.util.Date;
+
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterInfo;
 import crawler.service.NovelChapterInfoManager;
 
@@ -14,19 +17,25 @@ import crawler.service.NovelChapterInfoManager;
 @Service("novelChapterInfoManager")
 public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapterInfo, Long> implements NovelChapterInfoManager {
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelChapterInfoManager#setModifiedDate(crawler.domain.NovelChapterInfo, net.htmlparser.jericho.Element)
+    /* (非 Javadoc)
+     * 
+     * @see crawler.service.NovelChapterInfoManager#saveNovelChapterInfo(net.htmlparser.jericho.Element, crawler.domain.NovelChapter)
      */
     @Override
-    public void setModifiedDate(NovelChapterInfo novelChapterInfo, Element chapterElement) {
-        Element element = chapterElement.getAllElementsByClass("long_update").get(0);
+    public NovelChapterInfo saveNovelChapterInfo(final Element element, final NovelChapter novelChapter) {
+        NovelChapterInfo novelChapterInfo = null;
 
-        if (element.getAllElements("span").size() > 0) {
-            novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日 改稿").parseDateTime(element.getAllElements("span").get(0).getAttributeValue("title").toString()).toDate());
+        if (novelChapter == null) {
+            novelChapterInfo = new NovelChapterInfo();
         } else {
-            novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日").parseDateTime(element.getTextExtractor().toString()).toDate());
+            novelChapterInfo = novelChapter.getNovelChapterInfo();
+            novelChapterInfo.setUpdateDate(new Date());
         }
+
+        novelChapterInfo.setCheckedDate(new Date());
+        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日").parseDateTime(NovelElementsUtil.getChapterModifiedDate(element, true).replaceAll(" 改稿", "")).toDate());
+        novelChapterInfo.setUnread(true);
+
+        return novelChapterInfo;
     }
 }

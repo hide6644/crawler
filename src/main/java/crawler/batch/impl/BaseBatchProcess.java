@@ -9,7 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- * バッチ処理の基底クラス.
+ * バッチ処理の基底.
  */
 public abstract class BaseBatchProcess {
 

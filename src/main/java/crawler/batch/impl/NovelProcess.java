@@ -11,12 +11,12 @@ import crawler.batch.BatchProcess;
 import crawler.service.NovelManager;
 
 /**
- * 小説のバッチ処理クラス.
+ * 小説の情報を取得するバッチ処理を実行する.
  */
 @Service("novelProcess")
 public class NovelProcess extends BaseBatchProcess implements BatchProcess {
 
-    /** 小説を管理するクラス */
+    /** 小説の情報を管理する */
     @Autowired
     private NovelManager novelManager;
 
@@ -32,11 +32,13 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
                 if (args[i].equals("sendReport")) {
                     novelManager.sendReport();
                 } else {
-                    novelManager.save(args[i]);
+                    novelManager.add(args[i]);
                 }
             }
         } else {
-            novelManager.checkUpdate();
+            for (Long savedNovelId : novelManager.getCheckTargetId()) {
+                novelManager.checkForUpdatesAndSaveHistory(savedNovelId);
+            }
         }
     }
 }

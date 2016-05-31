@@ -39,7 +39,7 @@ class HibernateSearchTools {
     private static final Log log = LogFactory.getLog(HibernateSearchTools.class);
 
     /**
-     * プライベート・コンストラクタ.<br />
+     * プライベート・コンストラクタ.
      * このクラスはインスタンス化禁止.
      */
     private HibernateSearchTools() {
@@ -109,7 +109,7 @@ class HibernateSearchTools {
     }
 
     /**
-     * ファセットクエリを作成する.
+     * ファセットを作成する.
      *
      * @param field
      *            対象となる項目
@@ -119,7 +119,7 @@ class HibernateSearchTools {
      *            エンティティクラス
      * @param sess
      *            DBセッション
-     * @return
+     * @return ファセット
      */
     public static List<Facet> generateFacet(String field, int maxCount,
             @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
