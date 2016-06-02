@@ -28,10 +28,12 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
 
     /* (非 Javadoc)
      * 
-     * @see crawler.service.NovelChapterManager#saveNovelChapter(java.net.URL, net.htmlparser.jericho.Source, crawler.domain.Novel)
+     * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, crawler.domain.Novel)
      */
     @Override
-    public void saveNovelChapter(final URL url, final Source html, final Novel novel) {
+    public void saveNovelChapter(final Source html, final Novel novel) {
+        URL url = NovelManagerUtil.getUrl(novel.getUrl());
+
         for (Element chapterElement : html.getAllElements("dl")) {
             String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
 
@@ -76,10 +78,12 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
 
     /* (非 Javadoc)
      * 
-     * @see crawler.service.NovelChapterManager#saveNovelChapter(java.net.URL, net.htmlparser.jericho.Source, crawler.domain.Novel, crawler.domain.NovelHistory)
+     * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, crawler.domain.Novel, crawler.domain.NovelHistory)
      */
     @Override
-    public void saveNovelChapter(final URL url, final Source html, final Novel novel, final NovelHistory novelHistory) {
+    public void saveNovelChapter(final Source html, final Novel novel, final NovelHistory novelHistory) {
+        URL url = NovelManagerUtil.getUrl(novel.getUrl());
+
         for (Element chapterElement : html.getAllElements("dl")) {
             if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelHistory)) {
                 // 小説の章の情報に差異がある場合

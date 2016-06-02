@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,10 +55,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      */
     @Override
     public void add(final String url) {
-        URL novelUrl = NovelManagerUtil.getUrl(url);
-
         // URLからhtmlを取得
-        Source html = NovelManagerUtil.getSource(novelUrl);
+        Source html = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(url));
 
         if (html != null) {
             // 小説の情報作成
@@ -73,7 +70,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             novel.setNovelInfo(novelInfo);
 
             // 小説の章作成
-            novelChapterManager.saveNovelChapter(novelUrl, html, novel);
+            novelChapterManager.saveNovelChapter(html, novel);
 
             log.info("[add] title:" + novel.getTitle());
             save(novel);
@@ -128,10 +125,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     public void checkForUpdatesAndSaveHistory(final Long savedNovelId) {
         Novel savedNovel = novelDao.get(savedNovelId);
-        URL savedNovelUrl = NovelManagerUtil.getUrl(savedNovel.getUrl());
 
         // URLからhtmlを取得
-        Source html = NovelManagerUtil.getSource(savedNovelUrl);
+        Source html = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(savedNovel.getUrl()));
 
         if (html == null) {
             savedNovel.setDeleted(true);
@@ -142,7 +138,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         Novel currentNovel = createNovel(savedNovel.getUrl(), html);
 
         log.info("[check] title:" + currentNovel.getTitle());
-        NovelHistory novelHistory = createNovelHistory(savedNovelUrl, savedNovel, currentNovel);
+        NovelHistory novelHistory = createNovelHistory(savedNovel, currentNovel);
 
         if (novelHistory != null) {
             // 差異がある場合
@@ -162,15 +158,13 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     /**
      * 小説の更新履歴を作成する.
      * 
-     * @param savedNovelUrl
-     *            小説のURL
      * @param savedNovel
      *            保存済みの小説の情報
      * @param currentNovel
      *            現在の小説の情報
      * @return 小説の更新履歴
      */
-    private NovelHistory createNovelHistory(final URL savedNovelUrl, final Novel savedNovel, final Novel currentNovel) {
+    private NovelHistory createNovelHistory(final Novel savedNovel, final Novel currentNovel) {
         NovelHistory novelHistory = null;
 
         if (!savedNovel.getTitle().equals(currentNovel.getTitle())) {
@@ -206,7 +200,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             savedNovel.setBody(currentNovel.getBody());
 
             // 小説の章を取得
-            novelChapterManager.saveNovelChapter(savedNovelUrl, new Source(currentNovel.getBody()), savedNovel, novelHistory);
+            novelChapterManager.saveNovelChapter(new Source(currentNovel.getBody()), savedNovel, novelHistory);
         }
 
         return novelHistory;
