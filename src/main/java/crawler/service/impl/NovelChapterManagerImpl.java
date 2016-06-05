@@ -53,6 +53,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
 
                 novelChapter.setNovel(novel);
                 novel.addNovelChapter(novelChapter);
+
                 log.info("[add] chapterTitle:" + novelChapter.getTitle());
             }
         }
@@ -100,9 +101,6 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                     // URLが一致する小説の章を履歴から取得
                     NovelChapter savedNovelChapter = getSameNovelChapter(chapterUrl, novel);
 
-                    // 小説の章の付随情報を作成
-                    NovelChapterInfo novelChapterInfo = novelChapterInfoManager.saveNovelChapterInfo(chapterElement, savedNovelChapter);
-
                     if (savedNovelChapter != null) {
                         // 一致するURLがある場合、更新処理
                         savedNovelChapter.setUpdateDate(new Date());
@@ -112,11 +110,17 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                         novelChapterHistory.setNovelChapter(savedNovelChapter);
                         savedNovelChapter.addNovelChapterHistory(novelChapterHistory);
 
+                        // 小説の章の付随情報を更新
+                        novelChapterInfoManager.saveNovelChapterInfo(chapterElement, savedNovelChapter);
+
                         log.info("[update] chapter title:" + savedNovelChapter.getTitle());
                     } else {
                         // 登録処理
                         currentNovelChapter.setNovel(novel);
                         novel.addNovelChapter(currentNovelChapter);
+
+                        // 小説の章の付随情報を作成
+                        NovelChapterInfo novelChapterInfo = novelChapterInfoManager.saveNovelChapterInfo(chapterElement, currentNovelChapter);
 
                         novelChapterInfo.setNovelChapter(currentNovelChapter);
                         currentNovelChapter.setNovelChapterInfo(novelChapterInfo);

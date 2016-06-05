@@ -23,12 +23,11 @@ public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapter
      */
     @Override
     public NovelChapterInfo saveNovelChapterInfo(final Element element, final NovelChapter novelChapter) {
-        NovelChapterInfo novelChapterInfo = null;
+        NovelChapterInfo novelChapterInfo = novelChapter.getNovelChapterInfo();
 
-        if (novelChapter == null) {
+        if (novelChapterInfo == null) {
             novelChapterInfo = new NovelChapterInfo();
         } else {
-            novelChapterInfo = novelChapter.getNovelChapterInfo();
             novelChapterInfo.setUpdateDate(new Date());
         }
 

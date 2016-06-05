@@ -10,8 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.tools.generic.DateTool;
 import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -245,6 +248,17 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @return ファイルパス
      */
     private String createReport(final List<Novel> unreadNovels) {
+        // Velocityの初期化
+        Velocity.init(getClass().getResource("/velocity.properties").getPath());
+
+        // Velocityコンテキストに値を設定
+        VelocityContext context = new VelocityContext();
+        context.put("date", new DateTool());
+        context.put("unreadNovels", unreadNovels);
+
+        // テンプレートの作成
+        Template template = Velocity.getTemplate("report.vm", "UTF-8");
+
         String filePath = Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + new DateTime().minusDays(1).toString("yyyy-MM-dd") + ".html";
         PrintWriter pw = null;
 
@@ -256,25 +270,12 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             }
 
             pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            pw.println("<html><head>");
-            pw.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
-            pw.println("<meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no\" />");
-            pw.println("</head><body><dl>");
+
+            // テンプレートとマージ
+            template.merge(context, pw);
 
             for (Novel unreadNovel : unreadNovels) {
-                pw.println("<dt><a href='" + unreadNovel.getUrl() + "'>" + unreadNovel.getTitle() + "</a></dt>");
-
                 for (NovelChapter unreadNovelChapter : unreadNovel.getNovelChapters()) {
-                    if (unreadNovelChapter.getUpdateDate() == null || unreadNovelChapter.getCreateDate().equals(unreadNovelChapter.getUpdateDate())) {
-                        log.info("[add] title:" + unreadNovel.getTitle() + " chapter title:" + unreadNovelChapter.getTitle());
-                        pw.println("<dd>" + new DateTime(unreadNovelChapter.getNovelChapterInfo().getModifiedDate()).toString(ISODateTimeFormat.date()) + " <a href='" + unreadNovelChapter.getUrl()
-                                + "'>" + unreadNovelChapter.getTitle() + "</a></dd>");
-                    } else {
-                        log.info("[update] title:" + unreadNovel.getTitle() + " chapter title:" + unreadNovelChapter.getTitle());
-                        pw.println("<dd>" + new DateTime(unreadNovelChapter.getNovelChapterInfo().getModifiedDate()).toString(ISODateTimeFormat.date()) + " <a href='" + unreadNovelChapter.getUrl()
-                                + "'>" + unreadNovelChapter.getTitle() + "</a> (更新)</dd>");
-                    }
-
                     unreadNovelChapter.getNovelChapterInfo().setUnread(false);
                     unreadNovelChapter.getNovelChapterInfo().setReadDate(unreadNovelChapter.getNovelChapterInfo().getModifiedDate());
                     unreadNovelChapter.getNovelChapterInfo().setUpdateDate(new Date());
@@ -282,8 +283,6 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
                 save(unreadNovel);
             }
-
-            pw.println("</dl></body></html>");
         } catch (IOException e) {
             log.error("[error] report:", e);
         } finally {

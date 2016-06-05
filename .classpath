@@ -4,7 +4,7 @@
 	<classpathentry kind="src" output="target/classes" path="src/main/resources"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Java8"/>
 	<classpathentry kind="lib" path="target/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="target/lib/aopalliance-1.0.jar"/>
@@ -62,6 +62,8 @@
 	<classpathentry kind="lib" path="target/lib/spring-test-4.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-tx-4.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/subethasmtp-3.1.7.jar"/>
+	<classpathentry kind="lib" path="target/lib/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="target/lib/velocity-tools-generic-1.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
