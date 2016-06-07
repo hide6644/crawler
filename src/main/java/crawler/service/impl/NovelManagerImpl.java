@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
@@ -248,8 +249,14 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @return ファイルパス
      */
     private String createReport(final List<Novel> unreadNovels) {
+        Properties p = new Properties();
+        p.setProperty("resource.loader", "class");
+        p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        p.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
+        p.setProperty("runtime.log.logsystem.log4j.category", "org.apache.velocity");
+
         // Velocityの初期化
-        Velocity.init(getClass().getResource("/velocity.properties").getPath());
+        Velocity.init(p);
 
         // Velocityコンテキストに値を設定
         VelocityContext context = new VelocityContext();
