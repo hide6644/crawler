@@ -18,6 +18,7 @@ import org.apache.velocity.tools.generic.DateTool;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import crawler.Constants;
 import crawler.dao.NovelDao;
@@ -58,6 +59,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @see crawler.service.NovelManager#add(java.lang.String)
      */
     @Override
+    @Transactional
     public void add(final String url) {
         // URLからhtmlを取得
         Source html = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(url));
@@ -108,6 +110,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @see crawler.service.NovelManager#getCheckTargetId()
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         List<Long> checkTargetNovels = new ArrayList<Long>();
 
@@ -127,6 +130,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @see crawler.service.NovelManager#checkForUpdatesAndSaveHistory(java.lang.Long)
      */
     @Override
+    @Transactional
     public void checkForUpdatesAndSaveHistory(final Long savedNovelId) {
         Novel savedNovel = novelDao.get(savedNovelId);
 
@@ -216,6 +220,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @see crawler.service.NovelManager#getUnreadNovels()
      */
     @Override
+    @Transactional
     public List<Novel> getUnreadNovels() {
         return novelDao.getNovelsByUnread();
     }
@@ -226,6 +231,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * @see crawler.service.NovelManager#sendReport()
      */
     @Override
+    @Transactional
     public void sendReport() {
         List<Novel> unreadNovels = getUnreadNovels();
 
