@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.FieldInfo;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiFields;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
@@ -36,7 +37,7 @@ import crawler.dao.SearchException;
 class HibernateSearchTools {
 
     /** ログ出力クラス */
-    private static final Log log = LogFactory.getLog(HibernateSearchTools.class);
+    protected static final Logger log = LogManager.getLogger(HibernateSearchTools.class);
 
     /**
      * プライベート・コンストラクタ.
@@ -56,8 +57,7 @@ class HibernateSearchTools {
      *            DBセッション
      * @return 全文検索クエリ
      */
-    public static Query generateQuery(String searchTerm, @SuppressWarnings("rawtypes") Class searchedEntity,
-            Session sess) {
+    public static Query generateQuery(String searchTerm, @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
         Query query = null;
 
         if (searchTerm.equals("*")) {
@@ -82,7 +82,7 @@ class HibernateSearchTools {
                 Collection<String> fieldNames = new HashSet<String>();
 
                 for (FieldInfo fieldInfo : MultiFields.getMergedFieldInfos(reader)) {
-                    if (fieldInfo.isIndexed()) {
+                    if (fieldInfo.getIndexOptions() != IndexOptions.NONE) {
                         fieldNames.add(fieldInfo.name);
                     }
                 }
@@ -121,8 +121,7 @@ class HibernateSearchTools {
      *            DBセッション
      * @return ファセット
      */
-    public static List<Facet> generateFacet(String field, int maxCount,
-            @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
+    public static List<Facet> generateFacet(String field, int maxCount, @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
         FullTextSession txtSession = Search.getFullTextSession(sess);
         SearchFactory searchFactory = txtSession.getSearchFactory();
         QueryBuilder builder = searchFactory.buildQueryBuilder().forEntity(searchedEntity).get();
@@ -155,7 +154,7 @@ class HibernateSearchTools {
         try {
             massIndexer.startAndWait();
         } catch (InterruptedException e) {
-            log.error("mass reindexing interrupted: " + e.getMessage());
+            log.error("mass reindexing interrupted: {}", e.getMessage());
         } finally {
             txtSession.flushToIndexes();
         }
@@ -181,7 +180,7 @@ class HibernateSearchTools {
                 massIndexer.start();
             }
         } catch (InterruptedException e) {
-            log.error("mass reindexing interrupted: " + e.getMessage());
+            log.error("mass reindexing interrupted: {}", e.getMessage());
         } finally {
             txtSession.flushToIndexes();
         }

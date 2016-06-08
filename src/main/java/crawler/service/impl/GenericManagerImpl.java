@@ -3,8 +3,8 @@ package crawler.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.search.query.facet.Facet;
 
 import crawler.dao.GenericDao;
@@ -16,7 +16,7 @@ import crawler.service.GenericManager;
 public class GenericManagerImpl<T, PK extends Serializable> implements GenericManager<T, PK> {
 
     /** ログ出力クラス */
-    protected final Log log = LogFactory.getLog(getClass());
+    protected final Logger log = LogManager.getLogger(getClass());
 
     /** 一般的なCRUD DAOのインターフェース */
     protected GenericDao<T, PK> dao;

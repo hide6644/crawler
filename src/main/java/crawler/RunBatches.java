@@ -1,12 +1,11 @@
 package crawler;
 
-import net.sf.ehcache.CacheManager;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import crawler.batch.BatchProcess;
+import net.sf.ehcache.CacheManager;
 
 /**
  * 各取込処理を起動する.
@@ -14,7 +13,7 @@ import crawler.batch.BatchProcess;
 public class RunBatches {
 
     /** ログ出力クラス */
-    private static final Log log = LogFactory.getLog(RunBatches.class);
+    private static final Logger log = LogManager.getLogger(RunBatches.class);
 
     /**
      * 起動main処理.

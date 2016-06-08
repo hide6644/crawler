@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
@@ -22,7 +22,7 @@ import net.htmlparser.jericho.Source;
 public class NovelManagerUtil {
 
     /** ログ出力クラス */
-    private static final Log log = LogFactory.getLog(NovelManagerUtil.class);
+    private static final Logger log = LogManager.getLogger(NovelManagerUtil.class);
 
     /**
      * プライベート・コンストラクタ.
