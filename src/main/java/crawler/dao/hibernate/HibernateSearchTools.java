@@ -37,7 +37,7 @@ import crawler.dao.SearchException;
 class HibernateSearchTools {
 
     /** ログ出力クラス */
-    protected static final Logger log = LogManager.getLogger(HibernateSearchTools.class);
+    private static final Logger log = LogManager.getLogger(HibernateSearchTools.class);
 
     /**
      * プライベート・コンストラクタ.
