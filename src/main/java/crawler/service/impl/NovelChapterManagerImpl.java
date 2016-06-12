@@ -84,9 +84,10 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     @Override
     public void saveNovelChapter(final Source html, final Novel novel, final NovelHistory novelHistory) {
         URL url = NovelManagerUtil.getUrl(novel.getUrl());
+        Source htmlHistory = new Source(novelHistory.getBody());
 
         for (Element chapterElement : html.getAllElements("dl")) {
-            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelHistory)) {
+            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, htmlHistory)) {
                 // 小説の章の情報に差異がある場合
                 String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
 

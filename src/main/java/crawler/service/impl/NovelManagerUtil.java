@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import crawler.domain.Novel;
-import crawler.domain.NovelHistory;
 import crawler.service.impl.NovelElementsUtil.ContensType;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
@@ -119,17 +118,16 @@ public class NovelManagerUtil {
      *
      * @param element
      *            html element要素
-     * @param novelHistory
-     *            小説の更新履歴
+     * @param htmlHistory
+     *            小説の更新履歴の本文
      * @return true:更新有り、false:更新無し
      */
-    static boolean hasUpdatedChapter(final Element element, final NovelHistory novelHistory) {
-        Source html = new Source(novelHistory.getBody());
+    static boolean hasUpdatedChapter(final Element element, final Source htmlHistory) {
         String subtitle = NovelElementsUtil.getChapterTitleByNovelBody(element, NovelElementsUtil.ContensType.SUBTITLE);
         String chapterUpdateDate = NovelElementsUtil.getChapterModifiedDate(element, false);
 
         // 過去のコンテンツ
-        for (Element chapterHistory : html.getAllElements("tr")) {
+        for (Element chapterHistory : htmlHistory.getAllElements("tr")) {
             if (chapterHistory.getAllElementsByClass("period_subtitle").size() > 0) {
                 if (isDifferentSubtitle(subtitle, chapterUpdateDate, chapterHistory, NovelElementsUtil.ContensType.PERIOD_SUBTITLE)) {
                     // 変更なし
@@ -144,7 +142,7 @@ public class NovelManagerUtil {
         }
 
         // 現在のコンテンツ
-        for (Element chapterHistory : html.getAllElements("dl")) {
+        for (Element chapterHistory : htmlHistory.getAllElements("dl")) {
             if (isDifferentSubtitle(subtitle, chapterUpdateDate, chapterHistory, NovelElementsUtil.ContensType.SUBTITLE)) {
                 // 変更なし
                 return false;
