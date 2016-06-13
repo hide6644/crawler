@@ -5,7 +5,7 @@
     <diskStore path="${app_home}/cache" />
 
     <defaultCache
-        maxEntriesLocalHeap="10000"
+        maxEntriesLocalHeap="1000"
         maxBytesLocalHeap="100M"
         eternal="false"
         timeToIdleSeconds="120"
@@ -24,7 +24,7 @@
     </cache>
 
     <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
-        maxEntriesLocalHeap="5000"
+        maxEntriesLocalHeap="500"
         eternal="true">
         <persistence strategy="localTempSwap" />
     </cache>
