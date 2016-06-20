@@ -10,7 +10,7 @@ import java.nio.channels.FileLock;
 import org.apache.commons.io.IOUtils;
 
 /**
- * ロックファイルを処理するクラス.
+ * ロックファイルを処理する.
  */
 public class PreventMultiInstance implements Closeable {
 
@@ -24,7 +24,7 @@ public class PreventMultiInstance implements Closeable {
     private FileLock lock;
 
     /**
-     * デフォルト・コンストラクタ.<br>
+     * デフォルト・コンストラクタ.
      * インスタンス化時にロックファイルを作成する.
      */
     public PreventMultiInstance() {
@@ -32,7 +32,7 @@ public class PreventMultiInstance implements Closeable {
     }
 
     /**
-     * コンストラクタ.<br>
+     * コンストラクタ.
      * インスタンス化時にロックファイルを作成しますが、ロックはまだかけられていません.
      *
      * @param lockfile
@@ -49,8 +49,8 @@ public class PreventMultiInstance implements Closeable {
     }
 
     /**
-     * 同じデータ保存先を示して複数起動していないかチェックする.<br>
-     * ロックファイルは引数で指定されたディレクトリ上に作成される.<br>
+     * 同じデータ保存先を示して複数起動していないかチェックする.
+     * ロックファイルは引数で指定されたディレクトリ上に作成される.
      *
      * @return true:ロック取得成功、false:ロック取得失敗
      */
@@ -88,6 +88,7 @@ public class PreventMultiInstance implements Closeable {
      * ロックを解除する.
      *
      * @throws IOException
+     *             {@link IOException}
      */
     public void release() throws IOException {
         if (lock != null) {

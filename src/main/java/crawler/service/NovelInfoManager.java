@@ -1,7 +1,7 @@
 package crawler.service;
 
-import net.htmlparser.jericho.Source;
 import crawler.domain.NovelInfo;
+import net.htmlparser.jericho.Source;
 
 /**
  * 小説の付随情報を管理する.
@@ -11,10 +11,10 @@ public interface NovelInfoManager extends GenericManager<NovelInfo, Long> {
     /**
      * 小説の付随情報を設定する.
      *
-     * @param novelInfo
-     *            小説の付随情報
      * @param html
      *            html要素
+     * @param novelInfo
+     *            小説の付随情報
      */
-    public void setNovelInfo(NovelInfo novelInfo, Source html);
+    public void saveNovelInfo(Source html, NovelInfo novelInfo);
 }

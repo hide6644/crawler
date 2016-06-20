@@ -5,8 +5,11 @@
 
     <groupId>crawler</groupId>
     <artifactId>crawler</artifactId>
+    <packaging>jar</packaging>
     <name>crawler</name>
     <version>1.0.0</version>
+    <inceptionYear>2013</inceptionYear>
+    <url>https://github.com/hide6644/crawler</url>
 
     <scm>
         <connection>scm:git:git@github.com:hide6644/crawler.git</connection>
@@ -37,10 +40,10 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -62,14 +65,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
+                <version>2.19.1</version>
                 <configuration>
                     <argLine>-Dapp_home=${project.build.directory}</argLine>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>copy-resources</id>
@@ -115,14 +118,24 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+                <version>${jandex.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.logging</groupId>
-                <artifactId>jboss-logging</artifactId>
-                <version>${jboss.logging}</version>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${mail.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -134,25 +147,15 @@
             <version>${jdbc.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${HikariCP.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons.beanutils.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>${commons.dbcp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>${commons.dbcp2.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -188,21 +191,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <version>${bonecp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -211,26 +199,25 @@
 
         <!-- Logging -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
+            <artifactId>spring-aspects</artifactId>
             <version>${spring.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -239,7 +226,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-instrument</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -249,47 +241,45 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-hikaricp</artifactId>
+            <version>${hibernate.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP-java6</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search</artifactId>
+            <artifactId>hibernate-search-orm</artifactId>
             <version>${hibernate.search.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.solr</groupId>
                     <artifactId>solr-analysis-extras</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.hibernate.common</groupId>
-                    <artifactId>hibernate-commons-annotations</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-kuromoji</artifactId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-kuromoji</artifactId>
             <version>${lucene.version}</version>
         </dependency>
         <dependency>
@@ -297,10 +287,6 @@
             <artifactId>hibernate-ehcache</artifactId>
             <version>${hibernate.version}</version>
             <exclusions>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>net.sf.ehcache</groupId>
                     <artifactId>ehcache-core</artifactId>
@@ -327,13 +313,23 @@
             <artifactId>subethasmtp</artifactId>
             <version>${subethasmtp.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>velocity-tools</groupId>
+            <artifactId>velocity-tools-generic</artifactId>
+            <version>${velocity.tools.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
         <jdbc.groupId>mysql</jdbc.groupId>
         <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.33</jdbc.version>
+        <jdbc.version>5.1.39</jdbc.version>
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.url>
             <![CDATA[jdbc:mysql://localhost/crawler?createDatabaseIfNotExist=true&amp;zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true]]>
@@ -342,27 +338,28 @@
         <jdbc.password />
         <jdbc.validationQuery><![CDATA[SELECT 1 + 1]]></jdbc.validationQuery>
 
-        <bonecp.version>0.8.0.RELEASE</bonecp.version>
-        <aspectj.version>1.7.4</aspectj.version>
         <commons.beanutils.version>1.9.2</commons.beanutils.version>
-        <commons.codec.version>1.9</commons.codec.version>
-        <commons.dbcp.version>1.4</commons.dbcp.version>
-        <commons.dbcp2.version>2.0.1</commons.dbcp2.version>
-        <commons.io.version>2.4</commons.io.version>
+        <commons.codec.version>1.10</commons.codec.version>
+        <commons.io.version>2.5</commons.io.version>
         <commons.jexl.version>2.1.1</commons.jexl.version>
         <commons.lang.version>2.6</commons.lang.version>
-        <commons.lang3.version>3.3.2</commons.lang3.version>
-        <ehcache.version>2.8.5</ehcache.version>
-        <hibernate.version>4.3.6.Final</hibernate.version>
-        <hibernate.search.version>4.5.1.Final</hibernate.search.version>
-        <jboss.logging>3.1.4.GA</jboss.logging>
-        <jericho.html.version>3.3</jericho.html.version>
-        <joda.time.version>2.5</joda.time.version>
-        <junit.version>4.11</junit.version>
-        <lucene.version>3.6.2</lucene.version>
-        <slf4j.version>1.7.7</slf4j.version>
-        <spring.version>4.1.1.RELEASE</spring.version>
+        <commons.lang3.version>3.4</commons.lang3.version>
+        <ehcache.version>2.10.2</ehcache.version>
+        <hibernate.version>5.0.9.Final</hibernate.version>
+        <hibernate.search.version>5.5.3.Final</hibernate.search.version>
+        <HikariCP.version>2.4.6</HikariCP.version>
+        <jandex.version>2.0.2.Final</jandex.version>
+        <jericho.html.version>3.4</jericho.html.version>
+        <joda.time.version>2.9.4</joda.time.version>
+        <log4j.version>2.6</log4j.version>
+        <junit.version>4.12</junit.version>
+        <lucene.version>5.3.1</lucene.version>
+        <mail.version>1.4.7</mail.version>
+        <slf4j.version>1.7.21</slf4j.version>
+        <spring.version>4.2.6.RELEASE</spring.version>
         <subethasmtp.version>3.1.7</subethasmtp.version>
+        <velocity.version>1.7</velocity.version>
+        <velocity.tools.version>1.4</velocity.tools.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013-2014</copyright.year>

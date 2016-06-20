@@ -4,18 +4,18 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.FieldInfo;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.ReaderUtil;
-import org.apache.lucene.util.Version;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
@@ -37,10 +37,10 @@ import crawler.dao.SearchException;
 class HibernateSearchTools {
 
     /** ログ出力クラス */
-    private static final Log log = LogFactory.getLog(HibernateSearchTools.class);
+    private static final Logger log = LogManager.getLogger(HibernateSearchTools.class);
 
     /**
-     * プライベート・コンストラクタ.<br />
+     * プライベート・コンストラクタ.
      * このクラスはインスタンス化禁止.
      */
     private HibernateSearchTools() {
@@ -57,8 +57,7 @@ class HibernateSearchTools {
      *            DBセッション
      * @return 全文検索クエリ
      */
-    public static Query generateQuery(String searchTerm, @SuppressWarnings("rawtypes") Class searchedEntity,
-            Session sess) {
+    public static Query generateQuery(String searchTerm, @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
         Query query = null;
 
         if (searchTerm.equals("*")) {
@@ -72,7 +71,7 @@ class HibernateSearchTools {
                 Analyzer analyzer = null;
 
                 if (searchedEntity == null) {
-                    analyzer = new StandardAnalyzer(Version.LUCENE_36);
+                    analyzer = new StandardAnalyzer();
                 } else {
                     analyzer = txtSession.getSearchFactory().getAnalyzer(searchedEntity);
                 }
@@ -82,8 +81,8 @@ class HibernateSearchTools {
                 reader = readerAccessor.open(searchedEntity);
                 Collection<String> fieldNames = new HashSet<String>();
 
-                for (FieldInfo fieldInfo : ReaderUtil.getMergedFieldInfos(reader)) {
-                    if (fieldInfo.isIndexed) {
+                for (FieldInfo fieldInfo : MultiFields.getMergedFieldInfos(reader)) {
+                    if (fieldInfo.getIndexOptions() != IndexOptions.NONE) {
                         fieldNames.add(fieldInfo.name);
                     }
                 }
@@ -96,7 +95,7 @@ class HibernateSearchTools {
                     queries[i] = searchTerm;
                 }
 
-                query = MultiFieldQueryParser.parse(Version.LUCENE_36, queries, fnames, analyzer);
+                query = MultiFieldQueryParser.parse(queries, fnames, analyzer);
             } catch (ParseException e) {
                 throw new SearchException(e);
             } finally {
@@ -110,7 +109,7 @@ class HibernateSearchTools {
     }
 
     /**
-     * ファセットクエリを作成する.
+     * ファセットを作成する.
      *
      * @param field
      *            対象となる項目
@@ -120,10 +119,9 @@ class HibernateSearchTools {
      *            エンティティクラス
      * @param sess
      *            DBセッション
-     * @return
+     * @return ファセット
      */
-    public static List<Facet> generateFacet(String field, int maxCount,
-            @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
+    public static List<Facet> generateFacet(String field, int maxCount, @SuppressWarnings("rawtypes") Class searchedEntity, Session sess) {
         FullTextSession txtSession = Search.getFullTextSession(sess);
         SearchFactory searchFactory = txtSession.getSearchFactory();
         QueryBuilder builder = searchFactory.buildQueryBuilder().forEntity(searchedEntity).get();
@@ -156,7 +154,7 @@ class HibernateSearchTools {
         try {
             massIndexer.startAndWait();
         } catch (InterruptedException e) {
-            log.error("mass reindexing interrupted: " + e.getMessage());
+            log.error("mass reindexing interrupted: {}", e.getMessage());
         } finally {
             txtSession.flushToIndexes();
         }
@@ -182,7 +180,7 @@ class HibernateSearchTools {
                 massIndexer.start();
             }
         } catch (InterruptedException e) {
-            log.error("mass reindexing interrupted: " + e.getMessage());
+            log.error("mass reindexing interrupted: {}", e.getMessage());
         } finally {
             txtSession.flushToIndexes();
         }

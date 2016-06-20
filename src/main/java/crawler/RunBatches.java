@@ -1,20 +1,19 @@
 package crawler;
 
-import net.sf.ehcache.CacheManager;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import crawler.batch.BatchProcess;
+import net.sf.ehcache.CacheManager;
 
 /**
- * 各取込処理起動用クラス.
+ * 各取込処理を起動する.
  */
 public class RunBatches {
 
     /** ログ出力クラス */
-    private static final Log log = LogFactory.getLog(RunBatches.class);
+    private static final Logger log = LogManager.getLogger(RunBatches.class);
 
     /**
      * 起動main処理.
@@ -36,7 +35,7 @@ public class RunBatches {
                 ((BatchProcess) context.getBean("novelProcess")).execute(args);
             }
         } catch (Exception e) {
-            log.error("[error] novelProcess process is not found!:", e);
+            log.error(e);
         } finally {
             if (pmi != null) {
                 pmi.close();

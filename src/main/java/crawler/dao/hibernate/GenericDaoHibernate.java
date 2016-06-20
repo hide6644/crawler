@@ -9,10 +9,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +31,7 @@ import crawler.dao.SearchException;
 public class GenericDaoHibernate<T, PK extends Serializable> implements GenericDao<T, PK> {
 
     /** ログ出力クラス */
-    protected final Log log = LogFactory.getLog(getClass());
+    protected final Logger log = LogManager.getLogger(getClass());
 
     /** エンティティクラス */
     private Class<T> persistentClass;
@@ -93,13 +92,11 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @Override
     public T get(PK id) {
-        IdentifierLoadAccess byId = getSession().byId(persistentClass);
-        @SuppressWarnings("unchecked")
-        T entity = (T) byId.load(id);
+        T entity = getSession().byId(persistentClass).load(id);
 
         if (entity == null) {
-            log.warn("'" + this.persistentClass + "' object with id '" + id + "' not found...");
-            throw new ObjectRetrievalFailureException(this.persistentClass, id);
+            log.warn("'" + persistentClass + "' object with id '" + id + "' not found...");
+            throw new ObjectRetrievalFailureException(persistentClass, id);
         }
 
         return entity;
@@ -112,8 +109,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @Override
     public boolean exists(PK id) {
-        IdentifierLoadAccess byId = getSession().byId(persistentClass);
-        return byId.load(id) != null;
+        return getSession().byId(persistentClass).load(id) != null;
     }
 
     /*
@@ -124,8 +120,6 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     @Override
     public T save(T object) {
         getSession().saveOrUpdate(object);
-        getSession().flush();
-        getSession().clear();
         return object;
     }
 
@@ -137,7 +131,6 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     @Override
     public void remove(T object) {
         getSession().delete(object);
-        getSession().flush();
     }
 
     /*
@@ -147,25 +140,27 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @Override
     public void remove(PK id) {
-        Session sess = getSession();
-        IdentifierLoadAccess byId = sess.byId(persistentClass);
-        sess.delete(byId.load(id));
+        getSession().delete(getSession().byId(persistentClass).load(id));
     }
 
     /*
      * (非 Javadoc)
      *
-     * @see crawler.dao.GenericDao#findByNamedQuery(java.lang.String,
-     * java.util.Map)
+     * @see crawler.dao.GenericDao#findByNamedQuery(java.lang.String, java.util.Map)
      */
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams) {
         Query namedQuery = getSession().getNamedQuery(queryName);
 
         if (queryParams != null) {
             for (String s : queryParams.keySet()) {
-                namedQuery.setParameter(s, queryParams.get(s));
+                Object val = queryParams.get(s);
+                if (val instanceof Collection) {
+                    namedQuery.setParameterList(s, (Collection) val);
+                } else {
+                    namedQuery.setParameter(s, val);
+                }
             }
         }
 
@@ -180,9 +175,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     @Override
     @SuppressWarnings("unchecked")
     public List<T> search(String searchTerm) throws SearchException {
-        Session sess = getSession();
-        FullTextQuery hibQuery = Search.getFullTextSession(sess).createFullTextQuery(
-                HibernateSearchTools.generateQuery(searchTerm, persistentClass, sess), persistentClass);
+        FullTextQuery hibQuery = Search.getFullTextSession(getSession()).createFullTextQuery(
+                HibernateSearchTools.generateQuery(searchTerm, persistentClass, getSession()), persistentClass);
 
         return hibQuery.list();
     }
@@ -243,6 +237,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      *
      * @return DBセッション
      * @throws HibernateException
+     *             {@link HibernateException}
      */
     public Session getSession() throws HibernateException {
         Session sess = getSessionFactory().getCurrentSession();

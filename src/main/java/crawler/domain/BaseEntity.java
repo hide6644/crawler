@@ -46,7 +46,7 @@ public abstract class BaseEntity {
      * @return ID
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @DocumentId
     @XmlTransient
     public Long getId() {

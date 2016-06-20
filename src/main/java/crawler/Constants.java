@@ -6,7 +6,7 @@ package crawler;
 public class Constants {
 
     /**
-     * プライベート・コンストラクタ.<br />
+     * プライベート・コンストラクタ.
      * このクラスはインスタンス化禁止.
      */
     private Constants() {
