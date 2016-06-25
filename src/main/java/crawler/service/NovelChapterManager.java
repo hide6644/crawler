@@ -25,10 +25,10 @@ public interface NovelChapterManager extends GenericManager<NovelChapter, Long> 
      *
      * @param html
      *            html要素
-     * @param novel
+     * @param savedNovel
      *            小説の情報
      * @param novelHistory
      *            小説の更新履歴
      */
-    public void saveNovelChapter(Source html, Novel novel, NovelHistory novelHistory);
+    public void saveNovelChapter(Source html, Novel savedNovel, NovelHistory novelHistory);
 }

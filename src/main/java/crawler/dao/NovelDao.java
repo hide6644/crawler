@@ -6,7 +6,7 @@ import java.util.List;
 import crawler.domain.Novel;
 
 /**
- * 小説DAOのインターフェイス.
+ * 小説のDAOのインターフェイス.
  */
 public interface NovelDao extends GenericDao<Novel, Long> {
 

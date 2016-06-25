@@ -38,7 +38,7 @@ import net.htmlparser.jericho.Source;
 @Service("novelManager")
 public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements NovelManager {
 
-    /** 小説DAO. */
+    /** 小説のDAO. */
     private NovelDao novelDao;
 
     /** 小説の付随情報. */
@@ -306,10 +306,10 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     }
 
     /**
-     * 小説DAOのインターフェイスを設定する.
+     * 小説のDAOのインターフェイスを設定する.
      *
      * @param novelDao
-     *            小説DAOのインターフェイス
+     *            小説のDAOのインターフェイス
      */
     @Autowired
     public void setNovelDao(NovelDao novelDao) {
