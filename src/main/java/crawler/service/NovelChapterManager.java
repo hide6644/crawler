@@ -2,7 +2,6 @@ package crawler.service;
 
 import crawler.domain.Novel;
 import crawler.domain.NovelChapter;
-import crawler.domain.NovelHistory;
 import net.htmlparser.jericho.Source;
 
 /**
@@ -13,22 +12,22 @@ public interface NovelChapterManager extends GenericManager<NovelChapter, Long> 
     /**
      * 小説の章を設定する.
      *
-     * @param html
-     *            html要素
+     * @param novelBodyHtml
+     *            小説の本文のhtml要素
      * @param novel
      *            小説の情報
      */
-    public void saveNovelChapter(Source html, Novel novel);
+    public void saveNovelChapter(Source novelBodyHtml, Novel novel);
 
     /**
      * 小説の章を設定する(更新).
      *
-     * @param html
-     *            html要素
+     * @param novelBodyHtml
+     *            小説の本文のhtml要素
+     * @param novelHistoryBodyHtml
+     *            小説の更新履歴の本文のhtml要素
      * @param savedNovel
      *            小説の情報
-     * @param novelHistory
-     *            小説の更新履歴
      */
-    public void saveNovelChapter(Source html, Novel savedNovel, NovelHistory novelHistory);
+    public void saveNovelChapter(Source novelBodyHtml, Source novelHistoryBodyHtml, Novel savedNovel);
 }
