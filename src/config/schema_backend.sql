@@ -1,3 +1,9 @@
+create database crawler;
+grant all privileges on crawler.* to crawler identified by 'crawler_pass';
+
+create database crawler_rpl;
+grant all privileges on crawler_rpl.* to crawler identified by 'crawler_pass';
+
 drop table if exists novel_chapter_info cascade;
 drop table if exists novel_info cascade;
 drop table if exists novel_chapter_history cascade;
@@ -18,8 +24,7 @@ create table novel (
     create_date timestamp default '0000-00-00 00:00:00',
     update_user varchar(16) default null,
     update_date timestamp default '0000-00-00 00:00:00',
-    primary key (id),
-    unique (url)
+    primary key (id)
 ) engine = InnoDB default character set utf8;
 
 create table novel_history (
@@ -34,9 +39,10 @@ create table novel_history (
     create_date timestamp default '0000-00-00 00:00:00',
     update_user varchar(16) default null,
     update_date timestamp default '0000-00-00 00:00:00',
-    primary key (id),
-    foreign key (novel_id) references novel (id)
+    primary key (id)
 ) engine = InnoDB default character set utf8;
+salter table novel_history add index id_novel_id(id, novel_id);
+alter table novel_history add index novel_id(novel_id);
 
 create table novel_chapter (
     id integer not null auto_increment,
@@ -49,10 +55,10 @@ create table novel_chapter (
     create_date timestamp default '0000-00-00 00:00:00',
     update_user varchar(16) default null,
     update_date timestamp default '0000-00-00 00:00:00',
-    primary key (id),
-    unique (url),
-    foreign key (novel_id) references novel (id)
+    primary key (id)
 ) engine = InnoDB default character set utf8;
+alter table novel_chapter add index id_novel_id(id, novel_id);
+alter table novel_chapter add index novel_id(novel_id);
 
 create table novel_chapter_history (
     id integer not null auto_increment,
@@ -64,9 +70,10 @@ create table novel_chapter_history (
     create_date timestamp default '0000-00-00 00:00:00',
     update_user varchar(16) default null,
     update_date timestamp default '0000-00-00 00:00:00',
-    primary key (id),
-    foreign key (novel_chapter_id) references novel_chapter (id)
+    primary key (id)
 ) engine = InnoDB default character set utf8;
+alter table novel_chapter_history add index id_novel_chapter_id(id, novel_chapter_id);
+alter table novel_chapter_history add index novel_chapter_id(novel_chapter_id);
 
 create table novel_info (
     id integer not null auto_increment,
@@ -82,9 +89,11 @@ create table novel_info (
     create_date timestamp default '0000-00-00 00:00:00',
     update_user varchar(16) default null,
     update_date timestamp default '0000-00-00 00:00:00',
-    primary key (id),
-    foreign key (novel_id) references novel (id)
+    primary key (id)
 ) engine = InnoDB default character set utf8;
+alter table novel_info add index id_novel_id(id, novel_id);
+alter table novel_info add index novel_id(novel_id);
+alter table novel_info add index checked_date(checked_date);
 
 create table novel_chapter_info (
     id integer not null auto_increment,
@@ -98,7 +107,7 @@ create table novel_chapter_info (
     create_date timestamp default '0000-00-00 00:00:00',
     update_user varchar(16) default null,
     update_date timestamp default '0000-00-00 00:00:00',
-    primary key (id),
-    index (unread),
-    foreign key (novel_chapter_id) references novel_chapter (id)
+    primary key (id)
 ) engine = InnoDB default character set utf8;
+alter table novel_chapter_info add index id_novel_chapter_id(id, novel_chapter_id);
+alter table novel_chapter_info add index novel_chapter_id(novel_chapter_id);
