@@ -12,8 +12,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.search.annotations.DocumentId;
 
 /**
