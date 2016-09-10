@@ -1,4 +1,4 @@
-package crawler.dao.hibernate;
+package crawler.dao.jpa;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import crawler.domain.NovelChapter;
  * 小説DAOの実装クラス.
  */
 @Repository("novelChapterDao")
-public class NovelChapterDaoHibernate extends GenericDaoHibernate<NovelChapter, Long> implements NovelChapterDao {
+public class NovelChapterDaoHibernate extends GenericDaoJpa<NovelChapter, Long> implements NovelChapterDao {
 
     /**
      * デフォルト・コンストラクタ.
@@ -24,7 +24,7 @@ public class NovelChapterDaoHibernate extends GenericDaoHibernate<NovelChapter, 
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see crawler.dao.NovelChapterDao#getNovelChaptersByUrl(java.lang.String)
      */
     @Override
@@ -33,7 +33,7 @@ public class NovelChapterDaoHibernate extends GenericDaoHibernate<NovelChapter, 
         queryParams.put("url", url);
 
         List<NovelChapter> novelChapterList = findByNamedQuery(NovelChapter.FIND_BY_URL, queryParams);
-        if (novelChapterList == null || novelChapterList.isEmpty()) {
+        if (novelChapterList.isEmpty()) {
             return null;
         } else {
             return novelChapterList.get(0);

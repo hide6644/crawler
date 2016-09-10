@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE persistence>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+
+    <persistence-unit name="ApplicationEntityManager" transaction-type="RESOURCE_LOCAL">
+        <validation-mode>NONE</validation-mode>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>crawler.domain.Novel</class>
+        <class>crawler.domain.NovelChapter</class>
+        <class>crawler.domain.NovelChapterHistory</class>
+        <class>crawler.domain.NovelChapterInfo</class>
+        <class>crawler.domain.NovelHistory</class>
+        <class>crawler.domain.NovelInfo</class>
+    </persistence-unit>
+
+</persistence>
