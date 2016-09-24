@@ -7,14 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.tools.generic.DateTool;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +27,9 @@ import crawler.service.MailEngine;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 import crawler.service.NovelManager;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 import net.htmlparser.jericho.Source;
 
 /**
@@ -38,7 +38,7 @@ import net.htmlparser.jericho.Source;
 @Service("novelManager")
 public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements NovelManager {
 
-    /** 小説DAO. */
+    /** 小説のDAO. */
     private NovelDao novelDao;
 
     /** 小説の付随情報. */
@@ -85,7 +85,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
     /**
      * 小説の情報を作成する.
-     * 
+     *
      * @param url
      *            小説のURL
      * @param html
@@ -106,7 +106,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see crawler.service.NovelManager#getCheckTargetId()
      */
     @Override
@@ -126,7 +126,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see crawler.service.NovelManager#checkForUpdatesAndSaveHistory(java.lang.Long)
      */
     @Override
@@ -165,7 +165,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
     /**
      * 小説の更新履歴を作成する.
-     * 
+     *
      * @param savedNovel
      *            保存済みの小説の情報
      * @param currentNovel
@@ -208,7 +208,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             savedNovel.setBody(currentNovel.getBody());
 
             // 小説の章を取得
-            novelChapterManager.saveNovelChapter(new Source(currentNovel.getBody()), savedNovel, novelHistory);
+            novelChapterManager.saveNovelChapter(new Source(currentNovel.getBody()), new Source(novelHistory.getBody()), savedNovel);
         }
 
         return novelHistory;
@@ -249,28 +249,20 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
     /**
      * 未読小説の一覧のファイルを作成する.
-     * 
+     *
      * @param unreadNovels
      *            未読小説の一覧
      * @return ファイルパス
      */
     private String createReport(final List<Novel> unreadNovels) {
-        Properties p = new Properties();
-        p.setProperty("resource.loader", "class");
-        p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        p.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-        p.setProperty("runtime.log.logsystem.log4j.category", "org.apache.velocity");
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
+        cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        cfg.setLogTemplateExceptions(false);
 
-        // Velocityの初期化
-        Velocity.init(p);
-
-        // Velocityコンテキストに値を設定
-        VelocityContext context = new VelocityContext();
-        context.put("date", new DateTool());
-        context.put("unreadNovels", unreadNovels);
-
-        // テンプレートの作成
-        Template template = Velocity.getTemplate("report.vm", "UTF-8");
+        Map<String, Object> root = new HashMap<String, Object>();
+        root.put("unreadNovels", unreadNovels);
 
         String filePath = Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + new DateTime().minusDays(1).toString("yyyy-MM-dd") + ".html";
         PrintWriter pw = null;
@@ -285,7 +277,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
 
             // テンプレートとマージ
-            template.merge(context, pw);
+            cfg.getTemplate("report.ftl").process(root, pw);
 
             for (Novel unreadNovel : unreadNovels) {
                 for (NovelChapter unreadNovelChapter : unreadNovel.getNovelChapters()) {
@@ -298,6 +290,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             }
         } catch (IOException e) {
             log.error("[error] report:", e);
+        } catch (TemplateException e) {
+            log.error("[error] report:", e);
         } finally {
             IOUtils.closeQuietly(pw);
         }
@@ -306,10 +300,10 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     }
 
     /**
-     * 小説DAOのインターフェイスを設定する.
+     * 小説のDAOのインターフェイスを設定する.
      *
      * @param novelDao
-     *            小説DAOのインターフェイス
+     *            小説のDAOのインターフェイス
      */
     @Autowired
     public void setNovelDao(NovelDao novelDao) {

@@ -18,11 +18,11 @@ import crawler.service.NovelChapterInfoManager;
 public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapterInfo, Long> implements NovelChapterInfoManager {
 
     /* (非 Javadoc)
-     * 
+     *
      * @see crawler.service.NovelChapterInfoManager#saveNovelChapterInfo(net.htmlparser.jericho.Element, crawler.domain.NovelChapter)
      */
     @Override
-    public NovelChapterInfo saveNovelChapterInfo(final Element element, final NovelChapter novelChapter) {
+    public NovelChapterInfo saveNovelChapterInfo(final Element chapterElement, final NovelChapter novelChapter) {
         NovelChapterInfo novelChapterInfo = novelChapter.getNovelChapterInfo();
 
         if (novelChapterInfo == null) {
@@ -32,7 +32,7 @@ public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapter
         }
 
         novelChapterInfo.setCheckedDate(new Date());
-        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日").parseDateTime(NovelElementsUtil.getChapterModifiedDate(element, true).replaceAll(" 改稿", "")).toDate());
+        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日").parseDateTime(NovelElementsUtil.getChapterModifiedDate(chapterElement, true).replaceAll(" 改稿", "")).toDate());
         novelChapterInfo.setUnread(true);
 
         return novelChapterInfo;

@@ -6,11 +6,11 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import crawler.dao.NovelChapterDao;
 import crawler.domain.Novel;
 import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterHistory;
 import crawler.domain.NovelChapterInfo;
-import crawler.domain.NovelHistory;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
 import net.htmlparser.jericho.Element;
@@ -22,19 +22,22 @@ import net.htmlparser.jericho.Source;
 @Service("novelChapterManager")
 public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Long> implements NovelChapterManager {
 
+    /** 小説の章のDAO. */
+    private NovelChapterDao novelChapterDao;
+
     /** 小説の章の付随情報. */
     @Autowired
     private NovelChapterInfoManager novelChapterInfoManager;
 
     /* (非 Javadoc)
-     * 
+     *
      * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, crawler.domain.Novel)
      */
     @Override
-    public void saveNovelChapter(final Source html, final Novel novel) {
+    public void saveNovelChapter(final Source novelBodyHtml, final Novel novel) {
         URL url = NovelManagerUtil.getUrl(novel.getUrl());
 
-        for (Element chapterElement : html.getAllElements("dl")) {
+        for (Element chapterElement : novelBodyHtml.getAllElements("dl")) {
             String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
 
             // URLからhtmlを取得
@@ -61,7 +64,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
 
     /**
      * 小説の章の情報を作成する.
-     * 
+     *
      * @param url
      *            小説の章のURL
      * @param html
@@ -78,16 +81,15 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     }
 
     /* (非 Javadoc)
-     * 
-     * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, crawler.domain.Novel, crawler.domain.NovelHistory)
+     *
+     * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, net.htmlparser.jericho.Source, crawler.domain.Novel)
      */
     @Override
-    public void saveNovelChapter(final Source html, final Novel novel, final NovelHistory novelHistory) {
-        URL url = NovelManagerUtil.getUrl(novel.getUrl());
-        Source htmlHistory = new Source(novelHistory.getBody());
+    public void saveNovelChapter(final Source novelBodyHtml, final Source novelHistoryBodyHtml, final Novel savedNovel) {
+        URL url = NovelManagerUtil.getUrl(savedNovel.getUrl());
 
-        for (Element chapterElement : html.getAllElements("dl")) {
-            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, htmlHistory)) {
+        for (Element chapterElement : novelBodyHtml.getAllElements("dl")) {
+            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelHistoryBodyHtml)) {
                 // 小説の章の情報に差異がある場合
                 String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
 
@@ -100,7 +102,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                     NovelChapter currentNovelChapter = createNovelChapter(chapterUrl, chapterHtml);
 
                     // URLが一致する小説の章を履歴から取得
-                    NovelChapter savedNovelChapter = getSameNovelChapter(chapterUrl, novel);
+                    NovelChapter savedNovelChapter = novelChapterDao.getNovelChaptersByUrl(chapterUrl);
 
                     if (savedNovelChapter != null) {
                         // 一致するURLがある場合、更新処理
@@ -117,8 +119,8 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                         log.info("[update] chapter title:" + savedNovelChapter.getTitle());
                     } else {
                         // 登録処理
-                        currentNovelChapter.setNovel(novel);
-                        novel.addNovelChapter(currentNovelChapter);
+                        currentNovelChapter.setNovel(savedNovel);
+                        savedNovel.addNovelChapter(currentNovelChapter);
 
                         // 小説の章の付随情報を作成
                         NovelChapterInfo novelChapterInfo = novelChapterInfoManager.saveNovelChapterInfo(chapterElement, currentNovelChapter);
@@ -134,27 +136,8 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     }
 
     /**
-     * URLに一致する小説の章の情報を履歴から取得する.
-     * 
-     * @param chapterUrl
-     *            小説の章のURL
-     * @param novel
-     *            小説の情報
-     * @return 小説の章の情報
-     */
-    private NovelChapter getSameNovelChapter(final String chapterUrl, final Novel novel) {
-        for (NovelChapter novelChapter : novel.getNovelChapters()) {
-            if (chapterUrl.equals(novelChapter.getUrl())) {
-                return novelChapter;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * 小説の章の更新履歴を作成する.
-     * 
+     *
      * @param savedNovelChapter
      *            保存済みの小説の章の情報
      * @param currentNovelChapter
@@ -174,5 +157,17 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
         savedNovelChapter.setBody(currentNovelChapter.getBody());
 
         return novelChapterHistory;
+    }
+
+    /**
+     * 小説の章のDAOのインターフェイスを設定する.
+     *
+     * @param novelChapterDao
+     *            小説の章のDAOのインターフェイス
+     */
+    @Autowired
+    public void setNovelChapterDao(NovelChapterDao novelChapterDao) {
+        this.dao = novelChapterDao;
+        this.novelChapterDao = novelChapterDao;
     }
 }

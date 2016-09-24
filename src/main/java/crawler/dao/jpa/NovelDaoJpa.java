@@ -1,4 +1,4 @@
-package crawler.dao.hibernate;
+package crawler.dao.jpa;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,12 +14,12 @@ import crawler.domain.Novel;
  * 小説DAOの実装クラス.
  */
 @Repository("novelDao")
-public class NovelDaoHibernate extends GenericDaoHibernate<Novel, Long> implements NovelDao {
+public class NovelDaoJpa extends GenericDaoJpa<Novel, Long> implements NovelDao {
 
     /**
      * デフォルト・コンストラクタ.
      */
-    public NovelDaoHibernate() {
+    public NovelDaoJpa() {
         super(Novel.class);
     }
 

@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,9 +27,18 @@ import org.hibernate.search.annotations.Indexed;
  */
 @Entity
 @Table(name = "novel_chapter")
+@NamedQueries({
+    @NamedQuery(
+        name = NovelChapter.FIND_BY_URL,
+        query = "from NovelChapter nc where nc.url = :url"
+    )
+})
 @Indexed
 @Analyzer(impl = JapaneseAnalyzer.class)
 public class NovelChapter extends BaseEntity implements Serializable {
+
+    /** URLで検索するクエリ */
+    public static final String FIND_BY_URL = "NovelChapter.getNovelChaptersByUrl";
 
     /** URL */
     private String url;

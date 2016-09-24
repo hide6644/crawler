@@ -32,7 +32,7 @@ public class NovelManagerUtil {
 
     /**
      * 文字列からURLオブジェクトを生成する.
-     * 
+     *
      * @param url
      *            小説のURL
      * @return URLオブジェクト
@@ -48,7 +48,7 @@ public class NovelManagerUtil {
 
     /**
      * 小説のhtml要素を取得する.
-     * 
+     *
      * @param url
      *            URLオブジェクト
      * @return 小説のhtml要素
@@ -118,43 +118,44 @@ public class NovelManagerUtil {
      *
      * @param element
      *            html element要素
-     * @param htmlHistory
+     * @param novelHistoryBodyHtml
      *            小説の更新履歴の本文
      * @return true:更新有り、false:更新無し
      */
-    static boolean hasUpdatedChapter(final Element element, final Source htmlHistory) {
+    static boolean hasUpdatedChapter(final Element element, final Source novelHistoryBodyHtml) {
         String subtitle = NovelElementsUtil.getChapterTitleByNovelBody(element, NovelElementsUtil.ContensType.SUBTITLE);
         String chapterUpdateDate = NovelElementsUtil.getChapterModifiedDate(element, false);
 
         // 過去のコンテンツ
-        for (Element chapterHistory : htmlHistory.getAllElements("tr")) {
+        for (Element chapterHistory : novelHistoryBodyHtml.getAllElements("tr")) {
             if (chapterHistory.getAllElementsByClass("period_subtitle").size() > 0) {
                 if (isDifferentSubtitle(subtitle, chapterUpdateDate, chapterHistory, NovelElementsUtil.ContensType.PERIOD_SUBTITLE)) {
-                    // 変更なし
+                    // 更新なし
                     return false;
                 }
             } else if (chapterHistory.getAllElementsByClass("long_subtitle").size() > 0) {
                 if (isDifferentSubtitle(subtitle, chapterUpdateDate, chapterHistory, NovelElementsUtil.ContensType.LONG_SUBTITLE)) {
-                    // 変更なし
+                    // 更新なし
                     return false;
                 }
             }
         }
 
         // 現在のコンテンツ
-        for (Element chapterHistory : htmlHistory.getAllElements("dl")) {
+        for (Element chapterHistory : novelHistoryBodyHtml.getAllElements("dl")) {
             if (isDifferentSubtitle(subtitle, chapterUpdateDate, chapterHistory, NovelElementsUtil.ContensType.SUBTITLE)) {
-                // 変更なし
+                // 更新なし
                 return false;
             }
         }
 
+        // 更新あり
         return true;
     }
 
     /**
      * 小説の章の情報に差異があるか.
-     * 
+     *
      * @param subtitle
      *            小説の章のタイトル
      * @param chapterUpdateDate
