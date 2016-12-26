@@ -37,7 +37,7 @@ public class NovelManagerUtil {
      *            小説のURL
      * @return URLオブジェクト
      */
-    static URL getUrl(final String url) {
+    public static URL getUrl(final String url) {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
@@ -53,7 +53,7 @@ public class NovelManagerUtil {
      *            URLオブジェクト
      * @return 小説のhtml要素
      */
-    static Source getSource(final URL url) {
+    public static Source getSource(final URL url) {
         // ネットワーク負荷低減のため、1秒間隔で取得
         delayAccess();
 
@@ -73,7 +73,7 @@ public class NovelManagerUtil {
     /**
      * 1秒間実行を停止する.
      */
-    static void delayAccess() {
+    public static void delayAccess() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -87,7 +87,7 @@ public class NovelManagerUtil {
      *            小説の情報
      * @return true:確認必要、false:確認不要
      */
-    static boolean isConfirmedNovel(final Novel novel) {
+    public static boolean isConfirmedNovel(final Novel novel) {
         if (novel.getNovelInfo().isFinished()) {
             if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(DateTime.now().minusDays(45))) {
                 log.info("[skip] finished title:" + novel.getTitle());
@@ -122,7 +122,7 @@ public class NovelManagerUtil {
      *            小説の更新履歴の本文
      * @return true:更新有り、false:更新無し
      */
-    static boolean hasUpdatedChapter(final Element element, final Source novelHistoryBodyHtml) {
+    public static boolean hasUpdatedChapter(final Element element, final Source novelHistoryBodyHtml) {
         String subtitle = NovelElementsUtil.getChapterTitleByNovelBody(element, NovelElementsUtil.ContensType.SUBTITLE);
         String chapterUpdateDate = NovelElementsUtil.getChapterModifiedDate(element, false);
 
@@ -166,7 +166,7 @@ public class NovelManagerUtil {
      *            html要素の種類
      * @return true:小説の章のHTML要素が一致、false:小説の章のHTML要素が不一致
      */
-    static boolean isDifferentSubtitle(String subtitle, String chapterUpdateDate, Element chapterHistory, ContensType type) {
+    public static boolean isDifferentSubtitle(String subtitle, String chapterUpdateDate, Element chapterHistory, ContensType type) {
         String subtitleHistory = NovelElementsUtil.getChapterTitleByNovelBody(chapterHistory, type);
         String chapterUpdateDateHistory = NovelElementsUtil.getChapterModifiedDate(chapterHistory, false);
 

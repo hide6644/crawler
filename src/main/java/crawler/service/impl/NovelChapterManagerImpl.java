@@ -31,57 +31,6 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
 
     /* (非 Javadoc)
      *
-     * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, crawler.domain.Novel)
-     */
-    @Override
-    public void saveNovelChapter(final Source novelBodyHtml, final Novel novel) {
-        URL url = NovelManagerUtil.getUrl(novel.getUrl());
-
-        for (Element chapterElement : novelBodyHtml.getAllElements("dl")) {
-            String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
-
-            // URLからhtmlを取得
-            Source chapterHtml = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(chapterUrl));
-
-            if (NovelElementsUtil.existsChapter(chapterHtml)) {
-                // コンテンツが存在する場合
-                // 小説の章の情報を作成
-                NovelChapter novelChapter = createNovelChapter(chapterUrl, chapterHtml);
-
-                // 小説の章の付随情報を作成
-                NovelChapterInfo novelChapterInfo = novelChapterInfoManager.saveNovelChapterInfo(chapterElement, novelChapter);
-
-                novelChapterInfo.setNovelChapter(novelChapter);
-                novelChapter.setNovelChapterInfo(novelChapterInfo);
-
-                novelChapter.setNovel(novel);
-                novel.addNovelChapter(novelChapter);
-
-                log.info("[add] chapterTitle:" + novelChapter.getTitle());
-            }
-        }
-    }
-
-    /**
-     * 小説の章の情報を作成する.
-     *
-     * @param url
-     *            小説の章のURL
-     * @param html
-     *            小説の章のhtml要素
-     * @return 小説の章の情報
-     */
-    private NovelChapter createNovelChapter(final String url, final Source html) {
-        NovelChapter novelChapter = new NovelChapter();
-        novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
-        novelChapter.setUrl(url);
-        novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
-
-        return novelChapter;
-    }
-
-    /* (非 Javadoc)
-     *
      * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, net.htmlparser.jericho.Source, crawler.domain.Novel)
      */
     @Override
@@ -89,7 +38,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
         URL url = NovelManagerUtil.getUrl(savedNovel.getUrl());
 
         for (Element chapterElement : novelBodyHtml.getAllElements("dl")) {
-            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelHistoryBodyHtml)) {
+            if (novelHistoryBodyHtml == null || (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelHistoryBodyHtml))) {
                 // 小説の章の情報に差異がある場合
                 String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
 
@@ -105,7 +54,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                     NovelChapter savedNovelChapter = novelChapterDao.getNovelChaptersByUrl(chapterUrl);
 
                     if (savedNovelChapter != null) {
-                        // 一致するURLがある場合、更新処理
+                        // URLが一致する小説の章がある場合、更新処理
                         savedNovelChapter.setUpdateDate(new Date());
 
                         NovelChapterHistory novelChapterHistory = createNovelChapterHistory(savedNovelChapter, currentNovelChapter);
@@ -133,6 +82,24 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                 }
             }
         }
+    }
+
+    /**
+     * 小説の章の情報を作成する.
+     *
+     * @param url
+     *            小説の章のURL
+     * @param html
+     *            小説の章のhtml要素
+     * @return 小説の章の情報
+     */
+    private NovelChapter createNovelChapter(final String url, final Source html) {
+        NovelChapter novelChapter = new NovelChapter();
+        novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
+        novelChapter.setUrl(url);
+        novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
+
+        return novelChapter;
     }
 
     /**

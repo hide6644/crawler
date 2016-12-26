@@ -14,16 +14,6 @@ public interface NovelChapterManager extends GenericManager<NovelChapter, Long> 
      *
      * @param novelBodyHtml
      *            小説の本文のhtml要素
-     * @param novel
-     *            小説の情報
-     */
-    public void saveNovelChapter(Source novelBodyHtml, Novel novel);
-
-    /**
-     * 小説の章を設定する(更新).
-     *
-     * @param novelBodyHtml
-     *            小説の本文のhtml要素
      * @param novelHistoryBodyHtml
      *            小説の更新履歴の本文のhtml要素
      * @param savedNovel

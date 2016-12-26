@@ -76,7 +76,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             novel.setNovelInfo(novelInfo);
 
             // 小説の章作成
-            novelChapterManager.saveNovelChapter(html, novel);
+            novelChapterManager.saveNovelChapter(html, null, novel);
 
             log.info("[add] title:" + novel.getTitle());
             save(novel);
