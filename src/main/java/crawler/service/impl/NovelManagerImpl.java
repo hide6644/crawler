@@ -1,36 +1,22 @@
 package crawler.service.impl;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import crawler.Constants;
 import crawler.dao.NovelDao;
 import crawler.domain.Novel;
-import crawler.domain.NovelChapter;
-import crawler.domain.NovelHistory;
-import crawler.domain.NovelInfo;
-import crawler.service.MailEngine;
+import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 import crawler.service.NovelManager;
-import freemarker.template.Configuration;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
-import net.htmlparser.jericho.Source;
+import crawler.service.mail.NovelReportMail;
+import crawler.util.NovelManagerUtil;
 
 /**
  * 小説の情報を管理する.
@@ -49,9 +35,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Autowired
     private NovelChapterManager novelChapterManager;
 
-    /** メールを作成するクラス */
+    /** Reportメール処理クラス */
     @Autowired
-    private MailEngine mailEngine;
+    private NovelReportMail reportMail;
 
     /*
      * (非 Javadoc)
@@ -61,47 +47,18 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void add(final String url) {
-        // URLからhtmlを取得
-        Source html = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(url));
+        // 小説の情報を取得
+        NovelSource novelSource = new NovelSource(url);
+        novelSource.mapping();
 
-        if (html != null) {
-            // 小説の情報作成
-            Novel novel = createNovel(url, html);
+        // 小説の付随情報を取得
+        novelInfoManager.saveNovelInfo(novelSource);
+        log.info("[add] title:" + novelSource.getNovel().getTitle());
 
-            // 小説の付随情報作成
-            NovelInfo novelInfo = new NovelInfo();
-            novelInfo.setCheckedDate(new Date());
-            novelInfoManager.saveNovelInfo(html, novelInfo);
-            novelInfo.setNovel(novel);
-            novel.setNovelInfo(novelInfo);
+        // 小説の章を取得
+        novelChapterManager.saveNovelChapter(novelSource);
 
-            // 小説の章作成
-            novelChapterManager.saveNovelChapter(html, null, novel);
-
-            log.info("[add] title:" + novel.getTitle());
-            save(novel);
-        }
-    }
-
-    /**
-     * 小説の情報を作成する.
-     *
-     * @param url
-     *            小説のURL
-     * @param html
-     *            小説のhtml要素
-     * @return 小説の情報
-     */
-    private Novel createNovel(final String url, final Source html) {
-        Novel novel = new Novel();
-        novel.setTitle(NovelElementsUtil.getTitle(html));
-        novel.setWritername(NovelElementsUtil.getWritername(html));
-        novel.setDescription(NovelElementsUtil.getDescription(html));
-        novel.setBody(NovelElementsUtil.getBody(html));
-        novel.setUrl(url);
-        novel.setDeleted(false);
-
-        return novel;
+        save(novelSource.getNovel());
     }
 
     /*
@@ -112,16 +69,11 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
-        List<Long> checkTargetNovels = new ArrayList<Long>();
-
-        for (Novel savedNovel : novelDao.getNovelsByCheckedDate(new DateTime().withTimeAtStartOfDay().toDate())) {
-            // 更新頻度から確認対象を絞り込む
-            if (NovelManagerUtil.isConfirmedNovel(savedNovel)) {
-                checkTargetNovels.add(savedNovel.getId());
-            }
-        }
-
-        return checkTargetNovels;
+        // 更新頻度から確認対象を絞り込む
+        return novelDao.getNovelsByCheckedDate(new DateTime().withTimeAtStartOfDay().toDate()).stream()
+                .filter(savedNovel -> NovelManagerUtil.isConfirmedNovel(savedNovel))
+                .map(savedNovel -> savedNovel.getId())
+                .collect(Collectors.toList());
     }
 
     /*
@@ -131,87 +83,37 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      */
     @Override
     @Transactional
-    public void checkForUpdatesAndSaveHistory(final Long savedNovelId) {
-        Novel savedNovel = novelDao.get(savedNovelId);
+    public void checkForUpdatesAndSaveHistory(final Long checkTargetId) {
+        Novel savedNovel = novelDao.get(checkTargetId);
+        NovelSource currentNovelSource = null;
+        log.info("[check] title:" + savedNovel.getTitle());
 
-        // URLからhtmlを取得
-        Source html = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(savedNovel.getUrl()));
-
-        if (html == null) {
+        try {
+            currentNovelSource = new NovelSource(savedNovel.getUrl());
+        } catch (NullPointerException e) {
+            // ページが取得出来ない場合
+            // 削除フラグを設定
             savedNovel.setDeleted(true);
             savedNovel.setUpdateDate(new Date());
             return;
         }
 
-        Novel currentNovel = createNovel(savedNovel.getUrl(), html);
+        currentNovelSource.setNovel(savedNovel);
+        currentNovelSource.mapping();
 
-        log.info("[check] title:" + currentNovel.getTitle());
-        NovelHistory novelHistory = createNovelHistory(savedNovel, currentNovel);
+        if (currentNovelSource.getNovelHistory() != null) {
+            // 小説の情報に差異があった場合
+            // 小説の付随情報を取得
+            novelInfoManager.saveNovelInfo(currentNovelSource);
 
-        if (novelHistory != null) {
-            // 差異がある場合
-            novelInfoManager.saveNovelInfo(html, savedNovel.getNovelInfo());
-
-            novelHistory.setNovel(savedNovel);
-            savedNovel.addNovelHistory(novelHistory);
-        }
-
-        savedNovel.getNovelInfo().setCheckedDate(new Date());
-        savedNovel.getNovelInfo().setUpdateDate(new Date());
-        savedNovel.setUpdateDate(new Date());
-
-        save(savedNovel);
-    }
-
-    /**
-     * 小説の更新履歴を作成する.
-     *
-     * @param savedNovel
-     *            保存済みの小説の情報
-     * @param currentNovel
-     *            現在の小説の情報
-     * @return 小説の更新履歴
-     */
-    private NovelHistory createNovelHistory(final Novel savedNovel, final Novel currentNovel) {
-        NovelHistory novelHistory = null;
-
-        if (!savedNovel.getTitle().equals(currentNovel.getTitle())) {
-            if (novelHistory == null) {
-                novelHistory = new NovelHistory();
+            if (currentNovelSource.getNovelHistory().getBody() != null) {
+                // 小説の本文に差異があった場合
+                // 小説の章を取得
+                novelChapterManager.saveNovelChapter(currentNovelSource);
             }
-            // タイトルに差異がある場合
-            novelHistory.setTitle(savedNovel.getTitle());
-            savedNovel.setTitle(currentNovel.getTitle());
-        }
-        if (!savedNovel.getWritername().equals(currentNovel.getWritername())) {
-            if (novelHistory == null) {
-                novelHistory = new NovelHistory();
-            }
-            // 作者名に差異がある場合
-            novelHistory.setWritername(savedNovel.getWritername());
-            savedNovel.setWritername(currentNovel.getWritername());
-        }
-        if (!savedNovel.getDescription().equals(currentNovel.getDescription())) {
-            if (novelHistory == null) {
-                novelHistory = new NovelHistory();
-            }
-            // 解説に差異がある場合
-            novelHistory.setDescription(savedNovel.getDescription());
-            savedNovel.setDescription(currentNovel.getDescription());
-        }
-        if (!savedNovel.getBody().equals(currentNovel.getBody())) {
-            if (novelHistory == null) {
-                novelHistory = new NovelHistory();
-            }
-            // 本文に差異がある場合
-            novelHistory.setBody(savedNovel.getBody());
-            savedNovel.setBody(currentNovel.getBody());
 
-            // 小説の章を取得
-            novelChapterManager.saveNovelChapter(new Source(currentNovel.getBody()), new Source(novelHistory.getBody()), savedNovel);
+            save(currentNovelSource.getNovel());
         }
-
-        return novelHistory;
     }
 
     /*
@@ -241,62 +143,21 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         }
 
         try {
-            mailEngine.sendReportMail(createReport(unreadNovels));
-        } catch (Exception e) {
-            log.error("[error] send mail:", e);
-        }
-    }
+            // メール送信
+            reportMail.sendUnreadNovelsReport(unreadNovels);
 
-    /**
-     * 未読小説の一覧のファイルを作成する.
-     *
-     * @param unreadNovels
-     *            未読小説の一覧
-     * @return ファイルパス
-     */
-    private String createReport(final List<Novel> unreadNovels) {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
-        cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("unreadNovels", unreadNovels);
-
-        String filePath = Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + new DateTime().minusDays(1).toString("yyyy-MM-dd") + ".html";
-        PrintWriter pw = null;
-
-        try {
-            File file = new File(filePath);
-            File dir = file.getParentFile();
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-
-            // テンプレートとマージ
-            cfg.getTemplate("report.ftl").process(root, pw);
-
-            for (Novel unreadNovel : unreadNovels) {
-                for (NovelChapter unreadNovelChapter : unreadNovel.getNovelChapters()) {
+            unreadNovels.forEach(unreadNovel -> {
+                unreadNovel.getNovelChapters().forEach(unreadNovelChapter -> {
                     unreadNovelChapter.getNovelChapterInfo().setUnread(false);
                     unreadNovelChapter.getNovelChapterInfo().setReadDate(unreadNovelChapter.getNovelChapterInfo().getModifiedDate());
                     unreadNovelChapter.getNovelChapterInfo().setUpdateDate(new Date());
-                }
+                });
 
                 save(unreadNovel);
-            }
-        } catch (IOException e) {
-            log.error("[error] report:", e);
-        } catch (TemplateException e) {
-            log.error("[error] report:", e);
-        } finally {
-            IOUtils.closeQuietly(pw);
+            });
+        } catch (Exception e) {
+            log.error("[error] send mail:", e);
         }
-
-        return filePath;
     }
 
     /**

@@ -1,4 +1,4 @@
-package crawler.service.impl;
+package crawler.util;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;

@@ -1,20 +1,19 @@
 package crawler.service.impl;
 
 import java.net.URL;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
-import crawler.domain.Novel;
 import crawler.domain.NovelChapter;
-import crawler.domain.NovelChapterHistory;
-import crawler.domain.NovelChapterInfo;
+import crawler.domain.source.NovelChapterSource;
+import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
+import crawler.util.NovelElementsUtil;
+import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Element;
-import net.htmlparser.jericho.Source;
 
 /**
  * 小説の章を管理する.
@@ -29,101 +28,50 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     @Autowired
     private NovelChapterInfoManager novelChapterInfoManager;
 
-    /* (非 Javadoc)
+    /*
+     * (非 Javadoc)
      *
-     * @see crawler.service.NovelChapterManager#saveNovelChapter(net.htmlparser.jericho.Source, net.htmlparser.jericho.Source, crawler.domain.Novel)
+     * @see crawler.service.NovelChapterManager#saveNovelChapter(crawler.domain.source.NovelSource)
      */
     @Override
-    public void saveNovelChapter(final Source novelBodyHtml, final Source novelHistoryBodyHtml, final Novel savedNovel) {
-        URL url = NovelManagerUtil.getUrl(savedNovel.getUrl());
+    public void saveNovelChapter(final NovelSource novelSource) {
+        URL url = NovelManagerUtil.getUrl(novelSource.getUrl());
 
-        for (Element chapterElement : novelBodyHtml.getAllElements("dl")) {
-            if (novelHistoryBodyHtml == null || (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelHistoryBodyHtml))) {
+        for (Element chapterElement : novelSource.getChapterElementList()) {
+            // 小説の本文に含まれる章の数だけ繰り返す
+            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelSource.getNovelHistory())) {
                 // 小説の章の情報に差異がある場合
                 String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
+                NovelChapterSource novelChapterSource = null;
 
-                // URLからhtmlを取得
-                Source chapterHtml = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(chapterUrl));
+                try {
+                    novelChapterSource = new NovelChapterSource(chapterUrl);
+                } catch (NullPointerException e) {
+                    // ページが取得出来ない場合
+                    continue;
+                }
 
-                if (NovelElementsUtil.existsChapter(chapterHtml)) {
-                    // コンテンツが存在する場合
-                    // 小説の章の情報を作成
-                    NovelChapter currentNovelChapter = createNovelChapter(chapterUrl, chapterHtml);
+                // URLが一致する小説の章を取得
+                NovelChapter savedNovelChapter = novelChapterDao.getNovelChaptersByUrl(chapterUrl);
+                novelChapterSource.setNovelChapter(savedNovelChapter);
+                novelChapterSource.mapping();
 
-                    // URLが一致する小説の章を履歴から取得
-                    NovelChapter savedNovelChapter = novelChapterDao.getNovelChaptersByUrl(chapterUrl);
+                // 小説の章の付随情報を取得
+                novelChapterInfoManager.saveNovelChapterInfo(chapterElement, novelChapterSource);
 
-                    if (savedNovelChapter != null) {
-                        // URLが一致する小説の章がある場合、更新処理
-                        savedNovelChapter.setUpdateDate(new Date());
+                if (savedNovelChapter == null) {
+                    // URLが一致する小説の章がない場合
+                    // 登録処理
+                    novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
+                    novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
 
-                        NovelChapterHistory novelChapterHistory = createNovelChapterHistory(savedNovelChapter, currentNovelChapter);
-
-                        novelChapterHistory.setNovelChapter(savedNovelChapter);
-                        savedNovelChapter.addNovelChapterHistory(novelChapterHistory);
-
-                        // 小説の章の付随情報を更新
-                        novelChapterInfoManager.saveNovelChapterInfo(chapterElement, savedNovelChapter);
-
-                        log.info("[update] chapter title:" + savedNovelChapter.getTitle());
-                    } else {
-                        // 登録処理
-                        currentNovelChapter.setNovel(savedNovel);
-                        savedNovel.addNovelChapter(currentNovelChapter);
-
-                        // 小説の章の付随情報を作成
-                        NovelChapterInfo novelChapterInfo = novelChapterInfoManager.saveNovelChapterInfo(chapterElement, currentNovelChapter);
-
-                        novelChapterInfo.setNovelChapter(currentNovelChapter);
-                        currentNovelChapter.setNovelChapterInfo(novelChapterInfo);
-
-                        log.info("[add] chapter title:" + currentNovelChapter.getTitle());
-                    }
+                    log.info("[add] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                } else {
+                    // 更新処理
+                    log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
                 }
             }
         }
-    }
-
-    /**
-     * 小説の章の情報を作成する.
-     *
-     * @param url
-     *            小説の章のURL
-     * @param html
-     *            小説の章のhtml要素
-     * @return 小説の章の情報
-     */
-    private NovelChapter createNovelChapter(final String url, final Source html) {
-        NovelChapter novelChapter = new NovelChapter();
-        novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
-        novelChapter.setUrl(url);
-        novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
-
-        return novelChapter;
-    }
-
-    /**
-     * 小説の章の更新履歴を作成する.
-     *
-     * @param savedNovelChapter
-     *            保存済みの小説の章の情報
-     * @param currentNovelChapter
-     *            現在の小説の章の情報
-     * @return 小説の章の更新履歴
-     */
-    private NovelChapterHistory createNovelChapterHistory(final NovelChapter savedNovelChapter, final NovelChapter currentNovelChapter) {
-        NovelChapterHistory novelChapterHistory = new NovelChapterHistory();
-
-        if (!savedNovelChapter.getTitle().equals(currentNovelChapter.getTitle())) {
-            // タイトルに差異がある場合
-            novelChapterHistory.setTitle(savedNovelChapter.getTitle());
-            savedNovelChapter.setTitle(currentNovelChapter.getTitle());
-        }
-
-        novelChapterHistory.setBody(savedNovelChapter.getBody());
-        savedNovelChapter.setBody(currentNovelChapter.getBody());
-
-        return novelChapterHistory;
     }
 
     /**

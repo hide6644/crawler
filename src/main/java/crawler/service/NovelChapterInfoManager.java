@@ -1,7 +1,7 @@
 package crawler.service;
 
-import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterInfo;
+import crawler.domain.source.NovelChapterSource;
 import net.htmlparser.jericho.Element;
 
 /**
@@ -14,9 +14,8 @@ public interface NovelChapterInfoManager extends GenericManager<NovelChapterInfo
      *
      * @param chapterElement
      *            小説の本文のhtml element要素
-     * @param novelChapter
+     * @param novelChapterSource
      *            小説の章の情報
-     * @return 小説の章の付随情報
      */
-    public NovelChapterInfo saveNovelChapterInfo(Element chapterElement, NovelChapter novelChapter);
+    public void saveNovelChapterInfo(Element chapterElement, NovelChapterSource novelChapterSource);
 }
