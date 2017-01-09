@@ -51,6 +51,13 @@
 	<classpathentry kind="lib" path="target/lib/mockito-core-1.10.19.jar"/>
 	<classpathentry kind="lib" path="target/lib/mysql-connector-java-5.1.39.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.1.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-api-mockito-1.6.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-api-mockito-common-1.6.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-api-support-1.6.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-core-1.6.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-module-junit4-1.6.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-module-junit4-common-1.6.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/powermock-reflect-1.6.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.21.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aop-4.3.3.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aspects-4.3.3.RELEASE.jar"/>

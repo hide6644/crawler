@@ -93,8 +93,10 @@ public class NovelSource {
                 novelHistory.setBody(novel.getBody());
             }
 
-            novelHistory.setNovel(novel);
-            novel.addNovelHistory(novelHistory);
+            if (novelHistory != null) {
+                novelHistory.setNovel(novel);
+                novel.addNovelHistory(novelHistory);
+            }
         }
 
         // 小説の情報を取得
