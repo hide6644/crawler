@@ -31,7 +31,7 @@ import freemarker.template.TemplateExceptionHandler;
 public class NovelReportMail {
 
     /** ログ出力クラス */
-    private final Logger log = LogManager.getLogger(getClass());
+    private Logger log = LogManager.getLogger(getClass());
 
     /** メールを処理するクラス */
     @Autowired(required = false)

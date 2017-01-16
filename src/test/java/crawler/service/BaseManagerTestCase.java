@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 @ContextConfiguration(locations = { "classpath:/crawler/dao/applicationContext.xml" })
 public abstract class BaseManagerTestCase extends AbstractTransactionalJUnit4SpringContextTests {
 
-    protected final transient Logger log = LogManager.getLogger(getClass());
+    protected transient Logger log = LogManager.getLogger(getClass());
 
     protected ResourceBundle rb;
 
