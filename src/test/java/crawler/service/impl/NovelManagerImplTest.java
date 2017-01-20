@@ -44,7 +44,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
     @Test
     public void testGetCheckTargetId() throws Exception {
-        File file = new File("F:/Work/crawler/n7767dn/20160924/ニューゲームにチートはいらない！.html");
+        File file = new File("./test.html");
         NovelSource novelSource = new NovelSource("http://www.foo.bar/test.html", new Source(file));
 
         {

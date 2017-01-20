@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -139,26 +139,26 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams) {
-        Query namedQuery = entityManager.createNamedQuery(queryName);
+        TypedQuery<T> namedQuery = entityManager.createNamedQuery(queryName, persistentClass);
 
         if (queryParams != null) {
-            for (String s : queryParams.keySet()) {
-                namedQuery.setParameter(s, queryParams.get(s));
-            }
+            queryParams.forEach((key, val) -> {
+                namedQuery.setParameter(key, val);
+            });
         }
 
         return namedQuery.getResultList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public List<T> search(String searchTerm) throws SearchException {
-        org.apache.lucene.search.Query qry = HibernateSearchJpaTools.generateQuery(searchTerm, persistentClass, entityManager, defaultAnalyzer);
-
-        return Search.getFullTextEntityManager(entityManager).createFullTextQuery(qry, persistentClass).getResultList();
+        return Search.getFullTextEntityManager(entityManager).createFullTextQuery(HibernateSearchJpaTools.generateQuery(searchTerm, persistentClass, entityManager, defaultAnalyzer), persistentClass).getResultList();
     }
 
     /**
