@@ -16,7 +16,7 @@ import crawler.service.GenericManager;
 public class GenericManagerImpl<T, PK extends Serializable> implements GenericManager<T, PK> {
 
     /** ログ出力クラス */
-    protected final Logger log = LogManager.getLogger(getClass());
+    protected Logger log = LogManager.getLogger(getClass());
 
     /** 一般的なCRUD DAOのインターフェース */
     protected GenericDao<T, PK> dao;

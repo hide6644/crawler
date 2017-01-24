@@ -1,15 +1,12 @@
 package crawler.service.impl;
 
-import net.htmlparser.jericho.Element;
-
-import java.util.Date;
-
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
-import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterInfo;
+import crawler.domain.source.NovelChapterInfoElement;
+import crawler.domain.source.NovelChapterSource;
 import crawler.service.NovelChapterInfoManager;
+import net.htmlparser.jericho.Element;
 
 /**
  * 小説の章の付随情報を管理する.
@@ -17,24 +14,18 @@ import crawler.service.NovelChapterInfoManager;
 @Service("novelChapterInfoManager")
 public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapterInfo, Long> implements NovelChapterInfoManager {
 
-    /* (非 Javadoc)
+    /*
+     * (非 Javadoc)
      *
-     * @see crawler.service.NovelChapterInfoManager#saveNovelChapterInfo(net.htmlparser.jericho.Element, crawler.domain.NovelChapter)
+     * @see crawler.service.NovelChapterInfoManager#saveNovelChapterInfo(net.htmlparser.jericho.Element, crawler.domain.source.NovelChapterSource)
      */
     @Override
-    public NovelChapterInfo saveNovelChapterInfo(final Element chapterElement, final NovelChapter novelChapter) {
-        NovelChapterInfo novelChapterInfo = novelChapter.getNovelChapterInfo();
+    public void saveNovelChapterInfo(final Element chapterElement, final NovelChapterSource novelChapterSource) {
+        NovelChapterInfoElement novelChapterInfoElement = new NovelChapterInfoElement(chapterElement);
+        novelChapterInfoElement.setNovelChapterInfo(novelChapterSource.getNovelChapter().getNovelChapterInfo());
+        novelChapterInfoElement.mapping();
 
-        if (novelChapterInfo == null) {
-            novelChapterInfo = new NovelChapterInfo();
-        } else {
-            novelChapterInfo.setUpdateDate(new Date());
-        }
-
-        novelChapterInfo.setCheckedDate(new Date());
-        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日").parseDateTime(NovelElementsUtil.getChapterModifiedDate(chapterElement, true).replaceAll(" 改稿", "")).toDate());
-        novelChapterInfo.setUnread(true);
-
-        return novelChapterInfo;
+        novelChapterInfoElement.getNovelChapterInfo().setNovelChapter(novelChapterSource.getNovelChapter());
+        novelChapterSource.getNovelChapter().setNovelChapterInfo(novelChapterInfoElement.getNovelChapterInfo());
     }
 }

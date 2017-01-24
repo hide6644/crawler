@@ -14,7 +14,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 public abstract class BaseBatchProcess {
 
     /** ログ出力クラス */
-    protected final Logger log = LogManager.getLogger(getClass());
+    protected Logger log = LogManager.getLogger(getClass());
 
     /** メッセージ取得クラス */
     protected MessageSourceAccessor messages;

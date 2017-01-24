@@ -98,7 +98,7 @@
 
     <!-- ========================== MAIL CONFIGURATION ========================= -->
 
-    <bean id="mailEngine" class="crawler.service.MailEngine">
+    <bean id="mailEngine" class="crawler.service.mail.MailEngine">
         <property name="mailSender" ref="mailSender" />
     </bean>
 

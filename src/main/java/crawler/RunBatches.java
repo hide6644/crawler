@@ -35,7 +35,7 @@ public class RunBatches {
                 ((BatchProcess) context.getBean("novelProcess")).execute(args);
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("[error] ", e);
         } finally {
             if (pmi != null) {
                 pmi.close();

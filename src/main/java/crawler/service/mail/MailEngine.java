@@ -1,4 +1,4 @@
-package crawler.service;
+package crawler.service.mail;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

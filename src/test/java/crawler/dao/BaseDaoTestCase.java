@@ -20,7 +20,7 @@ public abstract class BaseDaoTestCase extends AbstractTransactionalJUnit4SpringC
 
     public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
 
-    protected final transient Logger log = LogManager.getLogger(getClass());
+    protected transient Logger log = LogManager.getLogger(getClass());
 
     protected ResourceBundle rb;
 
