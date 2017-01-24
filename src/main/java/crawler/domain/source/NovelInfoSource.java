@@ -41,6 +41,7 @@ public class NovelInfoSource {
         if (novelInfo == null) {
             novelInfo = new NovelInfo();
         } else {
+            // 更新の場合
             novelInfo.setUpdateDate(new Date());
         }
 
