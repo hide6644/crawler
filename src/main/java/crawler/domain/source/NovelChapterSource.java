@@ -58,6 +58,7 @@ public class NovelChapterSource {
         if (novelChapter == null) {
             novelChapter = new NovelChapter();
         } else {
+            // 更新の場合、Historyを作成
             novelChapter.setUpdateDate(new Date());
 
             // 小説の章の更新履歴を作成

@@ -47,7 +47,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                 try {
                     novelChapterSource = new NovelChapterSource(chapterUrl);
                 } catch (NullPointerException e) {
-                    // ページが取得出来ない場合
+                    // ページが取得出来ない場合、何もしない
                     continue;
                 }
 
@@ -60,8 +60,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                 novelChapterInfoManager.saveNovelChapterInfo(chapterElement, novelChapterSource);
 
                 if (savedNovelChapter == null) {
-                    // URLが一致する小説の章がない場合
-                    // 登録処理
+                    // URLが一致する小説の章がない場合、登録処理
                     novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
                     novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
 

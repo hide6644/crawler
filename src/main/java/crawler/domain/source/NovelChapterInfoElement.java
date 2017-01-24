@@ -39,6 +39,7 @@ public class NovelChapterInfoElement {
         if (novelChapterInfo == null) {
             novelChapterInfo = new NovelChapterInfo();
         } else {
+            // 更新の場合
             novelChapterInfo.setUpdateDate(new Date());
         }
 

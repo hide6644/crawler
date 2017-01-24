@@ -61,6 +61,7 @@ public class NovelSource {
         if (novel == null) {
             novel = new Novel();
         } else {
+            // 更新の場合、Historyを作成
             novel.setUpdateDate(new Date());
 
             // 小説の更新履歴を作成
