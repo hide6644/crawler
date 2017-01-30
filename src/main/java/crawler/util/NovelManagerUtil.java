@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import crawler.domain.Novel;
-import crawler.domain.NovelHistory;
 import crawler.util.NovelElementsUtil.ContensType;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
@@ -117,40 +117,25 @@ public class NovelManagerUtil {
     /**
      * 小説の章の情報が更新されているか確認する.
      *
-     * @param element
-     *            html element要素
-     * @param novelHistoryBody
-     *            小説の更新履歴の本文
+     * @param chapterElement
+     *            小説の本文のelement要素
+     * @param chapterHistoryList
+     *            小説の本文の履歴の章のリスト
+     * @param type
+     *            html要素の種類
      * @return true:更新有り、false:更新無し
      */
-    public static boolean hasUpdatedChapter(final Element element, final NovelHistory novelHistory) {
-        if (novelHistory == null) {
+    public static boolean hasUpdatedChapter(final Element chapterElement, final List<Element> chapterHistoryList, final ContensType type) {
+        if (chapterHistoryList == null) {
             // Historyが無い場合、trueを返却
             return true;
         }
 
-        String subtitle = NovelElementsUtil.getChapterTitleByNovelBody(element, NovelElementsUtil.ContensType.SUBTITLE);
-        String chapterModifiedDate = NovelElementsUtil.getChapterModifiedDate(element, false);
-        Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
+        String subtitle = NovelElementsUtil.getChapterTitleByNovelBody(chapterElement, NovelElementsUtil.ContensType.SUBTITLE);
+        String chapterModifiedDate = NovelElementsUtil.getChapterModifiedDate(chapterElement, false);
 
-        // 過去のコンテンツ
-        for (Element chapterHistory : novelHistoryBodyHtml.getAllElements("tr")) {
-            if (chapterHistory.getAllElementsByClass("period_subtitle").size() > 0) {
-                if (isDifferentSubtitle(subtitle, chapterModifiedDate, chapterHistory, NovelElementsUtil.ContensType.PERIOD_SUBTITLE)) {
-                    // 更新なし
-                    return false;
-                }
-            } else if (chapterHistory.getAllElementsByClass("long_subtitle").size() > 0) {
-                if (isDifferentSubtitle(subtitle, chapterModifiedDate, chapterHistory, NovelElementsUtil.ContensType.LONG_SUBTITLE)) {
-                    // 更新なし
-                    return false;
-                }
-            }
-        }
-
-        // 現在のコンテンツ
-        for (Element chapterHistory : novelHistoryBodyHtml.getAllElements("dl")) {
-            if (isDifferentSubtitle(subtitle, chapterModifiedDate, chapterHistory, NovelElementsUtil.ContensType.SUBTITLE)) {
+        for (Element chapterHistory : chapterHistoryList) {
+            if (isDifferentSubtitle(subtitle, chapterModifiedDate, chapterHistory, type)) {
                 // 更新なし
                 return false;
             }
@@ -173,7 +158,7 @@ public class NovelManagerUtil {
      *            html要素の種類
      * @return true:小説の章のHTML要素が一致、false:小説の章のHTML要素が不一致
      */
-    public static boolean isDifferentSubtitle(String subtitle, String chapterModifiedDate, Element chapterHistory, ContensType type) {
+    public static boolean isDifferentSubtitle(final String subtitle, final String chapterModifiedDate, final Element chapterHistory, final ContensType type) {
         String subtitleHistory = NovelElementsUtil.getChapterTitleByNovelBody(chapterHistory, type);
         String chapterModifiedDateHistory = NovelElementsUtil.getChapterModifiedDate(chapterHistory, false);
 

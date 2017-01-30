@@ -6,6 +6,7 @@ import java.util.List;
 import crawler.domain.Novel;
 import crawler.domain.NovelHistory;
 import crawler.util.NovelElementsUtil;
+import crawler.util.NovelElementsUtil.ContensType;
 import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
@@ -116,6 +117,43 @@ public class NovelSource {
      */
     public List<Element> getChapterElementList() {
         return new Source(novel.getBody()).getAllElements("dl");
+    }
+
+    /**
+     * 小説の本文の履歴から小説の章のリストを取得する.
+     *
+     * @return 小説の章のリスト
+     */
+    public List<Element> getChapterHistoryElementList() {
+        List<Element> chapterHistoryList = null;
+
+        if (novelHistory != null) {
+            Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
+            chapterHistoryList = novelHistoryBodyHtml.getAllElements("dl");
+
+            if (chapterHistoryList.size() == 0) {
+                chapterHistoryList = novelHistoryBodyHtml.getAllElements("tr");
+            }
+        }
+
+        return chapterHistoryList;
+    }
+
+    /**
+     * 小説の本文から小説の章のhtml要素の種類を取得する.
+     *
+     * @return 小説の章のhtml要素の種類
+     */
+    public ContensType getChapterHistoryElementContensType() {
+        List<Element> chapterHistoryElementList = getChapterHistoryElementList();
+
+        if (chapterHistoryElementList.get(0).getAllElementsByClass("period_subtitle").size() > 0) {
+            return NovelElementsUtil.ContensType.PERIOD_SUBTITLE;
+        } else if (chapterHistoryElementList.get(0).getAllElementsByClass("long_subtitle").size() > 0) {
+            return NovelElementsUtil.ContensType.LONG_SUBTITLE;
+        } else {
+            return NovelElementsUtil.ContensType.SUBTITLE;
+        }
     }
 
     public String getUrl() {

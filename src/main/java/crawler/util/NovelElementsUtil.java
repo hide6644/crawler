@@ -18,7 +18,7 @@ public class NovelElementsUtil {
     /**
      * html要素の種類
      */
-    enum ContensType {
+    public enum ContensType {
         PERIOD_SUBTITLE, LONG_SUBTITLE, SUBTITLE
     };
 

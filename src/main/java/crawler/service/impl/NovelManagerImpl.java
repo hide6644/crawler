@@ -93,6 +93,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         } catch (NullPointerException e) {
             // ページが取得出来ない場合
             // 削除フラグを設定
+            log.info("[deleted] title:" + savedNovel.getTitle());
             savedNovel.setDeleted(true);
             savedNovel.setUpdateDate(new Date());
             return;

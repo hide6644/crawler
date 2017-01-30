@@ -1,6 +1,7 @@
 package crawler.service.impl;
 
 import java.net.URL;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
 import crawler.util.NovelElementsUtil;
+import crawler.util.NovelElementsUtil.ContensType;
 import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Element;
 
@@ -36,11 +38,14 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     @Override
     public void saveNovelChapter(final NovelSource novelSource) {
         URL url = NovelManagerUtil.getUrl(novelSource.getUrl());
+        // 小説の履歴から小説の章のElementリストを作成し、変数に代入
+        List<Element> chapterHistoryElementList = novelSource.getChapterHistoryElementList();
+        ContensType chapterHistoryElementContensType = novelSource.getChapterHistoryElementContensType();
 
         for (Element chapterElement : novelSource.getChapterElementList()) {
             // 小説の本文に含まれる章の数だけ繰り返す
-            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelSource.getNovelHistory())) {
-                // 小説の章の情報に差異がある場合
+            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, chapterHistoryElementList, chapterHistoryElementContensType)) {
+                // 小説の章の情報に差異がある場合、小説の章を取得
                 String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
                 NovelChapterSource novelChapterSource = null;
 
