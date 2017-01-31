@@ -8,14 +8,12 @@ import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
 import crawler.domain.NovelChapter;
+import crawler.domain.source.NovelBodyElement;
 import crawler.domain.source.NovelChapterSource;
 import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
-import crawler.util.NovelElementsUtil;
-import crawler.util.NovelElementsUtil.ContensType;
 import crawler.util.NovelManagerUtil;
-import net.htmlparser.jericho.Element;
 
 /**
  * 小説の章を管理する.
@@ -39,14 +37,13 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     public void saveNovelChapter(final NovelSource novelSource) {
         URL url = NovelManagerUtil.getUrl(novelSource.getUrl());
         // 小説の履歴から小説の章のElementリストを作成し、変数に代入
-        List<Element> chapterHistoryElementList = novelSource.getChapterHistoryElementList();
-        ContensType chapterHistoryElementContensType = novelSource.getChapterHistoryElementContensType();
+        List<NovelBodyElement> novelHistoryBodyElementList = novelSource.getChapterHistoryElementList();
 
-        for (Element chapterElement : novelSource.getChapterElementList()) {
+        for (NovelBodyElement novelBodyElement : novelSource.getChapterElementList()) {
             // 小説の本文に含まれる章の数だけ繰り返す
-            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, chapterHistoryElementList, chapterHistoryElementContensType)) {
+            if (NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementList)) {
                 // 小説の章の情報に差異がある場合、小説の章を取得
-                String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
+                String chapterUrl = "http://" + url.getHost() + novelBodyElement.getChapterUrl();
                 NovelChapterSource novelChapterSource = null;
 
                 try {
@@ -62,7 +59,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                 novelChapterSource.mapping();
 
                 // 小説の章の付随情報を取得
-                novelChapterInfoManager.saveNovelChapterInfo(chapterElement, novelChapterSource);
+                novelChapterInfoManager.saveNovelChapterInfo(novelBodyElement.getElement(), novelChapterSource);
 
                 if (savedNovelChapter == null) {
                     // URLが一致する小説の章がない場合、登録処理

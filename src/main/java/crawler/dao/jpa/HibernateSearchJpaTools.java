@@ -1,15 +1,17 @@
 package crawler.dao.jpa;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.persistence.EntityManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiFields;
@@ -61,7 +63,7 @@ class HibernateSearchJpaTools {
         IndexReader reader = null;
 
         try {
-            FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
+            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
             Analyzer analyzer = null;
 
             if (searchedEntity == null) {
@@ -73,21 +75,19 @@ class HibernateSearchJpaTools {
             SearchFactory searchFactory = fullTextEntityManager.getSearchFactory();
             readerAccessor = searchFactory.getIndexReaderAccessor();
             reader = readerAccessor.open(searchedEntity);
-            Collection<String> fieldNames = new HashSet<String>();
 
-            for (FieldInfo fieldInfo : MultiFields.getMergedFieldInfos(reader)) {
-                if (fieldInfo.getIndexOptions() != IndexOptions.NONE) {
-                    fieldNames.add(fieldInfo.name);
-                }
-            }
+            String[] fnames = StreamSupport.stream(
+                    Spliterators.spliteratorUnknownSize(
+                            MultiFields.getMergedFieldInfos(reader).iterator(), Spliterator.ORDERED),
+                    false)
+                    .filter(fieldInfo -> fieldInfo.getIndexOptions() != IndexOptions.NONE)
+                    .filter(fieldInfo -> !fieldInfo.name.equals("_hibernate_class"))
+                    .map(fieldInfo -> fieldInfo.name)
+                    .collect(Collectors.toSet())
+                    .toArray(new String[0]);
 
-            fieldNames.remove("_hibernate_class");
-            String[] fnames = fieldNames.toArray(new String[0]);
             String[] queries = new String[fnames.length];
-
-            for (int i = 0; i < queries.length; ++i) {
-                queries[i] = searchTerm;
-            }
+            Arrays.fill(queries, searchTerm);
 
             return MultiFieldQueryParser.parse(queries, fnames, analyzer);
         } catch (ParseException e) {

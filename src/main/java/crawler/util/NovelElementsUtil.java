@@ -16,13 +16,6 @@ public class NovelElementsUtil {
     }
 
     /**
-     * html要素の種類
-     */
-    public enum ContensType {
-        PERIOD_SUBTITLE, LONG_SUBTITLE, SUBTITLE
-    };
-
-    /**
      * 小説の章へのリンクが存在するか.
      *
      * @param element
@@ -115,20 +108,15 @@ public class NovelElementsUtil {
      *
      * @param element
      *            html element要素
-     * @param type
-     *            html要素の種類
      * @return 小説の章のタイトル
      */
-    public static String getChapterTitleByNovelBody(final Element element, final ContensType type) {
-        switch (type) {
-        case PERIOD_SUBTITLE:
+    public static String getChapterTitleByNovelBody(final Element element) {
+        if (element.getAllElementsByClass("period_subtitle").size() > 0) {
             return element.getAllElementsByClass("period_subtitle").get(0).getAllElements("a").get(0).toString();
-        case LONG_SUBTITLE:
+        } else if (element.getAllElementsByClass("long_subtitle").size() > 0) {
             return element.getAllElementsByClass("long_subtitle").get(0).getAllElements("a").get(0).toString();
-        case SUBTITLE:
+        } else {
             return element.getAllElementsByClass("subtitle").get(0).getAllElements("a").get(0).toString();
-        default:
-            throw new IllegalArgumentException();
         }
     }
 

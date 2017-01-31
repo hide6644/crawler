@@ -2,11 +2,11 @@ package crawler.domain.source;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import crawler.domain.Novel;
 import crawler.domain.NovelHistory;
 import crawler.util.NovelElementsUtil;
-import crawler.util.NovelElementsUtil.ContensType;
 import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
@@ -115,8 +115,10 @@ public class NovelSource {
      *
      * @return 小説の章のリスト
      */
-    public List<Element> getChapterElementList() {
-        return new Source(novel.getBody()).getAllElements("dl");
+    public List<NovelBodyElement> getChapterElementList() {
+        return new Source(novel.getBody()).getAllElements("dl").stream()
+                .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
+                .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toList());
     }
 
     /**
@@ -124,35 +126,22 @@ public class NovelSource {
      *
      * @return 小説の章のリスト
      */
-    public List<Element> getChapterHistoryElementList() {
-        List<Element> chapterHistoryList = null;
+    public List<NovelBodyElement> getChapterHistoryElementList() {
+        List<Element> chapterHistoryElementList = null;
 
         if (novelHistory != null) {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
-            chapterHistoryList = novelHistoryBodyHtml.getAllElements("dl");
+            chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
 
-            if (chapterHistoryList.size() == 0) {
-                chapterHistoryList = novelHistoryBodyHtml.getAllElements("tr");
+            if (chapterHistoryElementList.size() == 0) {
+                chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("tr");
             }
-        }
 
-        return chapterHistoryList;
-    }
-
-    /**
-     * 小説の本文から小説の章のhtml要素の種類を取得する.
-     *
-     * @return 小説の章のhtml要素の種類
-     */
-    public ContensType getChapterHistoryElementContensType() {
-        List<Element> chapterHistoryElementList = getChapterHistoryElementList();
-
-        if (chapterHistoryElementList.get(0).getAllElementsByClass("period_subtitle").size() > 0) {
-            return NovelElementsUtil.ContensType.PERIOD_SUBTITLE;
-        } else if (chapterHistoryElementList.get(0).getAllElementsByClass("long_subtitle").size() > 0) {
-            return NovelElementsUtil.ContensType.LONG_SUBTITLE;
+            return chapterHistoryElementList.stream()
+                    .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
+                    .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toList());
         } else {
-            return NovelElementsUtil.ContensType.SUBTITLE;
+            return null;
         }
     }
 

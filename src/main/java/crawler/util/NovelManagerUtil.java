@@ -12,8 +12,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import crawler.domain.Novel;
-import crawler.util.NovelElementsUtil.ContensType;
-import net.htmlparser.jericho.Element;
+import crawler.domain.source.NovelBodyElement;
 import net.htmlparser.jericho.Source;
 
 /**
@@ -117,25 +116,22 @@ public class NovelManagerUtil {
     /**
      * 小説の章の情報が更新されているか確認する.
      *
-     * @param chapterElement
+     * @param novelBodyElement
      *            小説の本文のelement要素
-     * @param chapterHistoryList
+     * @param novelHistoryBodyElementList
      *            小説の本文の履歴の章のリスト
-     * @param type
-     *            html要素の種類
      * @return true:更新有り、false:更新無し
      */
-    public static boolean hasUpdatedChapter(final Element chapterElement, final List<Element> chapterHistoryList, final ContensType type) {
-        if (chapterHistoryList == null) {
+    public static boolean hasUpdatedChapter(final NovelBodyElement novelBodyElement, final List<NovelBodyElement> novelHistoryBodyElementList) {
+        if (novelHistoryBodyElementList == null) {
             // Historyが無い場合、trueを返却
             return true;
         }
 
-        String subtitle = NovelElementsUtil.getChapterTitleByNovelBody(chapterElement, NovelElementsUtil.ContensType.SUBTITLE);
-        String chapterModifiedDate = NovelElementsUtil.getChapterModifiedDate(chapterElement, false);
-
-        for (Element chapterHistory : chapterHistoryList) {
-            if (isDifferentSubtitle(subtitle, chapterModifiedDate, chapterHistory, type)) {
+        for (NovelBodyElement novelHistoryBodyElement : novelHistoryBodyElementList) {
+            if (novelBodyElement.getChapterTitle().equals(novelHistoryBodyElement.getChapterTitle())
+                    && novelBodyElement.getChapterModifiedDate().equals(novelHistoryBodyElement.getChapterModifiedDate())) {
+                // 小説の章のHTML要素が一致する場合
                 // 更新なし
                 return false;
             }
@@ -143,30 +139,5 @@ public class NovelManagerUtil {
 
         // 更新あり
         return true;
-    }
-
-    /**
-     * 小説の章の情報に差異があるか.
-     *
-     * @param subtitle
-     *            小説の章のタイトル
-     * @param chapterModifiedDate
-     *            小説の章の更新日付
-     * @param chapterHistory
-     *            保存済みの小説の章のhtml element要素
-     * @param type
-     *            html要素の種類
-     * @return true:小説の章のHTML要素が一致、false:小説の章のHTML要素が不一致
-     */
-    public static boolean isDifferentSubtitle(final String subtitle, final String chapterModifiedDate, final Element chapterHistory, final ContensType type) {
-        String subtitleHistory = NovelElementsUtil.getChapterTitleByNovelBody(chapterHistory, type);
-        String chapterModifiedDateHistory = NovelElementsUtil.getChapterModifiedDate(chapterHistory, false);
-
-        if (subtitle.equals(subtitleHistory) && chapterModifiedDate.equals(chapterModifiedDateHistory)) {
-            // 小説の章のHTML要素が一致する場合
-            return true;
-        } else {
-            return false;
-        }
     }
 }
