@@ -116,28 +116,4 @@ public class NovelInfo extends BaseEntity implements Serializable {
     public void setNovel(Novel novel) {
         this.novel = novel;
     }
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    public final int hashCode() {
-        return hashCode(getId());
-    }
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public final boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (obj instanceof NovelInfo) {
-            return equals(getId(), ((NovelInfo) obj).getId());
-        } else {
-            return false;
-        }
-    }
 }

@@ -1,7 +1,7 @@
 package crawler.service.impl;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +36,12 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     @Override
     public void saveNovelChapter(final NovelSource novelSource) {
         URL url = NovelManagerUtil.getUrl(novelSource.getUrl());
-        // 小説の履歴から小説の章のElementリストを作成し、変数に代入
-        List<NovelBodyElement> novelHistoryBodyElementList = novelSource.getChapterHistoryElementList();
+        // 小説の履歴から小説の章のElementセットを作成し、変数に代入
+        Set<NovelBodyElement> novelHistoryBodyElementSet = novelSource.getChapterHistoryElementSet();
 
         for (NovelBodyElement novelBodyElement : novelSource.getChapterElementList()) {
             // 小説の本文に含まれる章の数だけ繰り返す
-            if (NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementList)) {
+            if (NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementSet)) {
                 // 小説の章の情報に差異がある場合、小説の章を取得
                 String chapterUrl = "http://" + url.getHost() + novelBodyElement.getChapterUrl();
                 NovelChapterSource novelChapterSource = null;
@@ -54,14 +54,13 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                 }
 
                 // URLが一致する小説の章を取得
-                NovelChapter savedNovelChapter = novelChapterDao.getNovelChaptersByUrl(chapterUrl);
-                novelChapterSource.setNovelChapter(savedNovelChapter);
+                novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(chapterUrl));
                 novelChapterSource.mapping();
 
                 // 小説の章の付随情報を取得
                 novelChapterInfoManager.saveNovelChapterInfo(novelBodyElement.getElement(), novelChapterSource);
 
-                if (savedNovelChapter == null) {
+                if (novelChapterSource.getNovelChapterHistory() == null) {
                     // URLが一致する小説の章がない場合、登録処理
                     novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
                     novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());

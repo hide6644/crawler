@@ -120,27 +120,33 @@ public class NovelChapter extends BaseEntity implements Serializable {
         this.novel = novel;
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    public final int hashCode() {
-        return hashCode(url);
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        return result;
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public final boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (obj instanceof NovelChapter) {
-            return equals(url, ((NovelChapter) obj).getUrl());
-        } else {
+        }
+        if (obj == null) {
             return false;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        NovelChapter other = (NovelChapter) obj;
+        if (url == null) {
+            if (other.url != null) {
+                return false;
+            }
+        } else if (!url.equals(other.url)) {
+            return false;
+        }
+        return true;
     }
 }

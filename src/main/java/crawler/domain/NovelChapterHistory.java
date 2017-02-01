@@ -52,28 +52,4 @@ public class NovelChapterHistory extends BaseEntity implements Serializable {
     public void setNovelChapter(NovelChapter novelChapter) {
         this.novelChapter = novelChapter;
     }
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    public final int hashCode() {
-        return hashCode(getId());
-    }
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public final boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (obj instanceof NovelChapterHistory) {
-            return equals(getId(), ((NovelChapterHistory) obj).getId());
-        } else {
-            return false;
-        }
-    }
 }

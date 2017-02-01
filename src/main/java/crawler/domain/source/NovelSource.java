@@ -2,6 +2,7 @@ package crawler.domain.source;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import crawler.domain.Novel;
@@ -122,24 +123,23 @@ public class NovelSource {
     }
 
     /**
-     * 小説の本文の履歴から小説の章のリストを取得する.
+     * 小説の本文の履歴から小説の章のセットを取得する.
      *
-     * @return 小説の章のリスト
+     * @return 小説の章のセット
      */
-    public List<NovelBodyElement> getChapterHistoryElementList() {
-        List<Element> chapterHistoryElementList = null;
-
+    public Set<NovelBodyElement> getChapterHistoryElementSet() {
         if (novelHistory != null) {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
-            chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
+            List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
 
             if (chapterHistoryElementList.size() == 0) {
+                // 古いスタイルの場合
                 chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("tr");
             }
 
             return chapterHistoryElementList.stream()
                     .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                    .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toList());
+                    .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toSet());
         } else {
             return null;
         }

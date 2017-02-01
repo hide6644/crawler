@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -118,26 +118,17 @@ public class NovelManagerUtil {
      *
      * @param novelBodyElement
      *            小説の本文のelement要素
-     * @param novelHistoryBodyElementList
-     *            小説の本文の履歴の章のリスト
+     * @param novelHistoryBodyElementSet
+     *            小説の本文の履歴の章のセット
      * @return true:更新有り、false:更新無し
      */
-    public static boolean hasUpdatedChapter(final NovelBodyElement novelBodyElement, final List<NovelBodyElement> novelHistoryBodyElementList) {
-        if (novelHistoryBodyElementList == null) {
-            // Historyが無い場合、trueを返却
+    public static boolean hasUpdatedChapter(final NovelBodyElement novelBodyElement, final Set<NovelBodyElement> novelHistoryBodyElementSet) {
+        if (novelHistoryBodyElementSet == null) {
+            // Historyが無い場合、true:更新有り
             return true;
         }
 
-        for (NovelBodyElement novelHistoryBodyElement : novelHistoryBodyElementList) {
-            if (novelBodyElement.getChapterTitle().equals(novelHistoryBodyElement.getChapterTitle())
-                    && novelBodyElement.getChapterModifiedDate().equals(novelHistoryBodyElement.getChapterModifiedDate())) {
-                // 小説の章のHTML要素が一致する場合
-                // 更新なし
-                return false;
-            }
-        }
-
-        // 更新あり
-        return true;
+        // 小説の章のHTML要素が一致しない場合、true:更新有り
+        return !novelHistoryBodyElementSet.contains(novelBodyElement);
     }
 }
