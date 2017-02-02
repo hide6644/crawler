@@ -1,6 +1,7 @@
 package crawler.service.impl;
 
 import java.io.File;
+import java.net.URL;
 
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
@@ -45,11 +46,12 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     @Test
     public void testGetCheckTargetId() throws Exception {
         File file = new File("./test.html");
-        NovelSource novelSource = new NovelSource("http://www.foo.bar/test.html", new Source(file));
+        URL url = new URL("http://www.foo.bar/test.html");
+        NovelSource novelSource = new NovelSource(url, new Source(file));
 
         {
             MockitoAnnotations.initMocks(this);
-            PowerMockito.whenNew(NovelSource.class).withArguments("http://www.foo.bar/test.html").thenReturn(novelSource);
+            PowerMockito.whenNew(NovelSource.class).withArguments(url).thenReturn(novelSource);
         }
 
         novelManager.add("http://www.foo.bar/test.html");

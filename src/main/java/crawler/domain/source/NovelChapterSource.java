@@ -1,5 +1,6 @@
 package crawler.domain.source;
 
+import java.net.URL;
 import java.util.Date;
 
 import crawler.domain.NovelChapter;
@@ -14,7 +15,7 @@ import net.htmlparser.jericho.Source;
 public class NovelChapterSource {
 
     /** 小説の章のURL */
-    private String url;
+    private URL url;
 
     /** 小説の章のhtml */
     private Source html;
@@ -32,7 +33,13 @@ public class NovelChapterSource {
      *            小説の章のURL
      */
     public NovelChapterSource(String url) {
-        this(url, NovelManagerUtil.getSource(NovelManagerUtil.getUrl(url)));
+        this.url = NovelManagerUtil.getUrl(url);
+        // URLからhtmlを取得
+        html = NovelManagerUtil.getSource(this.url);
+
+        if (html == null) {
+            throw new NullPointerException();
+        }
     }
 
     /**
@@ -43,7 +50,7 @@ public class NovelChapterSource {
      * @param html
      *            小説の章のhtml
      */
-    public NovelChapterSource(String url, Source html) {
+    public NovelChapterSource(URL url, Source html) {
         if (url == null || html == null || !NovelElementsUtil.existsChapter(html)) {
             throw new NullPointerException();
         }
@@ -79,15 +86,15 @@ public class NovelChapterSource {
 
         // 小説の章の情報を取得
         novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
-        novelChapter.setUrl(url);
+        novelChapter.setUrl(url.toString());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(URL url) {
         this.url = url;
     }
 

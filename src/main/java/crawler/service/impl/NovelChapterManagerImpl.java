@@ -1,6 +1,5 @@
 package crawler.service.impl;
 
-import java.net.URL;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
      */
     @Override
     public void saveNovelChapter(final NovelSource novelSource) {
-        URL url = NovelManagerUtil.getUrl(novelSource.getUrl());
+        String hostname = novelSource.getHostUrl();
         // 小説の履歴から小説の章のElementセットを作成し、変数に代入
         Set<NovelBodyElement> novelHistoryBodyElementSet = novelSource.getChapterHistoryElementSet();
 
@@ -43,18 +42,17 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
             // 小説の本文に含まれる章の数だけ繰り返す
             if (NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementSet)) {
                 // 小説の章の情報に差異がある場合、小説の章を取得
-                String chapterUrl = "http://" + url.getHost() + novelBodyElement.getChapterUrl();
                 NovelChapterSource novelChapterSource = null;
 
                 try {
-                    novelChapterSource = new NovelChapterSource(chapterUrl);
+                    novelChapterSource = new NovelChapterSource(hostname + novelBodyElement.getChapterUrl());
                 } catch (NullPointerException e) {
                     // ページが取得出来ない場合、何もしない
                     continue;
                 }
 
                 // URLが一致する小説の章を取得
-                novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(chapterUrl));
+                novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(novelChapterSource.getUrl().toString()));
                 novelChapterSource.mapping();
 
                 // 小説の章の付随情報を取得

@@ -1,5 +1,6 @@
 package crawler.domain.source;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ import net.htmlparser.jericho.Source;
 public class NovelSource {
 
     /** 小説のURL */
-    private String url;
+    private URL url;
 
     /** 小説のhtml */
     private Source html;
@@ -36,8 +37,13 @@ public class NovelSource {
      *            小説のURL
      */
     public NovelSource(String url) {
+        this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
-        this(url, NovelManagerUtil.getSource(NovelManagerUtil.getUrl(url)));
+        html = NovelManagerUtil.getSource(this.url);
+
+        if (html == null) {
+            throw new NullPointerException();
+        }
     }
 
     /**
@@ -48,7 +54,7 @@ public class NovelSource {
      * @param html
      *            小説のhtml
      */
-    public NovelSource(String url, Source html) {
+    public NovelSource(URL url, Source html) {
         if (url == null || html == null) {
             throw new NullPointerException();
         }
@@ -107,7 +113,7 @@ public class NovelSource {
         novel.setWritername(NovelElementsUtil.getWritername(html));
         novel.setDescription(NovelElementsUtil.getDescription(html));
         novel.setBody(NovelElementsUtil.getBody(html));
-        novel.setUrl(url);
+        novel.setUrl(url.toString());
         novel.setDeleted(false);
     }
 
@@ -145,11 +151,20 @@ public class NovelSource {
         }
     }
 
-    public String getUrl() {
+    /**
+     * 小説のUrlのホスト部分まで取得する.
+     * 
+     * @return 小説のUrlのホスト部分
+     */
+    public String getHostUrl() {
+        return url.getProtocol() + "://" + url.getHost();
+    }
+
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(URL url) {
         this.url = url;
     }
 
