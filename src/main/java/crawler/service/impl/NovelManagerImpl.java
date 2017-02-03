@@ -85,35 +85,33 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Long checkTargetId) {
         Novel savedNovel = novelDao.get(checkTargetId);
-        NovelSource currentNovelSource = null;
         log.info("[check] title:" + savedNovel.getTitle());
 
         try {
-            currentNovelSource = new NovelSource(savedNovel.getUrl());
+            NovelSource currentNovelSource = new NovelSource(savedNovel.getUrl());
+
+            currentNovelSource.setNovel(savedNovel);
+            currentNovelSource.mapping();
+
+            if (currentNovelSource.getNovelHistory() != null) {
+                // 小説の情報に差異があった場合
+                // 小説の付随情報を取得
+                novelInfoManager.saveNovelInfo(currentNovelSource);
+
+                if (currentNovelSource.getNovelHistory().getBody() != null) {
+                    // 小説の本文に差異があった場合
+                    // 小説の章を取得
+                    novelChapterManager.saveNovelChapter(currentNovelSource);
+                }
+
+                save(currentNovelSource.getNovel());
+            }
         } catch (NullPointerException e) {
             // ページが取得出来ない場合
             // 削除フラグを設定
             log.info("[deleted] title:" + savedNovel.getTitle());
             savedNovel.setDeleted(true);
             savedNovel.setUpdateDate(new Date());
-            return;
-        }
-
-        currentNovelSource.setNovel(savedNovel);
-        currentNovelSource.mapping();
-
-        if (currentNovelSource.getNovelHistory() != null) {
-            // 小説の情報に差異があった場合
-            // 小説の付随情報を取得
-            novelInfoManager.saveNovelInfo(currentNovelSource);
-
-            if (currentNovelSource.getNovelHistory().getBody() != null) {
-                // 小説の本文に差異があった場合
-                // 小説の章を取得
-                novelChapterManager.saveNovelChapter(currentNovelSource);
-            }
-
-            save(currentNovelSource.getNovel());
         }
     }
 

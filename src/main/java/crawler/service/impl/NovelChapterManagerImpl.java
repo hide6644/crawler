@@ -38,38 +38,34 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
         // 小説の履歴から小説の章のElementセットを作成し、変数に代入
         Set<NovelBodyElement> novelHistoryBodyElementSet = novelSource.getChapterHistoryElementSet();
 
-        for (NovelBodyElement novelBodyElement : novelSource.getChapterElementList()) {
-            // 小説の本文に含まれる章の数だけ繰り返す
-            if (NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementSet)) {
-                // 小説の章の情報に差異がある場合、小説の章を取得
-                NovelChapterSource novelChapterSource = null;
+        novelSource.getChapterElementList().stream()
+                .filter(novelBodyElement -> NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementSet))
+                .forEach(novelBodyElement -> {
+                    // 小説の章の情報に差異がある場合、小説の章を取得
+                    try {
+                        NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelBodyElement.getChapterUrl());
 
-                try {
-                    novelChapterSource = new NovelChapterSource(hostname + novelBodyElement.getChapterUrl());
-                } catch (NullPointerException e) {
-                    // ページが取得出来ない場合、何もしない
-                    continue;
-                }
+                        // URLが一致する小説の章を取得
+                        novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(novelChapterSource.getUrl().toString()));
+                        novelChapterSource.mapping();
 
-                // URLが一致する小説の章を取得
-                novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(novelChapterSource.getUrl().toString()));
-                novelChapterSource.mapping();
+                        // 小説の章の付随情報を取得
+                        novelChapterInfoManager.saveNovelChapterInfo(novelBodyElement.getElement(), novelChapterSource);
 
-                // 小説の章の付随情報を取得
-                novelChapterInfoManager.saveNovelChapterInfo(novelBodyElement.getElement(), novelChapterSource);
+                        if (novelChapterSource.getNovelChapterHistory() == null) {
+                            // URLが一致する小説の章がない場合、登録処理
+                            novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
+                            novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
 
-                if (novelChapterSource.getNovelChapterHistory() == null) {
-                    // URLが一致する小説の章がない場合、登録処理
-                    novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
-                    novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
-
-                    log.info("[add] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
-                } else {
-                    // 更新処理
-                    log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
-                }
-            }
-        }
+                            log.info("[add] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                        } else {
+                            // 更新処理
+                            log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                        }
+                    } catch (NullPointerException e) {
+                        // ページが取得出来ない場合、何もしない
+                    }
+                });
     }
 
     /**
