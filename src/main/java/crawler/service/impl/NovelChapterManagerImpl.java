@@ -1,19 +1,18 @@
 package crawler.service.impl;
 
-import java.net.URL;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
 import crawler.domain.NovelChapter;
+import crawler.domain.source.NovelBodyElement;
 import crawler.domain.source.NovelChapterSource;
 import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
-import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
-import net.htmlparser.jericho.Element;
 
 /**
  * 小説の章を管理する.
@@ -35,42 +34,38 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
      */
     @Override
     public void saveNovelChapter(final NovelSource novelSource) {
-        URL url = NovelManagerUtil.getUrl(novelSource.getUrl());
+        String hostname = novelSource.getHostUrl();
+        // 小説の履歴から小説の章のElementセットを作成し、変数に代入
+        Set<NovelBodyElement> novelHistoryBodyElementSet = novelSource.getChapterHistoryElementSet();
 
-        for (Element chapterElement : novelSource.getChapterElementList()) {
-            // 小説の本文に含まれる章の数だけ繰り返す
-            if (NovelElementsUtil.existsChapterLink(chapterElement) && NovelManagerUtil.hasUpdatedChapter(chapterElement, novelSource.getNovelHistory())) {
-                // 小説の章の情報に差異がある場合
-                String chapterUrl = "http://" + url.getHost() + NovelElementsUtil.getChapterUrlByNovelBody(chapterElement);
-                NovelChapterSource novelChapterSource = null;
+        novelSource.getChapterElementList().stream()
+                .filter(novelBodyElement -> NovelManagerUtil.hasUpdatedChapter(novelBodyElement, novelHistoryBodyElementSet))
+                .forEach(novelBodyElement -> {
+                    // 小説の章の情報に差異がある場合、小説の章を取得
+                    try {
+                        NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelBodyElement.getChapterUrl());
 
-                try {
-                    novelChapterSource = new NovelChapterSource(chapterUrl);
-                } catch (NullPointerException e) {
-                    // ページが取得出来ない場合、何もしない
-                    continue;
-                }
+                        // URLが一致する小説の章を取得
+                        novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(novelChapterSource.getUrl().toString()));
+                        novelChapterSource.mapping();
 
-                // URLが一致する小説の章を取得
-                NovelChapter savedNovelChapter = novelChapterDao.getNovelChaptersByUrl(chapterUrl);
-                novelChapterSource.setNovelChapter(savedNovelChapter);
-                novelChapterSource.mapping();
+                        // 小説の章の付随情報を取得
+                        novelChapterInfoManager.saveNovelChapterInfo(novelBodyElement.getElement(), novelChapterSource);
 
-                // 小説の章の付随情報を取得
-                novelChapterInfoManager.saveNovelChapterInfo(chapterElement, novelChapterSource);
+                        if (novelChapterSource.getNovelChapterHistory() == null) {
+                            // URLが一致する小説の章がない場合、登録処理
+                            novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
+                            novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
 
-                if (savedNovelChapter == null) {
-                    // URLが一致する小説の章がない場合、登録処理
-                    novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
-                    novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
-
-                    log.info("[add] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
-                } else {
-                    // 更新処理
-                    log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
-                }
-            }
-        }
+                            log.info("[add] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                        } else {
+                            // 更新処理
+                            log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                        }
+                    } catch (NullPointerException e) {
+                        // ページが取得出来ない場合、何もしない
+                    }
+                });
     }
 
     /**

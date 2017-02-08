@@ -170,55 +170,37 @@ public abstract class BaseEntity {
         this.updateDate = updateDate;
     }
 
-    /**
-     * 指定されたオブジェクトのHash Codeを生成する.
-     *
-     * @param obj
-     *            Hash Codeを生成するオブジェクト
-     * @return Hash Code
-     */
-    protected int hashCode(Object obj) {
-        return obj == null ? 0 : obj.hashCode();
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 
-    /**
-     * 指定されたオブジェクトを比較する.
-     *
-     * @param lhs
-     *            比較するオブジェクト
-     * @param rhs
-     *            比較するオブジェクト
-     * @return true 一致
-     */
-    protected boolean equals(Object lhs, Object rhs) {
-        if (lhs == rhs) {
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
-        } else if (lhs != null) {
-            return lhs.equals(rhs);
         }
-
-        return false;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        BaseEntity other = (BaseEntity) obj;
+        if (id == null) {
+            if (other.id != null) {
+                return false;
+            }
+        } else if (!id.equals(other.id)) {
+            return false;
+        }
+        return true;
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    public abstract int hashCode();
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public abstract boolean equals(Object obj);
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }

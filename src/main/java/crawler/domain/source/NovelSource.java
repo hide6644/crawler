@@ -1,7 +1,10 @@
 package crawler.domain.source;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import crawler.domain.Novel;
 import crawler.domain.NovelHistory;
@@ -16,7 +19,7 @@ import net.htmlparser.jericho.Source;
 public class NovelSource {
 
     /** 小説のURL */
-    private String url;
+    private URL url;
 
     /** 小説のhtml */
     private Source html;
@@ -34,8 +37,13 @@ public class NovelSource {
      *            小説のURL
      */
     public NovelSource(String url) {
+        this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
-        this(url, NovelManagerUtil.getSource(NovelManagerUtil.getUrl(url)));
+        html = NovelManagerUtil.getSource(this.url);
+
+        if (html == null) {
+            throw new NullPointerException();
+        }
     }
 
     /**
@@ -46,7 +54,7 @@ public class NovelSource {
      * @param html
      *            小説のhtml
      */
-    public NovelSource(String url, Source html) {
+    public NovelSource(URL url, Source html) {
         if (url == null || html == null) {
             throw new NullPointerException();
         }
@@ -105,7 +113,7 @@ public class NovelSource {
         novel.setWritername(NovelElementsUtil.getWritername(html));
         novel.setDescription(NovelElementsUtil.getDescription(html));
         novel.setBody(NovelElementsUtil.getBody(html));
-        novel.setUrl(url);
+        novel.setUrl(url.toString());
         novel.setDeleted(false);
     }
 
@@ -114,15 +122,49 @@ public class NovelSource {
      *
      * @return 小説の章のリスト
      */
-    public List<Element> getChapterElementList() {
-        return new Source(novel.getBody()).getAllElements("dl");
+    public List<NovelBodyElement> getChapterElementList() {
+        return new Source(novel.getBody()).getAllElements("dl").stream()
+                .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
+                .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toList());
     }
 
-    public String getUrl() {
+    /**
+     * 小説の本文の履歴から小説の章のセットを取得する.
+     *
+     * @return 小説の章のセット
+     */
+    public Set<NovelBodyElement> getChapterHistoryElementSet() {
+        if (novelHistory != null) {
+            Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
+            List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
+
+            if (chapterHistoryElementList.size() == 0) {
+                // 古いスタイルの場合
+                chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("tr");
+            }
+
+            return chapterHistoryElementList.stream()
+                    .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
+                    .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toSet());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 小説のUrlのホスト部分まで取得する.
+     * 
+     * @return 小説のUrlのホスト部分
+     */
+    public String getHostUrl() {
+        return url.getProtocol() + "://" + url.getHost();
+    }
+
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(URL url) {
         this.url = url;
     }
 

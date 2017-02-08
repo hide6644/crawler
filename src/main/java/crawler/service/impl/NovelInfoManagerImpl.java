@@ -18,6 +18,7 @@ public class NovelInfoManagerImpl extends GenericManagerImpl<NovelInfo, Long> im
      *
      * @see crawler.service.NovelInfoManager#saveNovelInfo(crawler.domain.source.NovelSource)
      */
+    @Override
     public void saveNovelInfo(final NovelSource novelSource) {
         NovelInfoSource novelInfoSource = new NovelInfoSource(novelSource.getHtml());
         novelInfoSource.setNovelInfo(novelSource.getNovel().getNovelInfo());
