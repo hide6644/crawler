@@ -44,7 +44,7 @@ public class NovelChapterInfoElement {
         }
 
         novelChapterInfo.setCheckedDate(new Date());
-        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月 dd日").parseDateTime(NovelElementsUtil.getChapterModifiedDate(element, true).replaceAll(" 改稿", "")).toDate());
+        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime(NovelElementsUtil.getChapterModifiedDate(element, true).replaceAll(" 改稿", "")).toDate());
         novelChapterInfo.setUnread(true);
     }
 
