@@ -152,6 +152,18 @@ public class NovelSource {
     }
 
     /**
+     * 小説の情報から小説の付随情報のリンクを取得する.
+     *
+     * @return 小説の付随情報のリンク
+     */
+    public String getNovelInfoLink() {
+        return html.getElementById("novel_header").getAllElements("a").stream()
+                .filter(linkElement -> linkElement.getTextExtractor().toString().equals("小説情報"))
+                .map(linkElement -> linkElement.getAttributeValue("href"))
+                .findFirst().orElse(null);
+    }
+
+    /**
      * 小説のUrlのホスト部分まで取得する.
      * 
      * @return 小説のUrlのホスト部分
