@@ -42,7 +42,7 @@ public class NovelManagerUtil {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
-            log.error("[error] url:" + url, e);
+            log.error("url:" + url, e);
             throw new RuntimeException(e);
         }
     }
@@ -63,10 +63,10 @@ public class NovelManagerUtil {
             html.fullSequentialParse();
             return html;
         } catch (FileNotFoundException e) {
-            log.error("[error] url:" + url, e);
+            log.error("url:" + url, e);
             return null;
         } catch (IOException e) {
-            log.error("[error] url:" + url, e);
+            log.error("url:" + url, e);
             throw new RuntimeException(e);
         }
     }

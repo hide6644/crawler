@@ -50,10 +50,10 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         // 小説の情報を取得
         NovelSource novelSource = new NovelSource(url);
         novelSource.mapping();
+        log.info("[add] title:" + novelSource.getNovel().getTitle());
 
         // 小説の付随情報を取得
         novelInfoManager.saveNovelInfo(novelSource);
-        log.info("[add] title:" + novelSource.getNovel().getTitle());
 
         // 小説の章を取得
         novelChapterManager.saveNovelChapter(novelSource);
@@ -137,7 +137,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         List<Novel> unreadNovels = getUnreadNovels();
 
         if (unreadNovels.size() == 0) {
-            log.info("not found.");
+            log.info("Not find unread novels.");
             return;
         }
 
@@ -145,17 +145,15 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             // メール送信
             reportMail.sendUnreadNovelsReport(unreadNovels);
 
-            unreadNovels.forEach(unreadNovel -> {
-                unreadNovel.getNovelChapters().forEach(unreadNovelChapter -> {
-                    unreadNovelChapter.getNovelChapterInfo().setUnread(false);
-                    unreadNovelChapter.getNovelChapterInfo().setReadDate(unreadNovelChapter.getNovelChapterInfo().getModifiedDate());
-                    unreadNovelChapter.getNovelChapterInfo().setUpdateDate(new Date());
-                });
-
-                save(unreadNovel);
-            });
+            Date now = new Date();
+            unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
+                    .forEach(unreadNovelChapter -> {
+                        unreadNovelChapter.getNovelChapterInfo().setUnread(false);
+                        unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
+                        unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
+                    });
         } catch (Exception e) {
-            log.error("[error] send mail:", e);
+            log.error("send mail:", e);
         }
     }
 
