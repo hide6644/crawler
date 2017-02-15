@@ -141,20 +141,17 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             return;
         }
 
-        try {
-            // メール送信
-            reportMail.sendUnreadNovelsReport(unreadNovels);
+        // メール送信
+        reportMail.sendUnreadNovelsReport(unreadNovels);
 
-            Date now = new Date();
-            unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
-                    .forEach(unreadNovelChapter -> {
-                        unreadNovelChapter.getNovelChapterInfo().setUnread(false);
-                        unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
-                        unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
-                    });
-        } catch (Exception e) {
-            log.error("send mail:", e);
-        }
+        // 小説のステータスを既読に更新
+        Date now = new Date();
+        unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
+                .forEach(unreadNovelChapter -> {
+                    unreadNovelChapter.getNovelChapterInfo().setUnread(false);
+                    unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
+                    unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
+                });
     }
 
     /**
