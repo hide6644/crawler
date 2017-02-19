@@ -30,6 +30,9 @@ public class NovelSource {
     /** 小説の更新履歴 */
     private NovelHistory novelHistory;
 
+    /** 新規フラグ */
+    private boolean add;
+
     /**
      * コンストラクタ.
      *
@@ -67,8 +70,10 @@ public class NovelSource {
      */
     public void mapping() {
         if (novel == null) {
+            add = true;
             novel = new Novel();
         } else {
+            add = false;
             // 更新の場合、Historyを作成
             novel.setUpdateDate(new Date());
 
@@ -165,11 +170,20 @@ public class NovelSource {
 
     /**
      * 小説のUrlのホスト部分まで取得する.
-     * 
+     *
      * @return 小説のUrlのホスト部分
      */
     public String getHostUrl() {
         return url.getProtocol() + "://" + url.getHost();
+    }
+
+    /**
+     * 新規か、更新か.
+     *
+     * @return true:新規、false:更新
+     */
+    public boolean isAdd() {
+        return add;
     }
 
     public URL getUrl() {
