@@ -13,12 +13,12 @@ import crawler.domain.NovelChapter;
  * 小説DAOの実装クラス.
  */
 @Repository("novelChapterDao")
-public class NovelChapterDaoHibernate extends GenericDaoJpa<NovelChapter, Long> implements NovelChapterDao {
+public class NovelChapterDaoJpa extends GenericDaoJpa<NovelChapter, Long> implements NovelChapterDao {
 
     /**
      * デフォルト・コンストラクタ.
      */
-    public NovelChapterDaoHibernate() {
+    public NovelChapterDaoJpa() {
         super(NovelChapter.class);
     }
 
