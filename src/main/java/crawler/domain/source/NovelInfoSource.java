@@ -1,5 +1,6 @@
 package crawler.domain.source;
 
+import java.net.URL;
 import java.util.Date;
 
 import org.joda.time.format.DateTimeFormat;
@@ -7,7 +8,6 @@ import org.joda.time.format.DateTimeFormat;
 import crawler.domain.NovelInfo;
 import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
-import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 
 /**
@@ -15,7 +15,10 @@ import net.htmlparser.jericho.Source;
  */
 public class NovelInfoSource {
 
-    /** 小説のhtml */
+    /** 小説の付随情報のURL */
+    private URL url;
+
+    /** 小説の付随情報のhtml */
     private Source html;
 
     /** 小説の付随情報 */
@@ -24,18 +27,37 @@ public class NovelInfoSource {
     /**
      * コンストラクタ.
      *
-     * @param html
-     *            小説のhtml
+     * @param url
+     *            小説の付随情報のURL
      */
-    public NovelInfoSource(Source html) {
+    public NovelInfoSource(String url) {
+        this.url = NovelManagerUtil.getUrl(url);
+        // URLからhtmlを取得
+        html = NovelManagerUtil.getSource(this.url);
+
         if (html == null) {
             throw new NullPointerException();
         }
+    }
+
+    /**
+     * コンストラクタ.
+     *
+     * @param url
+     *            小説の付随情報のURL
+     * @param html
+     *            小説の付随情報のhtml
+     */
+    public NovelInfoSource(URL url, Source html) {
+        if (url == null || html == null) {
+            throw new NullPointerException();
+        }
+        this.url = url;
         this.html = html;
     }
 
     /**
-     * 小説のhtmlから小説の付随情報のhtmlを取得し、小説の付随情報(NovelInfo)に変換する.
+     * 小説の付随情報のhtmlを小説の付随情報(NovelInfo)に変換する.
      */
     public void mapping() {
         if (novelInfo == null) {
@@ -45,19 +67,18 @@ public class NovelInfoSource {
             novelInfo.setUpdateDate(new Date());
         }
 
-        Element menuElement = html.getElementById("novel_header");
-
-        for (Element linkElement : menuElement.getAllElements("a")) {
-            if (linkElement.getTextExtractor().toString().equals("小説情報")) {
-                Source infoHtml = NovelManagerUtil.getSource(NovelManagerUtil.getUrl(linkElement.getAttributeValue("href")));
-
-                novelInfo.setKeyword(NovelElementsUtil.getKeyword(infoHtml));
-                novelInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月dd日 HH時mm分").parseDateTime(NovelElementsUtil.getModifiedDate(infoHtml)).toDate());
-                novelInfo.setFinished(NovelElementsUtil.getFinished(infoHtml));
-            }
-        }
-
+        novelInfo.setKeyword(NovelElementsUtil.getKeyword(html));
+        novelInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月dd日 HH時mm分").parseDateTime(NovelElementsUtil.getModifiedDate(html)).toDate());
+        novelInfo.setFinished(NovelElementsUtil.getFinished(html));
         novelInfo.setCheckedDate(new Date());
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 
     public Source getHtml() {

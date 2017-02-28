@@ -20,7 +20,7 @@ public class NovelInfoManagerImpl extends GenericManagerImpl<NovelInfo, Long> im
      */
     @Override
     public void saveNovelInfo(final NovelSource novelSource) {
-        NovelInfoSource novelInfoSource = new NovelInfoSource(novelSource.getHtml());
+        NovelInfoSource novelInfoSource = new NovelInfoSource(novelSource.getNovelInfoLink());
         novelInfoSource.setNovelInfo(novelSource.getNovel().getNovelInfo());
         novelInfoSource.mapping();
 

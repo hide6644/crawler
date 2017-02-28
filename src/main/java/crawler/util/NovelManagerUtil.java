@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import crawler.Constants;
 import crawler.domain.Novel;
 import crawler.domain.source.NovelBodyElement;
 import net.htmlparser.jericho.Source;
@@ -41,7 +42,7 @@ public class NovelManagerUtil {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
-            log.error("[error] url:" + url, e);
+            log.error("url:" + url, e);
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +55,7 @@ public class NovelManagerUtil {
      * @return 小説のhtml要素
      */
     public static Source getSource(final URL url) {
-        // ネットワーク負荷低減のため、1秒間隔で取得
+        // ネットワーク負荷低減のため、一時的に実行を停止
         delayAccess();
 
         try {
@@ -62,20 +63,20 @@ public class NovelManagerUtil {
             html.fullSequentialParse();
             return html;
         } catch (FileNotFoundException e) {
-            log.error("[error] url:" + url, e);
+            log.error("url:" + url, e);
             return null;
         } catch (IOException e) {
-            log.error("[error] url:" + url, e);
+            log.error("url:" + url, e);
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * 1秒間実行を停止する.
+     * 指定されたミリ秒数の間、一時的に実行を停止する.
      */
     public static void delayAccess() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(Constants.DELAY_ACCESS_TIME);
         } catch (InterruptedException e) {
         }
     }

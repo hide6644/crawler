@@ -50,14 +50,15 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         // 小説の情報を取得
         NovelSource novelSource = new NovelSource(url);
         novelSource.mapping();
-
-        // 小説の付随情報を取得
-        novelInfoManager.saveNovelInfo(novelSource);
         log.info("[add] title:" + novelSource.getNovel().getTitle());
 
-        // 小説の章を取得
+        // 小説の付随情報を保存
+        novelInfoManager.saveNovelInfo(novelSource);
+
+        // 小説の章を保存
         novelChapterManager.saveNovelChapter(novelSource);
 
+        // 小説を永続化
         save(novelSource.getNovel());
     }
 
@@ -94,21 +95,16 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             currentNovelSource.mapping();
 
             if (currentNovelSource.getNovelHistory() != null) {
-                // 小説の情報に差異があった場合
-                // 小説の付随情報を取得
+                // 小説の情報に差異があった場合、小説の付随情報を保存
                 novelInfoManager.saveNovelInfo(currentNovelSource);
 
                 if (currentNovelSource.getNovelHistory().getBody() != null) {
-                    // 小説の本文に差異があった場合
-                    // 小説の章を取得
+                    // 小説の本文に差異があった場合、小説の章を保存
                     novelChapterManager.saveNovelChapter(currentNovelSource);
                 }
-
-                save(currentNovelSource.getNovel());
             }
         } catch (NullPointerException e) {
-            // ページが取得出来ない場合
-            // 削除フラグを設定
+            // ページが取得出来ない場合、削除フラグを設定
             log.info("[deleted] title:" + savedNovel.getTitle());
             savedNovel.setDeleted(true);
             savedNovel.setUpdateDate(new Date());
@@ -136,26 +132,20 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     public void sendReport() {
         List<Novel> unreadNovels = getUnreadNovels();
 
-        if (unreadNovels.size() == 0) {
-            log.info("not found.");
-            return;
-        }
-
-        try {
+        if (unreadNovels.size() > 0) {
             // メール送信
             reportMail.sendUnreadNovelsReport(unreadNovels);
 
-            unreadNovels.forEach(unreadNovel -> {
-                unreadNovel.getNovelChapters().forEach(unreadNovelChapter -> {
-                    unreadNovelChapter.getNovelChapterInfo().setUnread(false);
-                    unreadNovelChapter.getNovelChapterInfo().setReadDate(unreadNovelChapter.getNovelChapterInfo().getModifiedDate());
-                    unreadNovelChapter.getNovelChapterInfo().setUpdateDate(new Date());
-                });
-
-                save(unreadNovel);
-            });
-        } catch (Exception e) {
-            log.error("[error] send mail:", e);
+            // 小説のステータスを既読に更新
+            Date now = new Date();
+            unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
+                    .forEach(unreadNovelChapter -> {
+                        unreadNovelChapter.getNovelChapterInfo().setUnread(false);
+                        unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
+                        unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
+                    });
+        } else {
+            log.info("Not find unread novels.");
         }
     }
 

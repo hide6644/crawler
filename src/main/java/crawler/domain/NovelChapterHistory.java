@@ -2,10 +2,12 @@ package crawler.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -35,6 +37,8 @@ public class NovelChapterHistory extends BaseEntity implements Serializable {
     }
 
     @Column
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     public String getBody() {
         return body;
     }

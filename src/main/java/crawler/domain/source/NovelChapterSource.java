@@ -26,6 +26,9 @@ public class NovelChapterSource {
     /** 小説の章の更新履歴 */
     private NovelChapterHistory novelChapterHistory;
 
+    /** 新規フラグ */
+    private boolean add;
+
     /**
      * コンストラクタ.
      *
@@ -63,8 +66,10 @@ public class NovelChapterSource {
      */
     public void mapping() {
         if (novelChapter == null) {
+            add = true;
             novelChapter = new NovelChapter();
         } else {
+            add = false;
             // 更新の場合、Historyを作成
             novelChapter.setUpdateDate(new Date());
 
@@ -88,6 +93,15 @@ public class NovelChapterSource {
         novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
         novelChapter.setUrl(url.toString());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
+    }
+
+    /**
+     * 新規か、更新か.
+     *
+     * @return true:新規、false:更新
+     */
+    public boolean isAdd() {
+        return add;
     }
 
     public URL getUrl() {

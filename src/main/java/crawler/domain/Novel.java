@@ -6,10 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -116,6 +118,8 @@ public class Novel extends BaseEntity implements Serializable {
     }
 
     @Column
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Field
     public String getBody() {
         return body;

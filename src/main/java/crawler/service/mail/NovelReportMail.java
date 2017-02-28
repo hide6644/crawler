@@ -67,13 +67,16 @@ public class NovelReportMail {
 
             // テンプレートとマージ
             cfg.getTemplate("report.ftl").process(root, pw);
-            mailEngine.sendReportMail(filePath);
+
+            String text = new DateTime().minusDays(1).toString("yyyy-MM-dd") + " updated.";
+            log.info("[send] report:" + text);
+            mailEngine.sendMail(text, filePath);
         } catch (IOException e) {
-            log.error("[error] report:", e);
+            log.error("[send] report:", e);
         } catch (TemplateException e) {
-            log.error("[error] report:", e);
+            log.error("[send] report:", e);
         } catch (MessagingException e) {
-            log.error("[error] report:", e);
+            log.error("[send] report:", e);
         } finally {
             IOUtils.closeQuietly(pw);
         }
