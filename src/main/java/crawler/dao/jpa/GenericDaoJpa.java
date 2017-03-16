@@ -26,21 +26,21 @@ import crawler.dao.SearchException;
  */
 public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, PK> {
 
-    /** Entity Managerクラス名 */
-    public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
-
     /** ログ出力クラス */
     protected Logger log = LogManager.getLogger(getClass());
+
+    /** Entity Managerクラス名 */
+    public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
 
     /** Entity Managerクラス */
     @PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
     protected EntityManager entityManager;
 
     /** エンティティクラス */
-    private Class<T> persistentClass;
+    protected Class<T> persistentClass;
 
     /** 形態解析クラス */
-    private Analyzer defaultAnalyzer;
+    protected Analyzer defaultAnalyzer;
 
     /**
      * コンストラクタ.
@@ -65,10 +65,6 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
         this.persistentClass = persistentClass;
         this.entityManager = entityManager;
         defaultAnalyzer = new StandardAnalyzer();
-    }
-
-    public EntityManager getEntityManager() {
-        return entityManager;
     }
 
     /**
@@ -96,7 +92,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
         T entity = entityManager.find(persistentClass, id);
 
         if (entity == null) {
-            String msg = "Uh oh, '" + persistentClass + "' object with id '" + id + "' not found...";
+            String msg = "'" + persistentClass + "' object with id '" + id + "' not found...";
             log.warn(msg);
             throw new EntityNotFoundException(msg);
         }
@@ -174,7 +170,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
      */
     @Override
     public void reindex() {
-        HibernateSearchJpaTools.reindex(persistentClass, getEntityManager());
+        HibernateSearchJpaTools.reindex(persistentClass, entityManager);
     }
 
     /**
@@ -182,6 +178,6 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
      */
     @Override
     public void reindexAll(boolean async) {
-        HibernateSearchJpaTools.reindexAll(async, getEntityManager());
+        HibernateSearchJpaTools.reindexAll(async, entityManager);
     }
 }

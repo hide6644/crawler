@@ -31,6 +31,14 @@ public interface NovelManager extends GenericManager<Novel, Long> {
     void checkForUpdatesAndSaveHistory(Long checkTargetId);
 
     /**
+     * 小説の更新を確認し、更新があった場合は内容を保存する.
+     *
+     * @param novel
+     *            小説の情報
+     */
+    void checkForUpdatesAndSaveHistory(Novel novel);
+
+    /**
      * 未読小説の一覧を取得する.
      *
      * @return 未読小説の一覧

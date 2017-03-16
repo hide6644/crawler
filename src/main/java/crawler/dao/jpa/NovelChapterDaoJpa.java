@@ -1,8 +1,6 @@
 package crawler.dao.jpa;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
 
@@ -25,18 +23,14 @@ public class NovelChapterDaoJpa extends GenericDaoJpa<NovelChapter, Long> implem
     /*
      * (非 Javadoc)
      *
-     * @see crawler.dao.NovelChapterDao#getNovelChaptersByUrl(java.lang.String)
+     * @see crawler.dao.NovelChapterDao#getByUrl(java.lang.String)
      */
     @Override
-    public NovelChapter getNovelChaptersByUrl(String url) {
-        Map<String, Object> queryParams = new HashMap<String, Object>();
-        queryParams.put("url", url);
-
-        List<NovelChapter> novelChapterList = findByNamedQuery(NovelChapter.FIND_BY_URL, queryParams);
-        if (novelChapterList.isEmpty()) {
+    public NovelChapter getByUrl(String url) {
+        try {
+            return entityManager.createNamedQuery("NovelChapter.findByUrl", persistentClass).setParameter("url", url).getSingleResult();
+        } catch (NoResultException e) {
             return null;
-        } else {
-            return novelChapterList.get(0);
         }
     }
 }

@@ -12,8 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,26 +28,10 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  */
 @Entity
 @Table(name = "novel")
-@NamedQueries({
-    @NamedQuery(
-        name = Novel.FIND_BY_CHECKED_DATE,
-        query = "from Novel n join fetch n.novelInfo ni where n.deleted = false and ni.checkedDate <= :checkedDate"
-    ),
-    @NamedQuery(
-        name = Novel.FIND_BY_UNREAD,
-        query = "select distinct n from Novel n join fetch n.novelInfo ni join fetch n.novelChapters nc join fetch nc.novelChapterInfo nci where nci.unread = true order by n.title, nc.id"
-    )
-})
 @Indexed
 @Analyzer(impl = JapaneseAnalyzer.class)
 @XmlRootElement
 public class Novel extends BaseEntity implements Serializable {
-
-    /** 最終確認日時で検索するクエリ */
-    public static final String FIND_BY_CHECKED_DATE = "Novel.getNovelsByCheckedDate";
-
-    /** 未読フラグで検索するクエリ */
-    public static final String FIND_BY_UNREAD = "Novel.getNovelsByUnread";
 
     /** URL */
     private String url;
