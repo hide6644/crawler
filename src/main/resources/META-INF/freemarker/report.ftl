@@ -5,13 +5,16 @@
 </head>
 <body>
 <dl>
-<#list unreadNovels as unreadNovel>
-  <dt><a href="${unreadNovel.url}">${unreadNovel.title}</a></dt>
-  <#list unreadNovel.novelChapters as unreadNovelChapter>
+<#list unreadNovels as novel>
+    <dt>
+        <#if novel.novelInfo.favorite>★</#if>
+        <a href="${novel.url}">${novel.title}</a>
+    </dt>
+  <#list novel.novelChapters as novelChapter>
     <dd>
-      ${unreadNovelChapter.novelChapterInfo.modifiedDate?string["yyyy/MM/dd"]}
-      <a href="${unreadNovelChapter.url}">${unreadNovelChapter.title}</a>
-      <#if unreadNovelChapter.createDate != unreadNovelChapter.updateDate>(更新)</#if>
+        ${novelChapter.novelChapterInfo.modifiedDate?string["yyyy/MM/dd"]}
+        <a href="${novelChapter.url}">${novelChapter.title}</a>
+        <#if novelChapter.createDate != novelChapter.updateDate>(更新)</#if>
     </dd>
   </#list>
 </#list>
