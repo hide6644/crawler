@@ -14,7 +14,7 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testGetNovelChaptersByUrl() throws Exception {
-        NovelChapter novelChapter = dao.getNovelChaptersByUrl("TEST");
+        NovelChapter novelChapter = dao.getByUrl("TEST");
 
         assertNull(novelChapter);
     }

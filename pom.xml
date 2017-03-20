@@ -7,7 +7,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -331,19 +331,19 @@
 
         <commons.io.version>2.5</commons.io.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <hibernate.version>5.2.8.Final</hibernate.version>
+        <hibernate.version>5.2.9.Final</hibernate.version>
         <hibernate.search.version>5.7.0.Final</hibernate.search.version>
-        <HikariCP.version>2.5.1</HikariCP.version>
+        <HikariCP.version>2.6.1</HikariCP.version>
         <jericho.html.version>3.4</jericho.html.version>
         <joda.time.version>2.9.7</joda.time.version>
         <log4j.version>2.7</log4j.version>
         <junit.version>4.12</junit.version>
-        <lucene.version>5.5.3</lucene.version>
+        <lucene.version>5.5.4</lucene.version>
         <mail.version>1.4.7</mail.version>
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.6.6</powermock.version>
         <slf4j.version>1.7.23</slf4j.version>
-        <spring.version>4.3.6.RELEASE</spring.version>
+        <spring.version>4.3.7.RELEASE</spring.version>
         <subethasmtp.version>3.1.7</subethasmtp.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

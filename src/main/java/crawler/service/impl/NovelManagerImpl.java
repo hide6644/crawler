@@ -47,19 +47,27 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void add(final String url) {
-        // 小説の情報を取得
-        NovelSource novelSource = new NovelSource(url);
-        novelSource.mapping();
-        log.info("[add] title:" + novelSource.getNovel().getTitle());
+        Novel novel = novelDao.getByUrl(url);
 
-        // 小説の付随情報を保存
-        novelInfoManager.saveNovelInfo(novelSource);
+        if (novel != null) {
+            // 指定した小説が登録済みの場合
+            log.info("[duplicate] title:" + novel.getTitle());
+            checkForUpdatesAndSaveHistory(novel);
+        } else {
+            // 小説の情報を取得
+            NovelSource novelSource = new NovelSource(url);
+            novelSource.mapping();
+            log.info("[add] title:" + novelSource.getNovel().getTitle());
 
-        // 小説の章を保存
-        novelChapterManager.saveNovelChapter(novelSource);
+            // 小説の付随情報を保存
+            novelInfoManager.saveNovelInfo(novelSource);
 
-        // 小説を永続化
-        save(novelSource.getNovel());
+            // 小説の章を保存
+            novelChapterManager.saveNovelChapter(novelSource);
+
+            // 小説を永続化
+            save(novelSource.getNovel());
+        }
     }
 
     /*
@@ -71,9 +79,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
-        return novelDao.getNovelsByCheckedDate(new DateTime().withTimeAtStartOfDay().toDate()).stream()
-                .filter(savedNovel -> NovelManagerUtil.isConfirmedNovel(savedNovel))
-                .map(savedNovel -> savedNovel.getId())
+        return novelDao.getByCheckedDateLessThanEqual(new DateTime().withTimeAtStartOfDay().toDate()).stream()
+                .filter(novel -> NovelManagerUtil.isConfirmedNovel(novel))
+                .map(novel -> novel.getId())
                 .collect(Collectors.toList());
     }
 
@@ -85,13 +93,26 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Long checkTargetId) {
-        Novel savedNovel = novelDao.get(checkTargetId);
-        log.info("[check] title:" + savedNovel.getTitle());
+        Novel novel = novelDao.get(checkTargetId);
+        log.info("[check] title:" + novel.getTitle());
 
+        if (novel != null) {
+            checkForUpdatesAndSaveHistory(novel);
+        }
+    }
+
+    /*
+     * (非 Javadoc)
+     *
+     * @see crawler.service.NovelManager#checkForUpdatesAndSaveHistory(crawler.domain.Novel)
+     */
+    @Override
+    @Transactional
+    public void checkForUpdatesAndSaveHistory(final Novel novel) {
         try {
-            NovelSource currentNovelSource = new NovelSource(savedNovel.getUrl());
+            NovelSource currentNovelSource = new NovelSource(novel.getUrl());
 
-            currentNovelSource.setNovel(savedNovel);
+            currentNovelSource.setNovel(novel);
             currentNovelSource.mapping();
 
             if (currentNovelSource.getNovelHistory() != null) {
@@ -105,9 +126,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             }
         } catch (NullPointerException e) {
             // ページが取得出来ない場合、削除フラグを設定
-            log.info("[deleted] title:" + savedNovel.getTitle());
-            savedNovel.setDeleted(true);
-            savedNovel.setUpdateDate(new Date());
+            log.info("[deleted] title:" + novel.getTitle());
+            novel.setDeleted(true);
+            novel.setUpdateDate(new Date());
         }
     }
 
@@ -119,7 +140,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public List<Novel> getUnreadNovels() {
-        return novelDao.getNovelsByUnread();
+        return novelDao.getByUnreadTrueOrderByTitleAndId();
     }
 
     /*

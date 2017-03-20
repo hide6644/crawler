@@ -14,5 +14,5 @@ public interface NovelChapterDao extends GenericDao<NovelChapter, Long> {
      *            URL
      * @return 小説の章
      */
-    NovelChapter getNovelChaptersByUrl(String url);
+    NovelChapter getByUrl(String url);
 }

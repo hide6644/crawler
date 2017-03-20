@@ -1,9 +1,9 @@
 package crawler.dao.jpa;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,23 +26,34 @@ public class NovelDaoJpa extends GenericDaoJpa<Novel, Long> implements NovelDao 
     /*
      * (非 Javadoc)
      *
-     * @see crawler.dao.NovelDao#getNovelsByCheckedDate(java.util.Date)
+     * @see crawler.dao.NovelDao#getByUrl(java.lang.String)
      */
     @Override
-    public List<Novel> getNovelsByCheckedDate(Date checkedDate) {
-        Map<String, Object> queryParams = new HashMap<String, Object>();
-        queryParams.put("checkedDate", checkedDate);
-
-        return findByNamedQuery(Novel.FIND_BY_CHECKED_DATE, queryParams);
+    public Novel getByUrl(String url) {
+        try {
+            return entityManager.createNamedQuery("Novel.findByUrl", persistentClass).setParameter("url", url).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     /*
      * (非 Javadoc)
      *
-     * @see crawler.dao.NovelDao#getNovelsByUnread()
+     * @see crawler.dao.NovelDao#getByCheckedDateLessThanEqual(java.util.Date)
      */
     @Override
-    public List<Novel> getNovelsByUnread() {
-        return findByNamedQuery(Novel.FIND_BY_UNREAD, null);
+    public List<Novel> getByCheckedDateLessThanEqual(Date checkedDate) {
+        return entityManager.createNamedQuery("Novel.findByCheckedDateLessThanEqual", persistentClass).setParameter("checkedDate", checkedDate).getResultList();
+    }
+
+    /*
+     * (非 Javadoc)
+     *
+     * @see crawler.dao.NovelDao#getByUnreadTrueOrderByTitleAndId()
+     */
+    @Override
+    public List<Novel> getByUnreadTrueOrderByTitleAndId() {
+        return entityManager.createNamedQuery("Novel.findByUnreadTrueOrderByTitleAndId", persistentClass).getResultList();
     }
 }

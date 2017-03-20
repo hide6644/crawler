@@ -2,22 +2,33 @@ package crawler.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Facet;
+import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * 小説の付随情報
@@ -38,6 +49,9 @@ public class NovelInfo extends BaseEntity implements Serializable {
 
     /** キーワード */
     private String keyword;
+
+    /** キーワード(スペースで分割) */
+    private Set<KeywordWrap> keywordSet = new HashSet<>();
 
     /** お気に入りフラグ */
     private boolean favorite;
@@ -86,6 +100,16 @@ public class NovelInfo extends BaseEntity implements Serializable {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+
+        Stream.of(Optional.ofNullable(keyword).orElseGet(String::new).split(" "))
+                .collect(Collectors.toSet()).forEach(keywords -> keywordSet.add(new KeywordWrap(keywords)));
+    }
+
+    @Transient
+    @IndexedEmbedded
+    @OneToMany
+    public Set<KeywordWrap> getKeywordSet() {
+        return keywordSet;
     }
 
     @Column
@@ -115,5 +139,19 @@ public class NovelInfo extends BaseEntity implements Serializable {
 
     public void setNovel(Novel novel) {
         this.novel = novel;
+    }
+}
+
+/**
+ * 小説の付随情報のキーワード
+ */
+class KeywordWrap {
+
+    @Field(analyze = Analyze.NO)
+    @Facet(encoding = FacetEncodingType.STRING)
+    String keyword;
+
+    public KeywordWrap(String keyword) {
+        this.keyword = keyword;
     }
 }

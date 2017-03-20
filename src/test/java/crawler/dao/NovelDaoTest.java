@@ -17,14 +17,14 @@ public class NovelDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testGetNovelsByCheckedDate() throws Exception {
-        List<Novel> novelList = dao.getNovelsByCheckedDate(new Date());
+        List<Novel> novelList = dao.getByCheckedDateLessThanEqual(new Date());
 
         assertNotNull(novelList);
     }
 
     @Test
     public void testGetNovelsByUnread() throws Exception {
-        List<Novel> novelList = dao.getNovelsByUnread();
+        List<Novel> novelList = dao.getByUnreadTrueOrderByTitleAndId();
 
         assertNotNull(novelList);
     }

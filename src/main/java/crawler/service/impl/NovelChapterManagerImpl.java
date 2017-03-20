@@ -46,7 +46,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                         NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelBodyElement.getChapterUrl());
 
                         // URLが一致する小説の章を取得
-                        novelChapterSource.setNovelChapter(novelChapterDao.getNovelChaptersByUrl(novelChapterSource.getUrl().toString()));
+                        novelChapterSource.setNovelChapter(novelChapterDao.getByUrl(novelChapterSource.getUrl().toString()));
                         novelChapterSource.mapping();
 
                         // 小説の章の付随情報を保存
