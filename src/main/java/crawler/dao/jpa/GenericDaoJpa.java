@@ -70,10 +70,9 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> getAll() {
-        return entityManager.createQuery("select obj from " + persistentClass.getName() + " obj").getResultList();
+        return entityManager.createQuery("select obj from " + persistentClass.getName() + " obj", persistentClass).getResultList();
     }
 
     /**
