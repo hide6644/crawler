@@ -1,9 +1,5 @@
 package crawler.batch.impl;
 
-import java.net.MalformedURLException;
-
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +22,7 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
      * @see crawler.batch.BatchProcess#execute(java.lang.String[])
      */
     @Override
-    public void execute(String[] args) throws MalformedURLException, MessagingException {
+    public void execute(String[] args) {
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
                 if (args[i].equals("checkForUpdates")) {
