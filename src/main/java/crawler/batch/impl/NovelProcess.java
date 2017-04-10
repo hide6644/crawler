@@ -25,9 +25,9 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
     public void execute(String[] args) {
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
-                if (args[i].equals("checkForUpdates")) {
+                if (args[i].equals(messages.getMessage("novelManager.getCheckTargetId"))) {
                     novelManager.getCheckTargetId().forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
-                } else if (args[i].equals("sendReport")) {
+                } else if (args[i].equals(messages.getMessage("novelManager.sendReport"))) {
                     novelManager.sendReport();
                 } else {
                     novelManager.add(args[i]);

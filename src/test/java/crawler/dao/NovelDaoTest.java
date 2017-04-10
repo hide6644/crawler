@@ -16,6 +16,13 @@ public class NovelDaoTest extends BaseDaoTestCase {
     private NovelDao dao;
 
     @Test
+    public void testGetByUrl() throws Exception {
+        Novel novel = dao.getByUrl("http://www.foo.bar/test/");
+
+        assertNull(novel);
+    }
+
+    @Test
     public void testGetNovelsByCheckedDate() throws Exception {
         List<Novel> novelList = dao.getByCheckedDateLessThanEqual(new Date());
 

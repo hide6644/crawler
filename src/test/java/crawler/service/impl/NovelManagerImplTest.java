@@ -44,16 +44,17 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     private NovelManagerImpl novelManager;
 
     @Test
-    public void testGetCheckTargetId() throws Exception {
-        File file = new File("./test.html");
-        URL url = new URL("http://www.foo.bar/test.html");
-        NovelSource novelSource = new NovelSource(url, new Source(file));
+    public void testAdd() throws Exception {
+        String fileName = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        File file = new File(fileName);
+        String url = "http://www.foo.bar/20160924/";
+        NovelSource novelSource = new NovelSource(new URL(url), new Source(file));
 
         {
             MockitoAnnotations.initMocks(this);
             PowerMockito.whenNew(NovelSource.class).withArguments(url).thenReturn(novelSource);
         }
 
-        novelManager.add("http://www.foo.bar/test.html");
+        novelManager.add(url);
     }
 }

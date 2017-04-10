@@ -13,8 +13,8 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
     private NovelChapterDao dao;
 
     @Test
-    public void testGetNovelChaptersByUrl() throws Exception {
-        NovelChapter novelChapter = dao.getByUrl("TEST");
+    public void testGetByUrl() throws Exception {
+        NovelChapter novelChapter = dao.getByUrl("http://www.foo.bar/test/");
 
         assertNull(novelChapter);
     }
