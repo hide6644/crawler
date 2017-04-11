@@ -8,13 +8,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-
 @ContextConfiguration(locations = { "classpath:/crawler/dao/applicationContext.xml" })
 public abstract class BaseManagerTestCase extends AbstractTransactionalJUnit4SpringContextTests {
 
     protected transient Logger log = LogManager.getLogger(getClass());
 
     protected ResourceBundle rb;
+
+    protected int smtpPort = 25250;
 
     public BaseManagerTestCase() {
         String className = this.getClass().getName();
