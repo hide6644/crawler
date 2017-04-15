@@ -78,6 +78,7 @@ public class NovelManagerUtil {
         try {
             Thread.sleep(Constants.DELAY_ACCESS_TIME);
         } catch (InterruptedException e) {
+          log.error("Interrupted:", e);
         }
     }
 

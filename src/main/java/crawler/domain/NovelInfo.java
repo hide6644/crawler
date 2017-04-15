@@ -98,6 +98,13 @@ public class NovelInfo extends BaseEntity implements Serializable {
         return keyword;
     }
 
+    /**
+     * キーワードを設定する.
+     * スペースで分割したキーワードをKeywordWrapに設定する.
+     *
+     * @param keyword
+     *            キーワード
+     */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
 
