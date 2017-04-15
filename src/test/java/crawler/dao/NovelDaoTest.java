@@ -17,7 +17,21 @@ public class NovelDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testGetByUrl() throws Exception {
-        Novel novel = dao.getByUrl("http://www.foo.bar/test/");
+        Novel novel = new Novel();
+        novel.setUrl("Url");
+        novel.setTitle("Title");
+        novel.setWritername("Writername");
+        novel.setDescription("Description");
+        novel.setBody("Body");
+        novel.setDeleted(false);
+        dao.save(novel);
+
+        novel = dao.getByUrl("Url");
+
+        assertNotNull(novel);
+
+        dao.remove(novel);
+        novel = dao.getByUrl("Url");
 
         assertNull(novel);
     }

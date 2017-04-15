@@ -1,5 +1,7 @@
 package crawler.service.impl;
 
+import static org.mockito.BDDMockito.*;
+
 import java.io.File;
 import java.net.URL;
 
@@ -15,6 +17,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import crawler.dao.NovelDao;
+import crawler.domain.Novel;
 import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
@@ -41,7 +44,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     private NovelChapterManager novelChapterManager;
 
     @InjectMocks
-    private NovelManagerImpl novelManager;
+    private NovelManagerImpl novelManager = new NovelManagerImpl();
 
     @Test
     public void testAdd() throws Exception {
@@ -56,5 +59,26 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         }
 
         novelManager.add(url);
+    }
+
+    @Test
+    public void testCheckForUpdatesAndSaveHistory() throws Exception {
+        String fileName = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        File file = new File(fileName);
+        String url = "http://www.foo.bar/20160924/";
+        NovelSource novelSource = new NovelSource(new URL(url), new Source(file));
+
+        {
+            MockitoAnnotations.initMocks(this);
+            PowerMockito.whenNew(NovelSource.class).withArguments(url).thenReturn(novelSource);
+        }
+
+        Novel novel = new Novel();
+        novel.setUrl(url);
+
+        given(novelDao.get(1L)).willReturn(novel);
+
+        novelManager.checkForUpdatesAndSaveHistory(1L);
+        novelManager.checkForUpdatesAndSaveHistory(2L);
     }
 }
