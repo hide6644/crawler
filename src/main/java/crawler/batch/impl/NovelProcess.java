@@ -16,10 +16,8 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
     @Autowired
     private NovelManager novelManager;
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.batch.BatchProcess#execute(java.lang.String[])
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void execute(String[] args) {

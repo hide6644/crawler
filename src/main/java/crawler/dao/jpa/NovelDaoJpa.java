@@ -23,10 +23,8 @@ public class NovelDaoJpa extends GenericDaoJpa<Novel, Long> implements NovelDao 
         super(Novel.class);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.dao.NovelDao#getByUrl(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Novel getByUrl(String url) {
@@ -37,20 +35,16 @@ public class NovelDaoJpa extends GenericDaoJpa<Novel, Long> implements NovelDao 
         }
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.dao.NovelDao#getByCheckedDateLessThanEqual(java.util.Date)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<Novel> getByCheckedDateLessThanEqual(Date checkedDate) {
         return entityManager.createNamedQuery("Novel.findByCheckedDateLessThanEqual", persistentClass).setParameter("checkedDate", checkedDate).getResultList();
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.dao.NovelDao#getByUnreadTrueOrderByTitleAndId()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<Novel> getByUnreadTrueOrderByTitleAndId() {

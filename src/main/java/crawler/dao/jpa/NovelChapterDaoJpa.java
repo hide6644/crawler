@@ -20,10 +20,8 @@ public class NovelChapterDaoJpa extends GenericDaoJpa<NovelChapter, Long> implem
         super(NovelChapter.class);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.dao.NovelChapterDao#getByUrl(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NovelChapter getByUrl(String url) {

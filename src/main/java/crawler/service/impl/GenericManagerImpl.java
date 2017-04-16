@@ -37,70 +37,56 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
         this.dao = genericDao;
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#getAll()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<T> getAll() {
         return dao.getAll();
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#get(java.io.Serializable)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public T get(PK id) {
         return dao.get(id);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#exists(java.io.Serializable)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean exists(PK id) {
         return dao.exists(id);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#save(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public T save(T object) {
         return dao.save(object);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#remove(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void remove(T object) {
         dao.remove(object);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#remove(java.io.Serializable)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void remove(PK id) {
         dao.remove(id);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#search(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<T> search(String searchTerm) {
@@ -111,30 +97,24 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
         return dao.search(searchTerm);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#facet(java.lang.String, int)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<Facet> facet(String field, int max) {
         return dao.facet(field, max);
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#reindex()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void reindex() {
         dao.reindex();
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.GenericManager#reindexAll(boolean)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void reindexAll(boolean async) {
