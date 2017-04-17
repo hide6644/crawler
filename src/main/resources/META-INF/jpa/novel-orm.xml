@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-	    http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-	version="2.1">
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+    version="2.1">
 
-	<named-query name="Novel.findByUrl">
+    <named-query name="Novel.findByUrl">
         <query><![CDATA[
             from Novel
                 where url = :url
         ]]></query>
-	</named-query>
+    </named-query>
 
-	<named-query name="Novel.findByCheckedDateLessThanEqual">
+    <named-query name="Novel.findByCheckedDateLessThanEqual">
         <query><![CDATA[
             from Novel n join fetch n.novelInfo ni
                 where n.deleted = false
                     and ni.checkedDate <= :checkedDate
         ]]></query>
-	</named-query>
+    </named-query>
 
-	<named-query name="Novel.findByUnreadTrueOrderByTitleAndId">
+    <named-query name="Novel.findByUnreadTrueOrderByTitleAndId">
         <query><![CDATA[
             select distinct n
                 from Novel n
@@ -30,6 +30,6 @@
                 where nci.unread = true
                 order by n.title, nc.id
         ]]></query>
-	</named-query>
+    </named-query>
 
 </entity-mappings>

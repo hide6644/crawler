@@ -168,6 +168,9 @@ public abstract class BaseEntity {
         this.updateDate = updateDate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -176,6 +179,9 @@ public abstract class BaseEntity {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

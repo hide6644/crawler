@@ -8,7 +8,7 @@ import crawler.batch.BatchProcess;
 import net.sf.ehcache.CacheManager;
 
 /**
- * 各取込処理を起動する.
+ * 各処理を起動する.
  */
 public class RunBatches {
 
@@ -16,7 +16,7 @@ public class RunBatches {
     private static final Logger log = LogManager.getLogger(RunBatches.class);
 
     /**
-     * 起動main処理.
+     * main処理.
      *
      * @param args
      *            プログラムの引数

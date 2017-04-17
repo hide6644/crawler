@@ -19,6 +19,8 @@ public interface NovelManager extends GenericManager<Novel, Long> {
 
     /**
      * 更新確認対象の小説一覧のIDを取得する.
+     *
+     * @return 更新確認対象の小説一覧
      */
     List<Long> getCheckTargetId();
 

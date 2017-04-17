@@ -16,6 +16,27 @@ public class NovelDaoTest extends BaseDaoTestCase {
     private NovelDao dao;
 
     @Test
+    public void testGetByUrl() throws Exception {
+        Novel novel = new Novel();
+        novel.setUrl("Url");
+        novel.setTitle("Title");
+        novel.setWritername("Writername");
+        novel.setDescription("Description");
+        novel.setBody("Body");
+        novel.setDeleted(false);
+        dao.save(novel);
+
+        novel = dao.getByUrl("Url");
+
+        assertNotNull(novel);
+
+        dao.remove(novel);
+        novel = dao.getByUrl("Url");
+
+        assertNull(novel);
+    }
+
+    @Test
     public void testGetNovelsByCheckedDate() throws Exception {
         List<Novel> novelList = dao.getByCheckedDateLessThanEqual(new Date());
 

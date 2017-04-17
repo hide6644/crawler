@@ -94,9 +94,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Long checkTargetId) {
         Novel novel = novelDao.get(checkTargetId);
-        log.info("[check] title:" + novel.getTitle());
 
         if (novel != null) {
+            log.info("[check] title:" + novel.getTitle());
             checkForUpdatesAndSaveHistory(novel);
         }
     }

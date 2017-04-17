@@ -16,11 +16,16 @@ public class NovelInfoDaoTest extends BaseDaoTestCase {
     private NovelInfoDao dao;
 
     @Test
-    public void testSearchNovelInfoByKeyword() throws Exception {
+    public void testSearch() throws Exception {
         dao.reindex();
 
         List<NovelInfo> novelInfoList = dao.search(new String[]{"ファンタジー"}, new String[]{"keyword"});
         assertNotNull(novelInfoList);
+    }
+
+    @Test
+    public void testFacet() throws Exception {
+        dao.reindex();
 
         List<Facet> facet = dao.facet("keywordSet.keyword", 10);
         assertNotNull(facet);

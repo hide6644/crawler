@@ -98,6 +98,13 @@ public class NovelInfo extends BaseEntity implements Serializable {
         return keyword;
     }
 
+    /**
+     * キーワードを設定する.
+     * スペースで分割したキーワードをKeywordWrapに設定する.
+     *
+     * @param keyword
+     *            キーワード
+     */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
 
@@ -143,15 +150,30 @@ public class NovelInfo extends BaseEntity implements Serializable {
 }
 
 /**
- * 小説の付随情報のキーワード
+ * 小説の付随情報のキーワード(スペースで分割)
  */
-class KeywordWrap {
+class KeywordWrap implements Serializable {
 
+    /** キーワード */
     @Field(analyze = Analyze.NO)
     @Facet(encoding = FacetEncodingType.STRING)
     String keyword;
 
+    /**
+     * コンストラクタ.
+     *
+     * @param keyword
+     *            小説の付随情報のキーワード
+     */
     public KeywordWrap(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
 }

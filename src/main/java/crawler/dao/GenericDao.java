@@ -14,14 +14,14 @@ public interface GenericDao<T, PK extends Serializable> {
     /**
      * すべてのオブジェクトを取得する.
      *
-     * @return モデル一覧
+     * @return オブジェクト一覧
      */
     List<T> getAll();
 
     /**
      * 重複を除くすべてのオブジェクトを取得する.
      *
-     * @return 重複を除くモデル一覧
+     * @return 重複を除くオブジェクト一覧
      */
     List<T> getAllDistinct();
 
@@ -39,7 +39,7 @@ public interface GenericDao<T, PK extends Serializable> {
      *
      * @param id
      *            主キー項目
-     * @return オブジェクト
+     * @return true:存在する、false:存在しない
      */
     boolean exists(PK id);
 
@@ -119,7 +119,7 @@ public interface GenericDao<T, PK extends Serializable> {
      * 全てのインデックスを再作成する.
      *
      * @param async
-     *            true:非同期
+     *            true:非同期、false:同期
      */
     void reindexAll(boolean async);
 }
