@@ -39,10 +39,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Autowired
     private NovelReportMail reportMail;
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelManager#add(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -70,10 +68,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         }
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelManager#getCheckTargetId()
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional(readOnly = true)
@@ -85,10 +81,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                 .collect(Collectors.toList());
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelManager#checkForUpdatesAndSaveHistory(java.lang.Long)
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -101,10 +95,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         }
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelManager#checkForUpdatesAndSaveHistory(crawler.domain.Novel)
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -132,10 +124,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         }
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelManager#getUnreadNovels()
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -143,10 +133,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         return novelDao.getByUnreadTrueOrderByTitleAndId();
     }
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelManager#sendReport()
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional

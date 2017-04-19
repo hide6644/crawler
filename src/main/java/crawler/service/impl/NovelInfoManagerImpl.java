@@ -13,10 +13,8 @@ import crawler.service.NovelInfoManager;
 @Service("novelInfoManager")
 public class NovelInfoManagerImpl extends GenericManagerImpl<NovelInfo, Long> implements NovelInfoManager {
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelInfoManager#saveNovelInfo(crawler.domain.source.NovelSource)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void saveNovelInfo(final NovelSource novelSource) {

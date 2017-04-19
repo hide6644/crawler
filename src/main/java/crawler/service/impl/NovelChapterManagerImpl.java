@@ -27,10 +27,8 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     @Autowired
     private NovelChapterInfoManager novelChapterInfoManager;
 
-    /*
-     * (非 Javadoc)
-     *
-     * @see crawler.service.NovelChapterManager#saveNovelChapter(crawler.domain.source.NovelSource)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void saveNovelChapter(final NovelSource novelSource) {
