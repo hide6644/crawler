@@ -6,6 +6,7 @@ import java.util.Date;
 import org.joda.time.format.DateTimeFormat;
 
 import crawler.domain.NovelInfo;
+import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Source;
@@ -29,31 +30,13 @@ public class NovelInfoSource {
      *
      * @param url
      *            小説の付随情報のURL
+     * @throws NovelNotFoundException
+     *             小説の付随情報が見つからない
      */
-    public NovelInfoSource(String url) {
+    public NovelInfoSource(String url) throws NovelNotFoundException {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
-
-        if (html == null) {
-            throw new NullPointerException();
-        }
-    }
-
-    /**
-     * コンストラクタ.
-     *
-     * @param url
-     *            小説の付随情報のURL
-     * @param html
-     *            小説の付随情報のhtml
-     */
-    public NovelInfoSource(URL url, Source html) {
-        if (url == null || html == null) {
-            throw new NullPointerException();
-        }
-        this.url = url;
-        this.html = html;
     }
 
     /**

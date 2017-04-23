@@ -5,6 +5,7 @@ import java.util.Date;
 import org.joda.time.format.DateTimeFormat;
 
 import crawler.domain.NovelChapterInfo;
+import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;
 
@@ -24,10 +25,12 @@ public class NovelChapterInfoElement {
      *
      * @param element
      *            小説の章の付随情報のhtml
+     * @throws NovelNotFoundException
+     *             小説の章の付随情報が見つからない
      */
-    public NovelChapterInfoElement(Element element) {
+    public NovelChapterInfoElement(Element element) throws NovelNotFoundException {
         if (element == null) {
-            throw new NullPointerException();
+            throw new NovelNotFoundException();
         }
         this.element = element;
     }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterHistory;
+import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Source;
@@ -34,31 +35,13 @@ public class NovelChapterSource {
      *
      * @param url
      *            小説の章のURL
+     * @throws NovelNotFoundException
+     *             小説の章が見つからない
      */
-    public NovelChapterSource(String url) {
+    public NovelChapterSource(String url) throws NovelNotFoundException {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
-
-        if (html == null) {
-            throw new NullPointerException();
-        }
-    }
-
-    /**
-     * コンストラクタ.
-     *
-     * @param url
-     *            小説の章のURL
-     * @param html
-     *            小説の章のhtml
-     */
-    public NovelChapterSource(URL url, Source html) {
-        if (url == null || html == null || !NovelElementsUtil.existsChapter(html)) {
-            throw new NullPointerException();
-        }
-        this.url = url;
-        this.html = html;
     }
 
     /**

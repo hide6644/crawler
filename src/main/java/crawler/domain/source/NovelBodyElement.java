@@ -4,11 +4,11 @@ import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;
 
 /**
- * 小説の本文のhtml
+ * 小説の本文のリンクのhtml
  */
 public class NovelBodyElement {
 
-    /** 小説の本文のhtml */
+    /** 小説の本文のリンクのhtml */
     private Element element;
 
     /** 小説の本文に記載されている章のURL */
@@ -24,7 +24,7 @@ public class NovelBodyElement {
      * コンストラクタ.
      *
      * @param element
-     *            小説の本文のhtml
+     *            小説の本文のリンクのhtml
      */
     public NovelBodyElement(Element element) {
         this(element, NovelElementsUtil.getChapterUrlByNovelBody(element),
@@ -36,7 +36,7 @@ public class NovelBodyElement {
      * コンストラクタ.
      *
      * @param element
-     *            小説の本文のhtml
+     *            小説の本文のリンクのhtml
      * @param chapterUrl
      *            小説の本文に記載されている章のURL
      * @param chapterLink

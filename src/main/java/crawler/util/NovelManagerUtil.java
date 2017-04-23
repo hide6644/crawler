@@ -14,6 +14,7 @@ import org.joda.time.Duration;
 import crawler.Constants;
 import crawler.domain.Novel;
 import crawler.domain.source.NovelBodyElement;
+import crawler.exception.NovelNotFoundException;
 import net.htmlparser.jericho.Source;
 
 /**
@@ -35,15 +36,17 @@ public class NovelManagerUtil {
      * 文字列からURLオブジェクトを生成する.
      *
      * @param url
-     *            小説のURL
+     *            URL
      * @return URLオブジェクト
+     * @throws NovelNotFoundException
+     *             URLで指定されたコンテンツが見つからない
      */
-    public static URL getUrl(final String url) {
+    public static URL getUrl(final String url) throws NovelNotFoundException {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
             log.error("url:" + url, e);
-            throw new RuntimeException(e);
+            throw new NovelNotFoundException();
         }
     }
 
@@ -53,8 +56,10 @@ public class NovelManagerUtil {
      * @param url
      *            URLオブジェクト
      * @return 小説のhtml要素
+     * @throws NovelNotFoundException
+     *             URLで指定されたコンテンツが見つからない
      */
-    public static Source getSource(final URL url) {
+    public static Source getSource(final URL url) throws NovelNotFoundException {
         // ネットワーク負荷低減のため、一時的に実行を停止
         delayAccess();
 
@@ -64,10 +69,10 @@ public class NovelManagerUtil {
             return html;
         } catch (FileNotFoundException e) {
             log.error("url:" + url, e);
-            return null;
+            throw new NovelNotFoundException();
         } catch (IOException e) {
             log.error("url:" + url, e);
-            throw new RuntimeException(e);
+            throw new NovelNotFoundException();
         }
     }
 
