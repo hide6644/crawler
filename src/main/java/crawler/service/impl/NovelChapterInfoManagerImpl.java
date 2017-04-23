@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import crawler.domain.NovelChapterInfo;
 import crawler.domain.source.NovelChapterInfoElement;
 import crawler.domain.source.NovelChapterSource;
+import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterInfoManager;
 import net.htmlparser.jericho.Element;
 
@@ -18,7 +19,7 @@ public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapter
      * {@inheritDoc}
      */
     @Override
-    public void saveNovelChapterInfo(final Element chapterElement, final NovelChapterSource novelChapterSource) {
+    public void saveNovelChapterInfo(final Element chapterElement, final NovelChapterSource novelChapterSource) throws NovelNotFoundException {
         NovelChapterInfoElement novelChapterInfoElement = new NovelChapterInfoElement(chapterElement);
         novelChapterInfoElement.setNovelChapterInfo(novelChapterSource.getNovelChapter().getNovelChapterInfo());
         novelChapterInfoElement.mapping();

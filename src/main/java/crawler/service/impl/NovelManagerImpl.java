@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import crawler.dao.NovelDao;
 import crawler.domain.Novel;
 import crawler.domain.source.NovelSource;
+import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 import crawler.service.NovelManager;
@@ -52,19 +53,23 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             log.info("[duplicate] title:" + novel.getTitle());
             checkForUpdatesAndSaveHistory(novel);
         } else {
-            // 小説の情報を取得
-            NovelSource novelSource = new NovelSource(url);
-            novelSource.mapping();
-            log.info("[add] title:" + novelSource.getNovel().getTitle());
+            try {
+                // 小説の情報を取得
+                NovelSource novelSource = new NovelSource(url);
+                novelSource.mapping();
+                log.info("[add] title:" + novelSource.getNovel().getTitle());
 
-            // 小説の付随情報を保存
-            novelInfoManager.saveNovelInfo(novelSource);
+                // 小説の付随情報を保存
+                novelInfoManager.saveNovelInfo(novelSource);
 
-            // 小説の章を保存
-            novelChapterManager.saveNovelChapter(novelSource);
+                // 小説の章を保存
+                novelChapterManager.saveNovelChapter(novelSource);
 
-            // 小説を永続化
-            save(novelSource.getNovel());
+                // 小説を永続化
+                save(novelSource.getNovel());
+            } catch (NovelNotFoundException e) {
+                log.info("[deleted] url:" + url);
+            }
         }
     }
 
@@ -116,8 +121,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                     novelChapterManager.saveNovelChapter(currentNovelSource);
                 }
             }
-        } catch (NullPointerException e) {
-            // ページが取得出来ない場合、削除フラグを設定
+        } catch (NovelNotFoundException e) {
+            // 小説が取得出来ない場合、削除フラグを設定
             log.info("[deleted] title:" + novel.getTitle());
             novel.setDeleted(true);
             novel.setUpdateDate(new Date());

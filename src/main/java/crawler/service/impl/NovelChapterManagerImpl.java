@@ -10,6 +10,7 @@ import crawler.domain.NovelChapter;
 import crawler.domain.source.NovelBodyElement;
 import crawler.domain.source.NovelChapterSource;
 import crawler.domain.source.NovelSource;
+import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
 import crawler.util.NovelManagerUtil;
@@ -60,8 +61,9 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                             // 更新処理
                             log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
                         }
-                    } catch (NullPointerException e) {
-                        // ページが取得出来ない場合、何もしない
+                    } catch (NovelNotFoundException e) {
+                        // 小説の章が取得出来ない場合、何もしない
+                        log.info("[not found] chapter url:" + novelBodyElement.getChapterUrl());
                     }
                 });
     }
