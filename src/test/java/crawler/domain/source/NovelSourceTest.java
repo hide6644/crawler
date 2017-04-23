@@ -17,10 +17,10 @@ public class NovelSourceTest {
 
         NovelSource novelSource = new NovelSource("file://" + filePath);
         novelSource.mapping();
-        List<NovelBodyElement> novelBodyElementList = novelSource.getChapterElementList();
+        List<NovelBodyIndexElement> chapterElementList = novelSource.getChapterElementList();
 
-        assertNotNull(novelBodyElementList);
-        assertEquals(novelBodyElementList.size(), 3);
+        assertNotNull(chapterElementList);
+        assertEquals(chapterElementList.size(), 3);
         assertTrue(novelSource.isAdd());
     }
 
@@ -38,10 +38,10 @@ public class NovelSourceTest {
         novelSource.setNovel(novel);
         novelSource.mapping();
 
-        Set<NovelBodyElement> novelBodyElementSet = novelSource.getChapterHistoryElementSet();
+        Set<NovelBodyIndexElement> chapterHistoryElementSet = novelSource.getChapterHistoryElementSet();
 
-        assertNotNull(novelBodyElementSet);
-        assertEquals(novelBodyElementSet.size(), 3);
+        assertNotNull(chapterHistoryElementSet);
+        assertEquals(chapterHistoryElementSet.size(), 3);
         assertFalse(novelSource.isAdd());
     }
 

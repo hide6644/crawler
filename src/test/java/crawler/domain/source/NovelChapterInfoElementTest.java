@@ -16,10 +16,10 @@ public class NovelChapterInfoElementTest {
 
         NovelSource novelSource = new NovelSource("file://" + filePath);
         novelSource.mapping();
-        List<NovelBodyElement> novelBodyElementList = novelSource.getChapterElementList();
+        List<NovelBodyIndexElement> chapterElementList = novelSource.getChapterElementList();
 
-        NovelBodyElement novelBodyElement = novelBodyElementList.get(0);
-        NovelChapterInfoElement novelChapterInfoElement = new NovelChapterInfoElement(novelBodyElement.getElement());
+        NovelBodyIndexElement novelBodyIndexElement = chapterElementList.get(0);
+        NovelChapterInfoElement novelChapterInfoElement = new NovelChapterInfoElement(novelBodyIndexElement.getElement());
         novelChapterInfoElement.mapping();
         NovelChapterInfo novelChapterInfo = novelChapterInfoElement.getNovelChapterInfo();
 

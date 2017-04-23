@@ -13,7 +13,7 @@ import org.joda.time.Duration;
 
 import crawler.Constants;
 import crawler.domain.Novel;
-import crawler.domain.source.NovelBodyElement;
+import crawler.domain.source.NovelBodyIndexElement;
 import crawler.exception.NovelNotFoundException;
 import net.htmlparser.jericho.Source;
 
@@ -123,19 +123,19 @@ public class NovelManagerUtil {
     /**
      * 小説の章の情報が更新されているか確認する.
      *
-     * @param novelBodyElement
+     * @param novelBodyIndexElement
      *            小説の本文のelement要素
-     * @param novelHistoryBodyElementSet
+     * @param novelHistoryBodyIndexElementSet
      *            小説の本文の履歴の章のセット
      * @return true:更新有り、false:更新無し
      */
-    public static boolean hasUpdatedChapter(final NovelBodyElement novelBodyElement, final Set<NovelBodyElement> novelHistoryBodyElementSet) {
-        if (novelHistoryBodyElementSet == null) {
+    public static boolean hasUpdatedChapter(final NovelBodyIndexElement novelBodyIndexElement, final Set<NovelBodyIndexElement> novelHistoryBodyIndexElementSet) {
+        if (novelHistoryBodyIndexElementSet == null) {
             // Historyが無い場合、true:更新有り
             return true;
         }
 
         // 小説の章のHTML要素が一致しない場合、true:更新有り
-        return !novelHistoryBodyElementSet.contains(novelBodyElement);
+        return !novelHistoryBodyIndexElementSet.contains(novelBodyIndexElement);
     }
 }

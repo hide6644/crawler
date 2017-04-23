@@ -110,10 +110,10 @@ public class NovelSource {
      *
      * @return 小説の章のリスト
      */
-    public List<NovelBodyElement> getChapterElementList() {
+    public List<NovelBodyIndexElement> getChapterElementList() {
         return new Source(novel.getBody()).getAllElements("dl").stream()
                 .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toList());
+                .map(chapterElement -> new NovelBodyIndexElement(chapterElement)).collect(Collectors.toList());
     }
 
     /**
@@ -121,7 +121,7 @@ public class NovelSource {
      *
      * @return 小説の章のセット
      */
-    public Set<NovelBodyElement> getChapterHistoryElementSet() {
+    public Set<NovelBodyIndexElement> getChapterHistoryElementSet() {
         if (novelHistory != null) {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
             List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
@@ -133,7 +133,7 @@ public class NovelSource {
 
             return chapterHistoryElementList.stream()
                     .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                    .map(chapterElement -> new NovelBodyElement(chapterElement)).collect(Collectors.toSet());
+                    .map(chapterElement -> new NovelBodyIndexElement(chapterElement)).collect(Collectors.toSet());
         } else {
             return null;
         }
