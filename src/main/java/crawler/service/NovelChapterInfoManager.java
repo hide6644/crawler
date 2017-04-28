@@ -2,6 +2,7 @@ package crawler.service;
 
 import crawler.domain.NovelChapterInfo;
 import crawler.domain.source.NovelChapterSource;
+import crawler.exception.NovelNotFoundException;
 import net.htmlparser.jericho.Element;
 
 /**
@@ -16,6 +17,8 @@ public interface NovelChapterInfoManager extends GenericManager<NovelChapterInfo
      *            小説の本文のhtml element要素
      * @param novelChapterSource
      *            小説の章の情報
+     * @throws NovelNotFoundException
+     *             小説の章の情報が見つからない
      */
-    public void saveNovelChapterInfo(Element chapterElement, NovelChapterSource novelChapterSource);
+    public void saveNovelChapterInfo(Element chapterElement, NovelChapterSource novelChapterSource) throws NovelNotFoundException;
 }

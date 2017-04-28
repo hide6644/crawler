@@ -4,11 +4,11 @@ import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;
 
 /**
- * 小説の本文のhtml
+ * 小説の本文の目次のhtml
  */
-public class NovelBodyElement {
+public class NovelBodyIndexElement {
 
-    /** 小説の本文のhtml */
+    /** 小説の本文の目次のhtml */
     private Element element;
 
     /** 小説の本文に記載されている章のURL */
@@ -24,9 +24,9 @@ public class NovelBodyElement {
      * コンストラクタ.
      *
      * @param element
-     *            小説の本文のhtml
+     *            小説の本文のリンクのhtml
      */
-    public NovelBodyElement(Element element) {
+    public NovelBodyIndexElement(Element element) {
         this(element, NovelElementsUtil.getChapterUrlByNovelBody(element),
                 NovelElementsUtil.getChapterTitleByNovelBody(element),
                 NovelElementsUtil.getChapterModifiedDate(element, false));
@@ -36,7 +36,7 @@ public class NovelBodyElement {
      * コンストラクタ.
      *
      * @param element
-     *            小説の本文のhtml
+     *            小説の本文の目次のhtml
      * @param chapterUrl
      *            小説の本文に記載されている章のURL
      * @param chapterLink
@@ -44,7 +44,7 @@ public class NovelBodyElement {
      * @param chapterModifiedDate
      *            小説の本文に記載されている章の最終更新日時
      */
-    public NovelBodyElement(Element element, String chapterUrl, String chapterLink, String chapterModifiedDate) {
+    public NovelBodyIndexElement(Element element, String chapterUrl, String chapterLink, String chapterModifiedDate) {
         this.element = element;
         this.chapterUrl = chapterUrl;
         this.chapterLink = chapterLink;
@@ -103,7 +103,7 @@ public class NovelBodyElement {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NovelBodyElement other = (NovelBodyElement) obj;
+        NovelBodyIndexElement other = (NovelBodyIndexElement) obj;
         if (chapterLink == null) {
             if (other.chapterLink != null) {
                 return false;
