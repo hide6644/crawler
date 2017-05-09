@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,6 @@ import org.joda.time.Duration;
 
 import crawler.Constants;
 import crawler.domain.Novel;
-import crawler.domain.source.NovelBodyIndexElement;
 import crawler.exception.NovelNotFoundException;
 import net.htmlparser.jericho.Source;
 
@@ -118,24 +116,5 @@ public class NovelManagerUtil {
         }
 
         return true;
-    }
-
-    /**
-     * 小説の章の情報が更新されているか確認する.
-     *
-     * @param novelBodyIndexElement
-     *            小説の本文のelement要素
-     * @param novelHistoryBodyIndexElementSet
-     *            小説の本文の履歴の章のセット
-     * @return true:更新有り、false:更新無し
-     */
-    public static boolean hasUpdatedChapter(final NovelBodyIndexElement novelBodyIndexElement, final Set<NovelBodyIndexElement> novelHistoryBodyIndexElementSet) {
-        if (novelHistoryBodyIndexElementSet == null) {
-            // Historyが無い場合、true:更新有り
-            return true;
-        }
-
-        // 小説の章のHTML要素が一致しない場合、true:更新有り
-        return !novelHistoryBodyIndexElementSet.contains(novelBodyIndexElement);
     }
 }

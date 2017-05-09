@@ -6,7 +6,7 @@ import net.htmlparser.jericho.Element;
 /**
  * 小説の本文の目次のhtml
  */
-public class NovelBodyIndexElement {
+public class NovelIndexElement {
 
     /** 小説の本文の目次のhtml */
     private Element element;
@@ -26,7 +26,7 @@ public class NovelBodyIndexElement {
      * @param element
      *            小説の本文のリンクのhtml
      */
-    public NovelBodyIndexElement(Element element) {
+    public NovelIndexElement(Element element) {
         this(element, NovelElementsUtil.getChapterUrlByNovelBody(element),
                 NovelElementsUtil.getChapterTitleByNovelBody(element),
                 NovelElementsUtil.getChapterModifiedDate(element, false));
@@ -44,7 +44,7 @@ public class NovelBodyIndexElement {
      * @param chapterModifiedDate
      *            小説の本文に記載されている章の最終更新日時
      */
-    public NovelBodyIndexElement(Element element, String chapterUrl, String chapterLink, String chapterModifiedDate) {
+    public NovelIndexElement(Element element, String chapterUrl, String chapterLink, String chapterModifiedDate) {
         this.element = element;
         this.chapterUrl = chapterUrl;
         this.chapterLink = chapterLink;
@@ -103,7 +103,7 @@ public class NovelBodyIndexElement {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NovelBodyIndexElement other = (NovelBodyIndexElement) obj;
+        NovelIndexElement other = (NovelIndexElement) obj;
         if (chapterLink == null) {
             if (other.chapterLink != null) {
                 return false;

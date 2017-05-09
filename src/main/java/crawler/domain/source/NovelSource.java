@@ -106,22 +106,22 @@ public class NovelSource {
     }
 
     /**
-     * 小説の本文から小説の章のリストを取得する.
+     * 小説の本文から小説の目次のリストを取得する.
      *
-     * @return 小説の章のリスト
+     * @return 小説の目次のリスト
      */
-    public List<NovelBodyIndexElement> getChapterElementList() {
+    public List<NovelIndexElement> getNovelIndexList() {
         return new Source(novel.getBody()).getAllElements("dl").stream()
                 .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                .map(chapterElement -> new NovelBodyIndexElement(chapterElement)).collect(Collectors.toList());
+                .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toList());
     }
 
     /**
-     * 小説の本文の履歴から小説の章のセットを取得する.
+     * 小説の本文の履歴から小説の目次のセットを取得する.
      *
-     * @return 小説の章のセット
+     * @return 小説の目次のセット
      */
-    public Set<NovelBodyIndexElement> getChapterHistoryElementSet() {
+    public Set<NovelIndexElement> getNovelHistoryIndexSet() {
         if (novelHistory != null) {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
             List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
@@ -133,7 +133,7 @@ public class NovelSource {
 
             return chapterHistoryElementList.stream()
                     .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                    .map(chapterElement -> new NovelBodyIndexElement(chapterElement)).collect(Collectors.toSet());
+                    .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toSet());
         } else {
             return null;
         }
