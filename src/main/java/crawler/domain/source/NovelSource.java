@@ -1,6 +1,5 @@
 package crawler.domain.source;
 
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -15,24 +14,15 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 
 /**
- * 小説のhtml
+ * 小説のhtmlを保持するクラス.
  */
-public class NovelSource {
-
-    /** 小説のURL */
-    private URL url;
-
-    /** 小説のhtml */
-    private Source html;
+public class NovelSource extends BaseSource {
 
     /** 小説の情報 */
     private Novel novel;
 
     /** 小説の更新履歴 */
     private NovelHistory novelHistory;
-
-    /** 新規フラグ */
-    private boolean add;
 
     /**
      * コンストラクタ.
@@ -158,31 +148,6 @@ public class NovelSource {
      */
     public String getHostUrl() {
         return url.getProtocol() + "://" + url.getHost();
-    }
-
-    /**
-     * 新規か、更新か.
-     *
-     * @return true:新規、false:更新
-     */
-    public boolean isAdd() {
-        return add;
-    }
-
-    public URL getUrl() {
-        return url;
-    }
-
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
-    public Source getHtml() {
-        return html;
-    }
-
-    public void setHtml(Source html) {
-        this.html = html;
     }
 
     public Novel getNovel() {

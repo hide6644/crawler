@@ -1,6 +1,5 @@
 package crawler.domain.source;
 
-import java.net.URL;
 import java.util.Date;
 
 import crawler.domain.NovelChapter;
@@ -8,27 +7,17 @@ import crawler.domain.NovelChapterHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
-import net.htmlparser.jericho.Source;
 
 /**
- * 小説の章の情報のhtml
+ * 小説の章の情報のhtmlを保持するクラス.
  */
-public class NovelChapterSource {
-
-    /** 小説の章のURL */
-    private URL url;
-
-    /** 小説の章のhtml */
-    private Source html;
+public class NovelChapterSource extends BaseSource {
 
     /** 小説の章の情報 */
     private NovelChapter novelChapter;
 
     /** 小説の章の更新履歴 */
     private NovelChapterHistory novelChapterHistory;
-
-    /** 新規フラグ */
-    private boolean add;
 
     /**
      * コンストラクタ.
@@ -76,31 +65,6 @@ public class NovelChapterSource {
         novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
         novelChapter.setUrl(url.toString());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
-    }
-
-    /**
-     * 新規か、更新か.
-     *
-     * @return true:新規、false:更新
-     */
-    public boolean isAdd() {
-        return add;
-    }
-
-    public URL getUrl() {
-        return url;
-    }
-
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
-    public Source getHtml() {
-        return html;
-    }
-
-    public void setHtml(Source html) {
-        this.html = html;
     }
 
     public NovelChapter getNovelChapter() {

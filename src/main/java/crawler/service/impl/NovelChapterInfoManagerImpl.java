@@ -3,10 +3,9 @@ package crawler.service.impl;
 import org.springframework.stereotype.Service;
 
 import crawler.domain.NovelChapterInfo;
-import crawler.domain.source.NovelChapterInfoElement;
 import crawler.domain.source.NovelChapterSource;
+import crawler.domain.source.NovelIndexElement;
 import crawler.service.NovelChapterInfoManager;
-import net.htmlparser.jericho.Element;
 
 /**
  * 小説の章の付随情報を管理する.
@@ -18,12 +17,11 @@ public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapter
      * {@inheritDoc}
      */
     @Override
-    public void saveNovelChapterInfo(final Element chapterElement, final NovelChapterSource novelChapterSource) {
-        NovelChapterInfoElement novelChapterInfoElement = new NovelChapterInfoElement(chapterElement);
-        novelChapterInfoElement.setNovelChapterInfo(novelChapterSource.getNovelChapter().getNovelChapterInfo());
-        novelChapterInfoElement.mapping();
+    public void saveNovelChapterInfo(final NovelIndexElement novelIndexElement, final NovelChapterSource novelChapterSource) {
+        novelIndexElement.setNovelChapterInfo(novelChapterSource.getNovelChapter().getNovelChapterInfo());
+        novelIndexElement.mapping();
 
-        novelChapterInfoElement.getNovelChapterInfo().setNovelChapter(novelChapterSource.getNovelChapter());
-        novelChapterSource.getNovelChapter().setNovelChapterInfo(novelChapterInfoElement.getNovelChapterInfo());
+        novelIndexElement.getNovelChapterInfo().setNovelChapter(novelChapterSource.getNovelChapter());
+        novelChapterSource.getNovelChapter().setNovelChapterInfo(novelIndexElement.getNovelChapterInfo());
     }
 }

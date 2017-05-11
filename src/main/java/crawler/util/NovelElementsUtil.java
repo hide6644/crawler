@@ -171,18 +171,16 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の本文のhtml element要素から小説の章の最終更新日時を取得する.
+     * 小説の目次のhtml element要素から小説の章の最終更新日時を取得する.
      *
      * @param element
      *            html element要素
-     * @param extract
-     *            true:括弧内を参照する、false:括弧内を参照しない
      * @return 小説の章の最終更新日時
      */
-    public static String getChapterModifiedDate(final Element element, final boolean extract) {
+    public static String getChapterModifiedDate(final Element element) {
         Element updateElement = element.getAllElementsByClass("long_update").get(0);
 
-        if (extract && updateElement.getAllElements("span").size() > 0) {
+        if (updateElement.getAllElements("span").size() > 0) {
             return updateElement.getAllElements("span").get(0).getAttributeValue("title").toString();
         } else {
             return updateElement.getTextExtractor().toString();

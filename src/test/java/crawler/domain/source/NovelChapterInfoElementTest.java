@@ -19,13 +19,12 @@ public class NovelChapterInfoElementTest {
         List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
 
         NovelIndexElement novelIndexElement = novelIndexList.get(0);
-        NovelChapterInfoElement novelChapterInfoElement = new NovelChapterInfoElement(novelIndexElement.getElement());
-        novelChapterInfoElement.mapping();
-        NovelChapterInfo novelChapterInfo = novelChapterInfoElement.getNovelChapterInfo();
+        novelIndexElement.mapping();
+        NovelChapterInfo novelChapterInfo = novelIndexElement.getNovelChapterInfo();
 
         assertNotNull(novelChapterInfo);
 
-        novelChapterInfoElement.setNovelChapterInfo(novelChapterInfo);
-        novelChapterInfoElement.mapping();
+        novelIndexElement.setNovelChapterInfo(novelChapterInfo);
+        novelIndexElement.mapping();
     }
 }
