@@ -28,11 +28,11 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     /** 小説のDAO. */
     private NovelDao novelDao;
 
-    /** 小説の付随情報を管理. */
+    /** 小説の付随情報を管理する. */
     @Autowired
     private NovelInfoManager novelInfoManager;
 
-    /** 小説の章を管理. */
+    /** 小説の章を管理する. */
     @Autowired
     private NovelChapterManager novelChapterManager;
 

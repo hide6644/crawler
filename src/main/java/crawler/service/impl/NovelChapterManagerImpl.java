@@ -23,7 +23,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     /** 小説の章のDAO. */
     private NovelChapterDao novelChapterDao;
 
-    /** 小説の章の付随情報を管理. */
+    /** 小説の章の付随情報を管理する. */
     @Autowired
     private NovelChapterInfoManager novelChapterInfoManager;
 

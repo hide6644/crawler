@@ -19,7 +19,9 @@ public class NovelInfoDaoTest extends BaseDaoTestCase {
     public void testSearch() throws Exception {
         dao.reindex();
 
-        List<NovelInfo> novelInfoList = dao.search(new String[]{"ファンタジー"}, new String[]{"keyword"});
+        List<NovelInfo> novelInfoList = dao.search("ファンタジー");
+        assertNotNull(novelInfoList);
+        novelInfoList = dao.search(new String[]{"ファンタジー"}, new String[]{"keyword"});
         assertNotNull(novelInfoList);
     }
 
