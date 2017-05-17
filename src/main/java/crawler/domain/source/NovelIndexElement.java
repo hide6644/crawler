@@ -32,7 +32,7 @@ public class NovelIndexElement {
      * コンストラクタ.
      *
      * @param element
-     *            小説の目次のhtml element要素
+     *            小説の目次のhtml element
      */
     public NovelIndexElement(Element element) {
         chapterUrl = NovelElementsUtil.getChapterUrlByNovelBody(element);
@@ -41,7 +41,7 @@ public class NovelIndexElement {
     }
 
     /**
-     * 小説の目次のhtml element要素を小説の章の付随情報(NovelChapterInfo)に変換する.
+     * 小説の目次のhtml elementを小説の章の付随情報(NovelChapterInfo)に変換する.
      */
     public void mapping() {
         if (novelChapterInfo == null) {

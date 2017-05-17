@@ -13,7 +13,7 @@ public interface NovelChapterInfoManager extends GenericManager<NovelChapterInfo
      * 小説の章の付随情報を設定する.
      *
      * @param novelIndexElement
-     *            小説の目次のhtml element要素
+     *            小説の目次のhtml element
      * @param novelChapterSource
      *            小説の章の情報のhtml
      */

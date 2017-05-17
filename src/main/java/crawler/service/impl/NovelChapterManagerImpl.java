@@ -38,7 +38,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
 
         novelSource.getNovelIndexList().stream()
                 // 小説の履歴が無い場合(新規の場合)、true:更新有りとする
-                // 小説の目次のhtml element要素が一致しない場合、true:更新有りとする
+                // 小説の目次のhtml elementが一致しない場合、true:更新有りとする
                 .filter(novelIndexElement -> novelHistoryIndexSet == null || !novelHistoryIndexSet.contains(novelIndexElement))
                 .forEach(novelIndexElement -> {
                     try {

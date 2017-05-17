@@ -49,11 +49,11 @@ public class NovelManagerUtil {
     }
 
     /**
-     * 小説のhtml要素を取得する.
+     * html sourceを取得する.
      *
      * @param url
      *            URLオブジェクト
-     * @return 小説のhtml要素
+     * @return html source
      * @throws NovelNotFoundException
      *             URLで指定されたコンテンツが見つからない
      */
