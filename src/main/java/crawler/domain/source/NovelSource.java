@@ -96,9 +96,9 @@ public class NovelSource extends BaseSource {
     }
 
     /**
-     * 小説の本文から小説の目次のリストを取得する.
+     * 小説の本文から小説の目次リストを取得する.
      *
-     * @return 小説の目次のリスト
+     * @return 小説の目次リスト
      */
     public List<NovelIndexElement> getNovelIndexList() {
         return new Source(novel.getBody()).getAllElements("dl").stream()
@@ -107,9 +107,9 @@ public class NovelSource extends BaseSource {
     }
 
     /**
-     * 小説の本文の履歴から小説の目次のセットを取得する.
+     * 小説の本文の履歴から小説の目次セットを取得する.
      *
-     * @return 小説の目次のセット
+     * @return 小説の目次セット
      */
     public Set<NovelIndexElement> getNovelHistoryIndexSet() {
         if (novelHistory != null) {

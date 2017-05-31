@@ -31,7 +31,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Indexed
 @Analyzer(impl = JapaneseAnalyzer.class)
 @XmlRootElement
-public class Novel extends BaseEntity implements Serializable {
+public class Novel extends BaseObject implements Serializable {
 
     /** URL */
     private String url;
@@ -54,10 +54,10 @@ public class Novel extends BaseEntity implements Serializable {
     /** 小説の付随情報 */
     private NovelInfo novelInfo;
 
-    /** 小説の更新履歴 */
+    /** 小説の更新履歴セット */
     private Set<NovelHistory> novelHistories = new HashSet<NovelHistory>();
 
-    /** 小説の章 */
+    /** 小説の章リスト */
     private List<NovelChapter> novelChapters = new ArrayList<NovelChapter>();
 
     @Column(nullable = false, length = 64)

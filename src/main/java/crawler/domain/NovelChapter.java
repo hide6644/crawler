@@ -29,7 +29,7 @@ import org.hibernate.search.annotations.Indexed;
 @Table(name = "novel_chapter")
 @Indexed
 @Analyzer(impl = JapaneseAnalyzer.class)
-public class NovelChapter extends BaseEntity implements Serializable {
+public class NovelChapter extends BaseObject implements Serializable {
 
     /** URL */
     private String url;
@@ -43,7 +43,7 @@ public class NovelChapter extends BaseEntity implements Serializable {
     /** 小説の章の付随情報 */
     private NovelChapterInfo novelChapterInfo;
 
-    /** 小説の章の更新履歴 */
+    /** 小説の章の更新履歴セット */
     private Set<NovelChapterHistory> novelChapterHistories = new HashSet<NovelChapterHistory>();
 
     /** 小説 */

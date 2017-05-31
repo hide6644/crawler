@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "novel_chapter_info")
-public class NovelChapterInfo extends BaseEntity implements Serializable {
+public class NovelChapterInfo extends BaseObject implements Serializable {
 
     /** 最終確認日時 */
     private Date checkedDate;

@@ -18,7 +18,7 @@ import org.hibernate.search.annotations.DocumentId;
  * エンティティの基底クラス.
  */
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class BaseObject {
 
     /** ID */
     private Long id;
@@ -193,7 +193,7 @@ public abstract class BaseEntity {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        BaseEntity other = (BaseEntity) obj;
+        BaseObject other = (BaseObject) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;

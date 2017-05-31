@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "novel_chapter_history")
-public class NovelChapterHistory extends BaseEntity implements Serializable {
+public class NovelChapterHistory extends BaseObject implements Serializable {
 
     /** タイトル */
     private String title;
