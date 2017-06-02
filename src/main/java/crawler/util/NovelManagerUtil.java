@@ -7,11 +7,8 @@ import java.net.URL;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 import crawler.Constants;
-import crawler.domain.Novel;
 import crawler.exception.NovelNotFoundException;
 import net.htmlparser.jericho.Source;
 
@@ -83,38 +80,5 @@ public class NovelManagerUtil {
         } catch (InterruptedException e) {
             log.error("Interrupted:", e);
         }
-    }
-
-    /**
-     * 小説の更新を確認するか、更新頻度から判断する.
-     *
-     * @param novel
-     *            小説の情報
-     * @return true:確認必要、false:確認不要
-     */
-    public static boolean isConfirmedNovel(final Novel novel) {
-        if (novel.getNovelInfo().isFinished()) {
-            if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(DateTime.now().minusDays(45))) {
-                log.info("[skip] finished title:" + novel.getTitle());
-                return false;
-            }
-        }
-
-        DateTime modifiedDate = new DateTime(novel.getNovelInfo().getModifiedDate());
-        if (modifiedDate.isAfter(DateTime.now().minusDays(30))) {
-            // 更新日付が30日以内の場合
-            if (new DateTime(novel.getNovelInfo().getCheckedDate())
-                    .isAfter(DateTime.now().minusDays((int) new Duration(modifiedDate, DateTime.now()).getStandardDays() / 2))) {
-                log.info("[skip] title:" + novel.getTitle());
-                return false;
-            }
-        } else {
-            if (new DateTime(novel.getNovelInfo().getCheckedDate()).isAfter(DateTime.now().minusDays(15))) {
-                log.info("[skip] title:" + novel.getTitle());
-                return false;
-            }
-        }
-
-        return true;
     }
 }

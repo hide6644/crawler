@@ -17,11 +17,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 /**
  * 小説の情報
@@ -32,6 +36,9 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Analyzer(impl = JapaneseAnalyzer.class)
 @XmlRootElement
 public class Novel extends BaseObject implements Serializable {
+
+    /** ログ出力クラス */
+    protected Logger log = LogManager.getLogger(getClass());
 
     /** URL */
     private String url;
@@ -59,6 +66,38 @@ public class Novel extends BaseObject implements Serializable {
 
     /** 小説の章リスト */
     private List<NovelChapter> novelChapters = new ArrayList<NovelChapter>();
+
+    /**
+     * 更新を確認する必要があるか.
+     * (更新頻度から判定する)
+     *
+     * @return true:確認必要、false:確認不要
+     */
+    public boolean needsCheckForUpdate() {
+        final DateTime now = DateTime.now();
+        if (novelInfo.isFinished()) {
+            if (new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays(45))) {
+                log.info("[skip] finished title:" + title);
+                return false;
+            }
+        }
+
+        final DateTime modifiedDate = new DateTime(novelInfo.getModifiedDate());
+        if (modifiedDate.isAfter(now.minusDays(30))) {
+            // 更新日付が30日以内の場合
+            if (new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays((int) new Duration(modifiedDate, now).getStandardDays() / 2))) {
+                log.info("[skip] title:" + title);
+                return false;
+            }
+        } else {
+            if (new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays(15))) {
+                log.info("[skip] title:" + title);
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     @Column(nullable = false, length = 64)
     public String getUrl() {
