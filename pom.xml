@@ -413,9 +413,9 @@
 
         <commons.io.version>2.5</commons.io.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <hibernate.version>5.2.9.Final</hibernate.version>
-        <hibernate.search.version>5.7.0.Final</hibernate.search.version>
-        <HikariCP.version>2.6.1</HikariCP.version>
+        <hibernate.version>5.2.10.Final</hibernate.version>
+        <hibernate.search.version>5.7.1.Final</hibernate.search.version>
+        <HikariCP.version>2.6.2</HikariCP.version>
         <jericho.html.version>3.4</jericho.html.version>
         <joda.time.version>2.9.9</joda.time.version>
         <junit.version>4.12</junit.version>
@@ -424,7 +424,7 @@
         <mail.version>1.4.7</mail.version>
         <mockito.version>1.10.19</mockito.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring.version>4.3.7.RELEASE</spring.version>
+        <spring.version>4.3.9.RELEASE</spring.version>
         <subethasmtp.version>3.1.7</subethasmtp.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
