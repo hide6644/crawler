@@ -7,13 +7,12 @@ import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
 import crawler.domain.NovelChapter;
-import crawler.domain.source.NovelBodyIndexElement;
 import crawler.domain.source.NovelChapterSource;
+import crawler.domain.source.NovelIndexElement;
 import crawler.domain.source.NovelSource;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
-import crawler.util.NovelManagerUtil;
 
 /**
  * 小説の章を管理する.
@@ -24,7 +23,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     /** 小説の章のDAO. */
     private NovelChapterDao novelChapterDao;
 
-    /** 小説の章の付随情報. */
+    /** 小説の章の付随情報を管理する. */
     @Autowired
     private NovelChapterInfoManager novelChapterInfoManager;
 
@@ -34,22 +33,24 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
     @Override
     public void saveNovelChapter(final NovelSource novelSource) {
         String hostname = novelSource.getHostUrl();
-        // 小説の履歴から小説の章のElementセットを作成し、変数に代入
-        Set<NovelBodyIndexElement> chapterHistoryElementSet = novelSource.getChapterHistoryElementSet();
+        // 小説の本文の履歴から小説の目次のセットを取得
+        Set<NovelIndexElement> novelHistoryIndexSet = novelSource.getNovelHistoryIndexSet();
 
-        novelSource.getChapterElementList().stream()
-                .filter(novelBodyIndexElement -> NovelManagerUtil.hasUpdatedChapter(novelBodyIndexElement, chapterHistoryElementSet))
-                .forEach(novelBodyIndexElement -> {
-                    // 小説の章の情報に差異がある場合、小説の章を取得
+        novelSource.getNovelIndexList().stream()
+                // 小説の履歴が無い場合(新規の場合)、true:更新有りとする
+                // 小説の目次のhtml elementが一致しない場合、true:更新有りとする
+                .filter(novelIndexElement -> novelHistoryIndexSet == null || !novelHistoryIndexSet.contains(novelIndexElement))
+                .forEach(novelIndexElement -> {
                     try {
-                        NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelBodyIndexElement.getChapterUrl());
+                        // 小説の章を取得
+                        NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelIndexElement.getChapterUrl());
 
-                        // URLが一致する小説の章を取得
+                        // 履歴からURLが一致する小説の章を取得し設定
                         novelChapterSource.setNovelChapter(novelChapterDao.getByUrl(novelChapterSource.getUrl().toString()));
                         novelChapterSource.mapping();
 
-                        // 小説の章の付随情報を保存
-                        novelChapterInfoManager.saveNovelChapterInfo(novelBodyIndexElement.getElement(), novelChapterSource);
+                        // 小説の章の付随情報を設定
+                        novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
 
                         if (novelChapterSource.isAdd()) {
                             // URLが一致する小説の章がない場合、登録処理
@@ -63,7 +64,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                         }
                     } catch (NovelNotFoundException e) {
                         // 小説の章が取得出来ない場合、何もしない
-                        log.info("[not found] chapter url:" + novelBodyIndexElement.getChapterUrl());
+                        log.info("[not found] chapter url:" + novelIndexElement.getChapterUrl());
                     }
                 });
     }

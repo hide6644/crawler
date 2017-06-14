@@ -1,6 +1,5 @@
 package crawler.domain.source;
 
-import java.net.URL;
 import java.util.Date;
 
 import org.joda.time.format.DateTimeFormat;
@@ -9,18 +8,14 @@ import crawler.domain.NovelInfo;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
-import net.htmlparser.jericho.Source;
 
 /**
- * 小説の付随情報のhtml
+ * 小説の付随情報のhtmlを保持するクラス.
  */
-public class NovelInfoSource {
+public class NovelInfoSource extends BaseSource {
 
-    /** 小説の付随情報のURL */
-    private URL url;
-
-    /** 小説の付随情報のhtml */
-    private Source html;
+    /** 最終更新日時のフォーマット */
+    public static final String MODIFIED_DATE_FORMAT = "yyyy年 MM月dd日 HH時mm分";
 
     /** 小説の付随情報 */
     private NovelInfo novelInfo;
@@ -51,25 +46,10 @@ public class NovelInfoSource {
         }
 
         novelInfo.setKeyword(NovelElementsUtil.getKeyword(html));
-        novelInfo.setModifiedDate(DateTimeFormat.forPattern("yyyy年 MM月dd日 HH時mm分").parseDateTime(NovelElementsUtil.getModifiedDate(html)).toDate());
+        novelInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
+                .parseDateTime(NovelElementsUtil.getModifiedDate(html)).toDate());
         novelInfo.setFinished(NovelElementsUtil.getFinished(html));
         novelInfo.setCheckedDate(new Date());
-    }
-
-    public URL getUrl() {
-        return url;
-    }
-
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
-    public Source getHtml() {
-        return html;
-    }
-
-    public void setHtml(Source html) {
-        this.html = html;
     }
 
     public NovelInfo getNovelInfo() {

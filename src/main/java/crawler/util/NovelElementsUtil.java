@@ -4,7 +4,7 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 
 /**
- * 小説のhtml要素抽出のUtilityクラス.
+ * 小説のhtml source抽出のUtilityクラス.
  */
 public class NovelElementsUtil {
 
@@ -19,7 +19,7 @@ public class NovelElementsUtil {
      * 小説の章へのリンクが存在するか.
      *
      * @param element
-     *            html element要素
+     *            html element
      * @return true:リンクが存在する、false:リンクが存在しない
      */
     public static boolean existsChapterLink(final Element element) {
@@ -30,7 +30,7 @@ public class NovelElementsUtil {
      * 小説の章が存在するか.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return true:章が存在する、false:章が存在しない
      */
     public static boolean existsChapter(final Source html) {
@@ -38,10 +38,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説のhtml要素から小説のタイトルを取得する.
+     * 小説のhtml sourceから小説のタイトルを取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説のタイトル
      */
     public static String getTitle(final Source html) {
@@ -49,10 +49,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説のhtml要素から小説の作者を取得する.
+     * 小説のhtml sourceから小説の作者を取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の作者
      */
     public static String getWritername(final Source html) {
@@ -60,10 +60,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説のhtml要素から小説の解説を取得する.
+     * 小説のhtml sourceから小説の解説を取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の解説
      */
     public static String getDescription(final Source html) {
@@ -71,10 +71,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説のhtml要素から小説の本文を取得する.
+     * 小説のhtml sourceから小説の本文を取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の本文
      */
     public static String getBody(final Source html) {
@@ -82,10 +82,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の本文のhtml element要素から小説の章のURLを取得する.
+     * 小説の本文のhtml elementから小説の章のURLを取得する.
      *
      * @param element
-     *            html element要素
+     *            html element
      * @return 小説の章のURL
      */
     public static String getChapterUrlByNovelBody(final Element element) {
@@ -93,10 +93,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の章のhtml要素から小説の章のタイトルを取得する.
+     * 小説の章のhtml sourceから小説の章のタイトルを取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の章のタイトル
      */
     public static String getChapterTitle(final Source html) {
@@ -104,10 +104,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の本文のhtml element要素から小説の章のタイトルを取得する.
+     * 小説の本文のhtml elementから小説の章のタイトルを取得する.
      *
      * @param element
-     *            html element要素
+     *            html element
      * @return 小説の章のタイトル
      */
     public static String getChapterTitleByNovelBody(final Element element) {
@@ -121,10 +121,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の章のhtml要素から小説の章の本文を取得する.
+     * 小説の章のhtml sourceから小説の章の本文を取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の章の本文
      */
     public static String getChapterBody(final Source html) {
@@ -132,10 +132,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の付随情報のhtml要素から小説の付随情報のキーワードを取得する.
+     * 小説の付随情報のhtml sourceから小説の付随情報のキーワードを取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の付随情報のキーワード
      */
     public static String getKeyword(final Source html) {
@@ -143,10 +143,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の付随情報のhtml要素から小説の付随情報の最終更新日時を取得する.
+     * 小説の付随情報のhtml sourceから小説の付随情報の最終更新日時を取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の付随情報の最終更新日時
      */
     public static String getModifiedDate(final Source html) {
@@ -154,10 +154,10 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の付随情報のhtml要素から小説の付随情報の完結フラグを取得する.
+     * 小説の付随情報のhtml sourceから小説の付随情報の完結フラグを取得する.
      *
      * @param html
-     *            html要素
+     *            html source
      * @return 小説の付随情報の完結フラグ
      */
     public static boolean getFinished(final Source html) {
@@ -171,18 +171,16 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の本文のhtml element要素から小説の章の最終更新日時を取得する.
+     * 小説の目次のhtml elementから小説の章の最終更新日時を取得する.
      *
      * @param element
-     *            html element要素
-     * @param extract
-     *            true:括弧内を参照する、false:括弧内を参照しない
+     *            html element
      * @return 小説の章の最終更新日時
      */
-    public static String getChapterModifiedDate(final Element element, final boolean extract) {
+    public static String getChapterModifiedDate(final Element element) {
         Element updateElement = element.getAllElementsByClass("long_update").get(0);
 
-        if (extract && updateElement.getAllElements("span").size() > 0) {
+        if (updateElement.getAllElements("span").size() > 0) {
             return updateElement.getAllElements("span").get(0).getAttributeValue("title").toString();
         } else {
             return updateElement.getTextExtractor().toString();

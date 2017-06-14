@@ -1,6 +1,5 @@
 package crawler.domain.source;
 
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -15,24 +14,15 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 
 /**
- * 小説のhtml
+ * 小説のhtmlを保持するクラス.
  */
-public class NovelSource {
-
-    /** 小説のURL */
-    private URL url;
-
-    /** 小説のhtml */
-    private Source html;
+public class NovelSource extends BaseSource {
 
     /** 小説の情報 */
     private Novel novel;
 
     /** 小説の更新履歴 */
     private NovelHistory novelHistory;
-
-    /** 新規フラグ */
-    private boolean add;
 
     /**
      * コンストラクタ.
@@ -106,22 +96,22 @@ public class NovelSource {
     }
 
     /**
-     * 小説の本文から小説の章のリストを取得する.
+     * 小説の本文から小説の目次リストを取得する.
      *
-     * @return 小説の章のリスト
+     * @return 小説の目次リスト
      */
-    public List<NovelBodyIndexElement> getChapterElementList() {
+    public List<NovelIndexElement> getNovelIndexList() {
         return new Source(novel.getBody()).getAllElements("dl").stream()
                 .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                .map(chapterElement -> new NovelBodyIndexElement(chapterElement)).collect(Collectors.toList());
+                .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toList());
     }
 
     /**
-     * 小説の本文の履歴から小説の章のセットを取得する.
+     * 小説の本文の履歴から小説の目次セットを取得する.
      *
-     * @return 小説の章のセット
+     * @return 小説の目次セット
      */
-    public Set<NovelBodyIndexElement> getChapterHistoryElementSet() {
+    public Set<NovelIndexElement> getNovelHistoryIndexSet() {
         if (novelHistory != null) {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
             List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
@@ -133,7 +123,7 @@ public class NovelSource {
 
             return chapterHistoryElementList.stream()
                     .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                    .map(chapterElement -> new NovelBodyIndexElement(chapterElement)).collect(Collectors.toSet());
+                    .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toSet());
         } else {
             return null;
         }
@@ -158,31 +148,6 @@ public class NovelSource {
      */
     public String getHostUrl() {
         return url.getProtocol() + "://" + url.getHost();
-    }
-
-    /**
-     * 新規か、更新か.
-     *
-     * @return true:新規、false:更新
-     */
-    public boolean isAdd() {
-        return add;
-    }
-
-    public URL getUrl() {
-        return url;
-    }
-
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
-    public Source getHtml() {
-        return html;
-    }
-
-    public void setHtml(Source html) {
-        this.html = html;
     }
 
     public Novel getNovel() {

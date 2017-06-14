@@ -36,7 +36,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Entity
 @Table(name = "novel_info")
 @Indexed
-public class NovelInfo extends BaseEntity implements Serializable {
+public class NovelInfo extends BaseObject implements Serializable {
 
     /** 最終確認日時 */
     private Date checkedDate;
@@ -50,7 +50,7 @@ public class NovelInfo extends BaseEntity implements Serializable {
     /** キーワード */
     private String keyword;
 
-    /** キーワード(スペースで分割) */
+    /** キーワードセット */
     private Set<KeywordWrap> keywordSet = new HashSet<>();
 
     /** お気に入りフラグ */
@@ -150,7 +150,7 @@ public class NovelInfo extends BaseEntity implements Serializable {
 }
 
 /**
- * 小説の付随情報のキーワード(スペースで分割)
+ * 小説の付随情報のキーワード
  */
 class KeywordWrap implements Serializable {
 

@@ -12,7 +12,7 @@ import crawler.service.NovelManager;
 @Service("novelProcess")
 public class NovelProcess extends BaseBatchProcess implements BatchProcess {
 
-    /** 小説の情報を管理する */
+    /** 小説の情報を管理する. */
     @Autowired
     private NovelManager novelManager;
 

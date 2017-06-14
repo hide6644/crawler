@@ -17,7 +17,6 @@ import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 import crawler.service.NovelManager;
 import crawler.service.mail.NovelReportMail;
-import crawler.util.NovelManagerUtil;
 
 /**
  * 小説の情報を管理する.
@@ -28,11 +27,11 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     /** 小説のDAO. */
     private NovelDao novelDao;
 
-    /** 小説の付随情報. */
+    /** 小説の付随情報を管理する. */
     @Autowired
     private NovelInfoManager novelInfoManager;
 
-    /** 小説の章. */
+    /** 小説の章を管理する. */
     @Autowired
     private NovelChapterManager novelChapterManager;
 
@@ -80,8 +79,8 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
-        return novelDao.getByCheckedDateLessThanEqual(new DateTime().withTimeAtStartOfDay().toDate()).stream()
-                .filter(novel -> NovelManagerUtil.isConfirmedNovel(novel))
+        return novelDao.getByCheckedDateLessThanEqual(DateTime.now().withTimeAtStartOfDay().toDate()).stream()
+                .filter(novel -> novel.needsCheckForUpdate())
                 .map(novel -> novel.getId())
                 .collect(Collectors.toList());
     }
