@@ -2,9 +2,11 @@ package crawler.service.mail;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +65,7 @@ public class NovelReportMail {
                 dir.mkdirs();
             }
 
-            pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)));
 
             // テンプレートとマージ
             cfg.getTemplate("report.ftl").process(root, pw);
