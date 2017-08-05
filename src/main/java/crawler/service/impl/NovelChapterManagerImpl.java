@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import crawler.dao.NovelChapterDao;
 import crawler.domain.NovelChapter;
 import crawler.domain.source.NovelChapterSource;
+import crawler.domain.source.NovelChapterSourceFactory;
 import crawler.domain.source.NovelIndexElement;
 import crawler.domain.source.NovelSource;
 import crawler.exception.NovelNotFoundException;
@@ -43,11 +44,8 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
                 .forEach(novelIndexElement -> {
                     try {
                         // 小説の章を取得
-                        NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelIndexElement.getChapterUrl());
-
-                        // 履歴からURLが一致する小説の章を取得し設定
-                        novelChapterSource.setNovelChapter(novelChapterDao.getByUrl(novelChapterSource.getUrl().toString()));
-                        novelChapterSource.mapping();
+                        String url = hostname + novelIndexElement.getChapterUrl();
+                        NovelChapterSource novelChapterSource = NovelChapterSourceFactory.newInstance(url, novelChapterDao.getByUrl(url));
 
                         // 小説の章の付随情報を設定
                         novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);

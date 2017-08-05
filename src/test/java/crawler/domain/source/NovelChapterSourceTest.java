@@ -12,15 +12,13 @@ public class NovelChapterSourceTest {
     public void testIsAdd() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test01.html").getPath();
 
-        NovelChapterSource novelChapterSource = new NovelChapterSource("file://" + filePath);
-        novelChapterSource.mapping();
+        NovelChapterSource novelChapterSource = NovelChapterSourceFactory.newInstance("file://" + filePath, null);
         NovelChapter novelChapter = novelChapterSource.getNovelChapter();
-        novelChapter.setTitle("Test小説の章のタイトル");
 
         assertTrue(novelChapterSource.isAdd());
 
-        novelChapterSource.setNovelChapter(novelChapter);
-        novelChapterSource.mapping();
+        novelChapter.setTitle("Test小説の章のタイトル");
+        novelChapterSource = NovelChapterSourceFactory.newInstance("file://" + filePath, novelChapter);
 
         assertFalse(novelChapterSource.isAdd());
     }

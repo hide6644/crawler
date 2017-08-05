@@ -32,16 +32,17 @@ public class NovelSource extends BaseSource {
      * @throws NovelNotFoundException
      *             小説が見つからない
      */
-    public NovelSource(String url) throws NovelNotFoundException {
+    protected NovelSource(String url) throws NovelNotFoundException {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
     }
 
     /**
-     * 小説のhtmlを小説の情報(Novel)に変換する.
+     * {@inheritDoc}
      */
-    public void mapping() {
+    @Override
+    protected void mapping() {
         if (novel == null) {
             add = true;
             novel = new Novel();
@@ -86,7 +87,7 @@ public class NovelSource extends BaseSource {
             }
         }
 
-        // 小説の情報を取得
+        // 小説の情報に設定
         novel.setTitle(NovelElementsUtil.getTitle(html));
         novel.setWritername(NovelElementsUtil.getWritername(html));
         novel.setDescription(NovelElementsUtil.getDescription(html));

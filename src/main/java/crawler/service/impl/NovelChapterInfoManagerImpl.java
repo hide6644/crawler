@@ -3,6 +3,8 @@ package crawler.service.impl;
 import org.springframework.stereotype.Service;
 
 import crawler.domain.NovelChapterInfo;
+import crawler.domain.source.NovelChapterModifiedDate;
+import crawler.domain.source.NovelChapterModifiedDateFactory;
 import crawler.domain.source.NovelChapterSource;
 import crawler.domain.source.NovelIndexElement;
 import crawler.service.NovelChapterInfoManager;
@@ -18,10 +20,9 @@ public class NovelChapterInfoManagerImpl extends GenericManagerImpl<NovelChapter
      */
     @Override
     public void saveNovelChapterInfo(final NovelIndexElement novelIndexElement, final NovelChapterSource novelChapterSource) {
-        novelIndexElement.setNovelChapterInfo(novelChapterSource.getNovelChapter().getNovelChapterInfo());
-        novelIndexElement.mapping();
+        NovelChapterModifiedDate novelChapterModifiedDate = NovelChapterModifiedDateFactory.newInstance(novelIndexElement, novelChapterSource.getNovelChapter().getNovelChapterInfo());
 
-        novelIndexElement.getNovelChapterInfo().setNovelChapter(novelChapterSource.getNovelChapter());
-        novelChapterSource.getNovelChapter().setNovelChapterInfo(novelIndexElement.getNovelChapterInfo());
+        novelChapterModifiedDate.getNovelChapterInfo().setNovelChapter(novelChapterSource.getNovelChapter());
+        novelChapterSource.getNovelChapter().setNovelChapterInfo(novelChapterModifiedDate.getNovelChapterInfo());
     }
 }

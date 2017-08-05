@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import crawler.domain.NovelInfo;
 import crawler.domain.source.NovelInfoSource;
+import crawler.domain.source.NovelInfoSourceFactory;
 import crawler.domain.source.NovelSource;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelInfoManager;
@@ -19,9 +20,7 @@ public class NovelInfoManagerImpl extends GenericManagerImpl<NovelInfo, Long> im
      */
     @Override
     public void saveNovelInfo(final NovelSource novelSource) throws NovelNotFoundException {
-        NovelInfoSource novelInfoSource = new NovelInfoSource(novelSource.getNovelInfoLink());
-        novelInfoSource.setNovelInfo(novelSource.getNovel().getNovelInfo());
-        novelInfoSource.mapping();
+        NovelInfoSource novelInfoSource = NovelInfoSourceFactory.newInstance(novelSource.getNovelInfoLink(), novelSource.getNovel().getNovelInfo());
 
         novelInfoSource.getNovelInfo().setNovel(novelSource.getNovel());
         novelSource.getNovel().setNovelInfo(novelInfoSource.getNovelInfo());

@@ -19,6 +19,11 @@ public abstract class BaseSource {
     protected boolean add;
 
     /**
+     * htmlをオブジェクトに変換する.
+     */
+    protected abstract void mapping();
+
+    /**
      * 新規か、更新か.
      *
      * @return true:新規、false:更新

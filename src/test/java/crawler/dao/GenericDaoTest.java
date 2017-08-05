@@ -61,4 +61,17 @@ public class GenericDaoTest extends BaseDaoTestCase {
         List<Novel> novelDistinctList = genericDao.getAllDistinct();
         assertTrue(novelDistinctList.size() > 0);
     }
+
+    @Test
+    public void testSearch() {
+        genericDao.reindex();
+        List<Novel> novelList = genericDao.search(new String[]{"class"}, new String[]{"body"});
+
+        assertNotNull(novelList.get(0));
+    }
+
+    @Test(expected = SearchException.class)
+    public void testSearchException() {
+        genericDao.search(new String[]{""}, new String[]{""});
+    }
 }
