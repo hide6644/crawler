@@ -28,7 +28,7 @@ examples:
     java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar checkForUpdates sendReport
 ```
 ## LICENSE
-AppFuse is released under version 2.0 of the [Apache License][].
+YOMOU CRAWLER is released under version 2.0 of the [Apache License][].
 
 [小説を読もう！]: http://yomou.syosetu.com/
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
