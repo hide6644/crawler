@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import crawler.dao.NovelDao;
 import crawler.domain.Novel;
 import crawler.domain.source.NovelSource;
-import crawler.domain.source.NovelSourceFactory;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
@@ -55,7 +54,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         } else {
             try {
                 // 小説の情報を取得
-                NovelSource novelSource = NovelSourceFactory.newInstance(url);
+                NovelSource novelSource = NovelSource.newInstance(url);
                 log.info("[add] title:" + novelSource.getNovel().getTitle());
 
                 // 小説の付随情報を保存
@@ -106,7 +105,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Novel novel) {
         try {
-            NovelSource currentNovelSource = NovelSourceFactory.newInstance(novel.getUrl(), novel);
+            NovelSource currentNovelSource = NovelSource.newInstance(novel.getUrl(), novel);
 
             if (currentNovelSource.getNovelHistory() != null) {
                 // 小説の情報に差異があった場合、小説の付随情報を保存

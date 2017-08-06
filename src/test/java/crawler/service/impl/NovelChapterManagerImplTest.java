@@ -9,7 +9,6 @@ import org.mockito.Mock;
 
 import crawler.dao.NovelChapterDao;
 import crawler.domain.source.NovelSource;
-import crawler.domain.source.NovelSourceFactory;
 import crawler.service.NovelChapterInfoManager;
 
 public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
@@ -30,7 +29,7 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
     public void testSaveNovelChapter() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
-        NovelSource novelSource = NovelSourceFactory.newInstance("file://" + filePath);
+        NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
 
         int startIndex = 0;
         if (filePath.indexOf(":") >= 0) {

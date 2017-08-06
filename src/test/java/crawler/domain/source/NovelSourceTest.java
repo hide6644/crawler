@@ -15,7 +15,7 @@ public class NovelSourceTest {
     public void testGetChapterElementList() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
-        NovelSource novelSource = NovelSourceFactory.newInstance("file://" + filePath);
+        NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
 
         assertNotNull(novelIndexList);
@@ -27,12 +27,12 @@ public class NovelSourceTest {
     public void testGetChapterHistoryElementSet() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
-        NovelSource novelSource = NovelSourceFactory.newInstance("file://" + filePath);
+        NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         Novel novel = novelSource.getNovel();
 
         filePath = this.getClass().getClassLoader().getResource("novel/20160925/test.html").getPath();
 
-        novelSource = NovelSourceFactory.newInstance("file://" + filePath, novel);
+        novelSource = NovelSource.newInstance("file://" + filePath, novel);
 
         Set<NovelIndexElement> novelHistoryIndexSet = novelSource.getNovelHistoryIndexSet();
 
@@ -45,7 +45,7 @@ public class NovelSourceTest {
     public void testGetNovelInfoLink() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
-        NovelSource novelSource = NovelSourceFactory.newInstance("file://" + filePath);
+        NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         String novelInfoLink = novelSource.getNovelInfoLink();
 
         assertNotNull(novelInfoLink);

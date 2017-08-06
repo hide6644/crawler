@@ -14,16 +14,16 @@ public class NovelChapterModifiedDateTest {
     public void testGetNovelChapterInfo() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
-        NovelSource novelSource = NovelSourceFactory.newInstance("file://" + filePath);
+        NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
         NovelIndexElement novelIndexElement = novelIndexList.get(0);
 
-        NovelChapterModifiedDate novelChapterModifiedDate = NovelChapterModifiedDateFactory.newInstance(novelIndexElement, null);
+        NovelChapterModifiedDate novelChapterModifiedDate = NovelChapterModifiedDate.newInstance(novelIndexElement, null);
         NovelChapterInfo novelChapterInfo = novelChapterModifiedDate.getNovelChapterInfo();
 
         assertNotNull(novelChapterInfo);
 
-        novelChapterModifiedDate = NovelChapterModifiedDateFactory.newInstance(novelIndexElement, null);
+        novelChapterModifiedDate = NovelChapterModifiedDate.newInstance(novelIndexElement, null);
         novelChapterInfo = novelChapterModifiedDate.getNovelChapterInfo();
 
         assertNotNull(novelChapterInfo);

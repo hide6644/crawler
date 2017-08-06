@@ -54,6 +54,25 @@ public class NovelInfoSource extends BaseSource {
         novelInfo.setCheckedDate(new Date());
     }
 
+    /**
+     * NovelInfoSourceのインスタンスを生成する.
+     *
+     * @param url
+     *            URL
+     * @param novelInfo
+     *            小説の付随情報
+     * @return NovelInfoSourceのインスタンス
+     * @throws NovelNotFoundException
+     *             指定されたURLが取得出来ない
+     */
+    public static NovelInfoSource newInstance(String url, NovelInfo novelInfo) throws NovelNotFoundException {
+        NovelInfoSource novelInfoSource = new NovelInfoSource(url);
+        novelInfoSource.setNovelInfo(novelInfo);
+        novelInfoSource.mapping();
+
+        return novelInfoSource;
+    }
+
     public NovelInfo getNovelInfo() {
         return novelInfo;
     }
