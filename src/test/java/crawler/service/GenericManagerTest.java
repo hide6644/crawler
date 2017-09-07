@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import crawler.dao.jpa.GenericDaoJpa;
 import crawler.domain.Novel;
+import crawler.domain.NovelInfo;
 import crawler.service.impl.GenericManagerImpl;
 
 public class GenericManagerTest extends BaseManagerTestCase {
@@ -27,15 +28,29 @@ public class GenericManagerTest extends BaseManagerTestCase {
     @Before
     public void setUp() {
         genericManager = new GenericManagerImpl<Novel, Long>(new GenericDaoJpa<Novel, Long>(Novel.class, entityManager));
+
+        Novel novel = new Novel();
+        novel.setUrl("Url");
+        novel.setTitle("Title");
+        novel.setWritername("Writername");
+        novel.setDescription("Description");
+        novel.setBody("Body");
+
+        NovelInfo novelInfo = new NovelInfo();
+        novelInfo.setKeyword("Keyword1 Keyword2");
+        novelInfo.setNovel(novel);
+        novel.setNovelInfo(novelInfo);
+
+        genericManager.save(novel);
     }
 
     @Test
     public void testSearch() throws Exception {
         genericManager.reindexAll(false);
-        List<Novel> novelList = genericManager.search("class");
+        List<Novel> novelList = genericManager.search("Body");
 
         assertNotNull(novelList);
-        assertEquals(1, novelList.size());
+        assertTrue(novelList.size() > 0);
     }
 
     @Test
