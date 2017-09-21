@@ -23,11 +23,8 @@ public class RunBatches {
      */
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        PreventMultiInstance pmi = null;
 
-        try {
-            pmi = new PreventMultiInstance();
-
+        try (PreventMultiInstance pmi = new PreventMultiInstance();) {
             if (!pmi.tryLock()) {
                 // 多重起動
                 log.warn("process is running!");
@@ -36,10 +33,6 @@ public class RunBatches {
             }
         } catch (Exception e) {
             log.error("[error] ", e);
-        } finally {
-            if (pmi != null) {
-                pmi.close();
-            }
         }
 
         CacheManager.getInstance().shutdown();

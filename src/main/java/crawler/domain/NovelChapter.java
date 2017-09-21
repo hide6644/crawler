@@ -44,7 +44,7 @@ public class NovelChapter extends BaseObject implements Serializable {
     private NovelChapterInfo novelChapterInfo;
 
     /** 小説の章の更新履歴セット */
-    private Set<NovelChapterHistory> novelChapterHistories = new HashSet<NovelChapterHistory>();
+    private Set<NovelChapterHistory> novelChapterHistories = new HashSet<>();
 
     /** 小説 */
     private Novel novel;

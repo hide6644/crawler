@@ -141,7 +141,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     public void sendReport() {
         List<Novel> unreadNovels = getUnreadNovels();
 
-        if (unreadNovels.size() > 0) {
+        if (unreadNovels.isEmpty()) {
+            log.info("Not find unread novels.");
+        } else {
             // メール送信
             reportMail.sendUnreadNovelsReport(unreadNovels);
 
@@ -153,8 +155,6 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                         unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
                         unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
                     });
-        } else {
-            log.info("Not find unread novels.");
         }
     }
 

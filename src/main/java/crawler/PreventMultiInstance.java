@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
+import java.nio.file.Files;
 
 import org.apache.commons.io.IOUtils;
 
@@ -103,6 +104,7 @@ public class PreventMultiInstance implements Closeable {
     public void close() {
         try {
             release();
+            Files.delete(file.toPath());
         } catch (IOException ex) {
             // 何もしない.
         } finally {
@@ -110,7 +112,5 @@ public class PreventMultiInstance implements Closeable {
                 IOUtils.closeQuietly(fos);
             }
         }
-
-        file.delete();
     }
 }

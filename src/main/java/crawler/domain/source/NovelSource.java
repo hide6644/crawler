@@ -1,5 +1,6 @@
 package crawler.domain.source;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -117,7 +118,7 @@ public class NovelSource extends BaseSource {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
             List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
 
-            if (chapterHistoryElementList.size() == 0) {
+            if (chapterHistoryElementList.isEmpty()) {
                 // 古いスタイルの場合
                 chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("tr");
             }
@@ -126,7 +127,7 @@ public class NovelSource extends BaseSource {
                     .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
                     .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toSet());
         } else {
-            return null;
+            return Collections.emptySet();
         }
     }
 

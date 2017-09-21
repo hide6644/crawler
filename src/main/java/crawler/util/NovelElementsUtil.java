@@ -23,7 +23,7 @@ public class NovelElementsUtil {
      * @return true:リンクが存在する、false:リンクが存在しない
      */
     public static boolean existsChapterLink(final Element element) {
-        return element.getAllElements("a").size() > 0;
+        return !element.getAllElements("a").isEmpty();
     }
 
     /**
@@ -34,7 +34,7 @@ public class NovelElementsUtil {
      * @return true:章が存在する、false:章が存在しない
      */
     public static boolean existsChapter(final Source html) {
-        return html.getAllElementsByClass("novel_subtitle").size() > 0;
+        return !html.getAllElementsByClass("novel_subtitle").isEmpty();
     }
 
     /**
@@ -111,9 +111,9 @@ public class NovelElementsUtil {
      * @return 小説の章のタイトル
      */
     public static String getChapterTitleByNovelBody(final Element element) {
-        if (element.getAllElementsByClass("period_subtitle").size() > 0) {
+        if (!element.getAllElementsByClass("period_subtitle").isEmpty()) {
             return element.getAllElementsByClass("period_subtitle").get(0).getAllElements("a").get(0).toString();
-        } else if (element.getAllElementsByClass("long_subtitle").size() > 0) {
+        } else if (!element.getAllElementsByClass("long_subtitle").isEmpty()) {
             return element.getAllElementsByClass("long_subtitle").get(0).getAllElements("a").get(0).toString();
         } else {
             return element.getAllElementsByClass("subtitle").get(0).getAllElements("a").get(0).toString();
@@ -163,11 +163,7 @@ public class NovelElementsUtil {
     public static boolean getFinished(final Source html) {
         Element finishedElement = html.getElementById("noveltype");
 
-        if (finishedElement != null && finishedElement.getTextExtractor().toString().equals("完結済")) {
-            return true;
-        } else {
-            return false;
-        }
+        return finishedElement != null && finishedElement.getTextExtractor().toString().equals("完結済");
     }
 
     /**
@@ -180,10 +176,10 @@ public class NovelElementsUtil {
     public static String getChapterModifiedDate(final Element element) {
         Element updateElement = element.getAllElementsByClass("long_update").get(0);
 
-        if (updateElement.getAllElements("span").size() > 0) {
-            return updateElement.getAllElements("span").get(0).getAttributeValue("title").toString();
-        } else {
+        if (updateElement.getAllElements("span").isEmpty()) {
             return updateElement.getTextExtractor().toString();
+        } else {
+            return updateElement.getAllElements("span").get(0).getAttributeValue("title");
         }
     }
 }
