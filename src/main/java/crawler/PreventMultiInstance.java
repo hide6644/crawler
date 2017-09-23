@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.Files;
 
 import org.apache.commons.io.IOUtils;
@@ -50,8 +51,7 @@ public class PreventMultiInstance implements Closeable {
     }
 
     /**
-     * 同じデータ保存先を示して複数起動していないかチェックする.
-     * ロックファイルは引数で指定されたディレクトリ上に作成される.
+     * ファイルをロックする.
      *
      * @return true:ロック取得成功、false:ロック取得失敗
      */
@@ -68,7 +68,7 @@ public class PreventMultiInstance implements Closeable {
                 // ロックが取得された場合
                 return true;
             }
-        } catch (IOException e) {
+        } catch (OverlappingFileLockException | IOException e) {
             // 何もしない
         }
 
@@ -108,9 +108,7 @@ public class PreventMultiInstance implements Closeable {
         } catch (IOException ex) {
             // 何もしない.
         } finally {
-            if (fos != null) {
-                IOUtils.closeQuietly(fos);
-            }
+            IOUtils.closeQuietly(fos);
         }
     }
 }

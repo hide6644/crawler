@@ -22,10 +22,6 @@ public class NovelChapterModifiedDateTest {
         NovelChapterInfo novelChapterInfo = novelChapterModifiedDate.getNovelChapterInfo();
 
         assertNotNull(novelChapterInfo);
-
-        novelChapterModifiedDate = NovelChapterModifiedDate.newInstance(novelIndexElement, null);
-        novelChapterInfo = novelChapterModifiedDate.getNovelChapterInfo();
-
-        assertNotNull(novelChapterInfo);
+        assertNotEquals(novelIndexElement, novelIndexList.get(1));
     }
 }
