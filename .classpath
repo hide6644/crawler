@@ -49,7 +49,7 @@
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/mail-1.4.7.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-core-2.10.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/mysql-connector-java-5.1.43.jar"/>
+	<classpathentry kind="lib" path="target/lib/mysql-connector-java-5.1.44.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aop-4.3.11.RELEASE.jar"/>
