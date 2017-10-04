@@ -28,16 +28,17 @@ public class NovelInfoSource extends BaseSource {
      * @throws NovelNotFoundException
      *             小説の付随情報が見つからない
      */
-    public NovelInfoSource(String url) throws NovelNotFoundException {
+    protected NovelInfoSource(String url) throws NovelNotFoundException {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
     }
 
     /**
-     * 小説の付随情報のhtmlを小説の付随情報(NovelInfo)に変換する.
+     * {@inheritDoc}
      */
-    public void mapping() {
+    @Override
+    protected void mapping() {
         if (novelInfo == null) {
             novelInfo = new NovelInfo();
         } else {
@@ -45,11 +46,31 @@ public class NovelInfoSource extends BaseSource {
             novelInfo.setUpdateDate(new Date());
         }
 
+        // 小説の付随情報に設定
         novelInfo.setKeyword(NovelElementsUtil.getKeyword(html));
         novelInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
                 .parseDateTime(NovelElementsUtil.getModifiedDate(html)).toDate());
         novelInfo.setFinished(NovelElementsUtil.getFinished(html));
         novelInfo.setCheckedDate(new Date());
+    }
+
+    /**
+     * NovelInfoSourceのインスタンスを生成する.
+     *
+     * @param url
+     *            URL
+     * @param novelInfo
+     *            小説の付随情報
+     * @return NovelInfoSourceのインスタンス
+     * @throws NovelNotFoundException
+     *             指定されたURLが取得出来ない
+     */
+    public static NovelInfoSource newInstance(String url, NovelInfo novelInfo) throws NovelNotFoundException {
+        NovelInfoSource novelInfoSource = new NovelInfoSource(url);
+        novelInfoSource.setNovelInfo(novelInfo);
+        novelInfoSource.mapping();
+
+        return novelInfoSource;
     }
 
     public NovelInfo getNovelInfo() {

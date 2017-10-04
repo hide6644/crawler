@@ -27,16 +27,17 @@ public class NovelChapterSource extends BaseSource {
      * @throws NovelNotFoundException
      *             小説の章が見つからない
      */
-    public NovelChapterSource(String url) throws NovelNotFoundException {
+    protected NovelChapterSource(String url) throws NovelNotFoundException {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
     }
 
     /**
-     * 小説の章のhtmlを小説の章の情報(NovelChapter)に変換する.
+     * {@inheritDoc}
      */
-    public void mapping() {
+    @Override
+    protected void mapping() {
         if (novelChapter == null) {
             add = true;
             novelChapter = new NovelChapter();
@@ -61,10 +62,29 @@ public class NovelChapterSource extends BaseSource {
             novelChapter.addNovelChapterHistory(novelChapterHistory);
         }
 
-        // 小説の章の情報を取得
+        // 小説の章の情報に設定
         novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
         novelChapter.setUrl(url.toString());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
+    }
+
+    /**
+     * NovelChapterSourceのインスタンスを生成する.
+     *
+     * @param url
+     *            URL
+     * @param novelChapter
+     *            小説の章の情報
+     * @return NovelChapterSourceのインスタンス
+     * @throws NovelNotFoundException
+     *             指定されたURLが取得出来ない
+     */
+    public static NovelChapterSource newInstance(String url, NovelChapter novelChapter) throws NovelNotFoundException {
+        NovelChapterSource novelChapterSource = new NovelChapterSource(url);
+        novelChapterSource.setNovelChapter(novelChapter);
+        novelChapterSource.mapping();
+
+        return novelChapterSource;
     }
 
     public NovelChapter getNovelChapter() {

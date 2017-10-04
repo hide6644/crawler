@@ -39,15 +39,12 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
         novelSource.getNovelIndexList().stream()
                 // 小説の履歴が無い場合(新規の場合)、true:更新有りとする
                 // 小説の目次のhtml elementが一致しない場合、true:更新有りとする
-                .filter(novelIndexElement -> novelHistoryIndexSet == null || !novelHistoryIndexSet.contains(novelIndexElement))
+                .filter(novelIndexElement -> !novelHistoryIndexSet.contains(novelIndexElement))
                 .forEach(novelIndexElement -> {
                     try {
                         // 小説の章を取得
-                        NovelChapterSource novelChapterSource = new NovelChapterSource(hostname + novelIndexElement.getChapterUrl());
-
-                        // 履歴からURLが一致する小説の章を取得し設定
-                        novelChapterSource.setNovelChapter(novelChapterDao.getByUrl(novelChapterSource.getUrl().toString()));
-                        novelChapterSource.mapping();
+                        String url = hostname + novelIndexElement.getChapterUrl();
+                        NovelChapterSource novelChapterSource = NovelChapterSource.newInstance(url, novelChapterDao.getByUrl(url));
 
                         // 小説の章の付随情報を設定
                         novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);

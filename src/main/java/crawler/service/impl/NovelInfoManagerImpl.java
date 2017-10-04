@@ -19,9 +19,7 @@ public class NovelInfoManagerImpl extends GenericManagerImpl<NovelInfo, Long> im
      */
     @Override
     public void saveNovelInfo(final NovelSource novelSource) throws NovelNotFoundException {
-        NovelInfoSource novelInfoSource = new NovelInfoSource(novelSource.getNovelInfoLink());
-        novelInfoSource.setNovelInfo(novelSource.getNovel().getNovelInfo());
-        novelInfoSource.mapping();
+        NovelInfoSource novelInfoSource = NovelInfoSource.newInstance(novelSource.getNovelInfoLink(), novelSource.getNovel().getNovelInfo());
 
         novelInfoSource.getNovelInfo().setNovel(novelSource.getNovel());
         novelSource.getNovel().setNovelInfo(novelInfoSource.getNovelInfo());

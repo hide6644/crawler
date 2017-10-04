@@ -54,8 +54,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
         } else {
             try {
                 // 小説の情報を取得
-                NovelSource novelSource = new NovelSource(url);
-                novelSource.mapping();
+                NovelSource novelSource = NovelSource.newInstance(url);
                 log.info("[add] title:" + novelSource.getNovel().getTitle());
 
                 // 小説の付随情報を保存
@@ -106,10 +105,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Novel novel) {
         try {
-            NovelSource currentNovelSource = new NovelSource(novel.getUrl());
-
-            currentNovelSource.setNovel(novel);
-            currentNovelSource.mapping();
+            NovelSource currentNovelSource = NovelSource.newInstance(novel.getUrl(), novel);
 
             if (currentNovelSource.getNovelHistory() != null) {
                 // 小説の情報に差異があった場合、小説の付随情報を保存
@@ -145,7 +141,9 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     public void sendReport() {
         List<Novel> unreadNovels = getUnreadNovels();
 
-        if (unreadNovels.size() > 0) {
+        if (unreadNovels.isEmpty()) {
+            log.info("Not find unread novels.");
+        } else {
             // メール送信
             reportMail.sendUnreadNovelsReport(unreadNovels);
 
@@ -157,8 +155,6 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                         unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
                         unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
                     });
-        } else {
-            log.info("Not find unread novels.");
         }
     }
 

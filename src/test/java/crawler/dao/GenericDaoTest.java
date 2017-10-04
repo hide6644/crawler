@@ -18,8 +18,6 @@ public class GenericDaoTest extends BaseDaoTestCase {
 
     GenericDao<Novel, Long> genericDao;
 
-    public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
-
     @Before
     public void setUp() {
         genericDao = new GenericDaoJpa<Novel, Long>(Novel.class, entityManager);
@@ -38,10 +36,12 @@ public class GenericDaoTest extends BaseDaoTestCase {
         Map<String, Object> param = new HashMap<>();
         param.put("url", "Url");
         List<Novel> novelList = genericDao.findByNamedQuery("Novel.findByUrl", param);
+
         assertNotNull(novelList);
         assertTrue(genericDao.exists(novelList.get(0).getId()));
 
         Novel novel = genericDao.get(novelList.get(0).getId());
+
         assertNotNull(novel);
     }
 
@@ -53,12 +53,28 @@ public class GenericDaoTest extends BaseDaoTestCase {
     @Test
     public void testGetAll() {
         List<Novel> novelList = genericDao.getAll();
+
         assertTrue(novelList.size() > 0);
     }
 
     @Test
     public void testGetAllDistinct() {
         List<Novel> novelDistinctList = genericDao.getAllDistinct();
+
         assertTrue(novelDistinctList.size() > 0);
+    }
+
+    @Test
+    public void testSearch() {
+        genericDao.reindex();
+        List<Novel> novelList = genericDao.search(new String[]{"Body"}, new String[]{"body"});
+
+        assertNotNull(novelList);
+        assertTrue(novelList.size() > 0);
+    }
+
+    @Test(expected = SearchException.class)
+    public void testSearchException() {
+        genericDao.search(new String[]{""}, new String[]{""});
     }
 }

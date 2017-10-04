@@ -9,16 +9,17 @@ import crawler.domain.NovelInfo;
 public class NovelInfoSourceTest {
 
     @Test
-    public void testGetChapterElementList() throws Exception {
+    public void testGetNovelInfo() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/testInfo.html").getPath();
 
-        NovelInfoSource novelInfoSource = new NovelInfoSource("file://" + filePath);
-        novelInfoSource.mapping();
+        NovelInfoSource novelInfoSource = NovelInfoSource.newInstance("file://" + filePath, null);
         NovelInfo novelInfo = novelInfoSource.getNovelInfo();
 
         assertNotNull(novelInfo);
 
-        novelInfoSource.setNovelInfo(novelInfo);
-        novelInfoSource.mapping();
+        novelInfoSource = NovelInfoSource.newInstance("file://" + filePath, novelInfo);
+        novelInfo = novelInfoSource.getNovelInfo();
+
+        assertNotNull(novelInfo);
     }
 }

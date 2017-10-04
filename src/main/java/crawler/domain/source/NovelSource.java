@@ -1,5 +1,6 @@
 package crawler.domain.source;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -32,16 +33,17 @@ public class NovelSource extends BaseSource {
      * @throws NovelNotFoundException
      *             小説が見つからない
      */
-    public NovelSource(String url) throws NovelNotFoundException {
+    protected NovelSource(String url) throws NovelNotFoundException {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
     }
 
     /**
-     * 小説のhtmlを小説の情報(Novel)に変換する.
+     * {@inheritDoc}
      */
-    public void mapping() {
+    @Override
+    protected void mapping() {
         if (novel == null) {
             add = true;
             novel = new Novel();
@@ -86,7 +88,7 @@ public class NovelSource extends BaseSource {
             }
         }
 
-        // 小説の情報を取得
+        // 小説の情報に設定
         novel.setTitle(NovelElementsUtil.getTitle(html));
         novel.setWritername(NovelElementsUtil.getWritername(html));
         novel.setDescription(NovelElementsUtil.getDescription(html));
@@ -116,7 +118,7 @@ public class NovelSource extends BaseSource {
             Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
             List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
 
-            if (chapterHistoryElementList.size() == 0) {
+            if (chapterHistoryElementList.isEmpty()) {
                 // 古いスタイルの場合
                 chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("tr");
             }
@@ -125,7 +127,7 @@ public class NovelSource extends BaseSource {
                     .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
                     .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toSet());
         } else {
-            return null;
+            return Collections.emptySet();
         }
     }
 
@@ -148,6 +150,38 @@ public class NovelSource extends BaseSource {
      */
     public String getHostUrl() {
         return url.getProtocol() + "://" + url.getHost();
+    }
+
+    /**
+     * NovelSourceのインスタンスを生成する.
+     *
+     * @param url
+     *            URL
+     * @return NovelSourceのインスタンス
+     * @throws NovelNotFoundException
+     *             指定されたURLが取得出来ない
+     */
+    public static NovelSource newInstance(String url) throws NovelNotFoundException {
+        return newInstance(url ,null);
+    }
+
+    /**
+     * NovelSourceのインスタンスを生成する.
+     *
+     * @param url
+     *            URL
+     * @param novel
+     *            小説の情報
+     * @return NovelSourceのインスタンス
+     * @throws NovelNotFoundException
+     *             指定されたURLが取得出来ない
+     */
+    public static NovelSource newInstance(String url, Novel novel) throws NovelNotFoundException {
+        NovelSource novelSource = new NovelSource(url);
+        novelSource.setNovel(novel);
+        novelSource.mapping();
+
+        return novelSource;
     }
 
     public Novel getNovel() {

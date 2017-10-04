@@ -1,6 +1,5 @@
 package crawler.util;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -62,9 +61,6 @@ public class NovelManagerUtil {
             Source html = new Source(url);
             html.fullSequentialParse();
             return html;
-        } catch (FileNotFoundException e) {
-            log.error("url:" + url, e);
-            throw new NovelNotFoundException();
         } catch (IOException e) {
             log.error("url:" + url, e);
             throw new NovelNotFoundException();
@@ -78,7 +74,8 @@ public class NovelManagerUtil {
         try {
             Thread.sleep(Constants.DELAY_ACCESS_TIME);
         } catch (InterruptedException e) {
-            log.error("Interrupted:", e);
+            log.warn("Interrupted:", e);
+            Thread.currentThread().interrupt();
         }
     }
 }

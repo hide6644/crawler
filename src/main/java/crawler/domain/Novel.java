@@ -37,9 +37,6 @@ import org.joda.time.Duration;
 @XmlRootElement
 public class Novel extends BaseObject implements Serializable {
 
-    /** ログ出力クラス */
-    protected Logger log = LogManager.getLogger(getClass());
-
     /** URL */
     private String url;
 
@@ -62,10 +59,10 @@ public class Novel extends BaseObject implements Serializable {
     private NovelInfo novelInfo;
 
     /** 小説の更新履歴セット */
-    private Set<NovelHistory> novelHistories = new HashSet<NovelHistory>();
+    private Set<NovelHistory> novelHistories = new HashSet<>();
 
     /** 小説の章リスト */
-    private List<NovelChapter> novelChapters = new ArrayList<NovelChapter>();
+    private List<NovelChapter> novelChapters = new ArrayList<>();
 
     /**
      * 更新を確認する必要があるか.
@@ -74,12 +71,12 @@ public class Novel extends BaseObject implements Serializable {
      * @return true:確認必要、false:確認不要
      */
     public boolean needsCheckForUpdate() {
+        final Logger log = LogManager.getLogger(Novel.class);
+
         final DateTime now = DateTime.now();
-        if (novelInfo.isFinished()) {
-            if (new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays(45))) {
-                log.info("[skip] finished title:" + title);
-                return false;
-            }
+        if (novelInfo.isFinished() && new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays(45))) {
+            log.info("[skip] finished title:" + title);
+            return false;
         }
 
         final DateTime modifiedDate = new DateTime(novelInfo.getModifiedDate());

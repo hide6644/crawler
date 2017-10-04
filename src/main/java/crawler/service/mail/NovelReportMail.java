@@ -13,7 +13,6 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -56,31 +55,21 @@ public class NovelReportMail {
         root.put("unreadNovels", unreadNovels);
 
         String filePath = Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + new DateTime().minusDays(1).toString("yyyy-MM-dd") + ".html";
-        PrintWriter pw = null;
+        File file = new File(filePath);
+        File dir = file.getParentFile();
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
 
-        try {
-            File file = new File(filePath);
-            File dir = file.getParentFile();
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)));
-
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)));) {
             // テンプレートとマージ
             cfg.getTemplate("report.ftl").process(root, pw);
 
             String text = new DateTime().minusDays(1).toString("yyyy-MM-dd") + " updated.";
             log.info("[send] report:" + text);
             mailEngine.sendMail(text, filePath);
-        } catch (IOException e) {
-            log.error("[send] report:", e);
-        } catch (TemplateException e) {
-            log.error("[send] report:", e);
-        } catch (MessagingException e) {
-            log.error("[send] report:", e);
-        } finally {
-            IOUtils.closeQuietly(pw);
+        } catch (IOException | TemplateException | MessagingException e) {
+            log.error("[not send] report:", e);
         }
     }
 }

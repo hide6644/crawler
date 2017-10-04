@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import crawler.batch.BatchProcess;
-import net.sf.ehcache.CacheManager;
 
 /**
  * 各処理を起動する.
@@ -23,26 +22,18 @@ public class RunBatches {
      */
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        PreventMultiInstance pmi = null;
 
-        try {
-            pmi = new PreventMultiInstance();
-
-            if (!pmi.tryLock()) {
+        try (PreventMultiInstance pmi = new PreventMultiInstance();) {
+            if (pmi.tryLock()) {
+                ((BatchProcess) context.getBean("novelProcess")).execute(args);
+            } else {
                 // 多重起動
                 log.warn("process is running!");
-            } else {
-                ((BatchProcess) context.getBean("novelProcess")).execute(args);
             }
         } catch (Exception e) {
             log.error("[error] ", e);
-        } finally {
-            if (pmi != null) {
-                pmi.close();
-            }
         }
 
-        CacheManager.getInstance().shutdown();
         context.close();
     }
 }

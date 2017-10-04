@@ -1,10 +1,5 @@
 package crawler.domain.source;
 
-import java.util.Date;
-
-import org.joda.time.format.DateTimeFormat;
-
-import crawler.domain.NovelChapterInfo;
 import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;
 
@@ -12,9 +7,6 @@ import net.htmlparser.jericho.Element;
  * 小説の目次のhtml elementを保持するクラス.
  */
 public class NovelIndexElement {
-
-    /** 最終更新日時のフォーマット */
-    public static final String MODIFIED_DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
     /** 小説の目次に記載されている章のURL */
     private String chapterUrl;
@@ -24,9 +16,6 @@ public class NovelIndexElement {
 
     /** 小説の目次に記載されている章の最終更新日時 */
     private String chapterModifiedDate;
-
-    /** 小説の章の付随情報 */
-    private NovelChapterInfo novelChapterInfo;
 
     /**
      * コンストラクタ.
@@ -38,23 +27,6 @@ public class NovelIndexElement {
         chapterUrl = NovelElementsUtil.getChapterUrlByNovelBody(element);
         chapterLink = NovelElementsUtil.getChapterTitleByNovelBody(element);
         chapterModifiedDate = NovelElementsUtil.getChapterModifiedDate(element);
-    }
-
-    /**
-     * 小説の目次のhtml elementを小説の章の付随情報(NovelChapterInfo)に変換する.
-     */
-    public void mapping() {
-        if (novelChapterInfo == null) {
-            novelChapterInfo = new NovelChapterInfo();
-        } else {
-            // 更新の場合
-            novelChapterInfo.setUpdateDate(new Date());
-        }
-
-        novelChapterInfo.setCheckedDate(new Date());
-        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
-                .parseDateTime(chapterModifiedDate.replaceAll(" 改稿", "")).toDate());
-        novelChapterInfo.setUnread(true);
     }
 
     public String getChapterUrl() {
@@ -79,14 +51,6 @@ public class NovelIndexElement {
 
     public void setChapterModifiedDate(String chapterModifiedDate) {
         this.chapterModifiedDate = chapterModifiedDate;
-    }
-
-    public NovelChapterInfo getNovelChapterInfo() {
-        return novelChapterInfo;
-    }
-
-    public void setNovelChapterInfo(NovelChapterInfo novelChapterInfo) {
-        this.novelChapterInfo = novelChapterInfo;
     }
 
     @Override
