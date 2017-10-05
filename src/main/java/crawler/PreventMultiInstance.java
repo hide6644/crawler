@@ -9,8 +9,6 @@ import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.Files;
 
-import org.apache.commons.io.IOUtils;
-
 /**
  * ロックファイルを処理する.
  */
@@ -99,16 +97,13 @@ public class PreventMultiInstance implements Closeable {
 
     /**
      * ロックされていればロックを解除し、 ロックファイルを削除する.
+     *
+     * @throws IOException
+     *             {@link IOException}
      */
     @Override
-    public void close() {
-        try {
-            release();
-            Files.delete(file.toPath());
-        } catch (IOException ex) {
-            // 何もしない.
-        } finally {
-            IOUtils.closeQuietly(fos);
-        }
+    public void close() throws IOException {
+        fos.close();
+        Files.delete(file.toPath());
     }
 }
