@@ -23,9 +23,9 @@
 	<classpathentry kind="lib" path="target/lib/hibernate-entitymanager-5.2.11.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.2.11.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-5.8.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-orm-5.8.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/HikariCP-2.7.1.jar"/>
+	<classpathentry kind="lib" path="F:/Work/pleiades/workspace/crawler/target/lib/hibernate-search-engine-5.8.1.Final.jar"/>
+	<classpathentry kind="lib" path="F:/Work/pleiades/workspace/crawler/target/lib/hibernate-search-orm-5.8.1.Final.jar"/>
+	<classpathentry kind="lib" path="F:/Work/pleiades/workspace/crawler/target/lib/HikariCP-2.7.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/jandex-2.0.3.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/javassist-3.20.0-GA.jar"/>
 	<classpathentry kind="lib" path="target/lib/jboss-logging-3.3.0.Final.jar"/>
@@ -52,19 +52,19 @@
 	<classpathentry kind="lib" path="target/lib/mysql-connector-java-5.1.44.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-aop-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-aspects-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-beans-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-context-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-context-support-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-core-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-expression-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-instrument-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-jdbc-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-orm-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-oxm-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-test-4.3.11.RELEASE.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-tx-4.3.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-aop-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-aspects-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-beans-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-context-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-context-support-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-core-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-expression-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-instrument-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-jdbc-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-orm-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-oxm-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-test-4.3.12.RELEASE.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-tx-4.3.12.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/subethasmtp-3.1.7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
