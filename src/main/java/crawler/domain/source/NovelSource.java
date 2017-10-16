@@ -48,53 +48,68 @@ public class NovelSource extends BaseSource {
             add = true;
             novel = new Novel();
         } else {
-            add = false;
             // 更新の場合、Historyを作成
-            novel.setUpdateDate(new Date());
+            add = false;
 
-            // 小説の更新履歴を作成
-            if (!novel.getTitle().equals(NovelElementsUtil.getTitle(html))) {
-                if (novelHistory == null) {
-                    novelHistory = new NovelHistory();
-                }
-                // タイトルに差異がある場合
-                novelHistory.setTitle(novel.getTitle());
-            }
-            if (!novel.getWritername().equals(NovelElementsUtil.getWritername(html))) {
-                if (novelHistory == null) {
-                    novelHistory = new NovelHistory();
-                }
-                // 作者名に差異がある場合
-                novelHistory.setWritername(novel.getWritername());
-            }
-            if (!novel.getDescription().equals(NovelElementsUtil.getDescription(html))) {
-                if (novelHistory == null) {
-                    novelHistory = new NovelHistory();
-                }
-                // 解説に差異がある場合
-                novelHistory.setDescription(novel.getDescription());
-            }
-            if (!novel.getBody().equals(NovelElementsUtil.getBody(html))) {
-                if (novelHistory == null) {
-                    novelHistory = new NovelHistory();
-                }
-                // 本文に差異がある場合
-                novelHistory.setBody(novel.getBody());
-            }
+            // 差異をチェックし、差異がある場合、小説の更新履歴を作成
+            checkTitleDiff();
+            checkWriternameDiff();
+            checkDescriptionDiff();
+            checkBodyDiff();
 
             if (novelHistory != null) {
+                // 小説の更新履歴が作成された場合
                 novelHistory.setNovel(novel);
                 novel.addNovelHistory(novelHistory);
             }
+
+            // 更新日時を変更
+            novel.setUpdateDate(new Date());
         }
 
-        // 小説の情報に設定
+        // 小説の情報を変更
         novel.setTitle(NovelElementsUtil.getTitle(html));
         novel.setWritername(NovelElementsUtil.getWritername(html));
         novel.setDescription(NovelElementsUtil.getDescription(html));
         novel.setBody(NovelElementsUtil.getBody(html));
         novel.setUrl(url.toString());
         novel.setDeleted(false);
+    }
+
+    /**
+     * タイトルに差異があるか確認し、差異があれば小説の更新履歴を作成する.
+     */
+    void checkTitleDiff() {
+        if (!novel.getTitle().equals(NovelElementsUtil.getTitle(html))) {
+            createNovelHistory().setTitle(novel.getTitle());
+        }
+    }
+
+    /**
+     * 作者名に差異があるか確認し、差異があれば小説の更新履歴を作成する.
+     */
+    void checkWriternameDiff() {
+        if (!novel.getWritername().equals(NovelElementsUtil.getWritername(html))) {
+            createNovelHistory().setWritername(novel.getWritername());
+        }
+    }
+
+    /**
+     * 解説に差異があるか確認し、差異があれば小説の更新履歴を作成する.
+     */
+    void checkDescriptionDiff() {
+        if (!novel.getDescription().equals(NovelElementsUtil.getDescription(html))) {
+            createNovelHistory().setDescription(novel.getDescription());
+        }
+    }
+
+    /**
+     * 本文に差異があるか確認し、差異があれば小説の更新履歴を作成する.
+     */
+    void checkBodyDiff() {
+        if (!novel.getBody().equals(NovelElementsUtil.getBody(html))) {
+            createNovelHistory().setBody(novel.getBody());
+        }
     }
 
     /**
@@ -162,7 +177,7 @@ public class NovelSource extends BaseSource {
      *             指定されたURLが取得出来ない
      */
     public static NovelSource newInstance(String url) throws NovelNotFoundException {
-        return newInstance(url ,null);
+        return newInstance(url, null);
     }
 
     /**
@@ -198,5 +213,18 @@ public class NovelSource extends BaseSource {
 
     public void setNovelHistory(NovelHistory novelHistory) {
         this.novelHistory = novelHistory;
+    }
+
+    /**
+     * 小説の更新履歴を作成する.
+     *
+     * @return 小説の更新履歴
+     */
+    public NovelHistory createNovelHistory() {
+        if (novelHistory == null) {
+            novelHistory = new NovelHistory();
+        }
+
+        return novelHistory;
     }
 }
