@@ -43,10 +43,11 @@ public class NovelInfoSource extends BaseSource {
             novelInfo = new NovelInfo();
         } else {
             // 更新の場合
+            // 更新日時を変更
             novelInfo.setUpdateDate(new Date());
         }
 
-        // 小説の付随情報に設定
+        // 小説の付随情報を変更
         novelInfo.setKeyword(NovelElementsUtil.getKeyword(html));
         novelInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
                 .parseDateTime(NovelElementsUtil.getModifiedDate(html)).toDate());

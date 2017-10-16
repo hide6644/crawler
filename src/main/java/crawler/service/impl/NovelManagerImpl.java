@@ -75,6 +75,15 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      * {@inheritDoc}
      */
     @Override
+    @Transactional
+    public void delete(final String url) {
+        novelDao.remove(novelDao.getByUrl(url));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む

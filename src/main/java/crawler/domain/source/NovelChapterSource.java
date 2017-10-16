@@ -42,30 +42,44 @@ public class NovelChapterSource extends BaseSource {
             add = true;
             novelChapter = new NovelChapter();
         } else {
-            add = false;
             // 更新の場合、Historyを作成
-            novelChapter.setUpdateDate(new Date());
+            add = false;
 
             // 小説の章の更新履歴を作成
-            if (novelChapterHistory == null) {
-                novelChapterHistory = new NovelChapterHistory();
+            checkTitleDiff();
+            checkBodyDiff();
+
+            if (novelChapterHistory != null) {
+                // 小説の章の更新履歴が作成された場合
+                novelChapterHistory.setNovelChapter(novelChapter);
+                novelChapter.addNovelChapterHistory(novelChapterHistory);
             }
 
-            if (!novelChapter.getTitle().equals(NovelElementsUtil.getChapterTitle(html))) {
-                // タイトルに差異がある場合
-                novelChapterHistory.setTitle(novelChapter.getTitle());
-            }
-
-            novelChapterHistory.setBody(novelChapter.getBody());
-
-            novelChapterHistory.setNovelChapter(novelChapter);
-            novelChapter.addNovelChapterHistory(novelChapterHistory);
+            // 更新日時を変更
+            novelChapter.setUpdateDate(new Date());
         }
 
-        // 小説の章の情報に設定
+        // 小説の章の情報を変更
         novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
         novelChapter.setUrl(url.toString());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
+    }
+
+    /**
+     * タイトルに差異があるか確認し、差異があれば小説の章の更新履歴を作成する.
+     */
+    void checkTitleDiff() {
+        if (!novelChapter.getTitle().equals(NovelElementsUtil.getChapterTitle(html))) {
+            createNovelChapterHistory().setTitle(novelChapter.getTitle());
+        }
+    }
+
+    /**
+     * 本文に差異があるか確認し、差異があれば小説の更新履歴を作成する.
+     */
+    void checkBodyDiff() {
+        // 本文は常に変更ありとする
+        createNovelChapterHistory().setBody(novelChapter.getBody());
     }
 
     /**
@@ -101,5 +115,18 @@ public class NovelChapterSource extends BaseSource {
 
     public void setNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
         this.novelChapterHistory = novelChapterHistory;
+    }
+
+    /**
+     * 小説の章の更新履歴を作成する.
+     *
+     * @return 小説の章の更新履歴
+     */
+    public NovelChapterHistory createNovelChapterHistory() {
+        if (novelChapterHistory == null) {
+            novelChapterHistory = new NovelChapterHistory();
+        }
+
+        return novelChapterHistory;
     }
 }

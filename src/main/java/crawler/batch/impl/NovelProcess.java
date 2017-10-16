@@ -24,11 +24,20 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
                 if (args[i].equals(messages.getMessage("novelManager.getCheckTargetId"))) {
+                    // 更新チェック
                     novelManager.getCheckTargetId().forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
                 } else if (args[i].equals(messages.getMessage("novelManager.sendReport"))) {
+                    // 更新チェック結果を送信
                     novelManager.sendReport();
+                } else if (args[i].startsWith(messages.getMessage("novelManager.add"))) {
+                    // 小説を追加
+                    novelManager.add(args[i].substring(args[i].indexOf('=') + 1).trim());
+                } else if (args[i].startsWith(messages.getMessage("novelManager.delete"))) {
+                    // 小説を削除
+                    novelManager.delete(args[i].substring(args[i].indexOf('=') + 1).trim());
                 } else {
-                    novelManager.add(args[i]);
+                    // 不正な引数
+                    throw new IllegalArgumentException();
                 }
             }
         }

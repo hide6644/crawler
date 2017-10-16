@@ -27,10 +27,24 @@ public class NovelProcessTest {
     public void testExecute() throws Exception {
         given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
         given(messages.getMessage("novelManager.sendReport")).willReturn("sendReport");
+        given(messages.getMessage("novelManager.add")).willReturn("add");
+        given(messages.getMessage("novelManager.delete")).willReturn("del");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
                 "sendReport",
-                "http://foo.bar" });
+                "add=http://foo.bar",
+                "del=http://foo.bar" });
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testExecuteInvalid() throws Exception {
+        given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
+        given(messages.getMessage("novelManager.sendReport")).willReturn("sendReport");
+        given(messages.getMessage("novelManager.add")).willReturn("add");
+        given(messages.getMessage("novelManager.delete")).willReturn("del");
+
+        // 不正な引数
+        novelProcess.execute(new String[] { "test" });
     }
 }

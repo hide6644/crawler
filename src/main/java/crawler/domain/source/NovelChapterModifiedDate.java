@@ -41,10 +41,11 @@ public class NovelChapterModifiedDate {
             novelChapterInfo = new NovelChapterInfo();
         } else {
             // 更新の場合
+            // 更新日時を変更
             novelChapterInfo.setUpdateDate(new Date());
         }
 
-        // 小説の章の付随情報に設定
+        // 小説の章の付随情報を変更
         novelChapterInfo.setCheckedDate(new Date());
         novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
                 .parseDateTime(chapterModifiedDate.replaceAll(MODIFIED_DATE_REPLACE_REGEX, "")).toDate());
