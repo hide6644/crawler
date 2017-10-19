@@ -14,6 +14,9 @@ public class RunBatches {
     /** ログ出力クラス */
     private static final Logger log = LogManager.getLogger(RunBatches.class);
 
+    /** Spring設定ファイルの参照先 */
+    public static final String CONFIG_LOCATION = "applicationContext.xml";
+
     /**
      * main処理.
      *
@@ -21,7 +24,7 @@ public class RunBatches {
      *            プログラムの引数
      */
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(CONFIG_LOCATION);
 
         try (PreventMultiInstance pmi = new PreventMultiInstance();) {
             if (pmi.tryLock()) {

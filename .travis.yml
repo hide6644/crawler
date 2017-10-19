@@ -1,0 +1,9 @@
+language: java
+sudo: false
+jdk:
+  - openjdk8
+before_script:
+  - mysql -uroot -e "create database crawler_test"
+  - mysql -uroot crawler_test < src/config/schema.sql
+after_success:
+  - mvn clean package site
