@@ -1,6 +1,5 @@
 package crawler;
 
-import java.io.File;
 import java.util.ResourceBundle;
 
 /**
@@ -19,10 +18,10 @@ public class Constants {
     public static final String BUNDLE_KEY = "applicationResources";
 
     /** ファイル区切り文字 */
-    public static final String FILE_SEP = File.separator;
+    public static final String FILE_SEP = System.getProperty("file.separator");
 
     /** 実行フォルダ名 */
-    public static final String APP_FOLDER_NAME = Constants.FILE_SEP;
+    public static final String APP_FOLDER_NAME = System.getProperty("app_home") + Constants.FILE_SEP;
 
     /** 一時停止時間 */
     public static final long DELAY_ACCESS_TIME = Long.parseLong(ResourceBundle.getBundle(BUNDLE_KEY).getString("delay.access.time")) * 1000;
