@@ -22,6 +22,16 @@
         <tag>HEAD</tag>
     </scm>
 
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/hide6644/crawler/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/hide6644/crawler</url>
+    </ciManagement>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -35,6 +45,9 @@
             <id>hide6644</id>
             <name>Hideyuki OKAWA</name>
             <email>hide6644@gmail.com</email>
+            <roles>
+                <role>Project founder</role>
+            </roles>
             <timezone>+9</timezone>
         </developer>
     </developers>
