@@ -7,7 +7,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -43,7 +43,7 @@
     <developers>
         <developer>
             <id>hide6644</id>
-            <name>Hideyuki OKAWA</name>
+            <name>Hideyuki OHKAWA</name>
             <email>hide6644@gmail.com</email>
             <roles>
                 <role>Project founder</role>
@@ -467,7 +467,7 @@
         <subethasmtp.version>3.1.7</subethasmtp.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <copyright.year>2013-2017</copyright.year>
+        <copyright.year>2013</copyright.year>
     </properties>
 
 </project>
