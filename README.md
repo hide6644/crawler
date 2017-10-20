@@ -1,3 +1,7 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build Status](https://travis-ci.org/hide6644/crawler.svg?branch=master)](https://travis-ci.org/hide6644/crawler)
+[![Coverage Status](https://coveralls.io/repos/github/hide6644/crawler/badge.svg?branch=master)](https://coveralls.io/github/hide6644/crawler?branch=master)
+***
 # YOMOU CRAWLER
 [小説を読もう！][] の更新チェッカー
 
