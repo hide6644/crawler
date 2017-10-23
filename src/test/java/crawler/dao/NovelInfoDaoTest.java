@@ -35,11 +35,11 @@ public class NovelInfoDaoTest extends BaseDaoTestCase {
         novel.setNovelInfo(novelInfo);
 
         genericDao.save(novel);
+        dao.reindexAll(true);
     }
 
     @Test
-    public void testSearch() throws Exception {
-        dao.reindex();
+    public void testSearch() {
         List<NovelInfo> novelInfoList = dao.search("Keyword1");
 
         assertNotNull(novelInfoList);
@@ -47,11 +47,14 @@ public class NovelInfoDaoTest extends BaseDaoTestCase {
         novelInfoList = dao.search(new String[]{"Keyword1"}, new String[]{"keyword"});
 
         assertNotNull(novelInfoList);
+
+        novelInfoList = dao.search("*");
+
+        assertNotNull(novelInfoList);
     }
 
     @Test
-    public void testFacet() throws Exception {
-        dao.reindex();
+    public void testFacet() {
         List<Facet> facet = dao.facet("keywordSet.keyword", 2);
 
         assertNotNull(facet);

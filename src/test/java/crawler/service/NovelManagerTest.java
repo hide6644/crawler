@@ -62,21 +62,21 @@ public class NovelManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testGetCheckTargetId() throws Exception {
+    public void testGetCheckTargetId() {
         List<Long> checkTargetId = novelManager.getCheckTargetId();
 
         assertNotNull(checkTargetId);
     }
 
     @Test
-    public void testGetUnreadNovels() throws Exception {
+    public void testGetUnreadNovels() {
         List<Novel> unreadNovels = novelManager.getUnreadNovels();
 
         assertNotNull(unreadNovels);
     }
 
     @Test
-    public void testSendReport() throws Exception {
+    public void testSendReport() {
         Wiser wiser = new Wiser();
         wiser.setPort(smtpPort);
         wiser.start();

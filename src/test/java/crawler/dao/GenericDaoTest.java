@@ -37,24 +37,20 @@ public class GenericDaoTest extends BaseDaoTestCase {
         param.put("url", "Url");
         List<Novel> novelList = genericDao.findByNamedQuery("Novel.findByUrl", param);
 
-        assertNotNull(novelList);
-        assertTrue(genericDao.exists(novelList.get(0).getId()));
-
-        Novel novel = genericDao.get(novelList.get(0).getId());
-
-        assertNotNull(novel);
-    }
-
-    @Test(expected = EntityNotFoundException.class)
-    public void testGetInvalid() throws Exception {
-        genericDao.get(-1L);
+        assertNotNull(genericDao.get(novelList.get(0).getId()));
     }
 
     @Test
-    public void testGetAll() {
+    public void testExists() {
         List<Novel> novelList = genericDao.getAll();
 
-        assertTrue(novelList.size() > 0);
+        assertTrue(genericDao.exists(novelList.get(0).getId()));
+        assertFalse(genericDao.exists(-1L));
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void testGetInvalid() {
+        genericDao.get(-1L);
     }
 
     @Test

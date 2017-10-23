@@ -2,6 +2,7 @@ package crawler.dao;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,8 +17,8 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
     @Autowired
     private NovelChapterDao cdao;
 
-    @Test
-    public void testGetByUrl() throws Exception {
+    @Before
+    public void setUp() {
         Novel novel = new Novel();
         novel.setUrl("Url");
         novel.setTitle("Title");
@@ -32,15 +33,18 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
         novelChapter.setBody("Body");
         novelChapter.setNovel(novel);
         novel.addNovelChapter(novelChapter);
-        novel = dao.save(novel);
+        dao.save(novel);
+    }
 
-        novelChapter = cdao.getByUrl("Url");
+    @Test
+    public void testGetByUrl() {
+        NovelChapter novelChapter = cdao.getByUrl("Url");
 
         assertNotNull(novelChapter);
 
-        dao.remove(novel.getId());
-        novelChapter = cdao.getByUrl("Url");
+        // 削除
+        dao.remove(novelChapter.getNovel().getId());
 
-        assertNull(novelChapter);
+        assertNull(cdao.getByUrl("Url"));
     }
 }

@@ -24,7 +24,7 @@ public class NovelProcessTest {
     private NovelProcess novelProcess = new NovelProcess();
 
     @Test
-    public void testExecute() throws Exception {
+    public void testExecute() {
         given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
         given(messages.getMessage("novelManager.sendReport")).willReturn("sendReport");
         given(messages.getMessage("novelManager.add")).willReturn("add");
@@ -38,7 +38,7 @@ public class NovelProcessTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testExecuteInvalid() throws Exception {
+    public void testExecuteInvalid() {
         given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
         given(messages.getMessage("novelManager.sendReport")).willReturn("sendReport");
         given(messages.getMessage("novelManager.add")).willReturn("add");
