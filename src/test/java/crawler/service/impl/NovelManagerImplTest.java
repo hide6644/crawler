@@ -30,7 +30,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     private NovelManagerImpl novelManager = new NovelManagerImpl();
 
     @Test
-    public void testAddAndDelete() throws Exception {
+    public void testAddAndDelete() {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         // 登録対象有り
@@ -56,7 +56,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     }
 
     @Test
-    public void testCheckForUpdatesAndSaveHistory() throws Exception {
+    public void testCheckForUpdatesAndSaveHistory() {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         Novel novel = new Novel();
@@ -80,7 +80,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     }
 
     @Test
-    public void testSendReport() throws Exception {
+    public void testSendReport() {
         novelManager.sendReport();
     }
 }

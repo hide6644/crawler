@@ -108,6 +108,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20</version>
                 <configuration>
+                    <reuseForks>false</reuseForks>
                     <argLine>${argLine} -Dapp_home=${project.build.directory}</argLine>
                 </configuration>
             </plugin>
@@ -452,7 +453,7 @@
 
         <commons.io.version>2.5</commons.io.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <hibernate.version>5.2.11.Final</hibernate.version>
+        <hibernate.version>5.2.12.Final</hibernate.version>
         <hibernate.search.version>5.8.1.Final</hibernate.search.version>
         <HikariCP.version>2.7.2</HikariCP.version>
         <jericho.html.version>3.4</jericho.html.version>

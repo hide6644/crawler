@@ -8,7 +8,7 @@ import org.junit.Test;
 public class NovelTest {
 
     @Test
-    public void testNeedsCheckForUpdate() throws Exception {
+    public void testNeedsCheckForUpdate() {
         // 完結済み小説 => 更新チェック対象
         Novel novel = new Novel();
         NovelInfo novelInfo = new NovelInfo();
@@ -50,5 +50,26 @@ public class NovelTest {
         novel.setNovelInfo(novelInfo);
 
         assertFalse(novel.needsCheckForUpdate());
+    }
+
+    @Test
+    public void testEquals() {
+        Novel novel1 = new Novel();
+        novel1.setUrl("test1");
+
+        assertTrue(novel1.equals(novel1));
+        assertFalse(novel1.equals(null));
+
+        Novel novel2 = new Novel();
+
+        assertFalse(novel1.equals(novel2));
+
+        novel2.setUrl("test2");
+
+        assertFalse(novel1.equals(novel2));
+
+        novel2.setUrl("test1");
+
+        assertTrue(novel1.equals(novel2));
     }
 }

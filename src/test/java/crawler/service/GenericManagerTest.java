@@ -45,7 +45,22 @@ public class GenericManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testSearch() throws Exception {
+    public void testGet() {
+        List<Novel> novelList = genericManager.getAll();
+
+        assertNotNull(genericManager.get(novelList.get(0).getId()));
+    }
+
+    @Test
+    public void testExists() {
+        List<Novel> novelList = genericManager.getAll();
+
+        assertTrue(genericManager.exists(novelList.get(0).getId()));
+        assertFalse(genericManager.exists(-1L));
+    }
+
+    @Test
+    public void testSearch() {
         genericManager.reindexAll(false);
         List<Novel> novelList = genericManager.search("Body");
 
@@ -54,7 +69,7 @@ public class GenericManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testFacet() throws Exception {
+    public void testFacet() {
         genericManager.reindexAll(false);
         List<Facet> novelFacet = genericManager.facet("keywordSet.keyword", 2);
 

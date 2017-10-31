@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,8 +16,8 @@ public class NovelDaoTest extends BaseDaoTestCase {
     @Autowired
     private NovelDao dao;
 
-    @Test
-    public void testGetByUrl() throws Exception {
+    @Before
+    public void setUp() {
         Novel novel = new Novel();
         novel.setUrl("Url");
         novel.setTitle("Title");
@@ -25,11 +26,15 @@ public class NovelDaoTest extends BaseDaoTestCase {
         novel.setBody("Body");
         novel.setDeleted(false);
         dao.save(novel);
+    }
 
-        novel = dao.getByUrl("Url");
+    @Test
+    public void testGetByUrl() {
+        Novel novel = dao.getByUrl("Url");
 
         assertNotNull(novel);
 
+        // 削除
         dao.remove(novel);
         novel = dao.getByUrl("Url");
 
@@ -37,14 +42,14 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testGetNovelsByCheckedDate() throws Exception {
+    public void testGetNovelsByCheckedDate() {
         List<Novel> novelList = dao.getByCheckedDateLessThanEqual(new Date());
 
         assertNotNull(novelList);
     }
 
     @Test
-    public void testGetNovelsByUnread() throws Exception {
+    public void testGetNovelsByUnread() {
         List<Novel> novelList = dao.getByUnreadTrueOrderByTitleAndId();
 
         assertNotNull(novelList);
