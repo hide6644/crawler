@@ -25,6 +25,12 @@ MySQLでの動作を前提としている。
 
 /crawler/src/test/resources/mail.properties については、自身の環境に合わせて変更すること。
 
+### DEPLOY
+```console
+任意のフォルダ/crawler.jar
+    /lib/クラスパスに指定されているJarファイル
+```
+
 ## USAGE
 ```console
 Usage: java [VM flags] <command>
@@ -53,6 +59,7 @@ examples:
   ・小説の更新を確認して、その結果をメールで送信
     java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar checkForUpdates sendReport
 ```
+
 ## LICENSE
 YOMOU CRAWLER is released under version 2.0 of the [Apache License][].
 
