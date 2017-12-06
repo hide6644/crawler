@@ -61,7 +61,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                 novelInfoManager.saveNovelInfo(novelSource);
 
                 // 小説の章を保存
-                novelChapterManager.saveNovelChapter(novelSource);
+                novelChapterManager.saveAllNovelChapter(novelSource);
 
                 // 小説を永続化
                 save(novelSource.getNovel());
@@ -122,7 +122,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
 
                 if (currentNovelSource.getNovelHistory().getBody() != null) {
                     // 小説の本文に差異があった場合、小説の章を保存
-                    novelChapterManager.saveNovelChapter(currentNovelSource);
+                    novelChapterManager.saveAllNovelChapter(currentNovelSource);
                 }
             }
         } catch (NovelNotFoundException e) {

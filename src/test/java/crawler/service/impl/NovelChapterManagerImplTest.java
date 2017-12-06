@@ -39,6 +39,6 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
         String fileQuery = filePath.substring(startIndex, filePath.indexOf("test.html"));
         URL url = new URL("file", fileQuery, "test.html");
         novelSource.setUrl(url);
-        novelChapterManager.saveNovelChapter(novelSource);
+        novelChapterManager.saveAllNovelChapter(novelSource);
     }
 }

@@ -9,10 +9,10 @@ import crawler.domain.source.NovelSource;
 public interface NovelChapterManager extends GenericManager<NovelChapter, Long> {
 
     /**
-     * 小説の章を設定する.
+     * 全ての小説の章を設定する.
      *
      * @param novelSource
      *            小説の情報
      */
-    public void saveNovelChapter(NovelSource novelSource);
+    public void saveAllNovelChapter(NovelSource novelSource);
 }
