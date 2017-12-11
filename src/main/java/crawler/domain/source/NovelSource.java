@@ -173,6 +173,16 @@ public class NovelSource extends BaseSource {
     }
 
     /**
+     * 小説のUrlのホスト名を設定する.
+     *
+     * @param hostname
+     *            小説のUrlのホスト名
+     */
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    /**
      * NovelSourceのインスタンスを生成する.
      *
      * @param url
