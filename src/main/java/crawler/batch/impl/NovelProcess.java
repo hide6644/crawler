@@ -21,25 +21,38 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
      */
     @Override
     public void execute(String[] args) {
-        if (args != null) {
-            for (int i = 0; i < args.length; i++) {
-                if (args[i].equals(messages.getMessage("novelManager.getCheckTargetId"))) {
-                    // 更新チェック
-                    novelManager.getCheckTargetId().forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
-                } else if (args[i].equals(messages.getMessage("novelManager.sendReport"))) {
-                    // 更新チェック結果を送信
-                    novelManager.sendReport();
-                } else if (args[i].startsWith(messages.getMessage("novelManager.add"))) {
-                    // 小説を追加
-                    novelManager.add(args[i].substring(args[i].indexOf('=') + 1).trim());
-                } else if (args[i].startsWith(messages.getMessage("novelManager.delete"))) {
-                    // 小説を削除
-                    novelManager.delete(args[i].substring(args[i].indexOf('=') + 1).trim());
-                } else {
-                    // 不正な引数
-                    throw new IllegalArgumentException();
-                }
-            }
+        if (args == null) {
+            // 何もしない
+            return;
+        }
+
+        for (int i = 0; i < args.length; i++) {
+            executeNovelManager(args[i]);
+        }
+    }
+
+    /**
+     * バッチ処理分岐(NovelManager).
+     *
+     * @param arg
+     *            引数
+     */
+    private void executeNovelManager(String arg) {
+        if (arg.equals(messages.getMessage("novelManager.getCheckTargetId"))) {
+            // 更新チェック
+            novelManager.getCheckTargetId().forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
+        } else if (arg.equals(messages.getMessage("novelManager.sendReport"))) {
+            // 更新チェック結果を送信
+            novelManager.sendReport();
+        } else if (arg.startsWith(messages.getMessage("novelManager.add"))) {
+            // 小説を追加
+            novelManager.add(arg.substring(arg.indexOf('=') + 1).trim());
+        } else if (arg.startsWith(messages.getMessage("novelManager.delete"))) {
+            // 小説を削除
+            novelManager.delete(arg.substring(arg.indexOf('=') + 1).trim());
+        } else {
+            // 不正な引数
+            throw new IllegalArgumentException();
         }
     }
 }
