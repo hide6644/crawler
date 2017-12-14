@@ -1,7 +1,5 @@
 package crawler.service.impl;
 
-import java.net.URL;
-
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -26,19 +24,12 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
     private NovelChapterManagerImpl novelChapterManager = new NovelChapterManagerImpl();
 
     @Test
-    public void testSaveNovelChapter() throws Exception {
+    public void testSaveAllNovelChapter() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
+        novelSource.setHostname("file://" + filePath.substring(0, filePath.indexOf("test.html")));
 
-        int startIndex = 0;
-        if (filePath.indexOf(":") >= 0) {
-            startIndex = 3;
-        }
-
-        String fileQuery = filePath.substring(startIndex, filePath.indexOf("test.html"));
-        URL url = new URL("file", fileQuery, "test.html");
-        novelSource.setUrl(url);
-        novelChapterManager.saveNovelChapter(novelSource);
+        novelChapterManager.saveAllNovelChapter(novelSource);
     }
 }

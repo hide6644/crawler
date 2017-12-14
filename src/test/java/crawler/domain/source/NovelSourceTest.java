@@ -51,7 +51,7 @@ public class NovelSourceTest {
         assertNotNull(novelInfoLink);
         assertEquals(novelInfoLink, "http://ncode.syosetu.com/novelview/infotop/ncode/20160924/");
 
-        String hostUrl = novelSource.getHostUrl();
+        String hostUrl = novelSource.getHostname();
 
         assertNotNull(hostUrl);
         assertEquals(hostUrl, "file://");

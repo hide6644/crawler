@@ -25,6 +25,9 @@ public class NovelSource extends BaseSource {
     /** 小説の更新履歴 */
     private NovelHistory novelHistory;
 
+    /** 小説のUrlのホスト名 */
+    private String hostname;
+
     /**
      * コンストラクタ.
      *
@@ -37,6 +40,8 @@ public class NovelSource extends BaseSource {
         this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
         html = NovelManagerUtil.getSource(this.url);
+        // URLからホスト名を取得
+        hostname = this.url.getProtocol() + "://" + this.url.getHost();
     }
 
     /**
@@ -159,12 +164,22 @@ public class NovelSource extends BaseSource {
     }
 
     /**
-     * 小説のUrlのホスト部分まで取得する.
+     * 小説のUrlのホスト名を取得する.
      *
-     * @return 小説のUrlのホスト部分
+     * @return 小説のUrlのホスト名
      */
-    public String getHostUrl() {
-        return url.getProtocol() + "://" + url.getHost();
+    public String getHostname() {
+        return hostname;
+    }
+
+    /**
+     * 小説のUrlのホスト名を設定する.
+     *
+     * @param hostname
+     *            小説のUrlのホスト名
+     */
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     /**
