@@ -291,6 +291,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -356,13 +363,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
-            <version>${hibernate.search.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.solr</groupId>
-                    <artifactId>solr-analysis-extras</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${hibernate-search.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -379,12 +380,12 @@
         <dependency>
             <groupId>net.htmlparser.jericho</groupId>
             <artifactId>jericho-html</artifactId>
-            <version>${jericho.html.version}</version>
+            <version>${jericho-html.version}</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>${joda.time.version}</version>
+            <version>${joda-time.version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -435,7 +436,7 @@
         <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
         <jdbc.groupId>mysql</jdbc.groupId>
         <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.44</jdbc.version>
+        <jdbc.version>5.1.45</jdbc.version>
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.url>
             <![CDATA[jdbc:mysql://localhost/crawler?createDatabaseIfNotExist=true&amp;zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true]]>
@@ -443,12 +444,13 @@
         <jdbc.username>crawler</jdbc.username>
         <jdbc.password />
 
+        <commons-lang3.version>3.6</commons-lang3.version>
         <freemarker.version>2.3.23</freemarker.version>
         <hibernate.version>5.2.12.Final</hibernate.version>
-        <hibernate.search.version>5.8.2.Final</hibernate.search.version>
+        <hibernate-search.version>5.8.2.Final</hibernate-search.version>
         <HikariCP.version>2.7.4</HikariCP.version>
-        <jericho.html.version>3.4</jericho.html.version>
-        <joda.time.version>2.9.9</joda.time.version>
+        <jericho-html.version>3.4</jericho-html.version>
+        <joda-time.version>2.9.9</joda-time.version>
         <junit.version>4.12</junit.version>
         <log4j.version>2.9.1</log4j.version>
         <lucene.version>5.5.4</lucene.version>

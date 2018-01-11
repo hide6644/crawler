@@ -61,7 +61,10 @@ public class NovelReportMail {
             dir.mkdirs();
         }
 
-        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)));) {
+        try (FileOutputStream fos = new FileOutputStream(file);
+                OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                BufferedWriter bw = new BufferedWriter(osw);
+                PrintWriter pw = new PrintWriter(bw)) {
             // テンプレートとマージ
             cfg.getTemplate("report.ftl").process(root, pw);
 

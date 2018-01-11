@@ -49,7 +49,7 @@ public class NovelSourceTest {
         String novelInfoLink = novelSource.getNovelInfoLink();
 
         assertNotNull(novelInfoLink);
-        assertEquals(novelInfoLink, "http://ncode.syosetu.com/novelview/infotop/ncode/20160924/");
+        assertEquals(novelInfoLink, "../testinfo.html");
 
         String hostUrl = novelSource.getHostname();
 
