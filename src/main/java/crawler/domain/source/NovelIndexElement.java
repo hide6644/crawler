@@ -1,5 +1,8 @@
 package crawler.domain.source;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;
 
@@ -55,39 +58,23 @@ public class NovelIndexElement {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((chapterLink == null) ? 0 : chapterLink.hashCode());
-        result = prime * result + ((chapterModifiedDate == null) ? 0 : chapterModifiedDate.hashCode());
-        return result;
+        return new HashCodeBuilder()
+                .append(chapterLink)
+                .append(chapterModifiedDate).toHashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        }
-        if (obj == null) {
+        } else if (!(obj instanceof NovelIndexElement)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        NovelIndexElement other = (NovelIndexElement) obj;
-        if (chapterLink == null) {
-            if (other.chapterLink != null) {
-                return false;
-            }
-        } else if (!chapterLink.equals(other.chapterLink)) {
-            return false;
-        }
-        if (chapterModifiedDate == null) {
-            if (other.chapterModifiedDate != null) {
-                return false;
-            }
-        } else if (!chapterModifiedDate.equals(other.chapterModifiedDate)) {
-            return false;
-        }
-        return true;
+
+        NovelIndexElement castObj = (NovelIndexElement) obj;
+        return new EqualsBuilder()
+                .append(chapterLink, castObj.chapterLink)
+                .append(chapterModifiedDate, castObj.chapterModifiedDate)
+                .isEquals();
     }
 }
