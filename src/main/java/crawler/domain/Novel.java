@@ -19,15 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 /**
  * 小説の情報
@@ -65,39 +61,6 @@ public class Novel extends BaseObject implements Serializable {
 
     /** 小説の章リスト */
     private List<NovelChapter> novelChapters = new ArrayList<>();
-
-    /**
-     * 更新を確認する必要があるか.
-     * (更新頻度から判定する)
-     *
-     * @return true:確認必要、false:確認不要
-     */
-    public boolean needsCheckForUpdate() {
-        final Logger log = LogManager.getLogger(Novel.class);
-
-        final DateTime now = DateTime.now();
-        if (novelInfo.isFinished() && new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays(45))) {
-            // 完了済み、かつ確認日が45日以内の場合
-            log.info("[skip] finished title:" + title);
-            return false;
-        }
-
-        final DateTime modifiedDate = new DateTime(novelInfo.getModifiedDate());
-        if (modifiedDate.isAfter(now.minusDays(30))) {
-            // 更新日付が30日以内の場合
-            if (new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays((int) new Duration(modifiedDate, now).getStandardDays() / 2))) {
-                // 確認日時が更新日の半分の期間より後の場合
-                log.info("[skip] title:" + title);
-                return false;
-            }
-        } else if (new DateTime(novelInfo.getCheckedDate()).isAfter(now.minusDays(15))) {
-            // 確認日時が15日以内の場合
-            log.info("[skip] title:" + title);
-            return false;
-        }
-
-        return true;
-    }
 
     @Column(nullable = false, length = 64)
     public String getUrl() {

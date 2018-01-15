@@ -20,6 +20,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -29,6 +31,8 @@ import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 /**
  * 小説の付随情報
@@ -61,6 +65,40 @@ public class NovelInfo extends BaseObject implements Serializable {
 
     /** 小説 */
     private Novel novel;
+
+    /**
+     * 更新を確認する必要があるか.
+     * (更新頻度から判定する)
+     *
+     * @return true:確認必要、false:確認不要
+     */
+    public boolean needsCheckForUpdate() {
+        final Logger log = LogManager.getLogger(NovelInfo.class);
+
+        final DateTime now = DateTime.now();
+        final DateTime checkedDateTime = new DateTime(checkedDate);
+        if (finished && checkedDateTime.isAfter(now.minusDays(45))) {
+            // 完了済み、かつ確認日が45日以内の場合
+            log.info("[skip] finished title:" + novel.getTitle());
+            return false;
+        }
+
+        final DateTime modifiedDateTime = new DateTime(modifiedDate);
+        if (modifiedDateTime.isAfter(now.minusDays(30))) {
+            // 更新日付が30日以内の場合
+            if (checkedDateTime.isAfter(now.minusDays((int) new Duration(modifiedDateTime, now).getStandardDays() / 2))) {
+                // 確認日時が更新日の半分の期間より後の場合
+                log.info("[skip] title:" + novel.getTitle());
+                return false;
+            }
+        } else if (checkedDateTime.isAfter(now.minusDays(15))) {
+            // 確認日時が15日以内の場合
+            log.info("[skip] title:" + novel.getTitle());
+            return false;
+        }
+
+        return true;
+    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "checked_date")
