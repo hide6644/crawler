@@ -27,13 +27,13 @@ public class NovelProcessTest {
     public void testExecute() {
         given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
         given(messages.getMessage("novelManager.sendReport")).willReturn("sendReport");
-        given(messages.getMessage("novelManager.add")).willReturn("add");
+        given(messages.getMessage("novelManager.save")).willReturn("save");
         given(messages.getMessage("novelManager.delete")).willReturn("del");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
                 "sendReport",
-                "add=http://foo.bar",
+                "save=http://foo.bar",
                 "del=http://foo.bar" });
     }
 
@@ -41,7 +41,7 @@ public class NovelProcessTest {
     public void testExecuteInvalid() {
         given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
         given(messages.getMessage("novelManager.sendReport")).willReturn("sendReport");
-        given(messages.getMessage("novelManager.add")).willReturn("add");
+        given(messages.getMessage("novelManager.save")).willReturn("save");
         given(messages.getMessage("novelManager.delete")).willReturn("del");
 
         // 不正な引数
