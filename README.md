@@ -13,7 +13,7 @@
 * 保存した小説を全文検索出来る（予定）
 
 ### DATABASE
-MySQLでの動作を前提としている。  
+MySQLでの動作を前提としている。
 データベースを作成たら下記のスクリプトを実行し、テーブルを作成する。
 
   /crawler/src/config/schema.sql
@@ -28,7 +28,7 @@ MySQLでの動作を前提としている。
 ### DEPLOY
 ```console
 任意のフォルダ/crawler.jar
-    /lib/クラスパスに指定されているJarファイル
+    /lib/Jarファイル
 ```
 
 ## USAGE
@@ -42,18 +42,20 @@ VM flags:
       実行Jarのパスを指定する
 
 command:
-  add=http://ncode.syosetu.com/小説のURL/
+  save=http://ncode.syosetu.com/小説のURL/
       小説を追加する
+      登録済みの小説の場合、更新を確認する
   del=http://ncode.syosetu.com/小説のURL/
       小説を削除する
   checkForUpdates
-      小説の更新を確認する
+      登録済みの全ての小説の更新を確認する
+      但し、1年以上更新の無い小説は対象外とする
   sendReport
       更新の確認結果をメールする
 
 examples:
   ・小説を追加
-    java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar add=http://ncode.syosetu.com/小説のURL/
+    java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar save=http://ncode.syosetu.com/小説のURL/
   ・小説を削除
     java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar del=http://ncode.syosetu.com/小説のURL/
   ・小説の更新を確認して、その結果をメールで送信
