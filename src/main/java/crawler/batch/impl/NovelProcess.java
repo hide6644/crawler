@@ -44,9 +44,9 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
         } else if (arg.equals(messages.getMessage("novelManager.sendReport"))) {
             // 更新チェック結果を送信
             novelManager.sendReport();
-        } else if (arg.startsWith(messages.getMessage("novelManager.add"))) {
-            // 小説を追加
-            novelManager.add(arg.substring(arg.indexOf('=') + 1).trim());
+        } else if (arg.startsWith(messages.getMessage("novelManager.save"))) {
+            // 小説を追加、既に存在する場合は更新
+            novelManager.save(arg.substring(arg.indexOf('=') + 1).trim());
         } else if (arg.startsWith(messages.getMessage("novelManager.delete"))) {
             // 小説を削除
             novelManager.delete(arg.substring(arg.indexOf('=') + 1).trim());

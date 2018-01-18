@@ -44,7 +44,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      */
     @Override
     @Transactional
-    public void add(final String url) {
+    public void save(final String url) {
         Novel novel = novelDao.getByUrl(url);
 
         if (novel != null) {
@@ -88,7 +88,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
         return novelDao.getByCheckedDateLessThanEqual(DateTime.now().withTimeAtStartOfDay().toDate()).stream()
-                .filter(novel -> novel.needsCheckForUpdate())
+                .filter(novel -> novel.getNovelInfo().needsCheckForUpdate())
                 .map(novel -> novel.getId())
                 .collect(Collectors.toList());
     }

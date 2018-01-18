@@ -10,12 +10,12 @@ import crawler.domain.Novel;
 public interface NovelManager extends GenericManager<Novel, Long> {
 
     /**
-     * 小説を登録する.
+     * 小説を登録更新する.
      *
      * @param url
      *            小説のURL
      */
-    void add(String url);
+    void save(String url);
 
     /**
      * 小説を削除する.
