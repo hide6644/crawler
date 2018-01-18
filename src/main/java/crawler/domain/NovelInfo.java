@@ -63,6 +63,9 @@ public class NovelInfo extends BaseObject implements Serializable {
     /** 評価 */
     private Integer rank;
 
+    /** 更新確認有効 */
+    private boolean checkEnable;
+
     /** 小説 */
     private Novel novel;
 
@@ -173,6 +176,15 @@ public class NovelInfo extends BaseObject implements Serializable {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    @Column(name = "check_enable")
+    public boolean getCheckEnable() {
+        return checkEnable;
+    }
+
+    public void setCheckEnable(boolean checkEnable) {
+        this.checkEnable = checkEnable;
     }
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

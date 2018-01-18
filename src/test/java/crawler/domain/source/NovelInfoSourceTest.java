@@ -16,10 +16,13 @@ public class NovelInfoSourceTest {
         NovelInfo novelInfo = novelInfoSource.getNovelInfo();
 
         assertNotNull(novelInfo);
+        assertFalse(novelInfo.getCheckEnable());
 
+        filePath = this.getClass().getClassLoader().getResource("novel/testInfo_new.html").getPath();
         novelInfoSource = NovelInfoSource.newInstance("file://" + filePath, novelInfo);
         novelInfo = novelInfoSource.getNovelInfo();
 
         assertNotNull(novelInfo);
+        assertTrue(novelInfo.getCheckEnable());
     }
 }

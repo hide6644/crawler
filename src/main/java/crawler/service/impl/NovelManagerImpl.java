@@ -44,7 +44,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      */
     @Override
     @Transactional
-    public void add(final String url) {
+    public void save(final String url) {
         Novel novel = novelDao.getByUrl(url);
 
         if (novel != null) {

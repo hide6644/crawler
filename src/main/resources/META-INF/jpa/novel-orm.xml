@@ -17,6 +17,7 @@
             from Novel n join fetch n.novelInfo ni
                 where n.deleted = false
                     and ni.checkedDate <= :checkedDate
+                    and ni.checkEnable = true
         ]]></query>
     </named-query>
 

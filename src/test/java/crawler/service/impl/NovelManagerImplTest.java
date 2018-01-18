@@ -34,7 +34,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         // 登録対象有り
-        novelManager.add("file://" + filePath);
+        novelManager.save("file://" + filePath);
 
         Novel novel = new Novel();
         novel.setUrl("file://" + filePath);
@@ -46,13 +46,13 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         given(novelDao.getByUrl("file://" + filePath)).willReturn(novel);
 
         // 登録済み
-        novelManager.add("file://" + filePath);
+        novelManager.save("file://" + filePath);
 
         // 削除
         novelManager.delete("file://" + filePath);
 
         // 登録対象無し
-        novelManager.add("file://" + filePath + "test");
+        novelManager.save("file://" + filePath + "test");
     }
 
     @Test
