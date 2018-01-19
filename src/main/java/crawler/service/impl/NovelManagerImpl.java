@@ -16,7 +16,6 @@ import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 import crawler.service.NovelManager;
-import crawler.service.mail.NovelReportMail;
 
 /**
  * 小説の情報を管理する.
@@ -34,10 +33,6 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     /** 小説の章を管理する. */
     @Autowired
     private NovelChapterManager novelChapterManager;
-
-    /** Reportメール処理クラス */
-    @Autowired
-    private NovelReportMail reportMail;
 
     /**
      * {@inheritDoc}
@@ -130,40 +125,6 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             log.info("[deleted] title:" + novel.getTitle());
             novel.setDeleted(true);
             novel.setUpdateDate(new Date());
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
-    public List<Novel> getUnreadNovels() {
-        return novelDao.getByUnreadTrueOrderByTitleAndId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
-    public void sendReport() {
-        List<Novel> unreadNovels = getUnreadNovels();
-
-        if (unreadNovels.isEmpty()) {
-            log.info("Not find unread novels.");
-        } else {
-            // メール送信
-            reportMail.sendUnreadNovelsReport(unreadNovels);
-
-            // 小説のステータスを既読に更新
-            Date now = new Date();
-            unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
-                    .forEach(unreadNovelChapter -> {
-                        unreadNovelChapter.getNovelChapterInfo().setUnread(false);
-                        unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
-                        unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
-                    });
         }
     }
 

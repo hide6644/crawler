@@ -21,6 +21,9 @@ public class NovelManagerTest extends BaseManagerTestCase {
     @Autowired
     private NovelManager novelManager;
 
+    @Autowired
+    private NovelOutputManager novelOutputManager;
+
     @Before
     public void setUp() {
         smtpPort = smtpPort + (int) (Math.random() * 100);
@@ -70,7 +73,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testGetUnreadNovels() {
-        List<Novel> unreadNovels = novelManager.getUnreadNovels();
+        List<Novel> unreadNovels = novelOutputManager.getUnreadNovels();
 
         assertNotNull(unreadNovels);
     }
@@ -81,7 +84,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
         wiser.setPort(smtpPort);
         wiser.start();
 
-        novelManager.sendReport();
+        novelOutputManager.sendReport();
 
         wiser.stop();
 

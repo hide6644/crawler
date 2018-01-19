@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import crawler.service.NovelManager;
+import crawler.service.NovelOutputManager;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NovelProcessTest {
@@ -19,6 +20,9 @@ public class NovelProcessTest {
 
     @Mock
     private NovelManager novelManager;
+
+    @Mock
+    private NovelOutputManager novelOutputManager;
 
     @InjectMocks
     private NovelProcess novelProcess = new NovelProcess();

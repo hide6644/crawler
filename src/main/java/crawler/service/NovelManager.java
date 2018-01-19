@@ -47,16 +47,4 @@ public interface NovelManager extends GenericManager<Novel, Long> {
      *            小説の情報
      */
     void checkForUpdatesAndSaveHistory(Novel novel);
-
-    /**
-     * 未読小説の一覧を取得する.
-     *
-     * @return 未読小説の一覧
-     */
-    List<Novel> getUnreadNovels();
-
-    /**
-     * 未読小説の一覧をメールで送信する.
-     */
-    void sendReport();
 }

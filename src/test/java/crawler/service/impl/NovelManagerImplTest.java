@@ -78,9 +78,4 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         // 更新対象無し
         novelManager.checkForUpdatesAndSaveHistory(novel);
     }
-
-    @Test
-    public void testSendReport() {
-        novelManager.sendReport();
-    }
 }
