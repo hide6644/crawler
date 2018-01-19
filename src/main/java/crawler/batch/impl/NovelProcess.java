@@ -62,10 +62,16 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
             novelManager.getCheckTargetId().forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
         } else if (arg.startsWith(messages.getMessage("novelManager.save"))) {
             // 小説を追加、既に存在する場合は更新
-            novelManager.save(arg.substring(arg.indexOf('=') + 1).trim());
+            novelManager.save(substringUrl(arg));
+        } else if (arg.startsWith(messages.getMessage("novelManager.favorite"))) {
+            // 小説をお気に入りに指定
+            novelManager.favorite(substringUrl(arg), true);
+        } else if (arg.startsWith(messages.getMessage("novelManager.unfavorite"))) {
+            // 小説のお気に入りを解除
+            novelManager.favorite(substringUrl(arg), false);
         } else if (arg.startsWith(messages.getMessage("novelManager.delete"))) {
             // 小説を削除
-            novelManager.delete(arg.substring(arg.indexOf('=') + 1).trim());
+            novelManager.delete(substringUrl(arg));
         } else {
             executeFlag = false;
         }
@@ -91,5 +97,16 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
         }
 
         return executeFlag;
+    }
+
+    /**
+     * 引数文字列内からURL部分を切り出す.
+     *
+     * @param arg
+     *            引数
+     * @return URL
+     */
+    private String substringUrl(String arg) {
+        return arg.substring(arg.indexOf('=') + 1).trim();
     }
 }

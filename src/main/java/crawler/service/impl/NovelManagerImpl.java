@@ -71,6 +71,21 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
      */
     @Override
     @Transactional
+    public void favorite(String url, boolean add) {
+        Novel novel = novelDao.getByUrl(url);
+
+        if (novel != null) {
+            novel.getNovelInfo().setFavorite(add);
+        } else {
+            log.info("[not found] url:" + url);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public void delete(final String url) {
         novelDao.remove(novelDao.getByUrl(url));
     }

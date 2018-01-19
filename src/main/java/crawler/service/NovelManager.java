@@ -10,12 +10,22 @@ import crawler.domain.Novel;
 public interface NovelManager extends GenericManager<Novel, Long> {
 
     /**
-     * 小説を登録更新する.
+     * 小説を登録、既に登録済みであれば更新する.
      *
      * @param url
      *            小説のURL
      */
     void save(String url);
+
+    /**
+     * 小説のお気に入り指定を制御する.
+     *
+     * @param url
+     *            小説のURL
+     * @param add
+     *            true:お気に入りにする、false:お気に入りを解除する
+     */
+    void favorite(String url, boolean add);
 
     /**
      * 小説を削除する.
