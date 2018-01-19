@@ -151,6 +151,7 @@ create table novel_info (
     keyword varchar(300) default null,
     favorite boolean default null,
     rank integer default null,
+    check_enable boolean default null,
     version integer default null,
     create_user varchar(16) default null,
     create_date timestamp default '0000-00-00 00:00:00',
