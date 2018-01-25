@@ -89,9 +89,12 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
     private boolean executeNovelOutputManager(String arg) {
         boolean executeFlag = true;
 
-        if (arg.equals(messages.getMessage("novelManager.sendReport"))) {
-            // 更新チェック結果をメールで送信
+        if (arg.equals(messages.getMessage("novelOutputManager.sendUnreadReport"))) {
+            // 未読小説の一覧をメールで送信
             novelOutputManager.sendUnreadReport();
+        } else if (arg.equals(messages.getMessage("novelOutputManager.sendModifiedDateReport"))) {
+            // 小説の最終更新日時一覧をメールで送信
+            novelOutputManager.sendModifiedDateReport();
         } else {
             executeFlag = false;
         }
