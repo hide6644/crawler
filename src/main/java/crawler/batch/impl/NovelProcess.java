@@ -90,8 +90,8 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
         boolean executeFlag = true;
 
         if (arg.equals(messages.getMessage("novelManager.sendReport"))) {
-            // 更新チェック結果を送信
-            novelOutputManager.sendReport();
+            // 更新チェック結果をメールで送信
+            novelOutputManager.sendUnreadReport();
         } else {
             executeFlag = false;
         }

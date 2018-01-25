@@ -31,7 +31,7 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
     @Override
     @Transactional
     public List<Novel> getUnreadNovels() {
-        return novelDao.getByUnreadTrueOrderByTitleAndId();
+        return novelDao.getByUnreadTrueOrderByTitleAndNovelChapterId();
     }
 
     /**
@@ -39,14 +39,23 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
      */
     @Override
     @Transactional
-    public void sendReport() {
+    public List<Novel> getModifiedDateOfNovels() {
+        return novelDao.getOrderByTitle();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void sendUnreadReport() {
         List<Novel> unreadNovels = getUnreadNovels();
 
         if (unreadNovels.isEmpty()) {
             log.info("Not find unread novels.");
         } else {
             // メール送信
-            reportMail.sendUnreadNovelsReport(unreadNovels);
+            reportMail.sendUnreadReport(unreadNovels);
 
             // 小説のステータスを既読に更新
             Date now = new Date();
@@ -56,6 +65,22 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
                         unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
                         unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
                     });
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void sendModifiedDateReport() {
+        List<Novel> novels = getModifiedDateOfNovels();
+
+        if (novels.isEmpty()) {
+            log.info("Not find novels.");
+        } else {
+            // メール送信
+            reportMail.sendModifiedDateReport(novels);
         }
     }
 

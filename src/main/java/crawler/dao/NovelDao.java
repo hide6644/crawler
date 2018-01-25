@@ -26,12 +26,19 @@ public interface NovelDao extends GenericDao<Novel, Long> {
      *            最終確認日時
      * @return 小説の一覧
      */
-    List<Novel> getByCheckedDateLessThanEqual(Date checkedDate);
+    List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(Date checkedDate);
 
     /**
      * 未読小説の一覧を取得する.
      *
      * @return 小説の一覧
      */
-    List<Novel> getByUnreadTrueOrderByTitleAndId();
+    List<Novel> getByUnreadTrueOrderByTitleAndNovelChapterId();
+
+    /**
+     * 小説の最終更新日時一覧を取得する.
+     *
+     * @return 小説の一覧
+     */
+    List<Novel> getOrderByTitle();
 }

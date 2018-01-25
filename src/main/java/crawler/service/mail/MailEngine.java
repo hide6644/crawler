@@ -1,5 +1,7 @@
 package crawler.service.mail;
 
+import java.io.File;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -26,13 +28,13 @@ public class MailEngine {
      * メールを送信する.
      *
      * @param text
-     *            本文
-     * @param attachmentFilePath
-     *            添付ファイルのパス
+     *            メール本文
+     * @param attachmentFile
+     *            添付ファイル
      * @throws MessagingException
      *             {@link MessagingException}
      */
-    public void sendMail(String text, String attachmentFilePath) throws MessagingException {
+    public void sendMail(String text, File attachmentFile) throws MessagingException {
         MimeMessage message = ((JavaMailSenderImpl) mailSender).createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -42,7 +44,7 @@ public class MailEngine {
         helper.setText(text);
         helper.setSubject(mailMessage.getSubject());
 
-        FileSystemResource file = new FileSystemResource(attachmentFilePath);
+        FileSystemResource file = new FileSystemResource(attachmentFile);
         helper.addAttachment(file.getFilename(), file);
 
         ((JavaMailSenderImpl) mailSender).send(message);

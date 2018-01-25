@@ -39,15 +39,23 @@ public class NovelDaoJpa extends GenericDaoJpa<Novel, Long> implements NovelDao 
      * {@inheritDoc}
      */
     @Override
-    public List<Novel> getByCheckedDateLessThanEqual(Date checkedDate) {
-        return entityManager.createNamedQuery("Novel.findByCheckedDateLessThanEqual", persistentClass).setParameter("checkedDate", checkedDate).getResultList();
+    public List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(Date checkedDate) {
+        return entityManager.createNamedQuery("Novel.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue", persistentClass).setParameter("checkedDate", checkedDate).getResultList();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Novel> getByUnreadTrueOrderByTitleAndId() {
-        return entityManager.createNamedQuery("Novel.findByUnreadTrueOrderByTitleAndId", persistentClass).getResultList();
+    public List<Novel> getByUnreadTrueOrderByTitleAndNovelChapterId() {
+        return entityManager.createNamedQuery("Novel.findByUnreadTrueOrderByTitleAndNovelChapterId", persistentClass).getResultList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Novel> getOrderByTitle() {
+        return entityManager.createNamedQuery("Novel.findByDeletedFalseOrderByTitle", persistentClass).getResultList();
     }
 }

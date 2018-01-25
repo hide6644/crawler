@@ -44,35 +44,90 @@ public class NovelReportMail {
      * @param unreadNovels
      *            未読小説の一覧
      */
-    public void sendUnreadNovelsReport(final List<Novel> unreadNovels) {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
-        cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
+    public void sendUnreadReport(final List<Novel> unreadNovels) {
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("unreadNovels", unreadNovels);
 
-        Map<String, Object> root = new HashMap<>();
-        root.put("unreadNovels", unreadNovels);
+        String yesterday = DateTime.now().minusDays(1).toString("yyyy-MM-dd");
+        File file = getFile("unread_novels_" + yesterday + ".html");
+        String text = yesterday + " updated.";
 
-        String filePath = Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + new DateTime().minusDays(1).toString("yyyy-MM-dd") + ".html";
-        File file = new File(filePath);
+        sendReport("report.ftl", dataModel, text, file);
+    }
+
+    /**
+     * 小説の最終更新日時一覧のファイルを送信する.
+     *
+     * @param novels
+     *            小説の一覧
+     */
+    public void sendModifiedDateReport(final List<Novel> novels) {
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("novels", novels);
+
+        String today = DateTime.now().toString("yyyy-MM-dd");
+        File file = getFile("modified_date_of_novels_" + today + ".html");
+        String text = "modified date of novels.";
+
+        sendReport("modified_date.ftl", dataModel, text, file);
+    }
+
+    /**
+     * Fileオブジェクトを取得する.
+     *
+     * @param filePath
+     *            ファイルパス
+     * @return ファイルオブジェクト
+     */
+    private File getFile(String filePath) {
+        File file = new File(Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + filePath);
         File dir = file.getParentFile();
+
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
+        return file;
+    }
+
+    /**
+     * ファイルを作成し送信する.
+     *
+     * @param templateName
+     *            テンプレート名
+     * @param dataModel
+     *            テンプレートの変数（名前と値のペア）
+     * @param text
+     *            メール本文
+     * @param file
+     *            ファイルオブジェクト
+     */
+    private void sendReport(String templateName, Map<String, Object> dataModel, String text, File file) {
         try (FileOutputStream fos = new FileOutputStream(file);
                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
                 BufferedWriter bw = new BufferedWriter(osw);
                 PrintWriter pw = new PrintWriter(bw)) {
             // テンプレートとマージ
-            cfg.getTemplate("report.ftl").process(root, pw);
+            getConfiguration().getTemplate(templateName).process(dataModel, pw);
 
-            String text = new DateTime().minusDays(1).toString("yyyy-MM-dd") + " updated.";
             log.info("[send] report:" + text);
-            mailEngine.sendMail(text, filePath);
+            mailEngine.sendMail(text, file);
         } catch (IOException | TemplateException | MessagingException e) {
             log.error("[not send] report:", e);
         }
+    }
+
+    /**
+     * Freemarkerの構成を取得する.
+     *
+     * @return Freemarkerの構成
+     */
+    private Configuration getConfiguration() {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
+        cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        cfg.setLogTemplateExceptions(false);
+        return cfg;
     }
 }

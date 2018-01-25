@@ -39,11 +39,11 @@ VM flags:
   -Dapp_home
       実行フォルダを指定する（キャッシュ、ログ、レポートの保存先になる）
   -jar
-      実行Jarのパスを指定する
+      crawler.jarのパスを指定する
 
 command:
   save=http://ncode.syosetu.com/小説のURL/
-      小説を追加する
+      小説を登録する
       登録済みの小説の場合、更新を確認する
   del=http://ncode.syosetu.com/小説のURL/
       小説を削除する

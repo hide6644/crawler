@@ -19,7 +19,12 @@ public class NovelOutputManagerImplTest extends BaseManagerMockTestCase {
     private NovelOutputManagerImpl novelOutputManager = new NovelOutputManagerImpl();
 
     @Test
-    public void testSendReport() {
-        novelOutputManager.sendReport();
+    public void testSendUnreadReport() {
+        novelOutputManager.sendUnreadReport();
+    }
+
+    @Test
+    public void testSendModifiedDateList() {
+        novelOutputManager.sendModifiedDateReport();;
     }
 }
