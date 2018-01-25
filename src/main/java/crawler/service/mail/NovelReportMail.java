@@ -50,9 +50,9 @@ public class NovelReportMail {
 
         String yesterday = DateTime.now().minusDays(1).toString("yyyy-MM-dd");
         File file = getFile("unread_novels_" + yesterday + ".html");
-        String text = yesterday + " updated.";
+        String bodyText = yesterday + " updated.";
 
-        sendReport("report.ftl", dataModel, text, file);
+        sendReport("unread_report.ftl", dataModel, bodyText, file);
     }
 
     /**
@@ -67,9 +67,9 @@ public class NovelReportMail {
 
         String today = DateTime.now().toString("yyyy-MM-dd");
         File file = getFile("modified_date_of_novels_" + today + ".html");
-        String text = "modified date of novels.";
+        String bodyText = "modified date of novels.";
 
-        sendReport("modified_date.ftl", dataModel, text, file);
+        sendReport("modified_date_report.ftl", dataModel, bodyText, file);
     }
 
     /**
@@ -97,12 +97,12 @@ public class NovelReportMail {
      *            テンプレート名
      * @param dataModel
      *            テンプレートの変数（名前と値のペア）
-     * @param text
+     * @param bodyText
      *            メール本文
      * @param file
      *            ファイルオブジェクト
      */
-    private void sendReport(String templateName, Map<String, Object> dataModel, String text, File file) {
+    private void sendReport(String templateName, Map<String, Object> dataModel, String bodyText, File file) {
         try (FileOutputStream fos = new FileOutputStream(file);
                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
                 BufferedWriter bw = new BufferedWriter(osw);
@@ -110,8 +110,8 @@ public class NovelReportMail {
             // テンプレートとマージ
             getConfiguration().getTemplate(templateName).process(dataModel, pw);
 
-            log.info("[send] report:" + text);
-            mailEngine.sendMail(text, file);
+            log.info("[send] report:" + bodyText);
+            mailEngine.sendMail(bodyText, file);
         } catch (IOException | TemplateException | MessagingException e) {
             log.error("[not send] report:", e);
         }

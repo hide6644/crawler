@@ -27,21 +27,21 @@ public class MailEngine {
     /**
      * メールを送信する.
      *
-     * @param text
-     *            メール本文
+     * @param bodyText
+     *            本文
      * @param attachmentFile
      *            添付ファイル
      * @throws MessagingException
      *             {@link MessagingException}
      */
-    public void sendMail(String text, File attachmentFile) throws MessagingException {
+    public void sendMail(String bodyText, File attachmentFile) throws MessagingException {
         MimeMessage message = ((JavaMailSenderImpl) mailSender).createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(mailMessage.getTo());
         helper.setFrom(mailMessage.getFrom());
 
-        helper.setText(text);
+        helper.setText(bodyText);
         helper.setSubject(mailMessage.getSubject());
 
         FileSystemResource file = new FileSystemResource(attachmentFile);
