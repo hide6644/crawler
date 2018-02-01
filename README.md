@@ -39,19 +39,21 @@ VM flags:
   -Dapp_home
       実行フォルダを指定する（キャッシュ、ログ、レポートの保存先になる）
   -jar
-      実行Jarのパスを指定する
+      crawler.jarのパスを指定する
 
 command:
   save=http://ncode.syosetu.com/小説のURL/
-      小説を追加する
+      小説を登録する
       登録済みの小説の場合、更新を確認する
   del=http://ncode.syosetu.com/小説のURL/
       小説を削除する
   checkForUpdates
       登録済みの全ての小説の更新を確認する
       但し、1年以上更新の無い小説は対象外とする
-  sendReport
+  sendUnreadReport
       更新の確認結果をメールする
+  sendModifiedDateReport
+      登録済み小説の一覧(タイトル、最終更新日時)をメールする
 
 examples:
   ・小説を追加
@@ -59,7 +61,7 @@ examples:
   ・小説を削除
     java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar del=http://ncode.syosetu.com/小説のURL/
   ・小説の更新を確認して、その結果をメールで送信
-    java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar checkForUpdates sendReport
+    java -Dapp_home=/home/crawler -jar /home/crawler/crawler.jar checkForUpdates sendUnreadReport
 ```
 
 ## LICENSE

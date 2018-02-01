@@ -9,6 +9,7 @@ import org.mockito.Mock;
 
 import crawler.dao.NovelDao;
 import crawler.domain.Novel;
+import crawler.domain.NovelInfo;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 
@@ -80,7 +81,22 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     }
 
     @Test
-    public void testSendReport() {
-        novelManager.sendReport();
+    public void testFavorite() {
+        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+
+        Novel novel = new Novel();
+        novel.setUrl("file://" + filePath);
+        novel.setTitle("Test小説のタイトル");
+        novel.setWritername("Test作者名");
+        novel.setDescription("Test小説の説明");
+        novel.setBody("Test本文");
+        NovelInfo novelInfo = new NovelInfo();
+        novel.setNovelInfo(novelInfo);
+
+        given(novelDao.getByUrl("file://" + filePath)).willReturn(novel);
+
+        novelManager.favorite("file://" + filePath, true);
+
+        novelManager.favorite("file://" + filePath, false);
     }
 }

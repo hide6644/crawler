@@ -21,6 +21,9 @@ public class NovelManagerTest extends BaseManagerTestCase {
     @Autowired
     private NovelManager novelManager;
 
+    @Autowired
+    private NovelOutputManager novelOutputManager;
+
     @Before
     public void setUp() {
         smtpPort = smtpPort + (int) (Math.random() * 100);
@@ -37,8 +40,10 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novel.setBody("Body");
 
         NovelInfo novelInfo = new NovelInfo();
-        novelInfo.setKeyword("Keyword1 Keyword2");
+        novelInfo.setCreateDate(DateTime.now().toDate());
+        novelInfo.setModifiedDate(DateTime.now().toDate());
         novelInfo.setFavorite(true);
+        novelInfo.setKeyword("Keyword1 Keyword2");
         novelInfo.setNovel(novel);
         novel.setNovelInfo(novelInfo);
 
@@ -70,18 +75,38 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testGetUnreadNovels() {
-        List<Novel> unreadNovels = novelManager.getUnreadNovels();
+        List<Novel> unreadNovels = novelOutputManager.getUnreadNovels();
 
         assertNotNull(unreadNovels);
     }
 
     @Test
-    public void testSendReport() {
+    public void testGetNovelsIncludingModifiedDate() {
+        List<Novel> novels = novelOutputManager.getModifiedDateOfNovels();
+
+        assertNotNull(novels);
+    }
+
+    @Test
+    public void testSendUnreadReport() {
         Wiser wiser = new Wiser();
         wiser.setPort(smtpPort);
         wiser.start();
 
-        novelManager.sendReport();
+        novelOutputManager.sendUnreadReport();
+
+        wiser.stop();
+
+        assertTrue(wiser.getMessages().size() == 1);
+    }
+
+    @Test
+    public void testSendModifiedDateList() {
+        Wiser wiser = new Wiser();
+        wiser.setPort(smtpPort);
+        wiser.start();
+
+        novelOutputManager.sendModifiedDateReport();
 
         wiser.stop();
 

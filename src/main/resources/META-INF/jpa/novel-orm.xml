@@ -12,7 +12,7 @@
         ]]></query>
     </named-query>
 
-    <named-query name="Novel.findByCheckedDateLessThanEqual">
+    <named-query name="Novel.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue">
         <query><![CDATA[
             from Novel n join fetch n.novelInfo ni
                 where n.deleted = false
@@ -21,7 +21,7 @@
         ]]></query>
     </named-query>
 
-    <named-query name="Novel.findByUnreadTrueOrderByTitleAndId">
+    <named-query name="Novel.findByUnreadTrueOrderByTitleAndNovelChapterId">
         <query><![CDATA[
             select distinct n
                 from Novel n
@@ -30,6 +30,14 @@
                     join fetch nc.novelChapterInfo nci
                 where nci.unread = true
                 order by n.title, nc.id
+        ]]></query>
+    </named-query>
+
+    <named-query name="Novel.findByDeletedFalseOrderByTitle">
+        <query><![CDATA[
+            from Novel n join fetch n.novelInfo ni
+                where n.deleted = false
+                order by n.title
         ]]></query>
     </named-query>
 

@@ -42,15 +42,22 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testGetNovelsByCheckedDate() {
-        List<Novel> novelList = dao.getByCheckedDateLessThanEqual(new Date());
+    public void testGetByCheckedDateLessThanEqualAndCheckEnableTrue() {
+        List<Novel> novelList = dao.getByCheckedDateLessThanEqualAndCheckEnableTrue(new Date());
 
         assertNotNull(novelList);
     }
 
     @Test
-    public void testGetNovelsByUnread() {
-        List<Novel> novelList = dao.getByUnreadTrueOrderByTitleAndId();
+    public void testGetByUnreadTrueOrderByTitleAndNovelChapterId() {
+        List<Novel> novelList = dao.getByUnreadTrueOrderByTitleAndNovelChapterId();
+
+        assertNotNull(novelList);
+    }
+
+    @Test
+    public void testGetOrderByTitle() {
+        List<Novel> novelList = dao.getOrderByTitle();
 
         assertNotNull(novelList);
     }
