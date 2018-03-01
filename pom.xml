@@ -7,7 +7,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -383,14 +383,9 @@
             <version>${jericho-html.version}</version>
         </dependency>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda-time.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>${freemarker.version}</version>
+            <groupId>no.api.freemarker</groupId>
+            <artifactId>freemarker-java8</artifactId>
+            <version>${freemarker-java8.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -445,12 +440,11 @@
         <jdbc.password />
 
         <commons-lang3.version>3.6</commons-lang3.version>
-        <freemarker.version>2.3.23</freemarker.version>
+        <freemarker-java8.version>1.2.0</freemarker-java8.version>
         <hibernate.version>5.2.13.Final</hibernate.version>
         <hibernate-search.version>5.9.0.Final</hibernate-search.version>
         <HikariCP.version>2.7.7</HikariCP.version>
         <jericho-html.version>3.4</jericho-html.version>
-        <joda-time.version>2.9.9</joda-time.version>
         <junit.version>4.12</junit.version>
         <log4j.version>2.9.1</log4j.version>
         <lucene.version>5.5.5</lucene.version>

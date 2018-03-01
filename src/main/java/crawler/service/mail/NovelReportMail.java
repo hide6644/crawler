@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,6 @@ import javax.mail.MessagingException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,16 @@ import crawler.domain.Novel;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import no.api.freemarker.java8.Java8ObjectWrapper;
 
 /**
  * Novel Reportメール処理クラス.
  */
 @Service("reportMail")
 public class NovelReportMail {
+
+    /** 日付のフォーマット */
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     /** ログ出力クラス */
     private Logger log = LogManager.getLogger(getClass());
@@ -48,7 +53,7 @@ public class NovelReportMail {
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("unreadNovels", unreadNovels);
 
-        String yesterday = DateTime.now().minusDays(1).toString("yyyy-MM-dd");
+        String yesterday = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(DATE_FORMAT));
         File file = getFile("unread_novels_" + yesterday + ".html");
         String bodyText = yesterday + " updated.";
 
@@ -65,7 +70,7 @@ public class NovelReportMail {
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("novels", novels);
 
-        String today = DateTime.now().toString("yyyy-MM-dd");
+        String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
         File file = getFile("modified_date_of_novels_" + today + ".html");
         String bodyText = "modified date of novels.";
 
@@ -128,6 +133,7 @@ public class NovelReportMail {
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
+        cfg.setObjectWrapper(new Java8ObjectWrapper(Configuration.VERSION_2_3_23));
         return cfg;
     }
 }

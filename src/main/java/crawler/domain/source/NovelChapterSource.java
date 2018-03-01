@@ -1,6 +1,6 @@
 package crawler.domain.source;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterHistory;
@@ -56,7 +56,7 @@ public class NovelChapterSource extends BaseSource {
             }
 
             // 更新日時を変更
-            novelChapter.setUpdateDate(new Date());
+            novelChapter.setUpdateDate(LocalDateTime.now());
         }
 
         // 小説の章の情報を変更

@@ -2,9 +2,10 @@ package crawler.service;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Before
     public void setUp() {
-        smtpPort = smtpPort + (int) (Math.random() * 100);
+        smtpPort = smtpPort + new Random().nextInt(100);
 
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) applicationContext.getBean("mailSender");
         mailSender.setPort(smtpPort);
@@ -40,8 +41,8 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novel.setBody("Body");
 
         NovelInfo novelInfo = new NovelInfo();
-        novelInfo.setCreateDate(DateTime.now().toDate());
-        novelInfo.setModifiedDate(DateTime.now().toDate());
+        novelInfo.setCreateDate(LocalDateTime.now());
+        novelInfo.setModifiedDate(LocalDateTime.now());
         novelInfo.setFavorite(true);
         novelInfo.setKeyword("Keyword1 Keyword2");
         novelInfo.setNovel(novel);
@@ -51,14 +52,14 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelChapter.setUrl("Url");
         novelChapter.setTitle("Title");
         novelChapter.setBody("Body");
-        novelChapter.setCreateDate(DateTime.now().toDate());
-        novelChapter.setUpdateDate(DateTime.now().toDate());
+        novelChapter.setCreateDate(LocalDateTime.now());
+        novelChapter.setUpdateDate(LocalDateTime.now());
         novelChapter.setNovel(novel);
         novel.addNovelChapter(novelChapter);
 
         NovelChapterInfo novelChapterInfo = new NovelChapterInfo();
-        novelChapterInfo.setCheckedDate(DateTime.now().minusDays(1).toDate());
-        novelChapterInfo.setModifiedDate(DateTime.now().minusDays(2).toDate());
+        novelChapterInfo.setCheckedDate(LocalDateTime.now().minusDays(1));
+        novelChapterInfo.setModifiedDate(LocalDateTime.now().minusDays(2));
         novelChapterInfo.setUnread(true);
         novelChapterInfo.setNovelChapter(novelChapter);
         novelChapter.setNovelChapterInfo(novelChapterInfo);

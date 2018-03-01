@@ -1,7 +1,7 @@
 package crawler.domain.source;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import crawler.domain.NovelInfo;
 import crawler.exception.NovelNotFoundException;
@@ -38,24 +38,23 @@ public class NovelInfoSource extends BaseSource {
      */
     @Override
     protected void mapping() {
-        final DateTime now = DateTime.now();
+        final LocalDateTime now = LocalDateTime.now();
 
         if (novelInfo == null) {
             novelInfo = new NovelInfo();
         } else {
             // 更新の場合
             // 更新日時を変更
-            novelInfo.setUpdateDate(now.toDate());
+            novelInfo.setUpdateDate(now);
         }
 
         // 小説の付随情報を変更
         novelInfo.setKeyword(NovelElementsUtil.getKeyword(html));
-        novelInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
-                .parseDateTime(NovelElementsUtil.getModifiedDate(html)).toDate());
+        novelInfo.setModifiedDate(LocalDateTime.parse(NovelElementsUtil.getModifiedDate(html), DateTimeFormatter.ofPattern(MODIFIED_DATE_FORMAT)));
         novelInfo.setFinished(NovelElementsUtil.getFinished(html));
-        novelInfo.setCheckedDate(now.toDate());
+        novelInfo.setCheckedDate(now);
         // 最終更新日時が1年以内の場合、True
-        novelInfo.setCheckEnable(new DateTime(novelInfo.getModifiedDate()).isAfter(now.minusYears(1)));
+        novelInfo.setCheckEnable(novelInfo.getModifiedDate().isAfter(now.minusYears(1)));
     }
 
     /**

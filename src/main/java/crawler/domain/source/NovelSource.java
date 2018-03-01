@@ -1,7 +1,7 @@
 package crawler.domain.source;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -69,7 +69,7 @@ public class NovelSource extends BaseSource {
             }
 
             // 更新日時を変更
-            novel.setUpdateDate(new Date());
+            novel.setUpdateDate(LocalDateTime.now());
         }
 
         // 小説の情報を変更

@@ -1,6 +1,6 @@
 package crawler.service.impl;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
             reportMail.sendUnreadReport(unreadNovels);
 
             // 小説のステータスを既読に更新
-            Date now = new Date();
+            LocalDateTime now = LocalDateTime.now();
             unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
                     .forEach(unreadNovelChapter -> {
                         unreadNovelChapter.getNovelChapterInfo().setUnread(false);
