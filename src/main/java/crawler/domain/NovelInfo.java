@@ -1,7 +1,8 @@
 package crawler.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -16,8 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.logging.log4j.LogManager;
@@ -31,8 +30,6 @@ import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 /**
  * 小説の付随情報
@@ -43,10 +40,10 @@ import org.joda.time.Duration;
 public class NovelInfo extends BaseObject implements Serializable {
 
     /** 最終確認日時 */
-    private Date checkedDate;
+    private LocalDateTime checkedDate;
 
     /** 最終更新日時 */
-    private Date modifiedDate;
+    private LocalDateTime modifiedDate;
 
     /** 完結フラグ */
     private boolean finished;
@@ -78,23 +75,21 @@ public class NovelInfo extends BaseObject implements Serializable {
     public boolean needsCheckForUpdate() {
         final Logger log = LogManager.getLogger(NovelInfo.class);
 
-        final DateTime now = DateTime.now();
-        final DateTime checkedDateTime = new DateTime(checkedDate);
-        if (finished && checkedDateTime.isAfter(now.minusDays(45))) {
+        final LocalDateTime now = LocalDateTime.now();
+        if (finished && checkedDate.isAfter(now.minusDays(45))) {
             // 完了済み、かつ確認日が45日以内の場合
             log.info("[skip] finished title:" + novel.getTitle());
             return false;
         }
 
-        final DateTime modifiedDateTime = new DateTime(modifiedDate);
-        if (modifiedDateTime.isAfter(now.minusDays(30))) {
+        if (modifiedDate.isAfter(now.minusDays(30))) {
             // 更新日付が30日以内の場合
-            if (checkedDateTime.isAfter(now.minusDays((int) new Duration(modifiedDateTime, now).getStandardDays() / 2))) {
+            if (checkedDate.isAfter(now.minusDays(Duration.between(modifiedDate, now).dividedBy(2).toDays()))) {
                 // 確認日時が更新日の半分の期間より後の場合
                 log.info("[skip] title:" + novel.getTitle());
                 return false;
             }
-        } else if (checkedDateTime.isAfter(now.minusDays(15))) {
+        } else if (checkedDate.isAfter(now.minusDays(15))) {
             // 確認日時が15日以内の場合
             log.info("[skip] title:" + novel.getTitle());
             return false;
@@ -103,23 +98,21 @@ public class NovelInfo extends BaseObject implements Serializable {
         return true;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "checked_date")
-    public Date getCheckedDate() {
+    public LocalDateTime getCheckedDate() {
         return checkedDate;
     }
 
-    public void setCheckedDate(Date checkedDate) {
+    public void setCheckedDate(LocalDateTime checkedDate) {
         this.checkedDate = checkedDate;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified_date")
-    public Date getModifiedDate() {
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

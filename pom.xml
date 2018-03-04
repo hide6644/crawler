@@ -7,7 +7,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.4.0</version>
+    <version>1.4.2</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -57,7 +57,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -66,7 +66,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.0.2</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -106,7 +106,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
+                <version>2.20.1</version>
                 <configuration>
                     <reuseForks>false</reuseForks>
                     <argLine>${argLine} -Dapp_home=${project.build.directory}</argLine>
@@ -115,12 +115,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.20</version>
+                <version>2.20.1</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -185,19 +185,19 @@
     <reporting>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.4</version>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>3.1.1</version>
                 <configuration>
                     <effort>Max</effort>
                     <xmlOutput>true</xmlOutput>
-                    <excludeFilterFile>src/config/findbugs-exclude.xml</excludeFilterFile>
+                    <excludeFilterFile>src/config/spotbugs-exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>3.0.0</version>
                 <configuration>
                     <configLocation>src/config/checkstyle.xml</configLocation>
                 </configuration>
@@ -225,7 +225,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.0.0</version>
                 <configuration>
                     <author>true</author>
                     <source>1.8</source>
@@ -383,14 +383,9 @@
             <version>${jericho-html.version}</version>
         </dependency>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda-time.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>${freemarker.version}</version>
+            <groupId>no.api.freemarker</groupId>
+            <artifactId>freemarker-java8</artifactId>
+            <version>${freemarker-java8.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -445,19 +440,18 @@
         <jdbc.password />
 
         <commons-lang3.version>3.6</commons-lang3.version>
-        <freemarker.version>2.3.23</freemarker.version>
-        <hibernate.version>5.2.12.Final</hibernate.version>
-        <hibernate-search.version>5.8.2.Final</hibernate-search.version>
-        <HikariCP.version>2.7.4</HikariCP.version>
+        <freemarker-java8.version>1.2.0</freemarker-java8.version>
+        <hibernate.version>5.2.13.Final</hibernate.version>
+        <hibernate-search.version>5.9.0.Final</hibernate-search.version>
+        <HikariCP.version>2.7.7</HikariCP.version>
         <jericho-html.version>3.4</jericho-html.version>
-        <joda-time.version>2.9.9</joda-time.version>
         <junit.version>4.12</junit.version>
         <log4j.version>2.9.1</log4j.version>
-        <lucene.version>5.5.4</lucene.version>
+        <lucene.version>5.5.5</lucene.version>
         <mail.version>1.4.7</mail.version>
-        <mockito.version>2.13.0</mockito.version>
+        <mockito.version>2.15.0</mockito.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring.version>4.3.13.RELEASE</spring.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
         <subethasmtp.version>3.1.7</subethasmtp.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,8 +1,7 @@
 package crawler.domain.source;
 
-import java.util.Date;
-
-import org.joda.time.format.DateTimeFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import crawler.domain.NovelChapterInfo;
 
@@ -42,13 +41,12 @@ public class NovelChapterModifiedDate {
         } else {
             // 更新の場合
             // 更新日時を変更
-            novelChapterInfo.setUpdateDate(new Date());
+            novelChapterInfo.setUpdateDate(LocalDateTime.now());
         }
 
         // 小説の章の付随情報を変更
-        novelChapterInfo.setCheckedDate(new Date());
-        novelChapterInfo.setModifiedDate(DateTimeFormat.forPattern(MODIFIED_DATE_FORMAT)
-                .parseDateTime(chapterModifiedDate.replaceAll(MODIFIED_DATE_REPLACE_REGEX, "")).toDate());
+        novelChapterInfo.setCheckedDate(LocalDateTime.now());
+        novelChapterInfo.setModifiedDate(LocalDateTime.parse(chapterModifiedDate.replaceAll(MODIFIED_DATE_REPLACE_REGEX, ""), DateTimeFormatter.ofPattern(MODIFIED_DATE_FORMAT)));
         novelChapterInfo.setUnread(true);
     }
 

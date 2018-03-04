@@ -1,10 +1,10 @@
 package crawler.service.impl;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,7 +97,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
-        return novelDao.getByCheckedDateLessThanEqualAndCheckEnableTrue(DateTime.now().withTimeAtStartOfDay().toDate()).stream()
+        return novelDao.getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)).stream()
                 .filter(novel -> novel.getNovelInfo().needsCheckForUpdate())
                 .map(novel -> novel.getId())
                 .collect(Collectors.toList());
@@ -139,7 +139,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             // 小説が取得出来ない場合、削除フラグを設定
             log.info("[deleted] title:" + novel.getTitle());
             novel.setDeleted(true);
-            novel.setUpdateDate(new Date());
+            novel.setUpdateDate(LocalDateTime.now());
         }
     }
 

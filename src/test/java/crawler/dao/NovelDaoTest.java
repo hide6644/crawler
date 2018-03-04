@@ -2,7 +2,7 @@ package crawler.dao;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.Before;
@@ -43,7 +43,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testGetByCheckedDateLessThanEqualAndCheckEnableTrue() {
-        List<Novel> novelList = dao.getByCheckedDateLessThanEqualAndCheckEnableTrue(new Date());
+        List<Novel> novelList = dao.getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now());
 
         assertNotNull(novelList);
     }

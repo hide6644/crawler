@@ -1,6 +1,6 @@
 package crawler.dao;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import crawler.domain.Novel;
@@ -26,7 +26,7 @@ public interface NovelDao extends GenericDao<Novel, Long> {
      *            最終確認日時
      * @return 小説の一覧
      */
-    List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(Date checkedDate);
+    List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime checkedDate);
 
     /**
      * 未読小説の一覧を取得する.

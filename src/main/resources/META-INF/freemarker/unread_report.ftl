@@ -14,9 +14,9 @@
     </dt>
   <#list novel.novelChapters as novelChapter>
     <dd>
-        ${novelChapter.novelChapterInfo.modifiedDate?string["yyyy/MM/dd"]}
+        ${novelChapter.novelChapterInfo.modifiedDate.format("yyyy/MM/dd")}
         <a href="${novelChapter.url}">${novelChapter.title}</a>
-        <#if novelChapter.createDate?date?iso_local != novelChapter.updateDate?date?iso_local>(更新)</#if>
+        <#if !novelChapter.createDate.isEqual(novelChapter.updateDate)>(更新)</#if>
     </dd>
   </#list>
 </#list>

@@ -11,7 +11,7 @@
     <dt>
         <#if novel.novelInfo.favorite>★</#if>
         <a href="${novel.url}">${novel.title}</a>
-        ${novel.novelInfo.modifiedDate?string["yyyy/MM/dd"]}
+        ${novel.novelInfo.modifiedDate.format("yyyy/MM/dd")}
     </dt>
 </#list>
 </dl>

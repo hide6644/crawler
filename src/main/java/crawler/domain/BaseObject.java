@@ -1,14 +1,12 @@
 package crawler.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,13 +30,13 @@ public abstract class BaseObject {
     private String createUser;
 
     /** 登録日時 */
-    private Date createDate;
+    private LocalDateTime createDate;
 
     /** 更新ユーザ */
     private String updateUser;
 
     /** 更新日時 */
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     /**
      * IDを取得する.
@@ -110,10 +108,9 @@ public abstract class BaseObject {
      *
      * @return 更新日時
      */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date", updatable = false)
     @XmlTransient
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
@@ -123,7 +120,7 @@ public abstract class BaseObject {
      * @param createDate
      *            登録日時
      */
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -153,10 +150,9 @@ public abstract class BaseObject {
      *
      * @return 更新日時
      */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     @XmlTransient
-    public Date getUpdateDate() {
+    public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
@@ -166,7 +162,7 @@ public abstract class BaseObject {
      * @param updateDate
      *            更新日時
      */
-    public void setUpdateDate(Date updateDate) {
+    public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
 

@@ -1,6 +1,6 @@
 package crawler.dao.jpa;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -39,7 +39,7 @@ public class NovelDaoJpa extends GenericDaoJpa<Novel, Long> implements NovelDao 
      * {@inheritDoc}
      */
     @Override
-    public List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(Date checkedDate) {
+    public List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime checkedDate) {
         return entityManager.createNamedQuery("Novel.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue", persistentClass).setParameter("checkedDate", checkedDate).getResultList();
     }
 

@@ -1,7 +1,7 @@
 package crawler.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * 小説の章の付随情報
@@ -21,37 +19,35 @@ import javax.persistence.TemporalType;
 public class NovelChapterInfo extends BaseObject implements Serializable {
 
     /** 最終確認日時 */
-    private Date checkedDate;
+    private LocalDateTime checkedDate;
 
     /** 最終更新日時 */
-    private Date modifiedDate;
+    private LocalDateTime modifiedDate;
 
     /** 未読フラグ */
     private boolean unread;
 
     /** 既読日時 */
-    private Date readDate;
+    private LocalDateTime readDate;
 
     /** 小説の章 */
     private NovelChapter novelChapter;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "checked_date")
-    public Date getCheckedDate() {
+    public LocalDateTime getCheckedDate() {
         return checkedDate;
     }
 
-    public void setCheckedDate(Date checkedDate) {
+    public void setCheckedDate(LocalDateTime checkedDate) {
         this.checkedDate = checkedDate;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified_date")
-    public Date getModifiedDate() {
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
@@ -64,13 +60,12 @@ public class NovelChapterInfo extends BaseObject implements Serializable {
         this.unread = unread;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "read_date")
-    public Date getReadDate() {
+    public LocalDateTime getReadDate() {
         return readDate;
     }
 
-    public void setReadDate(Date readDate) {
+    public void setReadDate(LocalDateTime readDate) {
         this.readDate = readDate;
     }
 
