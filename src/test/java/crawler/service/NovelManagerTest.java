@@ -4,13 +4,15 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Random;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.subethamail.wiser.Wiser;
+
+import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.util.ServerSetupTest;
 
 import crawler.domain.Novel;
 import crawler.domain.NovelChapter;
@@ -25,12 +27,15 @@ public class NovelManagerTest extends BaseManagerTestCase {
     @Autowired
     private NovelOutputManager novelOutputManager;
 
+    private GreenMail greenMail;
+
     @Before
     public void setUp() {
-        smtpPort = smtpPort + new Random().nextInt(100);
+        greenMail = new GreenMail(ServerSetupTest.SMTP);
+        greenMail.start();
 
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) applicationContext.getBean("mailSender");
-        mailSender.setPort(smtpPort);
+        mailSender.setPort(greenMail.getSmtp().getPort());
         mailSender.setHost("localhost");
 
         Novel novel = new Novel();
@@ -67,6 +72,11 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelManager.save(novel);
     }
 
+    @After
+    public void tearDown() {
+        greenMail.stop();
+    }
+
     @Test
     public void testGetCheckTargetId() {
         List<Long> checkTargetId = novelManager.getCheckTargetId();
@@ -90,27 +100,19 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testSendUnreadReport() {
-        Wiser wiser = new Wiser();
-        wiser.setPort(smtpPort);
-        wiser.start();
+        greenMail.reset();
 
         novelOutputManager.sendUnreadReport();
 
-        wiser.stop();
-
-        assertTrue(wiser.getMessages().size() == 1);
+        assertTrue(greenMail.getReceivedMessages().length == 1);
     }
 
     @Test
     public void testSendModifiedDateList() {
-        Wiser wiser = new Wiser();
-        wiser.setPort(smtpPort);
-        wiser.start();
+        greenMail.reset();
 
         novelOutputManager.sendModifiedDateReport();
 
-        wiser.stop();
-
-        assertTrue(wiser.getMessages().size() == 1);
+        assertTrue(greenMail.getReceivedMessages().length == 1);
     }
 }

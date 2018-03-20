@@ -15,8 +15,6 @@ public abstract class BaseManagerTestCase extends AbstractTransactionalJUnit4Spr
 
     protected ResourceBundle rb;
 
-    protected int smtpPort = 25250;
-
     public BaseManagerTestCase() {
         String className = this.getClass().getName();
 

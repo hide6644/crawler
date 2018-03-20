@@ -23,7 +23,7 @@ public class GenericManagerTest extends BaseManagerTestCase {
     @PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
     protected EntityManager entityManager;
 
-    GenericManager<Novel, Long> genericManager;
+    private GenericManager<Novel, Long> genericManager;
 
     @Before
     public void setUp() {
