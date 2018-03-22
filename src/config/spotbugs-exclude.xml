@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE FindBugsFilter>
 <FindBugsFilter>
+
+    <Match>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+    </Match>
+
 </FindBugsFilter>

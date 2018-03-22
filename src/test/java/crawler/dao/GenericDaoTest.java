@@ -16,7 +16,7 @@ import crawler.domain.Novel;
 
 public class GenericDaoTest extends BaseDaoTestCase {
 
-    GenericDao<Novel, Long> genericDao;
+    private GenericDao<Novel, Long> genericDao;
 
     @Before
     public void setUp() {

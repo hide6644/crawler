@@ -27,17 +27,6 @@ public class NovelElementsUtil {
     }
 
     /**
-     * 小説の章が存在するか.
-     *
-     * @param html
-     *            html source
-     * @return true:章が存在する、false:章が存在しない
-     */
-    public static boolean existsChapter(final Source html) {
-        return !html.getAllElementsByClass("novel_subtitle").isEmpty();
-    }
-
-    /**
      * 小説のhtml sourceから小説のタイトルを取得する.
      *
      * @param html
