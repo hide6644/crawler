@@ -453,7 +453,7 @@
         <javax.activation.version>1.1.1</javax.activation.version>
         <jericho-html.version>3.4</jericho-html.version>
         <junit.version>4.12</junit.version>
-        <log4j.version>2.10.0</log4j.version>
+        <log4j.version>2.9.1</log4j.version>
         <lucene.version>5.5.5</lucene.version>
         <mail.version>1.6.1</mail.version>
         <mockito.version>2.16.0</mockito.version>
