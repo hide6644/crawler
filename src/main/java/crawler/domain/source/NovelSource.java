@@ -152,15 +152,12 @@ public class NovelSource extends BaseSource {
     }
 
     /**
-     * 小説の情報から小説の付随情報のリンクを取得する.
+     * 小説の情報から小説の付随情報のURLを取得する.
      *
-     * @return 小説の付随情報のリンク
+     * @return 小説の付随情報のURL
      */
-    public String getNovelInfoLink() {
-        return html.getElementById("novel_header").getAllElements("a").stream()
-                .filter(linkElement -> linkElement.getTextExtractor().toString().equals("小説情報"))
-                .map(linkElement -> linkElement.getAttributeValue("href"))
-                .findFirst().orElse(null);
+    public String getNovelInfoUrl() {
+        return NovelElementsUtil.getNovelInfoUrl(html);
     }
 
     /**

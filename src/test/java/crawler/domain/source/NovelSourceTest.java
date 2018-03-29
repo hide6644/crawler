@@ -46,10 +46,10 @@ public class NovelSourceTest {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
-        String novelInfoLink = novelSource.getNovelInfoLink();
+        String novelInfoUrl = novelSource.getNovelInfoUrl();
 
-        assertNotNull(novelInfoLink);
-        assertEquals(novelInfoLink, "../testinfo.html");
+        assertNotNull(novelInfoUrl);
+        assertEquals(novelInfoUrl, "../testinfo.html");
 
         String hostUrl = novelSource.getHostname();
 
