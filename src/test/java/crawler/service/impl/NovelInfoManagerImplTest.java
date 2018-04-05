@@ -14,7 +14,7 @@ public class NovelInfoManagerImplTest {
         String filePath = this.getClass().getClassLoader().getResource("novel/testInfo.html").getPath();
 
         NovelSource novelSource = mock(NovelSource.class);
-        when(novelSource.getNovelInfoLink()).thenReturn("file://" + filePath);
+        when(novelSource.getNovelInfoUrl()).thenReturn("file://" + filePath);
         when(novelSource.getNovel()).thenReturn(new Novel());
 
         NovelInfoManagerImpl novelInfoManager = new NovelInfoManagerImpl();

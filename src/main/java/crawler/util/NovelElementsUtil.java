@@ -71,6 +71,20 @@ public class NovelElementsUtil {
     }
 
     /**
+     * 小説のhtml sourceから小説の付随情報のURLを取得する.
+     *
+     * @param html
+     *            html source
+     * @return 小説の付随情報のURL
+     */
+    public static String getNovelInfoUrl(final Source html) {
+        return html.getElementById("novel_header").getAllElements("a").stream()
+                .filter(linkElement -> linkElement.getTextExtractor().toString().equals("小説情報"))
+                .map(linkElement -> linkElement.getAttributeValue("href"))
+                .findFirst().orElse(null);
+    }
+
+    /**
      * 小説の本文のhtml elementから小説の章のURLを取得する.
      *
      * @param element
