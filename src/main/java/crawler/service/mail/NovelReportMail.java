@@ -2,6 +2,7 @@ package crawler.service.mail;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -108,7 +109,7 @@ public class NovelReportMail {
      *            Pathオブジェクト
      */
     private void sendReport(String templateName, Map<String, Object> dataModel, String bodyText, Path path) {
-        try (BufferedWriter bw = Files.newBufferedWriter(path);) {
+        try (BufferedWriter bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8);) {
             // テンプレートとマージ
             getConfiguration().getTemplate(templateName).process(dataModel, bw);
 
