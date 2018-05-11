@@ -23,6 +23,9 @@ public class Constants {
     /** 実行フォルダ名 */
     public static final String APP_FOLDER_NAME = System.getProperty("app_home") + Constants.FILE_SEP;
 
+    /** Entity Managerクラス名 */
+    public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
+
     /** 一時停止時間 */
     public static final long DELAY_ACCESS_TIME = Long.parseLong(ResourceBundle.getBundle(BUNDLE_KEY).getString("delay.access.time")) * 1000;
 }

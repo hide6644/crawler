@@ -14,12 +14,16 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
+import crawler.dao.NovelDao;
 import crawler.domain.Novel;
 import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterInfo;
 import crawler.domain.NovelInfo;
 
 public class NovelManagerTest extends BaseManagerTestCase {
+
+    @Autowired
+    private NovelDao novelDao;
 
     @Autowired
     private NovelManager novelManager;
@@ -69,7 +73,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelChapterInfo.setNovelChapter(novelChapter);
         novelChapter.setNovelChapterInfo(novelChapterInfo);
 
-        novelManager.save(novel);
+        novelDao.save(novel);
     }
 
     @After

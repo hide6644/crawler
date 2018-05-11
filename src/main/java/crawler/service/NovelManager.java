@@ -7,7 +7,7 @@ import crawler.domain.Novel;
 /**
  * 小説の情報を管理する.
  */
-public interface NovelManager extends GenericManager<Novel, Long> {
+public interface NovelManager {
 
     /**
      * 小説を登録、既に登録済みであれば更新する.

@@ -3,12 +3,15 @@ package crawler.dao;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+
 import crawler.domain.Novel;
 
 /**
  * 小説のDAOのインターフェイス.
  */
-public interface NovelDao extends GenericDao<Novel, Long> {
+public interface NovelDao extends JpaRepository<Novel, Long> {
 
     /**
      * 指定の「URL」の小説を取得する.
@@ -17,7 +20,7 @@ public interface NovelDao extends GenericDao<Novel, Long> {
      *            URL
      * @return 小説
      */
-    Novel getByUrl(String url);
+    Novel findByUrl(String url);
 
     /**
      * 指定の「最終確認日時」以前の小説の一覧を取得する.
@@ -26,19 +29,19 @@ public interface NovelDao extends GenericDao<Novel, Long> {
      *            最終確認日時
      * @return 小説の一覧
      */
-    List<Novel> getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime checkedDate);
+    List<Novel> findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(@Param("checkedDate") LocalDateTime checkedDate);
 
     /**
      * 未読小説の一覧を取得する.
      *
      * @return 小説の一覧
      */
-    List<Novel> getByUnreadTrueOrderByTitleAndNovelChapterId();
+    List<Novel> findByUnreadTrueOrderByTitleAndNovelChapterId();
 
     /**
      * 小説の最終更新日時一覧を取得する.
      *
      * @return 小説の一覧
      */
-    List<Novel> getOrderByTitle();
+    List<Novel> findByDeletedFalseOrderByTitle();
 }

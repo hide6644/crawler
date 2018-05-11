@@ -44,7 +44,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         novel.setDescription("Test小説の説明");
         novel.setBody("Test本文");
 
-        given(novelDao.getByUrl("file://" + filePath)).willReturn(novel);
+        given(novelDao.findByUrl("file://" + filePath)).willReturn(novel);
 
         // 登録済み
         novelManager.save("file://" + filePath);
@@ -67,7 +67,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         novel.setDescription("Test小説の説明");
         novel.setBody("Test本文");
 
-        given(novelDao.get(1L)).willReturn(novel);
+        given(novelDao.getOne(1L)).willReturn(novel);
 
         // 更新対象有り
         novelManager.checkForUpdatesAndSaveHistory(1L);
@@ -93,7 +93,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         NovelInfo novelInfo = new NovelInfo();
         novel.setNovelInfo(novelInfo);
 
-        given(novelDao.getByUrl("file://" + filePath)).willReturn(novel);
+        given(novelDao.findByUrl("file://" + filePath)).willReturn(novel);
 
         novelManager.favorite("file://" + filePath, true);
 

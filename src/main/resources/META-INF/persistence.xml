@@ -9,7 +9,6 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <mapping-file>META-INF/jpa/novel-orm.xml</mapping-file>
-        <mapping-file>META-INF/jpa/novel_chapter-orm.xml</mapping-file>
 
         <class>crawler.domain.Novel</class>
         <class>crawler.domain.NovelChapter</class>

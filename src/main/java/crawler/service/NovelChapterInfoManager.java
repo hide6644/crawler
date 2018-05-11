@@ -1,13 +1,12 @@
 package crawler.service;
 
-import crawler.domain.NovelChapterInfo;
 import crawler.domain.source.NovelChapterSource;
 import crawler.domain.source.NovelIndexElement;
 
 /**
  * 小説の章の付随情報を管理する.
  */
-public interface NovelChapterInfoManager extends GenericManager<NovelChapterInfo, Long> {
+public interface NovelChapterInfoManager {
 
     /**
      * 小説の章の付随情報を設定する.

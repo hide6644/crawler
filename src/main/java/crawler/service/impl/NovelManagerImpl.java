@@ -21,9 +21,10 @@ import crawler.service.NovelManager;
  * 小説の情報を管理する.
  */
 @Service("novelManager")
-public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements NovelManager {
+public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
 
     /** 小説のDAO. */
+    @Autowired
     private NovelDao novelDao;
 
     /** 小説の付随情報を管理する. */
@@ -40,7 +41,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void save(final String url) {
-        Novel novel = novelDao.getByUrl(url);
+        Novel novel = novelDao.findByUrl(url);
 
         if (novel != null) {
             // 指定した小説が登録済みの場合
@@ -59,7 +60,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
                 novelChapterManager.saveAllNovelChapter(novelSource);
 
                 // 小説を永続化
-                save(novelSource.getNovel());
+                novelDao.save(novelSource.getNovel());
             } catch (NovelNotFoundException e) {
                 log.info("[deleted] url:" + url);
             }
@@ -72,7 +73,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void favorite(String url, boolean add) {
-        Novel novel = novelDao.getByUrl(url);
+        Novel novel = novelDao.findByUrl(url);
 
         if (novel != null) {
             novel.getNovelInfo().setFavorite(add);
@@ -87,7 +88,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void delete(final String url) {
-        novelDao.remove(novelDao.getByUrl(url));
+        novelDao.delete(novelDao.findByUrl(url));
     }
 
     /**
@@ -97,7 +98,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
-        return novelDao.getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)).stream()
+        return novelDao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)).stream()
                 .filter(novel -> novel.getNovelInfo().needsCheckForUpdate())
                 .map(novel -> novel.getId())
                 .collect(Collectors.toList());
@@ -109,7 +110,7 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
     @Override
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Long checkTargetId) {
-        Novel novel = novelDao.get(checkTargetId);
+        Novel novel = novelDao.getOne(checkTargetId);
 
         if (novel != null) {
             log.info("[check] title:" + novel.getTitle());
@@ -141,17 +142,5 @@ public class NovelManagerImpl extends GenericManagerImpl<Novel, Long> implements
             novel.setDeleted(true);
             novel.setUpdateDate(LocalDateTime.now());
         }
-    }
-
-    /**
-     * 小説のDAOのインターフェイスを設定する.
-     *
-     * @param novelDao
-     *            小説のDAOのインターフェイス
-     */
-    @Autowired
-    public void setNovelDao(NovelDao novelDao) {
-        this.dao = novelDao;
-        this.novelDao = novelDao;
     }
 }
