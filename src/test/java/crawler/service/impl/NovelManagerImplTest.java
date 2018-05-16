@@ -99,4 +99,13 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
         novelManager.favorite("file://" + filePath, false);
     }
+
+    @Test
+    public void testNotFoundFavorite() {
+        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+
+        given(novelDao.findByUrl("file://" + filePath)).willReturn(null);
+
+        novelManager.favorite("file://" + filePath, true);
+    }
 }

@@ -93,6 +93,7 @@ public class PreventMultiInstance implements Closeable {
     public void release() throws IOException {
         if (lock != null) {
             lock.release();
+            lock = null;
         }
     }
 
@@ -104,7 +105,9 @@ public class PreventMultiInstance implements Closeable {
      */
     @Override
     public void close() throws IOException {
-        fos.close();
-        Files.delete(path);
+        if (fos != null) {
+            fos.close();
+            Files.delete(path);
+        }
     }
 }

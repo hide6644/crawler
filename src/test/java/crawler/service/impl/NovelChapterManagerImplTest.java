@@ -1,11 +1,16 @@
 package crawler.service.impl;
 
+import static org.mockito.BDDMockito.*;
+
+import java.time.LocalDateTime;
+
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import crawler.dao.NovelChapterDao;
+import crawler.domain.NovelChapter;
 import crawler.domain.source.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 
@@ -29,6 +34,15 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         novelSource.setHostname("file://" + filePath.substring(0, filePath.indexOf("test.html")));
+
+        NovelChapter novelChapter =new NovelChapter();
+        novelChapter.setUrl("Url");
+        novelChapter.setTitle("Title");
+        novelChapter.setBody("Body");
+        novelChapter.setCreateDate(LocalDateTime.now());
+        novelChapter.setUpdateDate(LocalDateTime.now());
+
+        given(novelChapterDao.findByUrl(novelSource.getHostname() + "test02.html")).willReturn(novelChapter);
 
         novelChapterManager.saveAllNovelChapter(novelSource);
     }
