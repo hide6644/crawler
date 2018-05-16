@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
-import crawler.domain.NovelChapter;
 import crawler.domain.source.NovelChapterSource;
 import crawler.domain.source.NovelIndexElement;
 import crawler.domain.source.NovelSource;
@@ -18,9 +17,10 @@ import crawler.service.NovelChapterManager;
  * 小説の章を管理する.
  */
 @Service("novelChapterManager")
-public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Long> implements NovelChapterManager {
+public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelChapterManager {
 
     /** 小説の章のDAO. */
+    @Autowired
     private NovelChapterDao novelChapterDao;
 
     /** 小説の章の付随情報を管理する. */
@@ -54,7 +54,7 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
         try {
             // 小説の章を取得
             String url = novelSource.getHostname() + novelIndexElement.getChapterUrl();
-            NovelChapterSource novelChapterSource = NovelChapterSource.newInstance(url, novelChapterDao.getByUrl(url));
+            NovelChapterSource novelChapterSource = NovelChapterSource.newInstance(url, novelChapterDao.findByUrl(url));
 
             // 小説の章の付随情報を設定
             novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
@@ -73,17 +73,5 @@ public class NovelChapterManagerImpl extends GenericManagerImpl<NovelChapter, Lo
             // 小説の章が取得出来ない場合、何もしない
             log.info("[not found] chapter url:" + novelIndexElement.getChapterUrl());
         }
-    }
-
-    /**
-     * 小説の章のDAOのインターフェイスを設定する.
-     *
-     * @param novelChapterDao
-     *            小説の章のDAOのインターフェイス
-     */
-    @Autowired
-    public void setNovelChapterDao(NovelChapterDao novelChapterDao) {
-        this.dao = novelChapterDao;
-        this.novelChapterDao = novelChapterDao;
     }
 }

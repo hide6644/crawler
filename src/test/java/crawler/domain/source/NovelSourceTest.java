@@ -19,7 +19,7 @@ public class NovelSourceTest {
         List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
 
         assertNotNull(novelIndexList);
-        assertEquals(novelIndexList.size(), 3);
+        assertEquals(3, novelIndexList.size());
         assertTrue(novelSource.isAdd());
     }
 
@@ -37,7 +37,7 @@ public class NovelSourceTest {
         Set<NovelIndexElement> novelHistoryIndexSet = novelSource.getNovelHistoryIndexSet();
 
         assertNotNull(novelHistoryIndexSet);
-        assertEquals(novelHistoryIndexSet.size(), 3);
+        assertEquals(3, novelHistoryIndexSet.size());
         assertFalse(novelSource.isAdd());
     }
 
@@ -49,11 +49,11 @@ public class NovelSourceTest {
         String novelInfoUrl = novelSource.getNovelInfoUrl();
 
         assertNotNull(novelInfoUrl);
-        assertEquals(novelInfoUrl, "../testinfo.html");
+        assertEquals("../testinfo.html", novelInfoUrl);
 
         String hostUrl = novelSource.getHostname();
 
         assertNotNull(hostUrl);
-        assertEquals(hostUrl, "file://");
+        assertEquals("file://", hostUrl);
     }
 }

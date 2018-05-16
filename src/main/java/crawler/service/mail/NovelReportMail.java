@@ -1,12 +1,11 @@
 package crawler.service.mail;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ import no.api.freemarker.java8.Java8ObjectWrapper;
 /**
  * Novel Reportメール処理クラス.
  */
-@Service("reportMail")
+@Service("novelReportMail")
 public class NovelReportMail {
 
     /** 日付のフォーマット */
@@ -54,10 +53,10 @@ public class NovelReportMail {
         dataModel.put("unreadNovels", unreadNovels);
 
         String yesterday = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(DATE_FORMAT));
-        File file = getFile("unread_novels_" + yesterday + ".html");
+        Path path = getPath("unread_novels_" + yesterday + ".html");
         String bodyText = yesterday + " updated.";
 
-        sendReport("unread_report.ftl", dataModel, bodyText, file);
+        sendReport("unread_report.ftl", dataModel, bodyText, path);
     }
 
     /**
@@ -71,28 +70,30 @@ public class NovelReportMail {
         dataModel.put("novels", novels);
 
         String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
-        File file = getFile("modified_date_of_novels_" + today + ".html");
+        Path path = getPath("modified_date_of_novels_" + today + ".html");
         String bodyText = "modified date of novels.";
 
-        sendReport("modified_date_report.ftl", dataModel, bodyText, file);
+        sendReport("modified_date_report.ftl", dataModel, bodyText, path);
     }
 
     /**
-     * Fileオブジェクトを取得する.
+     * Pathオブジェクトを取得する.
      *
      * @param filePath
      *            ファイルパス
-     * @return ファイルオブジェクト
+     * @return Pathオブジェクト
      */
-    private File getFile(String filePath) {
-        File file = new File(Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + filePath);
-        File dir = file.getParentFile();
+    private Path getPath(String filePath) {
+        Path path = Paths.get(Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + filePath);
 
-        if (!dir.exists()) {
-            dir.mkdirs();
+        try {
+            Files.createDirectories(path.getParent());
+        } catch (IOException e) {
+            // file exists and is not a directory
+            // parent may not exist or other reason
         }
 
-        return file;
+        return path;
     }
 
     /**
@@ -104,19 +105,16 @@ public class NovelReportMail {
      *            テンプレートの変数（名前と値のペア）
      * @param bodyText
      *            メール本文
-     * @param file
-     *            ファイルオブジェクト
+     * @param path
+     *            Pathオブジェクト
      */
-    private void sendReport(String templateName, Map<String, Object> dataModel, String bodyText, File file) {
-        try (FileOutputStream fos = new FileOutputStream(file);
-                OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-                BufferedWriter bw = new BufferedWriter(osw);
-                PrintWriter pw = new PrintWriter(bw)) {
+    private void sendReport(String templateName, Map<String, Object> dataModel, String bodyText, Path path) {
+        try (BufferedWriter bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8);) {
             // テンプレートとマージ
-            getConfiguration().getTemplate(templateName).process(dataModel, pw);
+            getConfiguration().getTemplate(templateName).process(dataModel, bw);
 
             log.info("[send] report:" + bodyText);
-            mailEngine.sendMail(bodyText, file);
+            mailEngine.sendMail(bodyText, path.toFile());
         } catch (IOException | TemplateException | MessagingException e) {
             log.error("[not send] report:", e);
         }

@@ -33,18 +33,19 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
         novelChapter.setBody("Body");
         novelChapter.setNovel(novel);
         novel.addNovelChapter(novelChapter);
+
         dao.save(novel);
     }
 
     @Test
-    public void testGetByUrl() {
-        NovelChapter novelChapter = cdao.getByUrl("Url");
+    public void testFindByUrl() {
+        NovelChapter novelChapter = cdao.findByUrl("Url");
 
         assertNotNull(novelChapter);
 
         // 削除
-        dao.remove(novelChapter.getNovel().getId());
+        dao.deleteById(novelChapter.getNovel().getId());
 
-        assertNull(cdao.getByUrl("Url"));
+        assertNull(cdao.findByUrl("Url"));
     }
 }

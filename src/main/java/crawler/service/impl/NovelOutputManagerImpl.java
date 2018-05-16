@@ -16,9 +16,10 @@ import crawler.service.mail.NovelReportMail;
  * 小説の情報の出力を管理する.
  */
 @Service("novelOutputManager")
-public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> implements NovelOutputManager {
+public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutputManager {
 
     /** 小説のDAO. */
+    @Autowired
     private NovelDao novelDao;
 
     /** Reportメール処理クラス */
@@ -31,7 +32,7 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
     @Override
     @Transactional
     public List<Novel> getUnreadNovels() {
-        return novelDao.getByUnreadTrueOrderByTitleAndNovelChapterId();
+        return novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId();
     }
 
     /**
@@ -40,7 +41,7 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
     @Override
     @Transactional
     public List<Novel> getModifiedDateOfNovels() {
-        return novelDao.getOrderByTitle();
+        return novelDao.findByDeletedFalseOrderByTitle();
     }
 
     /**
@@ -82,17 +83,5 @@ public class NovelOutputManagerImpl extends GenericManagerImpl<Novel, Long> impl
             // メール送信
             reportMail.sendModifiedDateReport(novels);
         }
-    }
-
-    /**
-     * 小説のDAOのインターフェイスを設定する.
-     *
-     * @param novelDao
-     *            小説のDAOのインターフェイス
-     */
-    @Autowired
-    public void setNovelDao(NovelDao novelDao) {
-        this.dao = novelDao;
-        this.novelDao = novelDao;
     }
 }

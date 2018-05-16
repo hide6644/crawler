@@ -1,13 +1,14 @@
 package crawler;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * ロックファイルを処理する.
@@ -18,7 +19,7 @@ public class PreventMultiInstance implements Closeable {
     private FileOutputStream fos;
 
     /** ロックファイル */
-    private File file;
+    private Path path;
 
     /** ファイル領域上のロックオブジェクト */
     private FileLock lock;
@@ -39,10 +40,10 @@ public class PreventMultiInstance implements Closeable {
      *            ロックファイル名
      */
     public PreventMultiInstance(String lockfile) {
-        file = new File(lockfile);
-        // ロックファイルを開く.
+        path = Paths.get(lockfile);
+        // ロックファイルを開く
         try {
-            fos = new FileOutputStream(file);
+            fos = new FileOutputStream(path.toFile());
         } catch (FileNotFoundException e) {
             // 何もしない
         }
@@ -59,7 +60,7 @@ public class PreventMultiInstance implements Closeable {
         }
 
         try {
-            // ロックの取得を試行する.
+            // ロックの取得を試行する
             lock = fos.getChannel().tryLock();
 
             if (lock != null) {
@@ -104,6 +105,6 @@ public class PreventMultiInstance implements Closeable {
     @Override
     public void close() throws IOException {
         fos.close();
-        Files.delete(file.toPath());
+        Files.delete(path);
     }
 }

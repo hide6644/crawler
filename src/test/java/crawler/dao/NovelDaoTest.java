@@ -29,35 +29,34 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testGetByUrl() {
-        Novel novel = dao.getByUrl("Url");
+    public void testFindByUrl() {
+        Novel novel = dao.findByUrl("Url");
 
         assertNotNull(novel);
 
         // 削除
-        dao.remove(novel);
-        novel = dao.getByUrl("Url");
+        dao.delete(novel);
 
-        assertNull(novel);
+        assertNull(dao.findByUrl("Url"));
     }
 
     @Test
-    public void testGetByCheckedDateLessThanEqualAndCheckEnableTrue() {
-        List<Novel> novelList = dao.getByCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now());
+    public void testFindByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue() {
+        List<Novel> novelList = dao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now());
 
         assertNotNull(novelList);
     }
 
     @Test
-    public void testGetByUnreadTrueOrderByTitleAndNovelChapterId() {
-        List<Novel> novelList = dao.getByUnreadTrueOrderByTitleAndNovelChapterId();
+    public void testFindByUnreadTrueOrderByTitleAndNovelChapterId() {
+        List<Novel> novelList = dao.findByUnreadTrueOrderByTitleAndNovelChapterId();
 
         assertNotNull(novelList);
     }
 
     @Test
-    public void testGetOrderByTitle() {
-        List<Novel> novelList = dao.getOrderByTitle();
+    public void testFindByDeletedFalseOrderByTitle() {
+        List<Novel> novelList = dao.findByDeletedFalseOrderByTitle();
 
         assertNotNull(novelList);
     }

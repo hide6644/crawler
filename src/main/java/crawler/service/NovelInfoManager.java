@@ -1,13 +1,12 @@
 package crawler.service;
 
-import crawler.domain.NovelInfo;
 import crawler.domain.source.NovelSource;
 import crawler.exception.NovelNotFoundException;
 
 /**
  * 小説の付随情報を管理する.
  */
-public interface NovelInfoManager extends GenericManager<NovelInfo, Long> {
+public interface NovelInfoManager {
 
     /**
      * 小説の付随情報を設定する.

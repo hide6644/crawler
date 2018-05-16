@@ -7,7 +7,7 @@ import crawler.domain.Novel;
 /**
  * 小説の情報の出力を管理する.
  */
-public interface NovelOutputManager extends GenericManager<Novel, Long> {
+public interface NovelOutputManager {
 
     /**
      * 未読小説の一覧を取得する.
