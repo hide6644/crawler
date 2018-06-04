@@ -103,8 +103,8 @@ public class NovelManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testSendUnreadReport() {
-        greenMail.reset();
+    public void testSendUnreadReport() throws Exception {
+        greenMail.purgeEmailFromAllMailboxes();
 
         novelOutputManager.sendUnreadReport();
 
@@ -112,8 +112,8 @@ public class NovelManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testSendModifiedDateList() {
-        greenMail.reset();
+    public void testSendModifiedDateList() throws Exception {
+        greenMail.purgeEmailFromAllMailboxes();
 
         novelOutputManager.sendModifiedDateReport();
 
