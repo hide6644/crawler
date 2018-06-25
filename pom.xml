@@ -467,8 +467,8 @@
         <mail.version>1.6.1</mail.version>
         <mockito.version>2.18.3</mockito.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring.version>5.0.6.RELEASE</spring.version>
-        <spring-data.version>2.0.7.RELEASE</spring-data.version>
+        <spring.version>5.0.7.RELEASE</spring.version>
+        <spring-data.version>2.0.8.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
