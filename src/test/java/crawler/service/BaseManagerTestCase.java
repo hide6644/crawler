@@ -5,11 +5,17 @@ import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "classpath:/crawler/dao/applicationContext.xml" })
-public abstract class BaseManagerTestCase extends AbstractTransactionalJUnit4SpringContextTests {
+@Transactional
+@Rollback
+public abstract class BaseManagerTestCase {
 
     protected transient Logger log = LogManager.getLogger(getClass());
 

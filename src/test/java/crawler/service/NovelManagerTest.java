@@ -1,14 +1,15 @@
 package crawler.service;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.icegreen.greenmail.util.GreenMail;
@@ -23,6 +24,9 @@ import crawler.domain.NovelInfo;
 public class NovelManagerTest extends BaseManagerTestCase {
 
     @Autowired
+    private ApplicationContext applicationContext;
+
+    @Autowired
     private NovelDao novelDao;
 
     @Autowired
@@ -33,7 +37,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     private GreenMail greenMail;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         greenMail = new GreenMail(ServerSetupTest.SMTP);
         greenMail.start();
@@ -76,7 +80,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelDao.save(novel);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         greenMail.stop();
     }
