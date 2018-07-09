@@ -76,6 +76,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <excludeGroupIds>org.apache.maven.surefire</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>
