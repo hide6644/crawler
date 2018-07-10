@@ -9,7 +9,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.icegreen.greenmail.util.GreenMail;
@@ -22,9 +21,6 @@ import crawler.domain.NovelChapterInfo;
 import crawler.domain.NovelInfo;
 
 public class NovelManagerTest extends BaseManagerTestCase {
-
-    @Autowired
-    private ApplicationContext applicationContext;
 
     @Autowired
     private NovelDao novelDao;
