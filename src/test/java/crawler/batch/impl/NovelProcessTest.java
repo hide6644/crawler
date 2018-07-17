@@ -2,17 +2,18 @@ package crawler.batch.impl;
 
 import static org.mockito.BDDMockito.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import crawler.service.NovelManager;
 import crawler.service.NovelOutputManager;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class NovelProcessTest {
 
     @Mock
@@ -29,13 +30,7 @@ public class NovelProcessTest {
 
     @Test
     public void testExecute() {
-        given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
-        given(messages.getMessage("novelManager.save")).willReturn("save");
-        given(messages.getMessage("novelManager.favorite")).willReturn("fav");
-        given(messages.getMessage("novelManager.unfavorite")).willReturn("unfav");
-        given(messages.getMessage("novelManager.delete")).willReturn("del");
-        given(messages.getMessage("novelOutputManager.sendUnreadReport")).willReturn("sendUnreadReport");
-        given(messages.getMessage("novelOutputManager.sendModifiedDateReport")).willReturn("sendModifiedDateReport");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
@@ -47,17 +42,13 @@ public class NovelProcessTest {
                 "sendModifiedDateReport" });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testExecuteInvalid() {
-        given(messages.getMessage("novelManager.getCheckTargetId")).willReturn("checkForUpdates");
-        given(messages.getMessage("novelManager.save")).willReturn("save");
-        given(messages.getMessage("novelManager.favorite")).willReturn("fav");
-        given(messages.getMessage("novelManager.unfavorite")).willReturn("unfav");
-        given(messages.getMessage("novelManager.delete")).willReturn("del");
-        given(messages.getMessage("novelOutputManager.sendUnreadReport")).willReturn("sendUnreadReport");
-        given(messages.getMessage("novelOutputManager.sendModifiedDateReport")).willReturn("sendModifiedDateReport");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
 
         // 不正な引数
-        novelProcess.execute(new String[] { "test" });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            novelProcess.execute(new String[] { "test" });
+        });
     }
 }

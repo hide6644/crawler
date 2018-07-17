@@ -1,9 +1,9 @@
 package crawler.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import crawler.domain.Novel;
@@ -17,7 +17,7 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
     @Autowired
     private NovelChapterDao cdao;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         Novel novel = new Novel();
         novel.setUrl("Url");

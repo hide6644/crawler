@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.*;
 import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -42,7 +42,7 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
         novelChapter.setCreateDate(LocalDateTime.now());
         novelChapter.setUpdateDate(LocalDateTime.now());
 
-        given(novelChapterDao.findByUrl(novelSource.getHostname() + "test02.html")).willReturn(novelChapter);
+        when(novelChapterDao.findByUrl(novelSource.getHostname() + "test01.html")).thenReturn(novelChapter);
 
         novelChapterManager.saveAllNovelChapter(novelSource);
     }

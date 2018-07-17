@@ -1,8 +1,8 @@
 package crawler.service.impl;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import crawler.domain.Novel;
 import crawler.domain.source.NovelSource;

@@ -1,12 +1,13 @@
 package crawler.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import crawler.domain.Novel;
@@ -16,7 +17,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
     @Autowired
     private NovelDao dao;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         Novel novel = new Novel();
         novel.setUrl("Url");
@@ -26,6 +27,11 @@ public class NovelDaoTest extends BaseDaoTestCase {
         novel.setBody("Body");
         novel.setDeleted(false);
         dao.save(novel);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        dao.deleteAll();;
     }
 
     @Test
