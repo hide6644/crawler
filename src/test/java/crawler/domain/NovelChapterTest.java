@@ -26,4 +26,12 @@ public class NovelChapterTest {
 
         assertTrue(novelChapter1.equals(novelChapter2));
     }
+
+    @Test
+    public void testHashCode() {
+        NovelChapter novelChapter1 = new NovelChapter();
+        novelChapter1.setUrl("test1");
+
+        assertTrue(novelChapter1.hashCode() == novelChapter1.hashCode());
+    }
 }
