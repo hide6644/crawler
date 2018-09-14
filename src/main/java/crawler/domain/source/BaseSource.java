@@ -2,6 +2,8 @@ package crawler.domain.source;
 
 import java.net.URL;
 
+import crawler.exception.NovelNotFoundException;
+import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Source;
 
 /**
@@ -10,13 +12,30 @@ import net.htmlparser.jericho.Source;
 public abstract class BaseSource {
 
     /** URL */
-    protected URL url;
+    protected final URL url;
 
     /** htmlソース */
-    protected Source html;
+    protected final Source html;
 
     /** 新規フラグ */
-    protected boolean add;
+    protected final boolean add;
+
+    /**
+     * コンストラクタ.
+     *
+     * @param url
+     *            URL
+     * @param add
+     *            true:新規、false:更新
+     * @throws NovelNotFoundException
+     *             URLが見つからない
+     */
+    protected BaseSource(String url, boolean add) throws NovelNotFoundException {
+        this.url = NovelManagerUtil.getUrl(url);
+        // URLからhtmlを取得
+        this.html = NovelManagerUtil.getSource(this.url);
+        this.add = add;
+    }
 
     /**
      * htmlをオブジェクトに変換する.
@@ -36,15 +55,7 @@ public abstract class BaseSource {
         return url;
     }
 
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
     public Source getHtml() {
         return html;
-    }
-
-    public void setHtml(Source html) {
-        this.html = html;
     }
 }

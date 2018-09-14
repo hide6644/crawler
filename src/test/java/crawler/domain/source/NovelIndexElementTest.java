@@ -20,23 +20,6 @@ public class NovelIndexElementTest {
 
         assertFalse(novelIndexList.get(0).equals(novelIndexList.get(1)));
 
-        novelIndexList.get(0).setChapterLink(null);
-        novelIndexList.get(0).setChapterModifiedDate(null);
-        novelIndexList.get(0).setChapterUrl(novelIndexList.get(1).getChapterUrl());
-
-        assertFalse(novelIndexList.get(0).equals(novelIndexList.get(1)));
-
-        novelIndexList.get(0).setChapterLink(novelIndexList.get(1).getChapterLink());
-
-        assertFalse(novelIndexList.get(0).equals(novelIndexList.get(1)));
-
-        novelIndexList.get(0).setChapterLink(null);
-        novelIndexList.get(0).setChapterModifiedDate(novelIndexList.get(1).getChapterModifiedDate());
-
-        assertFalse(novelIndexList.get(0).equals(novelIndexList.get(1)));
-
-        novelIndexList.get(0).setChapterLink(novelIndexList.get(1).getChapterLink());
-
-        assertTrue(novelIndexList.get(0).equals(novelIndexList.get(1)));
+        assertTrue(novelIndexList.get(0).equals(novelIndexList.get(0)));
     }
 }

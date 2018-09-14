@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import crawler.domain.NovelInfo;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
-import crawler.util.NovelManagerUtil;
 
 /**
  * 小説の付随情報のhtmlを保持するクラス.
@@ -17,20 +16,23 @@ public class NovelInfoSource extends BaseSource {
     public static final String MODIFIED_DATE_FORMAT = "yyyy年 MM月dd日 HH時mm分";
 
     /** 小説の付随情報 */
-    private NovelInfo novelInfo;
+    private final NovelInfo novelInfo;
 
     /**
      * コンストラクタ.
      *
      * @param url
      *            小説の付随情報のURL
+     * @param add
+     *            true:新規、false:更新
+     * @param novelInfo
+     *            小説の付随情報
      * @throws NovelNotFoundException
      *             小説の付随情報が見つからない
      */
-    protected NovelInfoSource(String url) throws NovelNotFoundException {
-        this.url = NovelManagerUtil.getUrl(url);
-        // URLからhtmlを取得
-        html = NovelManagerUtil.getSource(this.url);
+    private NovelInfoSource(final String url, final boolean add, final NovelInfo novelInfo) throws NovelNotFoundException {
+        super(url ,add);
+        this.novelInfo = novelInfo;
     }
 
     /**
@@ -40,11 +42,8 @@ public class NovelInfoSource extends BaseSource {
     protected void mapping() {
         final LocalDateTime now = LocalDateTime.now();
 
-        if (novelInfo == null) {
-            novelInfo = new NovelInfo();
-        } else {
-            // 更新の場合
-            // 更新日時を変更
+        if (!add) {
+            // 更新の場合、更新日時を変更
             novelInfo.setUpdateDate(now);
         }
 
@@ -68,9 +67,14 @@ public class NovelInfoSource extends BaseSource {
      * @throws NovelNotFoundException
      *             指定されたURLが取得出来ない
      */
-    public static NovelInfoSource newInstance(String url, NovelInfo novelInfo) throws NovelNotFoundException {
-        NovelInfoSource novelInfoSource = new NovelInfoSource(url);
-        novelInfoSource.setNovelInfo(novelInfo);
+    public static NovelInfoSource newInstance(final String url, final NovelInfo novelInfo) throws NovelNotFoundException {
+        NovelInfoSource novelInfoSource = null;
+        if (novelInfo == null) {
+            novelInfoSource = new NovelInfoSource(url, true, new NovelInfo());
+        } else {
+            novelInfoSource = new NovelInfoSource(url, false, novelInfo);
+        }
+
         novelInfoSource.mapping();
 
         return novelInfoSource;
@@ -78,9 +82,5 @@ public class NovelInfoSource extends BaseSource {
 
     public NovelInfo getNovelInfo() {
         return novelInfo;
-    }
-
-    public void setNovelInfo(NovelInfo novelInfo) {
-        this.novelInfo = novelInfo;
     }
 }

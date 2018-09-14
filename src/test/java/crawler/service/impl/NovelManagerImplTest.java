@@ -2,6 +2,8 @@ package crawler.service.impl;
 
 import static org.mockito.BDDMockito.*;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -67,7 +69,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         novel.setDescription("Test小説の説明");
         novel.setBody("Test本文");
 
-        given(novelDao.getOne(1L)).willReturn(novel);
+        given(novelDao.findById(1L)).willReturn(Optional.ofNullable(novel));
 
         // 更新対象有り
         novelManager.checkForUpdatesAndSaveHistory(1L);
