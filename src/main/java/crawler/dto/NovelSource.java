@@ -1,4 +1,4 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import crawler.domain.Novel;
-import crawler.domain.NovelHistory;
+import crawler.entity.Novel;
+import crawler.entity.NovelHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;

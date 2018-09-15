@@ -1,6 +1,6 @@
 package crawler.service;
 
-import crawler.domain.source.NovelSource;
+import crawler.dto.NovelSource;
 import crawler.exception.NovelNotFoundException;
 
 /**

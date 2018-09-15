@@ -1,4 +1,4 @@
-package crawler.domain;
+package crawler.entity;
 
 import static org.junit.jupiter.api.Assertions.*;
 

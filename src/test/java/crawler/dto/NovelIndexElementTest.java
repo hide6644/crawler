@@ -1,4 +1,4 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 

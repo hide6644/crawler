@@ -4,9 +4,9 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.domain.NovelChapter;
-import crawler.domain.source.NovelChapterSource;
-import crawler.domain.source.NovelIndexElement;
+import crawler.dto.NovelChapterSource;
+import crawler.dto.NovelIndexElement;
+import crawler.entity.NovelChapter;
 
 public class NovelChapterInfoManagerImplTest {
 

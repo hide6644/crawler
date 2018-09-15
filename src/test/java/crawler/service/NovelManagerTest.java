@@ -17,10 +17,10 @@ import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
 import crawler.dao.NovelDao;
-import crawler.domain.Novel;
-import crawler.domain.NovelChapter;
-import crawler.domain.NovelChapterInfo;
-import crawler.domain.NovelInfo;
+import crawler.entity.Novel;
+import crawler.entity.NovelChapter;
+import crawler.entity.NovelChapterInfo;
+import crawler.entity.NovelInfo;
 
 public class NovelManagerTest extends BaseManagerTestCase {
 

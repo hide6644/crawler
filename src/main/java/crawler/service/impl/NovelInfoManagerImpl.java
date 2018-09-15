@@ -2,8 +2,8 @@ package crawler.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import crawler.domain.source.NovelInfoSource;
-import crawler.domain.source.NovelSource;
+import crawler.dto.NovelInfoSource;
+import crawler.dto.NovelSource;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelInfoManager;
 

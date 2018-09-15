@@ -1,4 +1,4 @@
-package crawler.domain;
+package crawler.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import crawler.dao.NovelDao;
-import crawler.domain.Novel;
-import crawler.domain.source.NovelSource;
+import crawler.dto.NovelSource;
+import crawler.entity.Novel;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;

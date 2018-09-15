@@ -10,12 +10,12 @@
 
         <mapping-file>META-INF/jpa/novel-orm.xml</mapping-file>
 
-        <class>crawler.domain.Novel</class>
-        <class>crawler.domain.NovelChapter</class>
-        <class>crawler.domain.NovelChapterHistory</class>
-        <class>crawler.domain.NovelChapterInfo</class>
-        <class>crawler.domain.NovelHistory</class>
-        <class>crawler.domain.NovelInfo</class>
+        <class>crawler.entity.Novel</class>
+        <class>crawler.entity.NovelChapter</class>
+        <class>crawler.entity.NovelChapterHistory</class>
+        <class>crawler.entity.NovelChapterInfo</class>
+        <class>crawler.entity.NovelHistory</class>
+        <class>crawler.entity.NovelInfo</class>
 
         <validation-mode>NONE</validation-mode>
     </persistence-unit>

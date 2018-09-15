@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import crawler.dao.NovelDao;
-import crawler.domain.Novel;
+import crawler.entity.Novel;
 import crawler.service.NovelOutputManager;
 import crawler.service.mail.NovelReportMail;
 

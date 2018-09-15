@@ -2,7 +2,7 @@ package crawler.service;
 
 import java.util.List;
 
-import crawler.domain.Novel;
+import crawler.entity.Novel;
 
 /**
  * 小説の情報の出力を管理する.

@@ -1,9 +1,9 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import crawler.domain.NovelInfo;
+import crawler.entity.NovelInfo;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 

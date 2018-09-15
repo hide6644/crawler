@@ -10,8 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import crawler.dao.NovelChapterDao;
-import crawler.domain.NovelChapter;
-import crawler.domain.source.NovelSource;
+import crawler.dto.NovelSource;
+import crawler.entity.NovelChapter;
 import crawler.service.NovelChapterInfoManager;
 
 public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
