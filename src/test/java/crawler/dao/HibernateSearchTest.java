@@ -1,12 +1,13 @@
 package crawler.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
 import org.hibernate.search.query.facet.Facet;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,9 +22,9 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Autowired
     private NovelDao dao;
 
-    HibernateSearch<NovelInfo> hibernateSearch;
+    private HibernateSearch<NovelInfo> hibernateSearch;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         hibernateSearch = new HibernateSearchImpl<NovelInfo>(NovelInfo.class, entityManager);
         hibernateSearch.reindexAll(false);
@@ -45,9 +46,11 @@ public class HibernateSearchTest extends BaseDaoTestCase {
         assertNotNull(novelInfoList);
     }
 
-    @Test(expected = SearchException.class)
+    @Test
     public void testSearchException() {
-        hibernateSearch.search(new String[]{""}, new String[]{""});
+        Assertions.assertThrows(SearchException.class, () -> {
+            hibernateSearch.search(new String[]{""}, new String[]{""});
+        });
     }
 
     @Test

@@ -1,5 +1,7 @@
 package crawler.util;
 
+import java.util.Optional;
+
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 
@@ -23,7 +25,7 @@ public class NovelElementsUtil {
      * @return true:リンクが存在する、false:リンクが存在しない
      */
     public static boolean existsChapterLink(final Element element) {
-        return !element.getAllElements("a").isEmpty();
+        return element.getFirstElement("a") != null;
     }
 
     /**
@@ -34,7 +36,7 @@ public class NovelElementsUtil {
      * @return 小説のタイトル
      */
     public static String getTitle(final Source html) {
-        return html.getAllElementsByClass("novel_title").get(0).getTextExtractor().toString();
+        return html.getFirstElementByClass("novel_title").getTextExtractor().toString();
     }
 
     /**
@@ -45,7 +47,7 @@ public class NovelElementsUtil {
      * @return 小説の作者
      */
     public static String getWritername(final Source html) {
-        return html.getAllElementsByClass("novel_writername").get(0).getTextExtractor().toString().replaceAll("作者：", "");
+        return html.getFirstElementByClass("novel_writername").getTextExtractor().toString().replaceAll("作者：", "");
     }
 
     /**
@@ -67,7 +69,7 @@ public class NovelElementsUtil {
      * @return 小説の本文
      */
     public static String getBody(final Source html) {
-        return html.getAllElementsByClass("index_box").get(0).toString();
+        return html.getFirstElementByClass("index_box").toString();
     }
 
     /**
@@ -92,7 +94,7 @@ public class NovelElementsUtil {
      * @return 小説の章のURL
      */
     public static String getChapterUrlByNovelBody(final Element element) {
-        return element.getAllElements("a").get(0).getAttributeValue("href");
+        return element.getFirstElement("a").getAttributeValue("href");
     }
 
     /**
@@ -103,7 +105,7 @@ public class NovelElementsUtil {
      * @return 小説の章のタイトル
      */
     public static String getChapterTitle(final Source html) {
-        return html.getAllElementsByClass("novel_subtitle").get(0).getTextExtractor().toString();
+        return html.getFirstElementByClass("novel_subtitle").getTextExtractor().toString();
     }
 
     /**
@@ -114,13 +116,10 @@ public class NovelElementsUtil {
      * @return 小説の章のタイトル
      */
     public static String getChapterTitleByNovelBody(final Element element) {
-        if (!element.getAllElementsByClass("period_subtitle").isEmpty()) {
-            return element.getAllElementsByClass("period_subtitle").get(0).getAllElements("a").get(0).toString();
-        } else if (!element.getAllElementsByClass("long_subtitle").isEmpty()) {
-            return element.getAllElementsByClass("long_subtitle").get(0).getAllElements("a").get(0).toString();
-        } else {
-            return element.getAllElementsByClass("subtitle").get(0).getAllElements("a").get(0).toString();
-        }
+        return Optional.ofNullable(element.getFirstElementByClass("period_subtitle"))
+                .orElse(Optional.ofNullable(element.getFirstElementByClass("long_subtitle"))
+                        .orElse(element.getFirstElementByClass("subtitle")))
+                .getFirstElement("a").toString();
     }
 
     /**
@@ -177,12 +176,12 @@ public class NovelElementsUtil {
      * @return 小説の章の最終更新日時
      */
     public static String getChapterModifiedDate(final Element element) {
-        Element updateElement = element.getAllElementsByClass("long_update").get(0);
+        Element updateElement = element.getFirstElementByClass("long_update");
 
-        if (updateElement.getAllElements("span").isEmpty()) {
-            return updateElement.getTextExtractor().toString();
+        if (updateElement.getFirstElement("span") != null) {
+            return updateElement.getFirstElement("span").getAttributeValue("title");
         } else {
-            return updateElement.getAllElements("span").get(0).getAttributeValue("title");
+            return updateElement.getTextExtractor().toString();
         }
     }
 }

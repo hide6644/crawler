@@ -1,8 +1,8 @@
 package crawler.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NovelTest {
 
@@ -25,5 +25,13 @@ public class NovelTest {
         novel2.setUrl("test1");
 
         assertTrue(novel1.equals(novel2));
+    }
+
+    @Test
+    public void testHashCode() {
+        Novel novel1 = new Novel();
+        novel1.setUrl("test1");
+
+        assertTrue(novel1.hashCode() == novel1.hashCode());
     }
 }

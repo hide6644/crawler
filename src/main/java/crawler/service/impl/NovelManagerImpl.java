@@ -110,12 +110,10 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
     @Override
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Long checkTargetId) {
-        Novel novel = novelDao.getOne(checkTargetId);
-
-        if (novel != null) {
+        novelDao.findById(checkTargetId).ifPresent(novel -> {
             log.info("[check] title:" + novel.getTitle());
             checkForUpdatesAndSaveHistory(novel);
-        }
+        });
     }
 
     /**

@@ -126,12 +126,12 @@ public class NovelReportMail {
      * @return Freemarkerの構成
      */
     private Configuration getConfiguration() {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
         cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
-        cfg.setObjectWrapper(new Java8ObjectWrapper(Configuration.VERSION_2_3_23));
+        cfg.setObjectWrapper(new Java8ObjectWrapper(Configuration.VERSION_2_3_28));
         return cfg;
     }
 }

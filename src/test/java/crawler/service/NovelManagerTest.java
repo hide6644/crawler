@@ -1,16 +1,18 @@
 package crawler.service;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.icegreen.greenmail.store.FolderException;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
@@ -31,13 +33,17 @@ public class NovelManagerTest extends BaseManagerTestCase {
     @Autowired
     private NovelOutputManager novelOutputManager;
 
-    private GreenMail greenMail;
+    private static GreenMail greenMail;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUpClass() {
         greenMail = new GreenMail(ServerSetupTest.SMTP);
         greenMail.start();
+    }
 
+    @BeforeEach
+    public void setUp() throws FolderException {
+        greenMail.purgeEmailFromAllMailboxes();
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) applicationContext.getBean("mailSender");
         mailSender.setPort(greenMail.getSmtp().getPort());
         mailSender.setHost("localhost");
@@ -76,8 +82,8 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelDao.save(novel);
     }
 
-    @After
-    public void tearDown() {
+    @AfterAll
+    public static void tearDownClass() {
         greenMail.stop();
     }
 
@@ -104,8 +110,6 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testSendUnreadReport() {
-        greenMail.reset();
-
         novelOutputManager.sendUnreadReport();
 
         assertTrue(greenMail.getReceivedMessages().length == 1);
@@ -113,8 +117,6 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testSendModifiedDateList() {
-        greenMail.reset();
-
         novelOutputManager.sendModifiedDateReport();
 
         assertTrue(greenMail.getReceivedMessages().length == 1);

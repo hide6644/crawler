@@ -10,7 +10,6 @@ import crawler.domain.Novel;
 import crawler.domain.NovelHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
-import crawler.util.NovelManagerUtil;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 
@@ -20,7 +19,7 @@ import net.htmlparser.jericho.Source;
 public class NovelSource extends BaseSource {
 
     /** 小説の情報 */
-    private Novel novel;
+    private final Novel novel;
 
     /** 小説の更新履歴 */
     private NovelHistory novelHistory;
@@ -33,13 +32,16 @@ public class NovelSource extends BaseSource {
      *
      * @param url
      *            小説のURL
+     * @param add
+     *            true:新規、false:更新
+     * @param novel
+     *            小説の情報
      * @throws NovelNotFoundException
      *             小説が見つからない
      */
-    protected NovelSource(String url) throws NovelNotFoundException {
-        this.url = NovelManagerUtil.getUrl(url);
-        // URLからhtmlを取得
-        html = NovelManagerUtil.getSource(this.url);
+    private NovelSource(final String url, final boolean add, final Novel novel) throws NovelNotFoundException {
+        super(url, add);
+        this.novel = novel;
         // URLからホスト名を取得
         hostname = this.url.getProtocol() + "://" + this.url.getHost();
     }
@@ -49,13 +51,8 @@ public class NovelSource extends BaseSource {
      */
     @Override
     protected void mapping() {
-        if (novel == null) {
-            add = true;
-            novel = new Novel();
-        } else {
+        if (!add) {
             // 更新の場合、Historyを作成
-            add = false;
-
             // 差異をチェックし、差異がある場合、小説の更新履歴を作成
             checkTitleDiff();
             checkWriternameDiff();
@@ -188,7 +185,7 @@ public class NovelSource extends BaseSource {
      * @throws NovelNotFoundException
      *             指定されたURLが取得出来ない
      */
-    public static NovelSource newInstance(String url) throws NovelNotFoundException {
+    public static NovelSource newInstance(final String url) throws NovelNotFoundException {
         return newInstance(url, null);
     }
 
@@ -203,9 +200,14 @@ public class NovelSource extends BaseSource {
      * @throws NovelNotFoundException
      *             指定されたURLが取得出来ない
      */
-    public static NovelSource newInstance(String url, Novel novel) throws NovelNotFoundException {
-        NovelSource novelSource = new NovelSource(url);
-        novelSource.setNovel(novel);
+    public static NovelSource newInstance(final String url, final Novel novel) throws NovelNotFoundException {
+        NovelSource novelSource = null;
+        if (novel == null) {
+            novelSource = new NovelSource(url, true, new Novel());
+        } else {
+            novelSource = new NovelSource(url, false, novel);
+        }
+
         novelSource.mapping();
 
         return novelSource;
@@ -215,16 +217,8 @@ public class NovelSource extends BaseSource {
         return novel;
     }
 
-    public void setNovel(Novel novel) {
-        this.novel = novel;
-    }
-
     public NovelHistory getNovelHistory() {
         return novelHistory;
-    }
-
-    public void setNovelHistory(NovelHistory novelHistory) {
-        this.novelHistory = novelHistory;
     }
 
     /**

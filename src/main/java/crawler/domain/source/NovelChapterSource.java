@@ -6,7 +6,6 @@ import crawler.domain.NovelChapter;
 import crawler.domain.NovelChapterHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
-import crawler.util.NovelManagerUtil;
 
 /**
  * 小説の章の情報のhtmlを保持するクラス.
@@ -14,7 +13,7 @@ import crawler.util.NovelManagerUtil;
 public class NovelChapterSource extends BaseSource {
 
     /** 小説の章の情報 */
-    private NovelChapter novelChapter;
+    private final NovelChapter novelChapter;
 
     /** 小説の章の更新履歴 */
     private NovelChapterHistory novelChapterHistory;
@@ -24,13 +23,16 @@ public class NovelChapterSource extends BaseSource {
      *
      * @param url
      *            小説の章のURL
+     * @param add
+     *            true:新規、false:更新
+     * @param novelChapter
+     *            小説の章の付随情報
      * @throws NovelNotFoundException
      *             小説の章が見つからない
      */
-    protected NovelChapterSource(String url) throws NovelNotFoundException {
-        this.url = NovelManagerUtil.getUrl(url);
-        // URLからhtmlを取得
-        html = NovelManagerUtil.getSource(this.url);
+    private NovelChapterSource(final String url, final boolean add, final NovelChapter novelChapter) throws NovelNotFoundException {
+        super(url, add);
+        this.novelChapter = novelChapter;
     }
 
     /**
@@ -38,13 +40,8 @@ public class NovelChapterSource extends BaseSource {
      */
     @Override
     protected void mapping() {
-        if (novelChapter == null) {
-            add = true;
-            novelChapter = new NovelChapter();
-        } else {
+        if (!add) {
             // 更新の場合、Historyを作成
-            add = false;
-
             // 小説の章の更新履歴を作成
             checkTitleDiff();
             checkBodyDiff();
@@ -93,9 +90,14 @@ public class NovelChapterSource extends BaseSource {
      * @throws NovelNotFoundException
      *             指定されたURLが取得出来ない
      */
-    public static NovelChapterSource newInstance(String url, NovelChapter novelChapter) throws NovelNotFoundException {
-        NovelChapterSource novelChapterSource = new NovelChapterSource(url);
-        novelChapterSource.setNovelChapter(novelChapter);
+    public static NovelChapterSource newInstance(final String url, final NovelChapter novelChapter) throws NovelNotFoundException {
+        NovelChapterSource novelChapterSource = null;
+        if (novelChapter == null) {
+            novelChapterSource = new NovelChapterSource(url, true, new NovelChapter());
+        } else {
+            novelChapterSource = new NovelChapterSource(url, false, novelChapter);
+        }
+
         novelChapterSource.mapping();
 
         return novelChapterSource;
@@ -105,16 +107,8 @@ public class NovelChapterSource extends BaseSource {
         return novelChapter;
     }
 
-    public void setNovelChapter(NovelChapter novelChapter) {
-        this.novelChapter = novelChapter;
-    }
-
     public NovelChapterHistory getNovelChapterHistory() {
         return novelChapterHistory;
-    }
-
-    public void setNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
-        this.novelChapterHistory = novelChapterHistory;
     }
 
     /**
