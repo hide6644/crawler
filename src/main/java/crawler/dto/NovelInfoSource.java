@@ -39,7 +39,7 @@ public class NovelInfoSource extends BaseSource {
      * {@inheritDoc}
      */
     @Override
-    protected void mapping() {
+    protected NovelInfoSource mapping() {
         final LocalDateTime now = LocalDateTime.now();
 
         if (!add) {
@@ -54,6 +54,8 @@ public class NovelInfoSource extends BaseSource {
         novelInfo.setCheckedDate(now);
         // 最終更新日時が1年以内の場合、True
         novelInfo.setCheckEnable(novelInfo.getModifiedDate().isAfter(now.minusYears(1)));
+
+        return this;
     }
 
     /**
@@ -68,16 +70,11 @@ public class NovelInfoSource extends BaseSource {
      *             指定されたURLが取得出来ない
      */
     public static NovelInfoSource newInstance(final String url, final NovelInfo novelInfo) throws NovelNotFoundException {
-        NovelInfoSource novelInfoSource = null;
         if (novelInfo == null) {
-            novelInfoSource = new NovelInfoSource(url, true, new NovelInfo());
+            return new NovelInfoSource(url, true, new NovelInfo()).mapping();
         } else {
-            novelInfoSource = new NovelInfoSource(url, false, novelInfo);
+            return new NovelInfoSource(url, false, novelInfo).mapping();
         }
-
-        novelInfoSource.mapping();
-
-        return novelInfoSource;
     }
 
     public NovelInfo getNovelInfo() {
