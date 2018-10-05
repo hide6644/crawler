@@ -30,7 +30,7 @@ public class NovelProcessTest {
 
     @Test
     public void testExecute() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
@@ -39,12 +39,13 @@ public class NovelProcessTest {
                 "unfav=http://foo.bar",
                 "del=http://foo.bar",
                 "sendUnreadReport",
-                "sendModifiedDateReport" });
+                "sendModifiedDateReport",
+                "reindexAll" });
     }
 
     @Test
     public void testExecuteInvalid() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         // 不正な引数
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
