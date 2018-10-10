@@ -12,6 +12,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 import crawler.service.NovelManager;
 import crawler.service.NovelOutputManager;
+import crawler.service.NovelSearchManager;
 
 @ExtendWith(MockitoExtension.class)
 public class NovelProcessTest {
@@ -24,6 +25,9 @@ public class NovelProcessTest {
 
     @Mock
     private NovelOutputManager novelOutputManager;
+
+    @Mock
+    private NovelSearchManager novelSearchManager;
 
     @InjectMocks
     private NovelProcess novelProcess = new NovelProcess();

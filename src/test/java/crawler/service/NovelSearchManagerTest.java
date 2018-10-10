@@ -54,11 +54,16 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
         novelChapter.setNovelChapterInfo(novelChapterInfo);
 
         novelDao.save(novel);
-        novelDao.flush();
     }
 
     @Test
     public void testReindexAll() {
         novelSearchManager.reindexAll(false);
+    }
+
+    @Test
+    public void testSearch() {
+        novelSearchManager.search("*");
+        novelSearchManager.search("TEST");
     }
 }
