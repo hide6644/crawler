@@ -14,8 +14,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import crawler.dao.jpa.HibernateSearchImpl;
-import crawler.domain.Novel;
-import crawler.domain.NovelInfo;
+import crawler.entity.Novel;
+import crawler.entity.NovelInfo;
 
 public class HibernateSearchTest extends BaseDaoTestCase {
 

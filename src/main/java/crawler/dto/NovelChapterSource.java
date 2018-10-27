@@ -1,9 +1,9 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import java.time.LocalDateTime;
 
-import crawler.domain.NovelChapter;
-import crawler.domain.NovelChapterHistory;
+import crawler.entity.NovelChapter;
+import crawler.entity.NovelChapterHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 
@@ -39,7 +39,7 @@ public class NovelChapterSource extends BaseSource {
      * {@inheritDoc}
      */
     @Override
-    protected void mapping() {
+    protected NovelChapterSource mapping() {
         if (!add) {
             // 更新の場合、Historyを作成
             // 小説の章の更新履歴を作成
@@ -60,6 +60,8 @@ public class NovelChapterSource extends BaseSource {
         novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
         novelChapter.setUrl(url.toString());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
+
+        return this;
     }
 
     /**
@@ -91,16 +93,11 @@ public class NovelChapterSource extends BaseSource {
      *             指定されたURLが取得出来ない
      */
     public static NovelChapterSource newInstance(final String url, final NovelChapter novelChapter) throws NovelNotFoundException {
-        NovelChapterSource novelChapterSource = null;
         if (novelChapter == null) {
-            novelChapterSource = new NovelChapterSource(url, true, new NovelChapter());
+            return new NovelChapterSource(url, true, new NovelChapter()).mapping();
         } else {
-            novelChapterSource = new NovelChapterSource(url, false, novelChapter);
+            return new NovelChapterSource(url, false, novelChapter).mapping();
         }
-
-        novelChapterSource.mapping();
-
-        return novelChapterSource;
     }
 
     public NovelChapter getNovelChapter() {
@@ -116,7 +113,7 @@ public class NovelChapterSource extends BaseSource {
      *
      * @return 小説の章の更新履歴
      */
-    public NovelChapterHistory createNovelChapterHistory() {
+    private NovelChapterHistory createNovelChapterHistory() {
         if (novelChapterHistory == null) {
             novelChapterHistory = new NovelChapterHistory();
         }

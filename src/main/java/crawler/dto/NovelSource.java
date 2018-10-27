@@ -1,4 +1,4 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import crawler.domain.Novel;
-import crawler.domain.NovelHistory;
+import crawler.entity.Novel;
+import crawler.entity.NovelHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
 import net.htmlparser.jericho.Element;
@@ -50,7 +50,7 @@ public class NovelSource extends BaseSource {
      * {@inheritDoc}
      */
     @Override
-    protected void mapping() {
+    protected NovelSource mapping() {
         if (!add) {
             // 更新の場合、Historyを作成
             // 差異をチェックし、差異がある場合、小説の更新履歴を作成
@@ -76,6 +76,8 @@ public class NovelSource extends BaseSource {
         novel.setBody(NovelElementsUtil.getBody(html));
         novel.setUrl(url.toString());
         novel.setDeleted(false);
+
+        return this;
     }
 
     /**
@@ -201,16 +203,11 @@ public class NovelSource extends BaseSource {
      *             指定されたURLが取得出来ない
      */
     public static NovelSource newInstance(final String url, final Novel novel) throws NovelNotFoundException {
-        NovelSource novelSource = null;
         if (novel == null) {
-            novelSource = new NovelSource(url, true, new Novel());
+            return new NovelSource(url, true, new Novel()).mapping();
         } else {
-            novelSource = new NovelSource(url, false, novel);
+            return new NovelSource(url, false, novel).mapping();
         }
-
-        novelSource.mapping();
-
-        return novelSource;
     }
 
     public Novel getNovel() {
@@ -226,7 +223,7 @@ public class NovelSource extends BaseSource {
      *
      * @return 小説の更新履歴
      */
-    public NovelHistory createNovelHistory() {
+    private NovelHistory createNovelHistory() {
         if (novelHistory == null) {
             novelHistory = new NovelHistory();
         }

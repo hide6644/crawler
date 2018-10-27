@@ -1,7 +1,7 @@
 package crawler.service;
 
-import crawler.domain.source.NovelChapterSource;
-import crawler.domain.source.NovelIndexElement;
+import crawler.dto.NovelChapterSource;
+import crawler.dto.NovelIndexElement;
 
 /**
  * 小説の章の付随情報を管理する.

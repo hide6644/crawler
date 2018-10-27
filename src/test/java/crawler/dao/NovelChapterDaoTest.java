@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import crawler.domain.Novel;
-import crawler.domain.NovelChapter;
+import crawler.entity.Novel;
+import crawler.entity.NovelChapter;
 
 public class NovelChapterDaoTest extends BaseDaoTestCase {
 

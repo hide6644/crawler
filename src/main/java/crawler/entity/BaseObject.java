@@ -1,5 +1,6 @@
-package crawler.domain;
+package crawler.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import org.hibernate.search.annotations.DocumentId;
  * エンティティの基底クラス.
  */
 @MappedSuperclass
-public abstract class BaseObject {
+public abstract class BaseObject implements Serializable {
 
     /** ID */
     private Long id;
@@ -44,7 +45,7 @@ public abstract class BaseObject {
      * @return ID
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
     @XmlTransient
     public Long getId() {

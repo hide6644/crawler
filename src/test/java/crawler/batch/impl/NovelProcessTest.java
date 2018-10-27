@@ -12,6 +12,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 import crawler.service.NovelManager;
 import crawler.service.NovelOutputManager;
+import crawler.service.NovelSearchManager;
 
 @ExtendWith(MockitoExtension.class)
 public class NovelProcessTest {
@@ -25,12 +26,15 @@ public class NovelProcessTest {
     @Mock
     private NovelOutputManager novelOutputManager;
 
+    @Mock
+    private NovelSearchManager novelSearchManager;
+
     @InjectMocks
     private NovelProcess novelProcess = new NovelProcess();
 
     @Test
     public void testExecute() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
@@ -39,12 +43,13 @@ public class NovelProcessTest {
                 "unfav=http://foo.bar",
                 "del=http://foo.bar",
                 "sendUnreadReport",
-                "sendModifiedDateReport" });
+                "sendModifiedDateReport",
+                "reindexAll" });
     }
 
     @Test
     public void testExecuteInvalid() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         // 不正な引数
         Assertions.assertThrows(IllegalArgumentException.class, () -> {

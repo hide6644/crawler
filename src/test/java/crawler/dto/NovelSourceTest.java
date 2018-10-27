@@ -1,4 +1,4 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.domain.Novel;
+import crawler.entity.Novel;
 
 public class NovelSourceTest {
 

@@ -1,10 +1,10 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.domain.NovelChapter;
+import crawler.entity.NovelChapter;
 
 public class NovelChapterSourceTest {
 

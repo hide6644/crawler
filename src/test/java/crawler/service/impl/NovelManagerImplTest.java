@@ -10,8 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import crawler.dao.NovelDao;
-import crawler.domain.Novel;
-import crawler.domain.NovelInfo;
+import crawler.entity.Novel;
+import crawler.entity.NovelInfo;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 

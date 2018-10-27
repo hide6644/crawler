@@ -2,7 +2,7 @@ package crawler.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import crawler.domain.NovelChapter;
+import crawler.entity.NovelChapter;
 
 /**
  * 小説の章のDAOのインターフェイス.

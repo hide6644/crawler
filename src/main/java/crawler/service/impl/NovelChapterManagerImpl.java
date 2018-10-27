@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
-import crawler.domain.source.NovelChapterSource;
-import crawler.domain.source.NovelIndexElement;
-import crawler.domain.source.NovelSource;
+import crawler.dto.NovelChapterSource;
+import crawler.dto.NovelIndexElement;
+import crawler.dto.NovelSource;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;

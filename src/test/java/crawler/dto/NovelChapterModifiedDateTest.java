@@ -1,4 +1,4 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.domain.NovelChapterInfo;
+import crawler.entity.NovelChapterInfo;
 
 public class NovelChapterModifiedDateTest {
 

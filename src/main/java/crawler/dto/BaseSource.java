@@ -1,4 +1,4 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import java.net.URL;
 
@@ -39,8 +39,10 @@ public abstract class BaseSource {
 
     /**
      * htmlをオブジェクトに変換する.
+     *
+     * @return htmlを保持するオブジェクト
      */
-    protected abstract void mapping();
+    protected abstract BaseSource mapping();
 
     /**
      * 新規か、更新か.

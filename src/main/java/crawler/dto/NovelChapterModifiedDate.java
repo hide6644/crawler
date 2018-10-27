@@ -1,9 +1,9 @@
-package crawler.domain.source;
+package crawler.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import crawler.domain.NovelChapterInfo;
+import crawler.entity.NovelChapterInfo;
 
 /**
  * 小説の目次に記載されている章の最終更新日時を保持するクラス.

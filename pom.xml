@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.5.3</version>
+    <version>1.5.4</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -104,7 +104,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>2.22.1</version>
                 <configuration>
                     <reuseForks>false</reuseForks>
                     <argLine>${argLine} -Dapp_home=${project.build.directory}</argLine>
@@ -113,12 +113,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>2.22.1</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.1</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -133,11 +133,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.3.0</version>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -190,7 +185,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.5</version>
+                <version>3.1.7</version>
                 <configuration>
                     <effort>Max</effort>
                     <xmlOutput>true</xmlOutput>
@@ -223,7 +218,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -462,24 +457,24 @@
         <jdbc.username>crawler</jdbc.username>
         <jdbc.password />
 
-        <commons-lang3.version>3.8</commons-lang3.version>
-        <ehcache.version>3.6.0</ehcache.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <ehcache.version>3.6.1</ehcache.version>
         <freemarker.version>2.3.28</freemarker.version>
-        <freemarker-java8.version>1.2.0</freemarker-java8.version>
+        <freemarker-java8.version>1.3.0</freemarker-java8.version>
         <greenmail.version>1.5.8</greenmail.version>
-        <hibernate.version>5.3.6.Final</hibernate.version>
-        <hibernate-search.version>5.10.3.Final</hibernate-search.version>
+        <hibernate.version>5.3.7.Final</hibernate.version>
+        <hibernate-search.version>5.10.4.Final</hibernate-search.version>
         <HikariCP.version>3.2.0</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jericho-html.version>3.4</jericho-html.version>
-        <junit-jupiter.version>5.2.0</junit-jupiter.version>
+        <junit-jupiter.version>5.3.1</junit-jupiter.version>
         <log4j.version>2.11.1</log4j.version>
         <lucene.version>5.5.5</lucene.version>
         <mail.version>1.6.2</mail.version>
-        <mockito.version>2.22.0</mockito.version>
+        <mockito.version>2.23.0</mockito.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring.version>5.0.9.RELEASE</spring.version>
-        <spring-data.version>2.0.10.RELEASE</spring-data.version>
+        <spring.version>5.1.1.RELEASE</spring.version>
+        <spring-data.version>2.1.1.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
