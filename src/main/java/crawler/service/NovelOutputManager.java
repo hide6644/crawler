@@ -1,6 +1,6 @@
 package crawler.service;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import crawler.entity.Novel;
 
@@ -14,14 +14,14 @@ public interface NovelOutputManager {
      *
      * @return 未読小説の一覧
      */
-    List<Novel> getUnreadNovels();
+    Stream<Novel> getUnreadNovels();
 
     /**
      * 小説の最終更新日時一覧を取得する.
      *
      * @return 小説の最終更新日時一覧
      */
-    List<Novel> getModifiedDateOfNovels();
+    Stream<Novel> getModifiedDateOfNovels();
 
     /**
      * 未読小説の一覧をメールで送信する.

@@ -2,6 +2,8 @@ package crawler.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      */
     @Override
     @Transactional
-    public List<Novel> getUnreadNovels() {
+    public Stream<Novel> getUnreadNovels() {
         return novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId();
     }
 
@@ -40,7 +42,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      */
     @Override
     @Transactional
-    public List<Novel> getModifiedDateOfNovels() {
+    public Stream<Novel> getModifiedDateOfNovels() {
         return novelDao.findByDeletedFalseOrderByTitle();
     }
 
@@ -50,7 +52,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional
     public void sendUnreadReport() {
-        List<Novel> unreadNovels = getUnreadNovels();
+        List<Novel> unreadNovels = getUnreadNovels().collect(Collectors.toList());
 
         if (unreadNovels.isEmpty()) {
             log.info("Not find unread novels.");
@@ -75,7 +77,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional
     public void sendModifiedDateReport() {
-        List<Novel> novels = getModifiedDateOfNovels();
+        List<Novel> novels = getModifiedDateOfNovels().collect(Collectors.toList());
 
         if (novels.isEmpty()) {
             log.info("Not find novels.");

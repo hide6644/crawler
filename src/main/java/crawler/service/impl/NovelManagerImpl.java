@@ -2,8 +2,7 @@ package crawler.service.impl;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,12 +95,11 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Long> getCheckTargetId() {
+    public Stream<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
-        return novelDao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)).stream()
+        return novelDao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS))
                 .filter(novel -> novel.getNovelInfo().needsCheckForUpdate())
-                .map(novel -> novel.getId())
-                .collect(Collectors.toList());
+                .map(novel -> novel.getId());
     }
 
     /**
