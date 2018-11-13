@@ -3,6 +3,7 @@ package crawler.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.hibernate.search.query.facet.Facet;
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +34,7 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Test
     public void testSearch() {
         saveNovel();
-        List<NovelInfo> novelInfoList = hibernateSearch.search("Keyword1");
+        Stream<NovelInfo> novelInfoList = hibernateSearch.search("Keyword1");
 
         assertNotNull(novelInfoList);
 

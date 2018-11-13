@@ -1,6 +1,6 @@
 package crawler.service.impl;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,7 +25,7 @@ public class NovelSearchManagerImpl implements NovelSearchManager {
      * {@inheritDoc}
      */
     @Override
-    public List<Novel> search(String searchTerm) {
+    public Stream<Novel> search(String searchTerm) {
         return novelSearch.search(searchTerm);
     }
 

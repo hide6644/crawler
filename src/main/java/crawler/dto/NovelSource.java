@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import crawler.entity.Novel;
 import crawler.entity.NovelHistory;
@@ -121,10 +122,10 @@ public class NovelSource extends BaseSource {
      *
      * @return 小説の目次リスト
      */
-    public List<NovelIndexElement> getNovelIndexList() {
+    public Stream<NovelIndexElement> getNovelIndexList() {
         return new Source(novel.getBody()).getAllElements("dl").stream()
                 .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
-                .map(chapterElement -> new NovelIndexElement(chapterElement)).collect(Collectors.toList());
+                .map(chapterElement -> new NovelIndexElement(chapterElement));
     }
 
     /**

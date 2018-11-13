@@ -2,8 +2,8 @@ package crawler.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +16,10 @@ public class NovelSourceTest {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
-        List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
+        Stream<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
 
         assertNotNull(novelIndexList);
-        assertEquals(3, novelIndexList.size());
+        assertEquals(3, novelIndexList.count());
         assertTrue(novelSource.isAdd());
     }
 

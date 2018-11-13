@@ -1,6 +1,6 @@
 package crawler.service;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import crawler.entity.Novel;
 
@@ -16,7 +16,7 @@ public interface NovelSearchManager {
      *            検索文字列
      * @return 検索結果のリスト
      */
-    List<Novel> search(String searchTerm);
+    Stream<Novel> search(String searchTerm);
 
     /**
      * 全てのインデックスを再作成する.

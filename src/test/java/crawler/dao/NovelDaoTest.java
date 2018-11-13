@@ -31,7 +31,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
 
     @AfterEach
     public void tearDown() {
-        dao.deleteAll();;
+        dao.deleteAll();
     }
 
     @Test
