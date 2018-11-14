@@ -3,7 +3,7 @@ package crawler.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -89,29 +89,23 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testGetCheckTargetId() {
-        Stream<Long> checkTargetId = novelManager.getCheckTargetId();
+        List<Long> checkTargetId = novelManager.getCheckTargetId();
 
         assertNotNull(checkTargetId);
-
-        checkTargetId.close();
     }
 
     @Test
     public void testGetUnreadNovels() {
-        Stream<Novel> unreadNovels = novelOutputManager.getUnreadNovels();
+        List<Novel> unreadNovels = novelOutputManager.getUnreadNovels();
 
         assertNotNull(unreadNovels);
-
-        unreadNovels.close();
     }
 
     @Test
     public void testGetNovelsIncludingModifiedDate() {
-        Stream<Novel> novels = novelOutputManager.getModifiedDateOfNovels();
+        List<Novel> novels = novelOutputManager.getModifiedDateOfNovels();
 
         assertNotNull(novels);
-
-        novels.close();
     }
 
     @Test

@@ -1,6 +1,6 @@
 package crawler.service;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 import crawler.entity.Novel;
 
@@ -40,7 +40,7 @@ public interface NovelManager {
      *
      * @return 更新確認対象の小説一覧
      */
-    Stream<Long> getCheckTargetId();
+    List<Long> getCheckTargetId();
 
     /**
      * 小説の更新を確認し、更新があった場合は内容を保存する.

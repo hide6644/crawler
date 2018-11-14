@@ -3,7 +3,6 @@ package crawler.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,8 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      */
     @Override
     @Transactional
-    public Stream<Novel> getUnreadNovels() {
-        return novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId();
+    public List<Novel> getUnreadNovels() {
+        return novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId().collect(Collectors.toList());
     }
 
     /**
@@ -42,8 +41,8 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      */
     @Override
     @Transactional
-    public Stream<Novel> getModifiedDateOfNovels() {
-        return novelDao.findByDeletedFalseOrderByTitle();
+    public List<Novel> getModifiedDateOfNovels() {
+        return novelDao.findByDeletedFalseOrderByTitle().collect(Collectors.toList());
     }
 
     /**
@@ -52,7 +51,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional
     public void sendUnreadReport() {
-        List<Novel> unreadNovels = getUnreadNovels().collect(Collectors.toList());
+        List<Novel> unreadNovels = getUnreadNovels();
 
         if (unreadNovels.isEmpty()) {
             log.info("Not find unread novels.");
@@ -77,7 +76,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional(readOnly = true)
     public void sendModifiedDateReport() {
-        List<Novel> novels = getModifiedDateOfNovels().collect(Collectors.toList());
+        List<Novel> novels = getModifiedDateOfNovels();
 
         if (novels.isEmpty()) {
             log.info("Not find novels.");

@@ -2,7 +2,6 @@ package crawler.batch.impl;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,9 +65,7 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
 
         if (arg.equals(messages.getMessage("novelManager.getCheckTargetId"))) {
             // 更新チェック
-            try (Stream<Long> checkTargetId = novelManager.getCheckTargetId()) {
-                checkTargetId.forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
-            }
+            novelManager.getCheckTargetId().forEach(savedNovelId -> novelManager.checkForUpdatesAndSaveHistory(savedNovelId));
         } else if (arg.startsWith(messages.getMessage("novelManager.save"))) {
             // 小説を追加、既に存在する場合は更新
             novelManager.save(substringUrl(arg));
