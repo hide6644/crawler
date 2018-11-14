@@ -75,7 +75,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void sendModifiedDateReport() {
         List<Novel> novels = getModifiedDateOfNovels().collect(Collectors.toList());
 
