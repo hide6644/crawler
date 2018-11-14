@@ -34,7 +34,15 @@ public class NovelProcessTest {
 
     @Test
     public void testExecute() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
+        when(messages.getMessage(anyString())).thenReturn(
+                "checkForUpdates", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "fav", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "fav", "unfav", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "reindexAll",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
@@ -45,6 +53,11 @@ public class NovelProcessTest {
                 "sendUnreadReport",
                 "sendModifiedDateReport",
                 "reindexAll" });
+    }
+
+    @Test
+    public void testExecuteNull() {
+        novelProcess.execute(null);
     }
 
     @Test
