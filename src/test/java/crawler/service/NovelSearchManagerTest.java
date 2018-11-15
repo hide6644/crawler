@@ -22,6 +22,7 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
 
     @BeforeEach
     public void setUp() {
+        novelSearchManager.reindexAll(false);
         Novel novel = new Novel();
         novel.setUrl("Url");
         novel.setTitle("Title");
