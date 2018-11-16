@@ -98,7 +98,7 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
     @Transactional(readOnly = true)
     public List<Long> getCheckTargetId() {
         // 更新頻度から確認対象を絞り込む
-        return novelDao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)).stream()
+        return novelDao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS))
                 .filter(novel -> novel.getNovelInfo().needsCheckForUpdate())
                 .map(novel -> novel.getId())
                 .collect(Collectors.toList());

@@ -35,7 +35,7 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
         // 小説の本文の履歴から小説の目次のセットを取得
         Set<NovelIndexElement> novelHistoryIndexSet = novelSource.getNovelHistoryIndexSet();
 
-        novelSource.getNovelIndexList().stream()
+        novelSource.getNovelIndexList()
                 // 小説の履歴が無い場合(新規の場合)、true:更新有りとする
                 // 小説の目次のhtml elementが一致しない場合、true:更新有りとする
                 .filter(novelIndexElement -> !novelHistoryIndexSet.contains(novelIndexElement))

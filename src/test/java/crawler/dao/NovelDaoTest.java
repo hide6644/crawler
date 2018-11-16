@@ -3,7 +3,7 @@ package crawler.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
 
     @AfterEach
     public void tearDown() {
-        dao.deleteAll();;
+        dao.deleteAll();
     }
 
     @Test
@@ -48,22 +48,28 @@ public class NovelDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue() {
-        List<Novel> novelList = dao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now());
+        Stream<Novel> novelList = dao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now());
 
         assertNotNull(novelList);
+
+        novelList.close();
     }
 
     @Test
     public void testFindByUnreadTrueOrderByTitleAndNovelChapterId() {
-        List<Novel> novelList = dao.findByUnreadTrueOrderByTitleAndNovelChapterId();
+        Stream<Novel> novelList = dao.findByUnreadTrueOrderByTitleAndNovelChapterId();
 
         assertNotNull(novelList);
+
+        novelList.close();
     }
 
     @Test
     public void testFindByDeletedFalseOrderByTitle() {
-        List<Novel> novelList = dao.findByDeletedFalseOrderByTitle();
+        Stream<Novel> novelList = dao.findByDeletedFalseOrderByTitle();
 
         assertNotNull(novelList);
+
+        novelList.close();
     }
 }

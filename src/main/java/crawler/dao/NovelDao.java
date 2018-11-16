@@ -1,9 +1,14 @@
 package crawler.dao;
 
+import static org.hibernate.jpa.QueryHints.*;
+
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.stream.Stream;
+
+import javax.persistence.QueryHint;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
 import crawler.entity.Novel;
@@ -29,19 +34,20 @@ public interface NovelDao extends JpaRepository<Novel, Long> {
      *            最終確認日時
      * @return 小説の一覧
      */
-    List<Novel> findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(@Param("checkedDate") LocalDateTime checkedDate);
+    @QueryHints(value = @QueryHint(name = HINT_FETCH_SIZE, value = "" + Integer.MIN_VALUE))
+    Stream<Novel> findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(@Param("checkedDate") LocalDateTime checkedDate);
 
     /**
      * 未読小説の一覧を取得する.
      *
      * @return 小説の一覧
      */
-    List<Novel> findByUnreadTrueOrderByTitleAndNovelChapterId();
+    Stream<Novel> findByUnreadTrueOrderByTitleAndNovelChapterId();
 
     /**
      * 小説の最終更新日時一覧を取得する.
      *
      * @return 小説の一覧
      */
-    List<Novel> findByDeletedFalseOrderByTitle();
+    Stream<Novel> findByDeletedFalseOrderByTitle();
 }

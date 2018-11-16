@@ -3,15 +3,14 @@ package crawler.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.hibernate.search.query.facet.Facet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import crawler.dao.jpa.HibernateSearchImpl;
 import crawler.entity.Novel;
@@ -33,7 +32,11 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Test
     public void testSearch() {
         saveNovel();
-        List<NovelInfo> novelInfoList = hibernateSearch.search("Keyword1");
+        Stream<NovelInfo> novelInfoList = hibernateSearch.search("Keyword1");
+
+        assertNotNull(novelInfoList);
+
+        novelInfoList = hibernateSearch.search(new String[]{"Keyword1"}, new String[]{"keyword"}, new Occur[]{Occur.SHOULD});
 
         assertNotNull(novelInfoList);
 
@@ -49,6 +52,9 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Test
     public void testSearchException() {
         Assertions.assertThrows(SearchException.class, () -> {
+            hibernateSearch.search(new String[]{""}, new String[]{""}, new Occur[]{Occur.SHOULD});
+        });
+        Assertions.assertThrows(SearchException.class, () -> {
             hibernateSearch.search(new String[]{""}, new String[]{""});
         });
     }
@@ -56,14 +62,21 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Test
     public void testPaged() {
         saveNovel();
-        List<NovelInfo> novelList = hibernateSearch.searchList("Keyword1", 0, 10);
-        Long novelCount = hibernateSearch.searchCount("Keyword1");
+        Stream<NovelInfo> novelList = hibernateSearch.search("Keyword1", 0, 10);
+        Long novelCount = hibernateSearch.count("Keyword1");
 
-        Page<NovelInfo> pagedUser = new PageImpl<>(novelList, PageRequest.of(0, 10), novelCount);
+        assertEquals(1, novelList.count());
+        assertEquals(Long.valueOf(1), novelCount);
+    }
 
-        assertEquals(1, pagedUser.getTotalPages());
-        assertEquals(1, pagedUser.getTotalElements());
-        assertEquals(1, pagedUser.getContent().size());
+    @Test
+    public void testPagedByField() {
+        saveNovel();
+        Stream<NovelInfo> novelList = hibernateSearch.search(new String[]{"Keyword1"}, new String[]{"keyword"}, 0, 10);
+        Long novelCount = hibernateSearch.count(new String[]{"Keyword1"}, new String[]{"keyword"});
+
+        assertEquals(1, novelList.count());
+        assertEquals(Long.valueOf(1), novelCount);
     }
 
     @Test

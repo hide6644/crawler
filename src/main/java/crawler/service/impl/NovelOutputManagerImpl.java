@@ -2,6 +2,7 @@ package crawler.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional
     public List<Novel> getUnreadNovels() {
-        return novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId();
+        return novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId().collect(Collectors.toList());
     }
 
     /**
@@ -41,7 +42,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional
     public List<Novel> getModifiedDateOfNovels() {
-        return novelDao.findByDeletedFalseOrderByTitle();
+        return novelDao.findByDeletedFalseOrderByTitle().collect(Collectors.toList());
     }
 
     /**
@@ -73,7 +74,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void sendModifiedDateReport() {
         List<Novel> novels = getModifiedDateOfNovels();
 
