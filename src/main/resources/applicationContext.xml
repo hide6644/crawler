@@ -68,6 +68,7 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
                 <prop key="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</prop>
+                <prop key="hibernate.javax.cache.missing_cache_strategy">create</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.JCacheRegionFactory</prop>
                 <prop key="hibernate.cache.default_cache_concurrency_strategy">read-write</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>
