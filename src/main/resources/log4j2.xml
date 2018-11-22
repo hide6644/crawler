@@ -21,14 +21,16 @@
     </Appenders>
 
     <Loggers>
-        <Root level="info">
-            <AppenderRef ref="stdout" />
-            <AppenderRef ref="applog" />
-        </Root>
+        <!-- Log application -->
         <Logger name="crawler" level="debug" additivity="false">
             <AppenderRef ref="stdout" />
             <AppenderRef ref="applog" />
         </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="stdout" />
+            <AppenderRef ref="applog" />
+        </Root>
     </Loggers>
 
 </Configuration>

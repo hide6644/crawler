@@ -458,7 +458,7 @@
         <jdbc.password />
 
         <commons-lang3.version>3.8.1</commons-lang3.version>
-        <ehcache.version>3.6.1</ehcache.version>
+        <ehcache.version>3.6.2</ehcache.version>
         <freemarker.version>2.3.28</freemarker.version>
         <freemarker-java8.version>1.3.0</freemarker-java8.version>
         <greenmail.version>1.5.8</greenmail.version>
