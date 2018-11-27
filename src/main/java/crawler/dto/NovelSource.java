@@ -1,18 +1,21 @@
 package crawler.dto;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import crawler.entity.Novel;
 import crawler.entity.NovelHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
-import net.htmlparser.jericho.Element;
-import net.htmlparser.jericho.Source;
+import crawler.util.NovelManagerUtil;
 
 /**
  * 小説のhtmlを保持するクラス.
@@ -25,23 +28,27 @@ public class NovelSource extends BaseSource {
     /** 小説の更新履歴 */
     private NovelHistory novelHistory;
 
-    /** 小説のUrlのホスト名 */
+    /** 小説のURL */
+    private final URL url;
+
+    /** 小説のURLのホスト名 */
     private String hostname;
 
     /**
      * コンストラクタ.
      *
-     * @param url
-     *            小説のURL
      * @param add
      *            true:新規、false:更新
+     * @param url
+     *            小説のURL
      * @param novel
      *            小説の情報
      * @throws NovelNotFoundException
      *             小説が見つからない
      */
-    private NovelSource(final String url, final boolean add, final Novel novel) throws NovelNotFoundException {
+    private NovelSource(final boolean add, final String url, final Novel novel) throws NovelNotFoundException {
         super(url, add);
+        this.url = NovelManagerUtil.getUrl(url);
         this.novel = novel;
         // URLからホスト名を取得
         hostname = this.url.getProtocol() + "://" + this.url.getHost();
@@ -123,7 +130,7 @@ public class NovelSource extends BaseSource {
      * @return 小説の目次リスト
      */
     public Stream<NovelIndexElement> getNovelIndexList() {
-        return new Source(novel.getBody()).getAllElements("dl").stream()
+        return Jsoup.parse(novel.getBody()).getElementsByTag("dl").stream()
                 .filter(chapterElement -> NovelElementsUtil.existsChapterLink(chapterElement))
                 .map(chapterElement -> new NovelIndexElement(chapterElement));
     }
@@ -135,12 +142,12 @@ public class NovelSource extends BaseSource {
      */
     public Set<NovelIndexElement> getNovelHistoryIndexSet() {
         if (novelHistory != null) {
-            Source novelHistoryBodyHtml = new Source(novelHistory.getBody());
-            List<Element> chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("dl");
+            Document novelHistoryBodyHtml = Jsoup.parse(novelHistory.getBody());
+            Elements chapterHistoryElementList = novelHistoryBodyHtml.getElementsByTag("dl");
 
             if (chapterHistoryElementList.isEmpty()) {
                 // 古いスタイルの場合
-                chapterHistoryElementList = novelHistoryBodyHtml.getAllElements("tr");
+                chapterHistoryElementList = novelHistoryBodyHtml.getElementsByTag("tr");
             }
 
             return chapterHistoryElementList.stream()
@@ -183,7 +190,7 @@ public class NovelSource extends BaseSource {
      * NovelSourceのインスタンスを生成する.
      *
      * @param url
-     *            URL
+     *            小説のURL
      * @return NovelSourceのインスタンス
      * @throws NovelNotFoundException
      *             指定されたURLが取得出来ない
@@ -196,7 +203,7 @@ public class NovelSource extends BaseSource {
      * NovelSourceのインスタンスを生成する.
      *
      * @param url
-     *            URL
+     *            小説のURL
      * @param novel
      *            小説の情報
      * @return NovelSourceのインスタンス
@@ -205,9 +212,9 @@ public class NovelSource extends BaseSource {
      */
     public static NovelSource newInstance(final String url, final Novel novel) throws NovelNotFoundException {
         if (novel == null) {
-            return new NovelSource(url, true, new Novel()).mapping();
+            return new NovelSource(true, url, new Novel()).mapping();
         } else {
-            return new NovelSource(url, false, novel).mapping();
+            return new NovelSource(false, url, novel).mapping();
         }
     }
 

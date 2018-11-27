@@ -23,6 +23,9 @@ public class Constants {
     /** 実行フォルダ名 */
     public static final String APP_FOLDER_NAME = System.getProperty("app_home") + Constants.FILE_SEP;
 
+    /** 実行フォルダ名 */
+    public static final String LOCAL_FILE_PREFIX = ResourceBundle.getBundle(BUNDLE_KEY).getString("local.file.prefix");
+
     /** Entity Managerクラス名 */
     public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
 

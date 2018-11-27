@@ -383,11 +383,6 @@
 
         <!-- Miscellaneous -->
         <dependency>
-            <groupId>net.htmlparser.jericho</groupId>
-            <artifactId>jericho-html</artifactId>
-            <version>${jericho-html.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>${freemarker.version}</version>
@@ -401,6 +396,11 @@
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>${ehcache.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -471,7 +471,7 @@
         <hibernate-search.version>5.10.5.Final</hibernate-search.version>
         <HikariCP.version>3.2.0</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
-        <jericho-html.version>3.4</jericho-html.version>
+        <jsoup.version>1.11.3</jsoup.version>
         <junit-jupiter.version>5.3.1</junit-jupiter.version>
         <log4j.version>2.11.1</log4j.version>
         <lucene.version>5.5.5</lucene.version>

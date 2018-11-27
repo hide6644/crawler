@@ -1,11 +1,13 @@
 package crawler.dto;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 
 import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelElementsUtil;
+import crawler.util.NovelManagerUtil;
 
 /**
  * 小説の章の情報のhtmlを保持するクラス.
@@ -18,20 +20,24 @@ public class NovelChapterSource extends BaseSource {
     /** 小説の章の更新履歴 */
     private NovelChapterHistory novelChapterHistory;
 
+    /** 小説の章のURL */
+    private final URL url;
+
     /**
      * コンストラクタ.
      *
-     * @param url
-     *            小説の章のURL
      * @param add
      *            true:新規、false:更新
+     * @param url
+     *            小説の章のURL
      * @param novelChapter
      *            小説の章の付随情報
      * @throws NovelNotFoundException
      *             小説の章が見つからない
      */
-    private NovelChapterSource(final String url, final boolean add, final NovelChapter novelChapter) throws NovelNotFoundException {
+    private NovelChapterSource(final boolean add, final String url, final NovelChapter novelChapter) throws NovelNotFoundException {
         super(url, add);
+        this.url = NovelManagerUtil.getUrl(url);
         this.novelChapter = novelChapter;
     }
 
@@ -85,7 +91,7 @@ public class NovelChapterSource extends BaseSource {
      * NovelChapterSourceのインスタンスを生成する.
      *
      * @param url
-     *            URL
+     *            小説の章のURL
      * @param novelChapter
      *            小説の章の情報
      * @return NovelChapterSourceのインスタンス
@@ -94,9 +100,9 @@ public class NovelChapterSource extends BaseSource {
      */
     public static NovelChapterSource newInstance(final String url, final NovelChapter novelChapter) throws NovelNotFoundException {
         if (novelChapter == null) {
-            return new NovelChapterSource(url, true, new NovelChapter()).mapping();
+            return new NovelChapterSource(true, url, new NovelChapter()).mapping();
         } else {
-            return new NovelChapterSource(url, false, novelChapter).mapping();
+            return new NovelChapterSource(false,url,  novelChapter).mapping();
         }
     }
 

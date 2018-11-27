@@ -21,17 +21,17 @@ public class NovelInfoSource extends BaseSource {
     /**
      * コンストラクタ.
      *
-     * @param url
-     *            小説の付随情報のURL
      * @param add
      *            true:新規、false:更新
+     * @param url
+     *            小説の付随情報のURL
      * @param novelInfo
      *            小説の付随情報
      * @throws NovelNotFoundException
      *             小説の付随情報が見つからない
      */
-    private NovelInfoSource(final String url, final boolean add, final NovelInfo novelInfo) throws NovelNotFoundException {
-        super(url ,add);
+    private NovelInfoSource(final boolean add, final String url, final NovelInfo novelInfo) throws NovelNotFoundException {
+        super(url, add);
         this.novelInfo = novelInfo;
     }
 
@@ -62,7 +62,7 @@ public class NovelInfoSource extends BaseSource {
      * NovelInfoSourceのインスタンスを生成する.
      *
      * @param url
-     *            URL
+     *            小説の付随情報のURL
      * @param novelInfo
      *            小説の付随情報
      * @return NovelInfoSourceのインスタンス
@@ -71,9 +71,9 @@ public class NovelInfoSource extends BaseSource {
      */
     public static NovelInfoSource newInstance(final String url, final NovelInfo novelInfo) throws NovelNotFoundException {
         if (novelInfo == null) {
-            return new NovelInfoSource(url, true, new NovelInfo()).mapping();
+            return new NovelInfoSource(true, url, new NovelInfo()).mapping();
         } else {
-            return new NovelInfoSource(url, false, novelInfo).mapping();
+            return new NovelInfoSource(false, url, novelInfo).mapping();
         }
     }
 

@@ -1,21 +1,17 @@
 package crawler.dto;
 
-import java.net.URL;
+import org.jsoup.nodes.Document;
 
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelManagerUtil;
-import net.htmlparser.jericho.Source;
 
 /**
  * htmlを保持する基底クラス.
  */
 public abstract class BaseSource {
 
-    /** URL */
-    protected final URL url;
-
     /** htmlソース */
-    protected final Source html;
+    protected final Document html;
 
     /** 新規フラグ */
     protected final boolean add;
@@ -31,9 +27,8 @@ public abstract class BaseSource {
      *             URLが見つからない
      */
     protected BaseSource(String url, boolean add) throws NovelNotFoundException {
-        this.url = NovelManagerUtil.getUrl(url);
         // URLからhtmlを取得
-        this.html = NovelManagerUtil.getSource(this.url);
+        this.html = NovelManagerUtil.getSource(url);
         this.add = add;
     }
 
@@ -53,11 +48,7 @@ public abstract class BaseSource {
         return add;
     }
 
-    public URL getUrl() {
-        return url;
-    }
-
-    public Source getHtml() {
+    public Document getHtml() {
         return html;
     }
 }

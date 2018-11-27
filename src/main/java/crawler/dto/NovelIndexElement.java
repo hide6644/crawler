@@ -2,9 +2,9 @@ package crawler.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.jsoup.nodes.Element;
 
 import crawler.util.NovelElementsUtil;
-import net.htmlparser.jericho.Element;
 
 /**
  * 小説の目次のhtml elementを保持するクラス.
