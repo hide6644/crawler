@@ -1,6 +1,7 @@
 package crawler.util;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -61,6 +62,8 @@ public class NovelManagerUtil {
             Source html = new Source(url);
             html.fullSequentialParse();
             return html;
+        } catch (ConnectException e) {
+            return getSource(url);
         } catch (IOException e) {
             log.error("url:" + url, e);
             throw new NovelNotFoundException();
