@@ -2,6 +2,7 @@ package crawler.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -65,6 +66,8 @@ public class NovelManagerUtil {
             } else {
                 return Jsoup.connect(url).get();
             }
+        } catch (ConnectException e) {
+            return getSource(url);
         } catch (IOException e) {
             log.error("url:" + url, e);
             throw new NovelNotFoundException();
