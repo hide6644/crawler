@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -67,8 +69,14 @@ public class NovelManagerUtil {
             } else {
                 return Jsoup.connect(url).get();
             }
-        } catch (ConnectException e) {
+        } catch (ConnectException | SocketTimeoutException e) {
             log.error("url:" + url, e);
+            throw new NovelConnectException();
+        } catch (HttpStatusException e) {
+            log.error("url:" + url, e);
+            if (e.getStatusCode() == 404) {
+                throw new NovelNotFoundException();
+            }
             throw new NovelConnectException();
         } catch (IOException e) {
             log.error("url:" + url, e);
