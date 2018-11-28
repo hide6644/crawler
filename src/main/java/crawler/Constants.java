@@ -1,5 +1,7 @@
 package crawler;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 /**
@@ -25,6 +27,9 @@ public class Constants {
 
     /** ローカルファイルの接頭辞 */
     public static final String LOCAL_FILE_PREFIX = ResourceBundle.getBundle(BUNDLE_KEY).getString("local.file.prefix");
+
+    /** デフォルトエンコード */
+    public static final Charset ENCODING = StandardCharsets.UTF_8;
 
     /** Entity Managerクラス名 */
     public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";

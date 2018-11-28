@@ -48,11 +48,11 @@ public class NovelManagerUtil {
     }
 
     /**
-     * html sourceを取得する.
+     * htmlファイルを取得する.
      *
      * @param url
      *            URLオブジェクト
-     * @return html source
+     * @return htmlファイル
      * @throws NovelNotFoundException
      *             URLで指定されたコンテンツが見つからない
      */
@@ -62,7 +62,7 @@ public class NovelManagerUtil {
 
         try {
             if (url.startsWith(Constants.LOCAL_FILE_PREFIX)) {
-                return Jsoup.parse(new File(url.substring(Constants.LOCAL_FILE_PREFIX.length())), null);
+                return Jsoup.parse(new File(url.substring(Constants.LOCAL_FILE_PREFIX.length())), Constants.ENCODING.name());
             } else {
                 return Jsoup.connect(url).get();
             }
