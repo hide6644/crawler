@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import crawler.Constants;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import net.htmlparser.jericho.Source;
 
@@ -55,7 +56,7 @@ public class NovelManagerUtil {
      *             URLで指定されたコンテンツが見つからない
      */
     public static Source getSource(final URL url) throws NovelNotFoundException {
-        // ネットワーク負荷低減のため、一時的に実行を停止
+        // ネットワーク負荷低減のため、実行を一時停止
         delayAccess();
 
         try {
@@ -63,7 +64,8 @@ public class NovelManagerUtil {
             html.fullSequentialParse();
             return html;
         } catch (ConnectException e) {
-            return getSource(url);
+            log.error("url:" + url, e);
+            throw new NovelConnectException();
         } catch (IOException e) {
             log.error("url:" + url, e);
             throw new NovelNotFoundException();
@@ -71,7 +73,7 @@ public class NovelManagerUtil {
     }
 
     /**
-     * 指定されたミリ秒数の間、一時的に実行を停止する.
+     * 指定されたミリ秒数の間、実行を停止する.
      */
     public static void delayAccess() {
         try {

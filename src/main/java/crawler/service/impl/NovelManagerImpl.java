@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import crawler.dao.NovelDao;
 import crawler.dto.NovelSource;
 import crawler.entity.Novel;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
@@ -61,8 +62,10 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
 
                 // 小説を永続化
                 novelDao.save(novelSource.getNovel());
+            } catch (NovelConnectException e) {
+                log.warn("[skip] url:" + url);
             } catch (NovelNotFoundException e) {
-                log.info("[deleted] url:" + url);
+                log.warn("[deleted] url:" + url);
             }
         }
     }
@@ -134,9 +137,11 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
                     novelChapterManager.saveAllNovelChapter(currentNovelSource);
                 }
             }
+        } catch (NovelConnectException e) {
+            log.warn("[skip] title:" + novel.getTitle());
         } catch (NovelNotFoundException e) {
             // 小説が取得出来ない場合、削除フラグを設定
-            log.info("[deleted] title:" + novel.getTitle());
+            log.warn("[deleted] title:" + novel.getTitle());
             novel.setDeleted(true);
             novel.setUpdateDate(LocalDateTime.now());
         }
