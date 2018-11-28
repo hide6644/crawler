@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import crawler.Constants;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 
 /**
@@ -57,7 +58,7 @@ public class NovelManagerUtil {
      *             URLで指定されたコンテンツが見つからない
      */
     public static Document getSource(final String url) throws NovelNotFoundException {
-        // ネットワーク負荷低減のため、一時的に実行を停止
+        // ネットワーク負荷低減のため、実行を一時停止
         delayAccess();
 
         try {
@@ -67,7 +68,8 @@ public class NovelManagerUtil {
                 return Jsoup.connect(url).get();
             }
         } catch (ConnectException e) {
-            return getSource(url);
+            log.error("url:" + url, e);
+            throw new NovelConnectException();
         } catch (IOException e) {
             log.error("url:" + url, e);
             throw new NovelNotFoundException();
@@ -75,7 +77,7 @@ public class NovelManagerUtil {
     }
 
     /**
-     * 指定されたミリ秒数の間、一時的に実行を停止する.
+     * 指定されたミリ秒数の間、実行を停止する.
      */
     public static void delayAccess() {
         try {

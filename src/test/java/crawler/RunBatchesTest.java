@@ -6,6 +6,6 @@ public class RunBatchesTest {
 
     @Test
     public void test() throws Exception {
-        RunBatches.main(new String[] {"test"});;
+        RunBatches.main(new String[] {"test"});
     }
 }

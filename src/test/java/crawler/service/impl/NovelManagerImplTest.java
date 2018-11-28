@@ -56,6 +56,9 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
         // 登録対象無し
         novelManager.save("file://" + filePath + "test");
+
+        // 接続不可
+        novelManager.save("http://localhost:19999/test");
     }
 
     @Test
@@ -79,6 +82,10 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
         novel.setUrl("file://" + filePath + "test");
         // 更新対象無し
+        novelManager.checkForUpdatesAndSaveHistory(novel);
+
+        novel.setUrl("http://localhost:19999/test");
+        // 接続不可
         novelManager.checkForUpdatesAndSaveHistory(novel);
     }
 
