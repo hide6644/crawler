@@ -1,5 +1,7 @@
 package crawler.dto;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 
 import crawler.exception.NovelNotFoundException;
@@ -9,6 +11,9 @@ import crawler.util.NovelManagerUtil;
  * htmlを保持する基底クラス.
  */
 public abstract class BaseSource {
+
+    /** ログ出力クラス */
+    protected Logger log = LogManager.getLogger(getClass());
 
     /** htmlソース */
     protected final Document html;
@@ -27,8 +32,10 @@ public abstract class BaseSource {
      *             URLが見つからない
      */
     protected BaseSource(String url, boolean add) throws NovelNotFoundException {
+        log.debug("[open] url:{}", () -> url);
         // URLからhtmlを取得
         this.html = NovelManagerUtil.getSource(url);
+        log.debug("[close] url:{}", () -> url);
         this.add = add;
     }
 
