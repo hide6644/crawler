@@ -59,7 +59,15 @@ public class NovelSource extends BaseSource {
      */
     @Override
     protected NovelSource mapping() {
-        if (!add) {
+        if (add) {
+            // 小説の情報を設定
+            novel.setTitle(NovelElementsUtil.getTitle(html));
+            novel.setWritername(NovelElementsUtil.getWritername(html));
+            novel.setDescription(NovelElementsUtil.getDescription(html));
+            novel.setBody(NovelElementsUtil.getBody(html));
+            novel.setUrl(url.toString());
+            novel.setDeleted(false);
+        } else {
             // 更新の場合、Historyを作成
             // 差異をチェックし、差異がある場合、小説の更新履歴を作成
             checkTitleDiff();
@@ -77,14 +85,6 @@ public class NovelSource extends BaseSource {
             novel.setUpdateDate(LocalDateTime.now());
         }
 
-        // 小説の情報を変更
-        novel.setTitle(NovelElementsUtil.getTitle(html));
-        novel.setWritername(NovelElementsUtil.getWritername(html));
-        novel.setDescription(NovelElementsUtil.getDescription(html));
-        novel.setBody(NovelElementsUtil.getBody(html));
-        novel.setUrl(url.toString());
-        novel.setDeleted(false);
-
         return this;
     }
 
@@ -92,8 +92,11 @@ public class NovelSource extends BaseSource {
      * タイトルに差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
     void checkTitleDiff() {
-        if (!novel.getTitle().equals(NovelElementsUtil.getTitle(html))) {
+        String title = NovelElementsUtil.getTitle(html);
+
+        if (!novel.getTitle().equals(title)) {
             createNovelHistory().setTitle(novel.getTitle());
+            novel.setTitle(title);
         }
     }
 
@@ -101,8 +104,11 @@ public class NovelSource extends BaseSource {
      * 作者名に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
     void checkWriternameDiff() {
-        if (!novel.getWritername().equals(NovelElementsUtil.getWritername(html))) {
+        String writername = NovelElementsUtil.getWritername(html);
+
+        if (!novel.getWritername().equals(writername)) {
             createNovelHistory().setWritername(novel.getWritername());
+            novel.setWritername(writername);
         }
     }
 
@@ -110,8 +116,11 @@ public class NovelSource extends BaseSource {
      * 解説に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
     void checkDescriptionDiff() {
-        if (!novel.getDescription().equals(NovelElementsUtil.getDescription(html))) {
+        String description = NovelElementsUtil.getDescription(html);
+
+        if (!novel.getDescription().equals(description)) {
             createNovelHistory().setDescription(novel.getDescription());
+            novel.setDescription(description);
         }
     }
 
@@ -119,8 +128,11 @@ public class NovelSource extends BaseSource {
      * 本文に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
     void checkBodyDiff() {
-        if (!novel.getBody().equals(NovelElementsUtil.getBody(html))) {
+        String body = NovelElementsUtil.getBody(html);
+
+        if (!novel.getBody().equals(body)) {
             createNovelHistory().setBody(novel.getBody());
+            novel.setBody(body);
         }
     }
 

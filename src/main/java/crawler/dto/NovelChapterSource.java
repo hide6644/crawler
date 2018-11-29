@@ -46,7 +46,12 @@ public class NovelChapterSource extends BaseSource {
      */
     @Override
     protected NovelChapterSource mapping() {
-        if (!add) {
+        if (add) {
+            // 小説の章の情報を設定
+            novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
+            novelChapter.setUrl(url.toString());
+            novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
+        } else {
             // 更新の場合、Historyを作成
             // 小説の章の更新履歴を作成
             checkTitleDiff();
@@ -62,11 +67,6 @@ public class NovelChapterSource extends BaseSource {
             novelChapter.setUpdateDate(LocalDateTime.now());
         }
 
-        // 小説の章の情報を変更
-        novelChapter.setTitle(NovelElementsUtil.getChapterTitle(html));
-        novelChapter.setUrl(url.toString());
-        novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
-
         return this;
     }
 
@@ -74,8 +74,11 @@ public class NovelChapterSource extends BaseSource {
      * タイトルに差異があるか確認し、差異があれば小説の章の更新履歴を作成する.
      */
     void checkTitleDiff() {
-        if (!novelChapter.getTitle().equals(NovelElementsUtil.getChapterTitle(html))) {
+        String chapterTitle = NovelElementsUtil.getChapterTitle(html);
+
+        if (!novelChapter.getTitle().equals(chapterTitle)) {
             createNovelChapterHistory().setTitle(novelChapter.getTitle());
+            novelChapter.setTitle(chapterTitle);
         }
     }
 
@@ -85,6 +88,7 @@ public class NovelChapterSource extends BaseSource {
     void checkBodyDiff() {
         // 本文は常に変更ありとする
         createNovelChapterHistory().setBody(novelChapter.getBody());
+        novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
     }
 
     /**
