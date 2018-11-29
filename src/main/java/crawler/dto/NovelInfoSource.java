@@ -52,8 +52,8 @@ public class NovelInfoSource extends BaseSource {
         novelInfo.setModifiedDate(LocalDateTime.parse(NovelElementsUtil.getModifiedDate(html), DateTimeFormatter.ofPattern(MODIFIED_DATE_FORMAT)));
         novelInfo.setFinished(NovelElementsUtil.getFinished(html));
         novelInfo.setCheckedDate(now);
-        // 最終更新日時が1年以内の場合、True
-        novelInfo.setCheckEnable(novelInfo.getModifiedDate().isAfter(now.minusYears(1)));
+        // 最終更新日時が3年以内の場合、True
+        novelInfo.setCheckEnable(novelInfo.getModifiedDate().isAfter(now.minusYears(3)));
 
         return this;
     }
