@@ -17,7 +17,7 @@ public class NovelManagerUtilTest {
     @Test
     public void testGetSource() throws Exception {
         Assertions.assertThrows(NovelNotFoundException.class, () -> {
-            NovelManagerUtil.getSource(NovelManagerUtil.getUrl("http://localhost:19999/test"));
+            NovelManagerUtil.getSource("http://localhost:19999/test");
         });
     }
 }
