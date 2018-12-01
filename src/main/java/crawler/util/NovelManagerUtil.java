@@ -1,15 +1,21 @@
 package crawler.util;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.HttpStatusException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import crawler.Constants;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
-import net.htmlparser.jericho.Source;
 
 /**
  * 小説の情報のUtilityクラス.
@@ -45,22 +51,33 @@ public class NovelManagerUtil {
     }
 
     /**
-     * html sourceを取得する.
+     * htmlファイルを取得する.
      *
      * @param url
      *            URLオブジェクト
-     * @return html source
+     * @return htmlファイル
      * @throws NovelNotFoundException
      *             URLで指定されたコンテンツが見つからない
      */
-    public static Source getSource(final URL url) throws NovelNotFoundException {
-        // ネットワーク負荷低減のため、一時的に実行を停止
+    public static Document getSource(final String url) throws NovelNotFoundException {
+        // ネットワーク負荷低減のため、実行を一時停止
         delayAccess();
 
         try {
-            Source html = new Source(url);
-            html.fullSequentialParse();
-            return html;
+            if (url.startsWith(Constants.LOCAL_FILE_PREFIX)) {
+                return Jsoup.parse(new File(url.substring(Constants.LOCAL_FILE_PREFIX.length())), Constants.ENCODING.name());
+            } else {
+                return Jsoup.connect(url).get();
+            }
+        } catch (ConnectException | SocketTimeoutException e) {
+            log.error("url:" + url, e);
+            throw new NovelConnectException();
+        } catch (HttpStatusException e) {
+            log.error("url:" + url, e);
+            if (e.getStatusCode() == 404) {
+                throw new NovelNotFoundException();
+            }
+            throw new NovelConnectException();
         } catch (IOException e) {
             log.error("url:" + url, e);
             throw new NovelNotFoundException();
@@ -68,7 +85,7 @@ public class NovelManagerUtil {
     }
 
     /**
-     * 指定されたミリ秒数の間、一時的に実行を停止する.
+     * 指定されたミリ秒数の間、実行を停止する.
      */
     public static void delayAccess() {
         try {
