@@ -208,7 +208,7 @@ class KeywordWrap implements Serializable {
      * @param keyword
      *            小説の付随情報のキーワード
      */
-    public KeywordWrap(String keyword) {
+    KeywordWrap(String keyword) {
         this.keyword = keyword;
     }
 
