@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public abstract class BaseManagerMockTestCase {
 
-    protected transient Logger log = LogManager.getLogger(getClass());
+    protected transient Logger log = LogManager.getLogger(this);
 
     protected ResourceBundle rb;
 

@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Rollback
 public abstract class BaseManagerTestCase {
 
-    protected transient Logger log = LogManager.getLogger(getClass());
+    protected transient Logger log = LogManager.getLogger(this);
 
     protected ResourceBundle rb;
 

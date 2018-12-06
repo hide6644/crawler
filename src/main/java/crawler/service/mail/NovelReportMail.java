@@ -36,7 +36,7 @@ public class NovelReportMail {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     /** ログ出力クラス */
-    private Logger log = LogManager.getLogger(getClass());
+    private final Logger log = LogManager.getLogger(this);
 
     /** メールを処理するクラス */
     @Autowired(required = false)

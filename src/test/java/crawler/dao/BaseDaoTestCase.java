@@ -22,7 +22,7 @@ public abstract class BaseDaoTestCase {
 
     public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
 
-    protected transient Logger log = LogManager.getLogger(getClass());
+    protected transient Logger log = LogManager.getLogger(this);
 
     protected ResourceBundle rb;
 

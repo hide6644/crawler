@@ -13,7 +13,7 @@ import crawler.util.NovelManagerUtil;
 public abstract class BaseSource {
 
     /** ログ出力クラス */
-    protected Logger log = LogManager.getLogger(getClass());
+    protected Logger log = LogManager.getLogger(this);
 
     /** htmlソース */
     protected final Document html;
