@@ -463,16 +463,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
         <jdbc.groupId>mysql</jdbc.groupId>
         <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.47</jdbc.version>
-        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-        <jdbc.url>
-            <![CDATA[jdbc:mysql://localhost/crawler?createDatabaseIfNotExist=true&amp;zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true]]>
-        </jdbc.url>
-        <jdbc.username>crawler</jdbc.username>
-        <jdbc.password />
+        <jdbc.version>8.0.13</jdbc.version>
 
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <ehcache.version>3.6.2</ehcache.version>
