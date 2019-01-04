@@ -29,7 +29,7 @@
 	<classpathentry kind="lib" path="target/lib/hibernate-jcache-5.4.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-5.11.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-orm-5.11.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/HikariCP-3.2.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/HikariCP-3.3.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/istack-commons-runtime-3.0.7.jar"/>
 	<classpathentry kind="lib" path="target/lib/jandex-2.0.5.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/javassist-3.24.0-GA.jar"/>
