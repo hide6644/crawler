@@ -106,7 +106,7 @@ public class NovelChapterSource extends BaseSource {
         if (novelChapter == null) {
             return new NovelChapterSource(true, url, new NovelChapter()).mapping();
         } else {
-            return new NovelChapterSource(false,url,  novelChapter).mapping();
+            return new NovelChapterSource(false, url,  novelChapter).mapping();
         }
     }
 

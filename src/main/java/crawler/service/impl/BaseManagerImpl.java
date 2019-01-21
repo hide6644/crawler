@@ -9,5 +9,5 @@ import org.apache.logging.log4j.Logger;
 public class BaseManagerImpl {
 
     /** ログ出力クラス */
-    protected Logger log = LogManager.getLogger(getClass());
+    protected Logger log = LogManager.getLogger(this);
 }

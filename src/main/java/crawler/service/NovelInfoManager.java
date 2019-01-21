@@ -16,5 +16,5 @@ public interface NovelInfoManager {
      * @throws NovelNotFoundException
      *             小説の情報が見つからない
      */
-    public void saveNovelInfo(NovelSource novelSource) throws NovelNotFoundException;
+    void saveNovelInfo(NovelSource novelSource) throws NovelNotFoundException;
 }

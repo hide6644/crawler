@@ -39,6 +39,9 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Indexed
 public class NovelInfo extends BaseObject implements Serializable {
 
+    /** ログ出力クラス */
+    private static final Logger log = LogManager.getLogger(NovelInfo.class);
+
     /** 最終確認日時 */
     private LocalDateTime checkedDate;
 
@@ -73,8 +76,6 @@ public class NovelInfo extends BaseObject implements Serializable {
      * @return true:確認必要、false:確認不要
      */
     public boolean needsCheckForUpdate() {
-        final Logger log = LogManager.getLogger(NovelInfo.class);
-
         final LocalDateTime now = LocalDateTime.now();
         if (finished && checkedDate.isAfter(now.minusDays(45))) {
             // 完了済み、かつ確認日が45日以内の場合
@@ -208,7 +209,7 @@ class KeywordWrap implements Serializable {
      * @param keyword
      *            小説の付随情報のキーワード
      */
-    public KeywordWrap(String keyword) {
+    KeywordWrap(String keyword) {
         this.keyword = keyword;
     }
 

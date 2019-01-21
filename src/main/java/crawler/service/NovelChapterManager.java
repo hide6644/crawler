@@ -13,5 +13,5 @@ public interface NovelChapterManager {
      * @param novelSource
      *            小説の情報
      */
-    public void saveAllNovelChapter(NovelSource novelSource);
+    void saveAllNovelChapter(NovelSource novelSource);
 }

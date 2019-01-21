@@ -16,5 +16,5 @@ public interface NovelChapterInfoManager {
      * @param novelChapterSource
      *            小説の章の情報のhtml
      */
-    public void saveNovelChapterInfo(NovelIndexElement novelIndexElement, NovelChapterSource novelChapterSource);
+    void saveNovelChapterInfo(NovelIndexElement novelIndexElement, NovelChapterSource novelChapterSource);
 }
