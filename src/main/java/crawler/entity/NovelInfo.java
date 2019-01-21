@@ -40,7 +40,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 public class NovelInfo extends BaseObject implements Serializable {
 
     /** ログ出力クラス */
-    private final Logger log = LogManager.getLogger(this);
+    private static final Logger log = LogManager.getLogger(NovelInfo.class);
 
     /** 最終確認日時 */
     private LocalDateTime checkedDate;
