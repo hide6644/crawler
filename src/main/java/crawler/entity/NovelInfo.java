@@ -3,40 +3,23 @@ package crawler.entity;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.Facet;
-import org.hibernate.search.annotations.FacetEncodingType;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * 小説の付随情報
  */
 @Entity
 @Table(name = "novel_info")
-@Indexed
 public class NovelInfo extends BaseObject implements Serializable {
 
     /** ログ出力クラス */
@@ -53,9 +36,6 @@ public class NovelInfo extends BaseObject implements Serializable {
 
     /** キーワード */
     private String keyword;
-
-    /** キーワードセット */
-    private Set<KeywordWrap> keywordSet = new HashSet<>();
 
     /** お気に入りフラグ */
     private boolean favorite;
@@ -127,31 +107,12 @@ public class NovelInfo extends BaseObject implements Serializable {
     }
 
     @Column(length = 300)
-    @Field
-    @Analyzer(impl = WhitespaceAnalyzer.class)
     public String getKeyword() {
         return keyword;
     }
 
-    /**
-     * キーワードを設定する.
-     * スペースで分割したキーワードをKeywordWrapに設定する.
-     *
-     * @param keyword
-     *            キーワード
-     */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
-
-        Stream.of(Optional.ofNullable(keyword).orElseGet(String::new).split(" "))
-                .collect(Collectors.toSet()).forEach(keywords -> keywordSet.add(new KeywordWrap(keywords)));
-    }
-
-    @Transient
-    @IndexedEmbedded
-    @OneToMany
-    public Set<KeywordWrap> getKeywordSet() {
-        return keywordSet;
     }
 
     @Column
@@ -183,41 +144,11 @@ public class NovelInfo extends BaseObject implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "novel_id")
-    @ContainedIn
     public Novel getNovel() {
         return novel;
     }
 
     public void setNovel(Novel novel) {
         this.novel = novel;
-    }
-}
-
-/**
- * 小説の付随情報のキーワード
- */
-class KeywordWrap implements Serializable {
-
-    /** キーワード */
-    @Field(analyze = Analyze.NO)
-    @Facet(encoding = FacetEncodingType.STRING)
-    String keyword;
-
-    /**
-     * コンストラクタ.
-     *
-     * @param keyword
-     *            小説の付随情報のキーワード
-     */
-    KeywordWrap(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
     }
 }

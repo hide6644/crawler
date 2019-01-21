@@ -19,19 +19,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * 小説の情報
  */
 @Entity
 @Table(name = "novel")
-@Indexed
-@Analyzer(impl = JapaneseAnalyzer.class)
 @XmlRootElement
 public class Novel extends BaseObject implements Serializable {
 
@@ -72,7 +65,6 @@ public class Novel extends BaseObject implements Serializable {
     }
 
     @Column(length = 100)
-    @Field
     public String getTitle() {
         return title;
     }
@@ -82,7 +74,6 @@ public class Novel extends BaseObject implements Serializable {
     }
 
     @Column(length = 100)
-    @Field
     public String getWritername() {
         return writername;
     }
@@ -92,7 +83,6 @@ public class Novel extends BaseObject implements Serializable {
     }
 
     @Column
-    @Field
     public String getDescription() {
         return description;
     }
@@ -104,7 +94,6 @@ public class Novel extends BaseObject implements Serializable {
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Field
     public String getBody() {
         return body;
     }
@@ -123,7 +112,6 @@ public class Novel extends BaseObject implements Serializable {
     }
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "novel", cascade = CascadeType.ALL)
-    @IndexedEmbedded
     public NovelInfo getNovelInfo() {
         return novelInfo;
     }
@@ -146,7 +134,6 @@ public class Novel extends BaseObject implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
-    @IndexedEmbedded
     public List<NovelChapter> getNovelChapters() {
         return novelChapters;
     }

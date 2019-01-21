@@ -1,7 +1,7 @@
 package crawler;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import crawler.batch.BatchProcess;
@@ -12,7 +12,7 @@ import crawler.batch.BatchProcess;
 public class RunBatches {
 
     /** ログ出力クラス */
-    private static final Logger log = LogManager.getLogger(RunBatches.class);
+    private static final Log log = LogFactory.getLog(RunBatches.class);
 
     /** Spring設定ファイルの参照先 */
     public static final String CONFIG_LOCATION = "applicationContext.xml";

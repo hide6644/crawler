@@ -12,7 +12,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 import crawler.service.NovelManager;
 import crawler.service.NovelOutputManager;
-import crawler.service.NovelSearchManager;
 
 @ExtendWith(MockitoExtension.class)
 public class NovelProcessTest {
@@ -26,23 +25,20 @@ public class NovelProcessTest {
     @Mock
     private NovelOutputManager novelOutputManager;
 
-    @Mock
-    private NovelSearchManager novelSearchManager;
-
     @InjectMocks
     private NovelProcess novelProcess = new NovelProcess();
 
     @Test
     public void testExecute() {
         when(messages.getMessage(anyString())).thenReturn(
-                "checkForUpdates", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
+                "checkForUpdates", "sendUnreadReport", "sendModifiedDateReport",
+                "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport",
+                "checkForUpdates", "save", "fav", "sendUnreadReport", "sendModifiedDateReport",
+                "checkForUpdates", "save", "fav", "unfav", "sendUnreadReport", "sendModifiedDateReport",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport",
+                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
 
         novelProcess.execute(new String[] {
                 "checkForUpdates",
@@ -51,8 +47,7 @@ public class NovelProcessTest {
                 "unfav=http://foo.bar",
                 "del=http://foo.bar",
                 "sendUnreadReport",
-                "sendModifiedDateReport",
-                "reindexAll" });
+                "sendModifiedDateReport" });
     }
 
     @Test
@@ -62,7 +57,7 @@ public class NovelProcessTest {
 
     @Test
     public void testExecuteInvalid() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport");
 
         // 不正な引数
         Assertions.assertThrows(IllegalArgumentException.class, () -> {

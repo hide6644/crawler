@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.search.annotations.DocumentId;
 
 /**
  * エンティティの基底クラス.
@@ -46,7 +45,6 @@ public abstract class BaseObject implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @DocumentId
     @XmlTransient
     public Long getId() {
         return id;

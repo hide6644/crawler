@@ -7,9 +7,6 @@
     </Properties>
 
     <Appenders>
-        <Console name="stdout" target="SYSTEM_OUT">
-            <PatternLayout pattern="${loglayout}" />
-        </Console>
         <RollingFile name="applog" fileName="${sys:app_home}/logs/app.log" filePattern="${sys:app_home}/logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout pattern="${loglayout}" />
             <Policies>
@@ -23,12 +20,10 @@
     <Loggers>
         <!-- Log application -->
         <Logger name="crawler" level="debug" additivity="false">
-            <AppenderRef ref="stdout" />
             <AppenderRef ref="applog" />
         </Logger>
 
         <Root level="info">
-            <AppenderRef ref="stdout" />
             <AppenderRef ref="applog" />
         </Root>
     </Loggers>

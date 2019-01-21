@@ -18,19 +18,12 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
 
 /**
  * 小説の章の情報
  */
 @Entity
 @Table(name = "novel_chapter")
-@Indexed
-@Analyzer(impl = JapaneseAnalyzer.class)
 public class NovelChapter extends BaseObject implements Serializable {
 
     /** URL */
@@ -61,7 +54,6 @@ public class NovelChapter extends BaseObject implements Serializable {
     }
 
     @Column(length = 100)
-    @Field
     public String getTitle() {
         return title;
     }
@@ -73,7 +65,6 @@ public class NovelChapter extends BaseObject implements Serializable {
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Field
     public String getBody() {
         return body;
     }
@@ -106,7 +97,6 @@ public class NovelChapter extends BaseObject implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "novel_id")
-    @ContainedIn
     public Novel getNovel() {
         return novel;
     }
