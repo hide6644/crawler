@@ -1,6 +1,6 @@
 package crawler.service.impl;
 
-import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 
@@ -45,5 +45,13 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
         when(novelChapterDao.findByUrl(novelSource.getHostname() + "test01.html")).thenReturn(novelChapter);
 
         novelChapterManager.saveAllNovelChapter(novelSource);
+        novelSource.getNovel().getNovelChapters()
+                .forEach(novelChapter2 -> {
+                    novelChapter2.getNovelChapterHistories().forEach(novelChapterHistory -> {
+                        novelChapterHistory.getTitle();
+                        novelChapterHistory.getBody();
+                        novelChapterHistory.getNovelChapter();
+                    });
+                });
     }
 }
