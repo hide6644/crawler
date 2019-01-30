@@ -10,8 +10,8 @@
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjrt-1.9.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.9.7.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.9.7.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.9.8.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.9.8.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.3.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.8.1.jar"/>
