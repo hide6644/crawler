@@ -160,7 +160,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.16</version>
+                            <version>8.17</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -463,9 +463,9 @@
 
         <jdbc.groupId>mysql</jdbc.groupId>
         <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>8.0.14</jdbc.version>
+        <jdbc.version>8.0.15</jdbc.version>
 
-        <byte-buddy.version>1.9.7</byte-buddy.version>
+        <byte-buddy.version>1.9.9</byte-buddy.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <ehcache.version>3.6.3</ehcache.version>
         <freemarker.version>2.3.28</freemarker.version>
@@ -479,7 +479,7 @@
         <junit-jupiter.version>5.3.2</junit-jupiter.version>
         <log4j.version>2.11.1</log4j.version>
         <mail.version>1.6.2</mail.version>
-        <mockito.version>2.23.4</mockito.version>
+        <mockito.version>2.24.0</mockito.version>
         <slf4j.version>1.7.25</slf4j.version>
         <spring.version>5.1.4.RELEASE</spring.version>
         <spring-data.version>2.1.4.RELEASE</spring-data.version>
