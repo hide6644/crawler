@@ -498,8 +498,8 @@
         <mail.version>1.6.2</mail.version>
         <mockito.version>2.24.0</mockito.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring.version>5.1.4.RELEASE</spring.version>
-        <spring-data.version>2.1.4.RELEASE</spring-data.version>
+        <spring.version>5.1.5.RELEASE</spring.version>
+        <spring-data.version>2.1.5.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
