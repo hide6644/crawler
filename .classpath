@@ -59,8 +59,8 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queries-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-core-2.24.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-2.24.5.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-core-2.25.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-2.25.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.1.1.jar"/>
