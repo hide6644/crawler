@@ -83,6 +83,12 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         novel.setUrl("file://" + filePath + "test");
         // 更新対象無し
         novelManager.checkForUpdatesAndSaveHistory(novel);
+        novel.getNovelHistories().forEach(novelHistory -> {
+            novelHistory.getTitle();
+            novelHistory.getWritername();
+            novelHistory.getDescription();
+            novelHistory.getNovel();
+        });
 
         novel.setUrl("http://localhost:19999/test");
         // 接続不可
