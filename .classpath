@@ -10,8 +10,8 @@
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjrt-1.9.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.9.10.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.9.10.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.9.12.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.9.12.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.3.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.8.1.jar"/>
@@ -21,7 +21,7 @@
 	<classpathentry kind="lib" path="target/lib/FastInfoset-1.2.16.jar"/>
 	<classpathentry kind="lib" path="target/lib/freemarker-2.3.28.jar"/>
 	<classpathentry kind="lib" path="target/lib/freemarker-java8-1.3.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/greenmail-1.5.9.jar"/>
+	<classpathentry kind="lib" path="target/lib/greenmail-1.5.10.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-commons-annotations-5.1.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-core-5.4.1.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.4.1.Final.jar"/>
