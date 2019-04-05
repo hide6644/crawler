@@ -496,7 +496,7 @@
         <log4j.version>2.11.2</log4j.version>
         <lucene.version>5.5.5</lucene.version>
         <mail.version>1.6.2</mail.version>
-        <mockito.version>2.25.1</mockito.version>
+        <mockito.version>2.26.0</mockito.version>
         <slf4j.version>1.7.26</slf4j.version>
         <spring.version>5.1.6.RELEASE</spring.version>
         <spring-data.version>2.1.6.RELEASE</spring-data.version>
