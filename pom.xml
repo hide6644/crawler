@@ -476,9 +476,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <jdbc.groupId>mysql</jdbc.groupId>
-        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>8.0.15</jdbc.version>
+        <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
+        <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
+        <jdbc.version>2.4.1</jdbc.version>
 
         <byte-buddy.version>1.9.12</byte-buddy.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
