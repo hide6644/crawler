@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.5.9</version>
+    <version>1.5.10</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -160,7 +160,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.18</version>
+                            <version>8.20</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -476,30 +476,30 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <jdbc.groupId>mysql</jdbc.groupId>
-        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>8.0.15</jdbc.version>
+        <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
+        <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
+        <jdbc.version>2.4.1</jdbc.version>
 
-        <byte-buddy.version>1.9.10</byte-buddy.version>
-        <commons-lang3.version>3.8.1</commons-lang3.version>
-        <ehcache.version>3.7.0</ehcache.version>
+        <byte-buddy.version>1.9.12</byte-buddy.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <ehcache.version>3.7.1</ehcache.version>
         <freemarker.version>2.3.28</freemarker.version>
         <freemarker-java8.version>1.3.0</freemarker-java8.version>
-        <greenmail.version>1.5.9</greenmail.version>
+        <greenmail.version>1.5.10</greenmail.version>
         <hibernate.version>5.4.1.Final</hibernate.version>
         <hibernate-search.version>5.11.1.Final</hibernate-search.version>
         <HikariCP.version>3.3.1</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
-        <jsoup.version>1.11.3</jsoup.version>
-        <junit-jupiter.version>5.4.1</junit-jupiter.version>
+        <jsoup.version>1.12.1</jsoup.version>
+        <junit-jupiter.version>5.4.2</junit-jupiter.version>
         <log4j.version>2.11.2</log4j.version>
         <lucene.version>5.5.5</lucene.version>
         <mail.version>1.6.2</mail.version>
-        <mockito.version>2.25.1</mockito.version>
+        <mockito.version>2.27.0</mockito.version>
         <slf4j.version>1.7.26</slf4j.version>
-        <spring.version>5.1.5.RELEASE</spring.version>
-        <spring-data.version>2.1.5.RELEASE</spring-data.version>
+        <spring.version>5.1.7.RELEASE</spring.version>
+        <spring-data.version>2.1.8.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
