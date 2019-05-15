@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.5.9</version>
+    <version>1.5.10</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -160,7 +160,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.19</version>
+                            <version>8.20</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -475,14 +475,14 @@
         <HikariCP.version>3.3.1</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
-        <jsoup.version>1.11.3</jsoup.version>
+        <jsoup.version>1.12.1</jsoup.version>
         <junit-jupiter.version>5.4.2</junit-jupiter.version>
         <log4j.version>2.11.2</log4j.version>
         <mail.version>1.6.2</mail.version>
         <mockito.version>2.27.0</mockito.version>
         <slf4j.version>1.7.26</slf4j.version>
-        <spring.version>5.1.6.RELEASE</spring.version>
-        <spring-data.version>2.1.6.RELEASE</spring-data.version>
+        <spring.version>5.1.7.RELEASE</spring.version>
+        <spring-data.version>2.1.8.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
