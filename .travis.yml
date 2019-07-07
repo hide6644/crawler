@@ -5,6 +5,7 @@ services:
 jdk:
   - openjdk8
 before_script:
+  - mysql -e "set global sql_mode = ''"
   - mysql -uroot -e "create database crawler"
   - mysql -uroot crawler < src/config/schema.sql
 after_success:
