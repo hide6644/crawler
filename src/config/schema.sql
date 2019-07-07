@@ -15,9 +15,9 @@ create table novel (
     deleted boolean default false,
     version integer default null,
     create_user varchar(16) default null,
-    create_date timestamp default '0000-00-00 00:00:00',
+    create_date timestamp,
     update_user varchar(16) default null,
-    update_date timestamp default '0000-00-00 00:00:00',
+    update_date timestamp,
     primary key (id),
     unique (url)
 ) engine = InnoDB default character set utf8;
@@ -31,9 +31,9 @@ create table novel_history (
     body mediumtext default null,
     version integer default null,
     create_user varchar(16) default null,
-    create_date timestamp default '0000-00-00 00:00:00',
+    create_date timestamp,
     update_user varchar(16) default null,
-    update_date timestamp default '0000-00-00 00:00:00',
+    update_date timestamp,
     primary key (id),
     foreign key (novel_id) references novel (id)
 ) engine = InnoDB default character set utf8;
@@ -46,9 +46,9 @@ create table novel_chapter (
     body mediumtext default null,
     version integer default null,
     create_user varchar(16) default null,
-    create_date timestamp default '0000-00-00 00:00:00',
+    create_date timestamp,
     update_user varchar(16) default null,
-    update_date timestamp default '0000-00-00 00:00:00',
+    update_date timestamp,
     primary key (id),
     unique (url),
     foreign key (novel_id) references novel (id)
@@ -61,9 +61,9 @@ create table novel_chapter_history (
     body mediumtext default null,
     version integer default null,
     create_user varchar(16) default null,
-    create_date timestamp default '0000-00-00 00:00:00',
+    create_date timestamp,
     update_user varchar(16) default null,
-    update_date timestamp default '0000-00-00 00:00:00',
+    update_date timestamp,
     primary key (id),
     foreign key (novel_chapter_id) references novel_chapter (id)
 ) engine = InnoDB default character set utf8;
@@ -80,9 +80,9 @@ create table novel_info (
     check_enable boolean default null,
     version integer default null,
     create_user varchar(16) default null,
-    create_date timestamp default '0000-00-00 00:00:00',
+    create_date timestamp,
     update_user varchar(16) default null,
-    update_date timestamp default '0000-00-00 00:00:00',
+    update_date timestamp,
     primary key (id),
     foreign key (novel_id) references novel (id)
 ) engine = InnoDB default character set utf8;
@@ -96,9 +96,9 @@ create table novel_chapter_info (
     read_date datetime default null,
     version integer default null,
     create_user varchar(16) default null,
-    create_date timestamp default '0000-00-00 00:00:00',
+    create_date timestamp,
     update_user varchar(16) default null,
-    update_date timestamp default '0000-00-00 00:00:00',
+    update_date timestamp,
     primary key (id),
     index (unread),
     foreign key (novel_chapter_id) references novel_chapter (id)
