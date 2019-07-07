@@ -1,5 +1,7 @@
 language: java
 sudo: false
+services:
+  - mysql
 jdk:
   - openjdk8
 before_script:
