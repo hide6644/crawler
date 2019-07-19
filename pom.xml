@@ -481,7 +481,7 @@
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
         <jdbc.version>2.4.2</jdbc.version>
 
-        <byte-buddy.version>1.9.13</byte-buddy.version>
+        <byte-buddy.version>1.9.14</byte-buddy.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <ehcache.version>3.7.1</ehcache.version>
         <freemarker.version>2.3.28</freemarker.version>
