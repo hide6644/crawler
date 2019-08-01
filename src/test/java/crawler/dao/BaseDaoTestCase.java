@@ -35,7 +35,7 @@ public abstract class BaseDaoTestCase {
         try {
             rb = ResourceBundle.getBundle(className);
         } catch (MissingResourceException mre) {
-            log.trace("No resource bundle found for: " + className);
+            log.trace("No resource bundle found for:{}", className);
         }
     }
 }

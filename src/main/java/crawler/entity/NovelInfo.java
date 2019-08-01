@@ -79,7 +79,7 @@ public class NovelInfo extends BaseObject implements Serializable {
         final LocalDateTime now = LocalDateTime.now();
         if (finished && checkedDate.isAfter(now.minusDays(45))) {
             // 完了済み、かつ確認日が45日以内の場合
-            log.info("[skip] finished title:" + novel.getTitle());
+            log.info("[skip] finished title:{}", () -> novel.getTitle());
             return false;
         }
 
@@ -87,12 +87,12 @@ public class NovelInfo extends BaseObject implements Serializable {
             // 更新日付が30日以内の場合
             if (checkedDate.isAfter(now.minusDays(Duration.between(modifiedDate, now).dividedBy(2).toDays()))) {
                 // 確認日時が更新日の半分の期間より後の場合
-                log.info("[skip] title:" + novel.getTitle());
+                log.info("[skip] title:{}", () -> novel.getTitle());
                 return false;
             }
         } else if (checkedDate.isAfter(now.minusDays(15))) {
             // 確認日時が15日以内の場合
-            log.info("[skip] title:" + novel.getTitle());
+            log.info("[skip] title:{}", () -> novel.getTitle());
             return false;
         }
 

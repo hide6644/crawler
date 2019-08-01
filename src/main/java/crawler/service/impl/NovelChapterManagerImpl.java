@@ -64,14 +64,14 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
                 novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
                 novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
 
-                log.info("[add] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                log.info("[add] chapter title:{}", () -> novelChapterSource.getNovelChapter().getTitle());
             } else {
                 // 更新処理
-                log.info("[update] chapter title:" + novelChapterSource.getNovelChapter().getTitle());
+                log.info("[update] chapter title:{}", () -> novelChapterSource.getNovelChapter().getTitle());
             }
         } catch (NovelNotFoundException e) {
             // 小説の章が取得出来ない場合、何もしない
-            log.info("[not found] chapter url:" + novelIndexElement.getChapterUrl());
+            log.info("[not found] chapter url:{}", () -> novelIndexElement.getChapterUrl());
         }
     }
 }
