@@ -113,7 +113,7 @@ public class NovelReportMail {
             // テンプレートとマージ
             getConfiguration().getTemplate(templateName).process(dataModel, bw);
 
-            log.info("[send] report:" + bodyText);
+            log.info("[send] report:{}", bodyText);
             mailEngine.sendMail(bodyText, path.toFile());
         } catch (IOException | TemplateException | MessagingException e) {
             log.error("[not send] report:", e);

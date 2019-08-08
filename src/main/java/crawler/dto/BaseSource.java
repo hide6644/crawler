@@ -32,10 +32,10 @@ public abstract class BaseSource {
      *             URLが見つからない
      */
     protected BaseSource(String url, boolean add) throws NovelNotFoundException {
-        log.debug("[open] url:{}", () -> url);
+        log.debug("[open] url:{}", url);
         // URLからhtmlを取得
         this.html = NovelManagerUtil.getSource(url);
-        log.debug("[close] url:{}", () -> url);
+        log.debug("[close] url:{}", url);
         this.add = add;
     }
 
