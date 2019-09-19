@@ -75,21 +75,6 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
      */
     @Override
     @Transactional
-    public void favorite(String url, boolean add) {
-        Novel novel = novelDao.findByUrl(url);
-
-        if (novel != null) {
-            novel.getNovelInfo().setFavorite(add);
-        } else {
-            log.info("[not found] url:{}", url);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
     public void delete(final String url) {
         novelDao.delete(novelDao.findByUrl(url));
     }
