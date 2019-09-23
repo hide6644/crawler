@@ -56,9 +56,6 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
             String url = novelSource.getHostname() + novelIndexElement.getChapterUrl();
             NovelChapterSource novelChapterSource = NovelChapterSource.newInstance(url, novelChapterDao.findByUrl(url));
 
-            // 小説の章の付随情報を設定
-            novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
-
             if (novelChapterSource.isAdd()) {
                 // URLが一致する小説の章がない場合、登録処理
                 novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
@@ -69,6 +66,9 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
                 // 更新処理
                 log.info("[update] chapter title:{}", () -> novelChapterSource.getNovelChapter().getTitle());
             }
+
+            // 小説の章の付随情報を設定
+            novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
         } catch (NovelNotFoundException e) {
             // 小説の章が取得出来ない場合、何もしない
             log.info("[not found] chapter url:{}", () -> novelIndexElement.getChapterUrl());

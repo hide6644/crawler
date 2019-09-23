@@ -18,16 +18,6 @@ public interface NovelManager {
     void save(String url);
 
     /**
-     * 小説のお気に入り指定を制御する.
-     *
-     * @param url
-     *            小説のURL
-     * @param add
-     *            true:お気に入りにする、false:お気に入りを解除する
-     */
-    void favorite(String url, boolean add);
-
-    /**
      * 小説を削除する.
      *
      * @param url

@@ -63,12 +63,6 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
         } else if (arg.startsWith(messages.getMessage("novelManager.save"))) {
             // 小説を追加、既に存在する場合は更新
             novelManager.save(substringUrl(arg));
-        } else if (arg.startsWith(messages.getMessage("novelManager.favorite"))) {
-            // 小説をお気に入りに指定
-            novelManager.favorite(substringUrl(arg), true);
-        } else if (arg.startsWith(messages.getMessage("novelManager.unfavorite"))) {
-            // 小説のお気に入りを解除
-            novelManager.favorite(substringUrl(arg), false);
         } else if (arg.startsWith(messages.getMessage("novelManager.delete"))) {
             // 小説を削除
             novelManager.delete(substringUrl(arg));
