@@ -45,7 +45,7 @@ public class NovelManagerUtil {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
-            log.error("url:" + url, e);
+            log.error("url:{}", url, e);
             throw new NovelNotFoundException();
         }
     }
@@ -70,16 +70,16 @@ public class NovelManagerUtil {
                 return Jsoup.connect(url).get();
             }
         } catch (ConnectException | SocketTimeoutException e) {
-            log.error("url:" + url, e);
+            log.error("url:{}", url, e);
             throw new NovelConnectException();
         } catch (HttpStatusException e) {
-            log.error("url:" + url, e);
+            log.error("url:{}", url, e);
             if (e.getStatusCode() == 404) {
                 throw new NovelNotFoundException();
             }
             throw new NovelConnectException();
         } catch (IOException e) {
-            log.error("url:" + url, e);
+            log.error("url:{}", url, e);
             throw new NovelNotFoundException();
         }
     }

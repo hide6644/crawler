@@ -34,7 +34,7 @@ public class RunBatches {
                 log.warn("process is running!");
             }
         } catch (Exception e) {
-            log.error("[error] ", e);
+            log.error("Unexpected exception:", e);
         }
 
         context.close();
