@@ -14,21 +14,21 @@
 
 ### DATABASE
 MySQLでの動作を前提としている。
-データベースを作成たら下記のスクリプトを実行し、テーブルを作成する。
+データベースを作成し、下記のスクリプトを実行する。
 
   /crawler/src/config/schema.sql
 
   /crawler/src/test/resources/jdbc.properties については、自身の環境に合わせて変更すること。
 
 ### E-MAIL
-登録した小説に更新があった場合、メールで通知するようになっている。
+登録した小説に更新があった場合、メールで通知出来る。
 
 /crawler/src/test/resources/mail.properties については、自身の環境に合わせて変更すること。
 
 ### DEPLOY
 ```console
 任意のフォルダ/crawler.jar
-    /lib/Jarファイル
+    /lib/ビルドしたときにダウンロードされたその他のJarファイル
 ```
 
 ## USAGE
