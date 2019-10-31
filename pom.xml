@@ -162,7 +162,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.25</version>
+                            <version>8.26</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -467,15 +467,15 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>2.5.0</jdbc.version>
+        <jdbc.version>2.5.1</jdbc.version>
 
-        <byte-buddy.version>1.10.1</byte-buddy.version>
+        <byte-buddy.version>1.10.2</byte-buddy.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <ehcache.version>3.8.1</ehcache.version>
         <freemarker.version>2.3.29</freemarker.version>
         <freemarker-java8.version>1.3.0</freemarker-java8.version>
-        <greenmail.version>1.5.10</greenmail.version>
-        <hibernate.version>5.4.6.Final</hibernate.version>
+        <greenmail.version>1.5.11</greenmail.version>
+        <hibernate.version>5.4.8.Final</hibernate.version>
         <HikariCP.version>3.4.1</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
