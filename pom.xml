@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.5.15</version>
+    <version>1.5.16</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -486,7 +486,7 @@
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
         <jdbc.version>2.5.1</jdbc.version>
 
-        <byte-buddy.version>1.10.2</byte-buddy.version>
+        <byte-buddy.version>1.10.3</byte-buddy.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <ehcache.version>3.8.1</ehcache.version>
         <freemarker.version>2.3.29</freemarker.version>

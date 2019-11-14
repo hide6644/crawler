@@ -1,7 +1,11 @@
 package crawler.service;
 
-import java.time.LocalDateTime;
+import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +63,17 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testReindexAll() {
-        novelSearchManager.reindexAll(false);
+        Assertions.assertDoesNotThrow(() -> {
+            novelSearchManager.reindexAll(false);
+        });
     }
 
     @Test
     public void testSearch() {
-        novelSearchManager.search("*");
-        novelSearchManager.search("TEST");
+        List<Novel> novelList = novelSearchManager.search("*");
+        assertTrue(novelList.size() > 0);
+
+        novelList = novelSearchManager.search("TEST");
+        assertTrue(novelList.size() == 0);
     }
 }

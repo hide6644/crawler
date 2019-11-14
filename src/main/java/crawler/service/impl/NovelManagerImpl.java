@@ -52,7 +52,7 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
             try {
                 // 小説の情報を取得
                 NovelSource novelSource = NovelSource.newInstance(url);
-                log.info("[add] title:" + novelSource.getNovel().getTitle());
+                log.info("[add] title:{}", () -> novelSource.getNovel().getTitle());
 
                 // 小説の付随情報を保存
                 novelInfoManager.saveNovelInfo(novelSource);

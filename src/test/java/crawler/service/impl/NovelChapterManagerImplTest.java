@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -44,7 +45,9 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
 
         when(novelChapterDao.findByUrl(novelSource.getHostname() + "test01.html")).thenReturn(novelChapter);
 
-        novelChapterManager.saveAllNovelChapter(novelSource);
+        Assertions.assertDoesNotThrow(() -> {
+            novelChapterManager.saveAllNovelChapter(novelSource);
+        });
         novelSource.getNovel().getNovelChapters()
                 .forEach(novelChapter2 -> {
                     novelChapter2.getNovelChapterHistories().forEach(novelChapterHistory -> {

@@ -47,7 +47,7 @@ public class NovelElementsUtil {
      * @return 小説の作者
      */
     public static String getWritername(final Document html) {
-        return html.getElementsByClass("novel_writername").first().text().replaceAll("作者：", "");
+        return html.getElementsByClass("novel_writername").first().text().replace("作者：", "");
     }
 
     /**

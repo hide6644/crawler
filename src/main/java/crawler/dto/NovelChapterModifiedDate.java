@@ -14,7 +14,7 @@ public class NovelChapterModifiedDate {
     public static final String MODIFIED_DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
     /** 最終更新日時の置き換える文字 */
-    public static final String MODIFIED_DATE_REPLACE_REGEX = " 改稿";
+    public static final String MODIFIED_DATE_REPLACE = " 改稿";
 
     /** 小説の目次に記載されている章の最終更新日時 */
     private final String chapterModifiedDate;
@@ -52,7 +52,7 @@ public class NovelChapterModifiedDate {
 
         // 小説の章の付随情報を変更
         novelChapterInfo.setCheckedDate(LocalDateTime.now());
-        novelChapterInfo.setModifiedDate(LocalDateTime.parse(chapterModifiedDate.replaceAll(MODIFIED_DATE_REPLACE_REGEX, ""), DateTimeFormatter.ofPattern(MODIFIED_DATE_FORMAT)));
+        novelChapterInfo.setModifiedDate(LocalDateTime.parse(chapterModifiedDate.replace(MODIFIED_DATE_REPLACE, ""), DateTimeFormatter.ofPattern(MODIFIED_DATE_FORMAT)));
         novelChapterInfo.setUnread(true);
     }
 

@@ -2,6 +2,7 @@ package crawler.service.impl;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import crawler.dto.NovelChapterSource;
@@ -18,6 +19,9 @@ public class NovelChapterInfoManagerImplTest {
         when(novelChapterSource.getNovelChapter()).thenReturn(new NovelChapter());
 
         NovelChapterInfoManagerImpl novelChapterInfoManager = new NovelChapterInfoManagerImpl();
-        novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
+
+        Assertions.assertDoesNotThrow(() -> {
+            novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
+        });
     }
 }

@@ -6,9 +6,12 @@ import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.Base64;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -67,7 +70,12 @@ public class NovelManagerUtil {
             if (url.startsWith(Constants.LOCAL_FILE_PREFIX)) {
                 return Jsoup.parse(new File(url.substring(Constants.LOCAL_FILE_PREFIX.length())), Constants.ENCODING.name());
             } else {
-                return Jsoup.connect(url).get();
+                if (StringUtils.isNotEmpty(Constants.PROXY_HOST)) {
+                    // プロキシ設定有りの場合
+                    return proxyConnect(Jsoup.connect(url)).get();
+                } else {
+                    return Jsoup.connect(url).get();
+                }
             }
         } catch (ConnectException | SocketTimeoutException e) {
             log.error("url:{}", url, e);
@@ -94,5 +102,33 @@ public class NovelManagerUtil {
             log.warn("Interrupted:", e);
             Thread.currentThread().interrupt();
         }
+    }
+
+    /**
+     * プロキシを設定する.
+     *
+     * @param connection
+     *            接続オブジェクト
+     * @return 接続オブジェクト
+     */
+    public static Connection proxyConnect(Connection connection) {
+        if (StringUtils.isNotEmpty(Constants.PROXY_USER)) {
+            // プロキシの認証有りの場合
+            return proxyAuth(connection.proxy(Constants.PROXY_HOST, Constants.PROXY_PORT));
+        } else {
+            return connection.proxy(Constants.PROXY_HOST, Constants.PROXY_PORT);
+        }
+    }
+
+    /**
+     * プロキシの認証を設定する.
+     *
+     * @param connection
+     *            接続オブジェクト
+     * @return 接続オブジェクト
+     */
+    public static Connection proxyAuth(Connection connection) {
+        return connection.header("Authorization",
+                Base64.getEncoder().encodeToString((Constants.PROXY_USER + ":" + Constants.PROXY_PASS).getBytes()));
     }
 }
