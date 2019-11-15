@@ -6,6 +6,7 @@ import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Base64;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +28,12 @@ public class NovelManagerUtil {
 
     /** ログ出力クラス */
     private static final Logger log = LogManager.getLogger(NovelManagerUtil.class);
+
+    /** 一時停止時間 */
+    public static final long DELAY_ACCESS_TIME = Long.parseLong(Constants.RB.getString("delay.access.time")) * 1000;
+
+    /** プロキシ設定 */
+    public static final String PROXY = System.getProperty("http_proxy");
 
     /**
      * プライベート・コンストラクタ.
@@ -70,14 +77,23 @@ public class NovelManagerUtil {
             if (url.startsWith(Constants.LOCAL_FILE_PREFIX)) {
                 return Jsoup.parse(new File(url.substring(Constants.LOCAL_FILE_PREFIX.length())), Constants.ENCODING.name());
             } else {
-                if (StringUtils.isNotEmpty(Constants.PROXY_HOST)) {
+                Connection conn = Jsoup.connect(url);
+
+                if (StringUtils.isNotEmpty(PROXY)) {
+                    URL proxyUrl = new URL(PROXY);
                     // プロキシ設定有りの場合
-                    return proxyConnect(Jsoup.connect(url)).get();
-                } else {
-                    return Jsoup.connect(url).get();
+                    conn = conn.proxy(proxyUrl.getHost(), proxyUrl.getPort());
+
+                    if (StringUtils.isNotEmpty(proxyUrl.getUserInfo())) {
+                        // プロキシの認証有りの場合
+                        conn = conn.header("Authorization",
+                                Base64.getEncoder().encodeToString(proxyUrl.getUserInfo().getBytes()));
+                    }
                 }
+
+                return conn.get();
             }
-        } catch (ConnectException | SocketTimeoutException e) {
+        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
             log.error("url:{}", url, e);
             throw new NovelConnectException();
         } catch (HttpStatusException e) {
@@ -97,38 +113,10 @@ public class NovelManagerUtil {
      */
     public static void delayAccess() {
         try {
-            Thread.sleep(Constants.DELAY_ACCESS_TIME);
+            Thread.sleep(DELAY_ACCESS_TIME);
         } catch (InterruptedException e) {
             log.warn("Interrupted:", e);
             Thread.currentThread().interrupt();
         }
-    }
-
-    /**
-     * プロキシを設定する.
-     *
-     * @param connection
-     *            接続オブジェクト
-     * @return 接続オブジェクト
-     */
-    public static Connection proxyConnect(Connection connection) {
-        if (StringUtils.isNotEmpty(Constants.PROXY_USER)) {
-            // プロキシの認証有りの場合
-            return proxyAuth(connection.proxy(Constants.PROXY_HOST, Constants.PROXY_PORT));
-        } else {
-            return connection.proxy(Constants.PROXY_HOST, Constants.PROXY_PORT);
-        }
-    }
-
-    /**
-     * プロキシの認証を設定する.
-     *
-     * @param connection
-     *            接続オブジェクト
-     * @return 接続オブジェクト
-     */
-    public static Connection proxyAuth(Connection connection) {
-        return connection.header("Authorization",
-                Base64.getEncoder().encodeToString((Constants.PROXY_USER + ":" + Constants.PROXY_PASS).getBytes()));
     }
 }

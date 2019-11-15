@@ -1,7 +1,8 @@
 package crawler.service.impl;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,14 +22,14 @@ public class NovelOutputManagerImplTest extends BaseManagerMockTestCase {
 
     @Test
     public void testSendUnreadReport() {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelOutputManager.sendUnreadReport();
         });
     }
 
     @Test
     public void testSendModifiedDateList() {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelOutputManager.sendModifiedDateReport();;
         });
     }

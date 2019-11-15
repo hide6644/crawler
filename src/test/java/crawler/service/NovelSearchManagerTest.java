@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testReindexAll() {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelSearchManager.reindexAll(false);
         });
     }

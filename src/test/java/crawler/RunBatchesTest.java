@@ -1,13 +1,14 @@
 package crawler;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 public class RunBatchesTest {
 
     @Test
     public void test() throws Exception {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             RunBatches.main(new String[] {"test"});
         });
     }

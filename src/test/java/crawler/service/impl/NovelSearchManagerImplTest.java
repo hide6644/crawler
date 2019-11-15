@@ -1,6 +1,7 @@
 package crawler.service.impl;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,7 +19,7 @@ public class NovelSearchManagerImplTest extends BaseManagerMockTestCase {
 
     @Test
     public void testReindexAll() {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelSearchManager.reindexAll(true);
         });
     }

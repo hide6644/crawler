@@ -1,8 +1,8 @@
 package crawler.batch.impl;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -44,7 +44,7 @@ public class NovelProcessTest {
                 "checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
                 "checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelProcess.execute(new String[] {
                     "checkForUpdates",
                     "save=http://foo.bar",
@@ -57,7 +57,7 @@ public class NovelProcessTest {
 
     @Test
     public void testExecuteNull() {
-        Assertions.assertDoesNotThrow(() -> novelProcess.execute(null));
+        assertDoesNotThrow(() -> novelProcess.execute(null));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class NovelProcessTest {
         when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         // 不正な引数
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             novelProcess.execute(new String[] { "test" });
         });
     }

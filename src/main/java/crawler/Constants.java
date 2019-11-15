@@ -4,8 +4,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * システム全体の定数クラス.
  */
@@ -38,19 +36,4 @@ public class Constants {
 
     /** Entity Managerクラス名 */
     public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
-
-    /** 一時停止時間 */
-    public static final long DELAY_ACCESS_TIME = Long.parseLong(RB.getString("delay.access.time")) * 1000;
-
-    /** プロキシホスト */
-    public static final String PROXY_HOST = RB.getString("proxyHost");
-
-    /** プロキシポート番号(デフォルト:8080) */
-    public static final int PROXY_PORT = Integer.parseInt(StringUtils.isNotEmpty(RB.getString("proxyPort")) ? RB.getString("proxyPort") : "8080");
-
-    /** プロキシ認証ユーザー */
-    public static final String PROXY_USER = RB.getString("proxyUser");
-
-    /** プロキシ認証パスワード */
-    public static final String PROXY_PASS = RB.getString("proxyPass");
 }

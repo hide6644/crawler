@@ -1,11 +1,11 @@
 package crawler.service.impl;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
 
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -37,7 +37,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         // 登録対象有り
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.save("file://" + filePath);
         });
 
@@ -51,22 +51,22 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         given(novelDao.findByUrl("file://" + filePath)).willReturn(novel);
 
         // 登録有りのため、更新
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.save("file://" + filePath);
         });
 
         // 削除
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.delete("file://" + filePath);
         });
 
         // 登録対象無し
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.save("file://" + filePath + "test");
         });
 
         // 接続不可
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.save("http://localhost:19999/test");
         });
     }
@@ -85,18 +85,18 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         given(novelDao.findById(1L)).willReturn(Optional.ofNullable(novel));
 
         // 更新対象有り
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.checkForUpdatesAndSaveHistory(1L);
         });
 
         // 更新対象無し
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.checkForUpdatesAndSaveHistory(2L);
         });
 
         novel.setUrl("file://" + filePath + "test");
         // 更新対象無し
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.checkForUpdatesAndSaveHistory(novel);
             novel.getNovelHistories().forEach(novelHistory -> {
                 novelHistory.getTitle();
@@ -108,7 +108,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
         novel.setUrl("http://localhost:19999/test");
         // 接続不可
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             novelManager.checkForUpdatesAndSaveHistory(novel);
         });
     }

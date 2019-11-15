@@ -68,7 +68,7 @@
 	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.1.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.28.jar"/>
+	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.29.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aop-5.2.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aspects-5.2.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-beans-5.2.1.RELEASE.jar"/>
