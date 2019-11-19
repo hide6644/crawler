@@ -17,7 +17,7 @@ public class Constants {
     }
 
     /** Resource Bundleの名前 */
-    public static final String BUNDLE_KEY = "applicationResources";
+    public static final String BUNDLE_KEY = "messages";
 
     /** Resource Bundle */
     public static final ResourceBundle RB = ResourceBundle.getBundle(BUNDLE_KEY);
