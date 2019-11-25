@@ -87,7 +87,7 @@ public class NovelManagerUtil {
                     if (StringUtils.isNotEmpty(proxyUrl.getUserInfo())) {
                         // プロキシの認証有りの場合
                         conn = conn.header("Authorization",
-                                Base64.getEncoder().encodeToString(proxyUrl.getUserInfo().getBytes()));
+                                Base64.getEncoder().encodeToString(proxyUrl.getUserInfo().getBytes(Constants.ENCODING)));
                     }
                 }
 

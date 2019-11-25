@@ -61,14 +61,8 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testReindexAll() {
-        assertDoesNotThrow(() -> {
-            novelSearchManager.reindexAll(false);
-        });
-    }
-
-    @Test
     public void testSearch() {
+        novelSearchManager.reindexAll(false);
         List<Novel> novelList = novelSearchManager.search("*");
         assertTrue(novelList.size() > 0);
 
