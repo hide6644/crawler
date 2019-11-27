@@ -22,7 +22,7 @@ public class NovelSearchManagerImpl implements NovelSearchManager {
     /** NovelのHibernate Search DAO */
     @Autowired
     @Qualifier("novelSearch")
-    HibernateSearch<Novel> novelSearch;
+    HibernateSearch novelSearch;
 
     /**
      * {@inheritDoc}

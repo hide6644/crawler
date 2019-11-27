@@ -7,12 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import crawler.dao.HibernateSearch;
-import crawler.entity.Novel;
 
 public class NovelSearchManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
-    private HibernateSearch<Novel> novelSearch;
+    private HibernateSearch novelSearch;
 
     @InjectMocks
     private NovelSearchManagerImpl novelSearchManager = new NovelSearchManagerImpl();

@@ -23,7 +23,7 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Autowired
     private NovelDao dao;
 
-    private HibernateSearch<NovelInfo> hibernateSearch;
+    private HibernateSearch hibernateSearch;
 
     @BeforeEach
     public void setUp() {
