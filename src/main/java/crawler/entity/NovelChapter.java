@@ -18,11 +18,16 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Normalizer;
+import org.hibernate.search.annotations.NormalizerDef;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.TokenFilterDef;
 
 /**
  * 小説の章の情報
@@ -31,6 +36,7 @@ import org.hibernate.search.annotations.Indexed;
 @Table(name = "novel_chapter")
 @Indexed
 @Analyzer(impl = JapaneseAnalyzer.class)
+@NormalizerDef(name = "novelChapterSort", filters = @TokenFilterDef(factory = LowerCaseFilterFactory.class))
 public class NovelChapter extends BaseObject implements Serializable {
 
     /** URL */
@@ -62,6 +68,8 @@ public class NovelChapter extends BaseObject implements Serializable {
 
     @Column(length = 100)
     @Field
+    @Field(name = "titleSort", normalizer = @Normalizer(definition = "novelChapterSort"))
+    @SortableField(forField = "titleSort")
     public String getTitle() {
         return title;
     }
@@ -74,6 +82,8 @@ public class NovelChapter extends BaseObject implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Field
+    @Field(name = "bodySort", normalizer = @Normalizer(definition = "novelChapterSort"))
+    @SortableField(forField = "bodySort")
     public String getBody() {
         return body;
     }

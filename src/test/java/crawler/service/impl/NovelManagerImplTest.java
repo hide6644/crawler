@@ -1,5 +1,6 @@
 package crawler.service.impl;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
@@ -36,7 +37,9 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
 
         // 登録対象有り
-        novelManager.save("file://" + filePath);
+        assertDoesNotThrow(() -> {
+            novelManager.save("file://" + filePath);
+        });
 
         Novel novel = new Novel();
         novel.setUrl("file://" + filePath);
@@ -47,17 +50,25 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
         given(novelDao.findByUrl("file://" + filePath)).willReturn(novel);
 
-        // 登録済み
-        novelManager.save("file://" + filePath);
+        // 登録有りのため、更新
+        assertDoesNotThrow(() -> {
+            novelManager.save("file://" + filePath);
+        });
 
         // 削除
-        novelManager.delete("file://" + filePath);
+        assertDoesNotThrow(() -> {
+            novelManager.delete("file://" + filePath);
+        });
 
         // 登録対象無し
-        novelManager.save("file://" + filePath + "test");
+        assertDoesNotThrow(() -> {
+            novelManager.save("file://" + filePath + "test");
+        });
 
         // 接続不可
-        novelManager.save("http://localhost:19999/test");
+        assertDoesNotThrow(() -> {
+            novelManager.save("http://localhost:19999/test");
+        });
     }
 
     @Test
@@ -74,23 +85,31 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
         given(novelDao.findById(1L)).willReturn(Optional.ofNullable(novel));
 
         // 更新対象有り
-        novelManager.checkForUpdatesAndSaveHistory(1L);
+        assertDoesNotThrow(() -> {
+            novelManager.checkForUpdatesAndSaveHistory(1L);
+        });
 
         // 更新対象無し
-        novelManager.checkForUpdatesAndSaveHistory(2L);
+        assertDoesNotThrow(() -> {
+            novelManager.checkForUpdatesAndSaveHistory(2L);
+        });
 
         novel.setUrl("file://" + filePath + "test");
         // 更新対象無し
-        novelManager.checkForUpdatesAndSaveHistory(novel);
-        novel.getNovelHistories().forEach(novelHistory -> {
-            novelHistory.getTitle();
-            novelHistory.getWritername();
-            novelHistory.getDescription();
-            novelHistory.getNovel();
+        assertDoesNotThrow(() -> {
+            novelManager.checkForUpdatesAndSaveHistory(novel);
+            novel.getNovelHistories().forEach(novelHistory -> {
+                novelHistory.getTitle();
+                novelHistory.getWritername();
+                novelHistory.getDescription();
+                novelHistory.getNovel();
+            });
         });
 
         novel.setUrl("http://localhost:19999/test");
         // 接続不可
-        novelManager.checkForUpdatesAndSaveHistory(novel);
+        assertDoesNotThrow(() -> {
+            novelManager.checkForUpdatesAndSaveHistory(novel);
+        });
     }
 }

@@ -6,9 +6,13 @@ import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.Base64;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,6 +28,12 @@ public class NovelManagerUtil {
 
     /** ログ出力クラス */
     private static final Logger log = LogManager.getLogger(NovelManagerUtil.class);
+
+    /** 一時停止時間 */
+    public static final long DELAY_ACCESS_TIME = Long.parseLong(Constants.RB.getString("delay.access.time")) * 1000;
+
+    /** プロキシ設定 */
+    public static final String PROXY = System.getProperty("http_proxy");
 
     /**
      * プライベート・コンストラクタ.
@@ -67,9 +77,23 @@ public class NovelManagerUtil {
             if (url.startsWith(Constants.LOCAL_FILE_PREFIX)) {
                 return Jsoup.parse(new File(url.substring(Constants.LOCAL_FILE_PREFIX.length())), Constants.ENCODING.name());
             } else {
-                return Jsoup.connect(url).get();
+                Connection conn = Jsoup.connect(url);
+
+                if (StringUtils.isNotEmpty(PROXY)) {
+                    URL proxyUrl = new URL(PROXY);
+                    // プロキシ設定有りの場合
+                    conn = conn.proxy(proxyUrl.getHost(), proxyUrl.getPort());
+
+                    if (StringUtils.isNotEmpty(proxyUrl.getUserInfo())) {
+                        // プロキシの認証有りの場合
+                        conn = conn.header("Authorization",
+                                Base64.getEncoder().encodeToString(proxyUrl.getUserInfo().getBytes(Constants.ENCODING)));
+                    }
+                }
+
+                return conn.get();
             }
-        } catch (ConnectException | SocketTimeoutException e) {
+        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
             log.error("url:{}", url, e);
             throw new NovelConnectException();
         } catch (HttpStatusException e) {
@@ -89,7 +113,7 @@ public class NovelManagerUtil {
      */
     public static void delayAccess() {
         try {
-            Thread.sleep(Constants.DELAY_ACCESS_TIME);
+            Thread.sleep(DELAY_ACCESS_TIME);
         } catch (InterruptedException e) {
             log.warn("Interrupted:", e);
             Thread.currentThread().interrupt();

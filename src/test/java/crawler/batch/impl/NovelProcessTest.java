@@ -1,8 +1,8 @@
 package crawler.batch.impl;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,35 +37,35 @@ public class NovelProcessTest {
         when(messages.getMessage(anyString())).thenReturn(
                 "checkForUpdates", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
                 "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
-                "checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
+                "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "del", "sendUnreadReport", "reindexAll",
+                "checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
+                "checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
-        novelProcess.execute(new String[] {
-                "checkForUpdates",
-                "save=http://foo.bar",
-                "fav=http://foo.bar",
-                "unfav=http://foo.bar",
-                "del=http://foo.bar",
-                "sendUnreadReport",
-                "sendModifiedDateReport",
-                "reindexAll" });
+        assertDoesNotThrow(() -> {
+            novelProcess.execute(new String[] {
+                    "checkForUpdates",
+                    "save=http://foo.bar",
+                    "del=http://foo.bar",
+                    "sendUnreadReport",
+                    "sendModifiedDateReport",
+                    "reindexAll" });
+        });
     }
 
     @Test
     public void testExecuteNull() {
-        novelProcess.execute(null);
+        assertDoesNotThrow(() -> novelProcess.execute(null));
     }
 
     @Test
     public void testExecuteInvalid() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "fav", "unfav", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
+        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         // 不正な引数
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             novelProcess.execute(new String[] { "test" });
         });
     }

@@ -19,11 +19,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Normalizer;
+import org.hibernate.search.annotations.NormalizerDef;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.TokenFilterDef;
 
 /**
  * 小説の情報
@@ -32,6 +37,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Table(name = "novel")
 @Indexed
 @Analyzer(impl = JapaneseAnalyzer.class)
+@NormalizerDef(name = "novelSort", filters = @TokenFilterDef(factory = LowerCaseFilterFactory.class))
 @XmlRootElement
 public class Novel extends BaseObject implements Serializable {
 
@@ -73,6 +79,8 @@ public class Novel extends BaseObject implements Serializable {
 
     @Column(length = 100)
     @Field
+    @Field(name = "titleSort", normalizer = @Normalizer(definition = "novelSort"))
+    @SortableField(forField = "titleSort")
     public String getTitle() {
         return title;
     }
@@ -83,6 +91,8 @@ public class Novel extends BaseObject implements Serializable {
 
     @Column(length = 100)
     @Field
+    @Field(name = "writernameSort", normalizer = @Normalizer(definition = "novelSort"))
+    @SortableField(forField = "writernameSort")
     public String getWritername() {
         return writername;
     }
@@ -93,6 +103,8 @@ public class Novel extends BaseObject implements Serializable {
 
     @Column
     @Field
+    @Field(name = "descriptionSort", normalizer = @Normalizer(definition = "novelSort"))
+    @SortableField(forField = "descriptionSort")
     public String getDescription() {
         return description;
     }
@@ -105,6 +117,8 @@ public class Novel extends BaseObject implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Field
+    @Field(name = "bodySort", normalizer = @Normalizer(definition = "novelSort"))
+    @SortableField(forField = "bodySort")
     public String getBody() {
         return body;
     }

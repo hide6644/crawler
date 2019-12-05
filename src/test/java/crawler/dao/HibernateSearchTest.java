@@ -3,9 +3,10 @@ package crawler.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.SortField;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.query.facet.Facet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import crawler.dao.jpa.HibernateSearchImpl;
+import crawler.dto.SearchTermAndField;
 import crawler.entity.Novel;
 import crawler.entity.NovelInfo;
 
@@ -21,7 +23,7 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Autowired
     private NovelDao dao;
 
-    private HibernateSearch<NovelInfo> hibernateSearch;
+    private HibernateSearch hibernateSearch;
 
     @BeforeEach
     public void setUp() {
@@ -32,21 +34,17 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Test
     public void testSearch() {
         saveNovel();
-        Stream<NovelInfo> novelInfoList = hibernateSearch.search("Keyword1");
+        SearchTermAndField term = new SearchTermAndField();
+        if (term.isEmpty()) {
+            assertNotNull(hibernateSearch.search("*").getResultStream());
+            assertNotNull(hibernateSearch.search("Keyword1").getResultStream());
+        }
 
-        assertNotNull(novelInfoList);
-
-        novelInfoList = hibernateSearch.search(new String[]{"Keyword1"}, new String[]{"keyword"}, new Occur[]{Occur.SHOULD});
-
-        assertNotNull(novelInfoList);
-
-        novelInfoList = hibernateSearch.search(new String[]{"Keyword1"}, new String[]{"keyword"});
-
-        assertNotNull(novelInfoList);
-
-        novelInfoList = hibernateSearch.search("*");
-
-        assertNotNull(novelInfoList);
+        term.addTermAndField("Keyword1", "keyword");
+        if (!term.isEmpty()) {
+            assertNotNull(hibernateSearch.search(term.getTermToArray(), term.getFieldToArray(), new Occur[]{Occur.SHOULD}).getResultStream());
+            assertNotNull(hibernateSearch.search(term.getTermToArray(), term.getFieldToArray()).getResultStream());
+        }
     }
 
     @Test
@@ -62,21 +60,23 @@ public class HibernateSearchTest extends BaseDaoTestCase {
     @Test
     public void testPaged() {
         saveNovel();
-        Stream<NovelInfo> novelList = hibernateSearch.search("Keyword1", 0, 10);
-        Long novelCount = hibernateSearch.count("Keyword1");
+        org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField("keywordSort", SortField.Type.STRING));
+        FullTextQuery novelList = hibernateSearch.search("Keyword1", 0L, 10, sort);
 
-        assertEquals(1, novelList.count());
-        assertEquals(Long.valueOf(1), novelCount);
+        assertEquals(1, novelList.getResultStream().count());
+        assertEquals(Integer.valueOf(1), novelList.getResultSize());
     }
 
     @Test
     public void testPagedByField() {
         saveNovel();
-        Stream<NovelInfo> novelList = hibernateSearch.search(new String[]{"Keyword1"}, new String[]{"keyword"}, 0, 10);
-        Long novelCount = hibernateSearch.count(new String[]{"Keyword1"}, new String[]{"keyword"});
+        SearchTermAndField term = new SearchTermAndField();
+        term.addTermAndField("Keyword1", "keyword");
+        org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(new SortField("keywordSort", SortField.Type.STRING));
+        FullTextQuery novelList = hibernateSearch.search(term.getTermToArray(), term.getFieldToArray(), 0L, 10, sort);
 
-        assertEquals(1, novelList.count());
-        assertEquals(Long.valueOf(1), novelCount);
+        assertEquals(1, novelList.getResultStream().count());
+        assertEquals(Integer.valueOf(1), novelList.getResultSize());
     }
 
     @Test

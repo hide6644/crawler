@@ -2,10 +2,12 @@ package crawler.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import crawler.dao.HibernateSearch;
 import crawler.entity.Novel;
@@ -20,14 +22,16 @@ public class NovelSearchManagerImpl implements NovelSearchManager {
     /** NovelのHibernate Search DAO */
     @Autowired
     @Qualifier("novelSearch")
-    HibernateSearch<Novel> novelSearch;
+    HibernateSearch novelSearch;
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
+    @Transactional(readOnly = true)
     public List<Novel> search(String searchTerm) {
-        return novelSearch.search(searchTerm).collect(Collectors.toList());
+        return ((Stream<Novel>) novelSearch.search(searchTerm).getResultStream()).collect(Collectors.toList());
     }
 
     /**

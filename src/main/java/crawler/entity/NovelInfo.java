@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -30,6 +31,10 @@ import org.hibernate.search.annotations.FacetEncodingType;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Normalizer;
+import org.hibernate.search.annotations.NormalizerDef;
+import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.annotations.TokenFilterDef;
 
 /**
  * 小説の付随情報
@@ -37,6 +42,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Entity
 @Table(name = "novel_info")
 @Indexed
+@NormalizerDef(name = "novelInfoSort", filters = @TokenFilterDef(factory = LowerCaseFilterFactory.class))
 public class NovelInfo extends BaseObject implements Serializable {
 
     /** ログ出力クラス */
@@ -127,8 +133,10 @@ public class NovelInfo extends BaseObject implements Serializable {
     }
 
     @Column(length = 300)
-    @Field
     @Analyzer(impl = WhitespaceAnalyzer.class)
+    @Field
+    @Field(name = "keywordSort", normalizer = @Normalizer(definition = "novelInfoSort"))
+    @SortableField(forField = "keywordSort")
     public String getKeyword() {
         return keyword;
     }
