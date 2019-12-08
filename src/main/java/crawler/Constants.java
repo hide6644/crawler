@@ -16,8 +16,11 @@ public class Constants {
     private Constants() {
     }
 
-    /** ResourceBundleの名前 */
-    public static final String BUNDLE_KEY = "applicationResources";
+    /** Resource Bundleの名前 */
+    public static final String BUNDLE_KEY = "messages";
+
+    /** Resource Bundle */
+    public static final ResourceBundle RB = ResourceBundle.getBundle(BUNDLE_KEY);
 
     /** ファイル区切り文字 */
     public static final String FILE_SEP = System.getProperty("file.separator");
@@ -26,14 +29,11 @@ public class Constants {
     public static final String APP_FOLDER_NAME = System.getProperty("app_home") + Constants.FILE_SEP;
 
     /** ローカルファイルの接頭辞 */
-    public static final String LOCAL_FILE_PREFIX = ResourceBundle.getBundle(BUNDLE_KEY).getString("local.file.prefix");
+    public static final String LOCAL_FILE_PREFIX = RB.getString("local.file.prefix");
 
     /** デフォルトエンコード */
     public static final Charset ENCODING = StandardCharsets.UTF_8;
 
     /** Entity Managerクラス名 */
     public static final String PERSISTENCE_UNIT_NAME = "ApplicationEntityManager";
-
-    /** 一時停止時間 */
-    public static final long DELAY_ACCESS_TIME = Long.parseLong(ResourceBundle.getBundle(BUNDLE_KEY).getString("delay.access.time")) * 1000;
 }

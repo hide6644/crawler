@@ -40,6 +40,8 @@ VM flags:
       実行フォルダを指定する（キャッシュ、ログ、レポートの保存先になる）
   -jar
       crawler.jarのパスを指定する
+  -Dhttp_proxy
+      任意でプロキシサーバーを指定する（http://hoge:piyo@foo.bar:8080）
 
 command:
   save=http://ncode.syosetu.com/小説のURL/
