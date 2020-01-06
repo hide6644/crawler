@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.27</version>
+                            <version>8.28</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -498,7 +498,7 @@
         <lucene.version>5.5.5</lucene.version>
         <mail.version>1.6.2</mail.version>
         <mockito.version>3.2.4</mockito.version>
-        <slf4j.version>1.7.29</slf4j.version>
+        <slf4j.version>1.7.30</slf4j.version>
         <spring.version>5.2.2.RELEASE</spring.version>
         <spring-data.version>2.2.3.RELEASE</spring-data.version>
 

@@ -14,8 +14,8 @@
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.1.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjrt-1.9.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.10.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.10.5.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.10.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.10.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.5.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.9.jar"/>
@@ -68,7 +68,7 @@
 	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.2.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.29.jar"/>
+	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.30.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aop-5.2.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aspects-5.2.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-beans-5.2.2.RELEASE.jar"/>
