@@ -479,7 +479,7 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>2.5.2</jdbc.version>
+        <jdbc.version>2.5.3</jdbc.version>
 
         <byte-buddy.version>1.10.6</byte-buddy.version>
         <commons-lang3.version>3.9</commons-lang3.version>
@@ -489,7 +489,7 @@
         <greenmail.version>1.5.11</greenmail.version>
         <hibernate.version>5.4.10.Final</hibernate.version>
         <hibernate-search.version>5.11.4.Final</hibernate-search.version>
-        <HikariCP.version>3.4.1</HikariCP.version>
+        <HikariCP.version>3.4.2</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
         <jsoup.version>1.12.1</jsoup.version>
@@ -499,8 +499,8 @@
         <mail.version>1.6.2</mail.version>
         <mockito.version>3.2.4</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <spring.version>5.2.2.RELEASE</spring.version>
-        <spring-data.version>2.2.3.RELEASE</spring-data.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
+        <spring-data.version>2.2.4.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
