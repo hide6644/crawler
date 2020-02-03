@@ -63,7 +63,7 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queries-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.5.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.5.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-core-3.2.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.2.4.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
