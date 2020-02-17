@@ -140,7 +140,7 @@
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>3.1.12</version>
+                            <version>4.0.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -481,7 +481,7 @@
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
         <jdbc.version>2.5.4</jdbc.version>
 
-        <byte-buddy.version>1.10.7</byte-buddy.version>
+        <byte-buddy.version>1.10.8</byte-buddy.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <ehcache.version>3.8.1</ehcache.version>
         <freemarker.version>2.3.29</freemarker.version>
