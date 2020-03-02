@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.29</version>
+                            <version>8.30</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -492,9 +492,9 @@
         <HikariCP.version>3.4.2</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
-        <jsoup.version>1.12.2</jsoup.version>
+        <jsoup.version>1.13.1</jsoup.version>
         <junit-jupiter.version>5.6.0</junit-jupiter.version>
-        <log4j.version>2.13.0</log4j.version>
+        <log4j.version>2.13.1</log4j.version>
         <lucene.version>5.5.5</lucene.version>
         <mail.version>1.6.2</mail.version>
         <mockito.version>3.3.0</mockito.version>
