@@ -43,7 +43,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Novel> getModifiedDateOfNovels() {
         try (Stream<Novel> novels = novelDao.findByDeletedFalseOrderByTitle()) {
             return novels.collect(Collectors.toList());
