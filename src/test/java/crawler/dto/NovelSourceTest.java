@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import crawler.entity.Novel;
+import crawler.mapping.NovelIndexElement;
+import crawler.mapping.NovelSource;
 
 public class NovelSourceTest {
 

@@ -1,6 +1,6 @@
 package crawler.service;
 
-import crawler.dto.NovelSource;
+import crawler.mapping.NovelSource;
 
 /**
  * 小説の章を管理する.

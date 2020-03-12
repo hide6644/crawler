@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import crawler.entity.NovelChapter;
+import crawler.mapping.NovelChapterSource;
 
 public class NovelChapterSourceTest {
 

@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping;
 
 import java.net.URL;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

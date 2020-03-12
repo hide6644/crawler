@@ -5,8 +5,8 @@ import static org.mockito.BDDMockito.*;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.dto.NovelSource;
 import crawler.entity.Novel;
+import crawler.mapping.NovelSource;
 
 public class NovelInfoManagerImplTest {
 

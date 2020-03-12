@@ -1,7 +1,7 @@
 package crawler.service;
 
-import crawler.dto.NovelSource;
 import crawler.exception.NovelNotFoundException;
+import crawler.mapping.NovelSource;
 
 /**
  * 小説の付随情報を管理する.

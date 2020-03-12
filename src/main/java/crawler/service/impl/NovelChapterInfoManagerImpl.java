@@ -2,9 +2,9 @@ package crawler.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import crawler.dto.NovelChapterModifiedDate;
-import crawler.dto.NovelChapterSource;
-import crawler.dto.NovelIndexElement;
+import crawler.mapping.NovelChapterModifiedDate;
+import crawler.mapping.NovelChapterSource;
+import crawler.mapping.NovelIndexElement;
 import crawler.service.NovelChapterInfoManager;
 
 /**
