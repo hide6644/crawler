@@ -1,7 +1,7 @@
 package crawler.service;
 
 import crawler.exception.NovelNotFoundException;
-import crawler.mapping.NovelSource;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 
 /**
  * 小説の付随情報を管理する.

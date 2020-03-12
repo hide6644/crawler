@@ -1,4 +1,4 @@
-package crawler.mapping;
+package crawler.mapping.yomou.syosetu.com;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

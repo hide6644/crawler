@@ -1,7 +1,7 @@
 package crawler.service;
 
-import crawler.mapping.NovelChapterSource;
-import crawler.mapping.NovelIndexElement;
+import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
+import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
 
 /**
  * 小説の章の付随情報を管理する.

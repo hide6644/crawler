@@ -3,8 +3,8 @@ package crawler.service.impl;
 import org.springframework.stereotype.Service;
 
 import crawler.exception.NovelNotFoundException;
-import crawler.mapping.NovelInfoSource;
-import crawler.mapping.NovelSource;
+import crawler.mapping.yomou.syosetu.com.NovelInfoSource;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelInfoManager;
 
 /**

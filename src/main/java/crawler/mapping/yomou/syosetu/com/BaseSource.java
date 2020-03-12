@@ -1,4 +1,4 @@
-package crawler.mapping;
+package crawler.mapping.yomou.syosetu.com;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

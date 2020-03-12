@@ -1,6 +1,6 @@
 package crawler.service;
 
-import crawler.mapping.NovelSource;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 
 /**
  * 小説の章を管理する.

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
 import crawler.exception.NovelNotFoundException;
-import crawler.mapping.NovelChapterSource;
-import crawler.mapping.NovelIndexElement;
-import crawler.mapping.NovelSource;
+import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
+import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
 

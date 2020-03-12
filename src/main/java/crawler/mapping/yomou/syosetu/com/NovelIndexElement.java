@@ -1,10 +1,8 @@
-package crawler.mapping;
+package crawler.mapping.yomou.syosetu.com;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jsoup.nodes.Element;
-
-import crawler.util.NovelElementsUtil;
 
 /**
  * 小説の目次のhtml elementを保持するクラス.

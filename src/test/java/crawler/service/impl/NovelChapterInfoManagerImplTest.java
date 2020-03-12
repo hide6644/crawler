@@ -6,8 +6,8 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
 
 import crawler.entity.NovelChapter;
-import crawler.mapping.NovelChapterSource;
-import crawler.mapping.NovelIndexElement;
+import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
+import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
 
 public class NovelChapterInfoManagerImplTest {
 

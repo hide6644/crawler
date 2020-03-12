@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.*;
 import org.junit.jupiter.api.Test;
 
 import crawler.entity.Novel;
-import crawler.mapping.NovelSource;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 
 public class NovelInfoManagerImplTest {
 

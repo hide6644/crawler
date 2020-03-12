@@ -1,11 +1,10 @@
-package crawler.mapping;
+package crawler.mapping.yomou.syosetu.com;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import crawler.entity.NovelInfo;
 import crawler.exception.NovelNotFoundException;
-import crawler.util.NovelElementsUtil;
 
 /**
  * 小説の付随情報のhtmlを保持するクラス.

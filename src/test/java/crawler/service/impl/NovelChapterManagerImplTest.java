@@ -12,7 +12,7 @@ import org.mockito.Mock;
 
 import crawler.dao.NovelChapterDao;
 import crawler.entity.NovelChapter;
-import crawler.mapping.NovelSource;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 
 public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {

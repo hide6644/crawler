@@ -1,4 +1,4 @@
-package crawler.mapping;
+package crawler.mapping.yomou.syosetu.com;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterHistory;
 import crawler.exception.NovelNotFoundException;
-import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
 
 /**
