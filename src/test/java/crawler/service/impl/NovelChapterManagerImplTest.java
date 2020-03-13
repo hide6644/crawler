@@ -31,7 +31,7 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
 
     @Test
     public void testSaveAllNovelChapter() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         novelSource.setHostname("file://" + filePath.substring(0, filePath.indexOf("test.html")));

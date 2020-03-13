@@ -34,7 +34,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
     @Test
     public void testAddAndDelete() {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         // 登録対象有り
         assertDoesNotThrow(() -> {
@@ -73,7 +73,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
 
     @Test
     public void testCheckForUpdatesAndSaveHistory() {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         Novel novel = new Novel();
         novel.setUrl("file://" + filePath);

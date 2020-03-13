@@ -15,7 +15,7 @@ public class NovelSourceTest {
 
     @Test
     public void testGetChapterElementList() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         Stream<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList();
@@ -27,12 +27,12 @@ public class NovelSourceTest {
 
     @Test
     public void testGetChapterHistoryElementSet() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         Novel novel = novelSource.getNovel();
 
-        filePath = this.getClass().getClassLoader().getResource("novel/20160925/test.html").getPath();
+        filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160925/test.html").getPath();
 
         novelSource = NovelSource.newInstance("file://" + filePath, novel);
 
@@ -45,7 +45,7 @@ public class NovelSourceTest {
 
     @Test
     public void testGetNovelInfoLink() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         String novelInfoUrl = novelSource.getNovelInfoUrl();
