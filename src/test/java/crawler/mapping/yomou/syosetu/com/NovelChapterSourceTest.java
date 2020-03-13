@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping.yomou.syosetu.com;
 
 import static org.junit.jupiter.api.Assertions.*;
 
