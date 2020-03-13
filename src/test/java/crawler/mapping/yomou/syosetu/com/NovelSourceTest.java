@@ -8,8 +8,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import crawler.entity.Novel;
-import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
-import crawler.mapping.yomou.syosetu.com.NovelSource;
 
 public class NovelSourceTest {
 
@@ -23,7 +21,7 @@ public class NovelSourceTest {
         assertNotNull(novelIndexList);
         assertEquals(3, novelIndexList.count());
         assertTrue(novelSource.isAdd());
-    }
+}
 
     @Test
     public void testGetChapterHistoryElementSet() throws Exception {
@@ -40,6 +38,14 @@ public class NovelSourceTest {
 
         assertNotNull(novelHistoryIndexSet);
         assertEquals(3, novelHistoryIndexSet.size());
+        assertFalse(novelSource.isAdd());
+
+        novelSource = NovelSource.newInstance("file://" + filePath, novelSource.getNovel());
+
+        novelHistoryIndexSet = novelSource.getNovelHistoryIndexSet();
+
+        assertNotNull(novelHistoryIndexSet);
+        assertEquals(0, novelHistoryIndexSet.size());
         assertFalse(novelSource.isAdd());
     }
 

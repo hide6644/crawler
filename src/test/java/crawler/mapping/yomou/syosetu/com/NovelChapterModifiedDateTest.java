@@ -8,9 +8,6 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import crawler.entity.NovelChapterInfo;
-import crawler.mapping.yomou.syosetu.com.NovelChapterModifiedDate;
-import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
-import crawler.mapping.yomou.syosetu.com.NovelSource;
 
 public class NovelChapterModifiedDateTest {
 

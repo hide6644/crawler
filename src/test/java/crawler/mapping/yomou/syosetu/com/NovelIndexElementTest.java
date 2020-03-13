@@ -7,9 +7,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
-import crawler.mapping.yomou.syosetu.com.NovelSource;
-
 public class NovelIndexElementTest {
 
     @Test
