@@ -16,111 +16,53 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 小説の章の情報
  */
+@Setter
+@Getter
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "novel_chapter")
 public class NovelChapter extends BaseObject implements Serializable {
 
     /** URL */
+    @Column(nullable = false, length = 64)
     private String url;
 
     /** タイトル */
+    @EqualsAndHashCode.Exclude
+    @Column(length = 100)
     private String title;
 
     /** 本文 */
-    private String body;
-
-    /** 小説の章の付随情報 */
-    private NovelChapterInfo novelChapterInfo;
-
-    /** 小説の章の更新履歴セット */
-    private Set<NovelChapterHistory> novelChapterHistories = new HashSet<>();
-
-    /** 小説 */
-    private Novel novel;
-
-    @Column(nullable = false, length = 64)
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    @Column(length = 100)
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    @EqualsAndHashCode.Exclude
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    public String getBody() {
-        return body;
-    }
+    private String body;
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
+    /** 小説の章の付随情報 */
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "novelChapter", cascade = CascadeType.ALL)
-    public NovelChapterInfo getNovelChapterInfo() {
-        return novelChapterInfo;
-    }
+    private NovelChapterInfo novelChapterInfo;
 
-    public void setNovelChapterInfo(NovelChapterInfo novelChapterInfo) {
-        this.novelChapterInfo = novelChapterInfo;
-    }
-
+    /** 小説の章の更新履歴セット */
+    @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "novelChapter", cascade = CascadeType.ALL)
-    public Set<NovelChapterHistory> getNovelChapterHistories() {
-        return novelChapterHistories;
-    }
+    private Set<NovelChapterHistory> novelChapterHistories = new HashSet<>();
 
-    public void setNovelChapterHistories(Set<NovelChapterHistory> novelChapterHistories) {
-        this.novelChapterHistories = novelChapterHistories;
-    }
+    /** 小説 */
+    @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "novel_id")
+    private Novel novel;
 
     public void addNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
         getNovelChapterHistories().add(novelChapterHistory);
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "novel_id")
-    public Novel getNovel() {
-        return novel;
-    }
-
-    public void setNovel(Novel novel) {
-        this.novel = novel;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(url).toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (!(obj instanceof NovelChapter)) {
-            return false;
-        }
-
-        NovelChapter castObj = (NovelChapter) obj;
-        return new EqualsBuilder()
-                .append(url, castObj.url)
-                .isEquals();
     }
 }

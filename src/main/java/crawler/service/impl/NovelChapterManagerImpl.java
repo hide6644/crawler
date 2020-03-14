@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
-import crawler.dto.NovelChapterSource;
-import crawler.dto.NovelIndexElement;
-import crawler.dto.NovelSource;
 import crawler.exception.NovelNotFoundException;
+import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
+import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
 

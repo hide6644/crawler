@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import crawler.dao.NovelDao;
-import crawler.dto.NovelSource;
 import crawler.entity.Novel;
 import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 import crawler.service.NovelManager;

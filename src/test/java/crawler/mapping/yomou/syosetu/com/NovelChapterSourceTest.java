@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping.yomou.syosetu.com;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ public class NovelChapterSourceTest {
 
     @Test
     public void testIsAdd() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test01.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test01.html").getPath();
 
         NovelChapterSource novelChapterSource = NovelChapterSource.newInstance("file://" + filePath, null);
         NovelChapter novelChapter = novelChapterSource.getNovelChapter();

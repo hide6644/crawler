@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>小説のタイトル</title>
+<title>小説のタイトル - 01.章のタイトル</title>
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="format-detection" content="telephone=no" />
@@ -18,13 +18,9 @@ function wOpen(URL,NAME,OPTION){WO1 = window.open(URL,NAME,OPTION);WO1.window.fo
 <script type="text/javascript" src="http://static.syosetu.com/view/js/global.js?o7o2oi"></script>
 <script type="text/javascript" src="http://static.syosetu.com/novelview/js/novelview.js?o5wz65"></script>
 
-<script type="text/javascript" src="http://static.syosetu.com/view/js/lib/jquery.readmore.js?o7mki8"></script>
 
-<script type="text/javascript">
-var microadCompass = microadCompass || {};
-microadCompass.queue = microadCompass.queue || [];
-</script>
-<script type="text/javascript" charset="UTF-8" src="//j.microad.net/js/compass.js"></script>
+
+
 
 
 
@@ -36,24 +32,11 @@ microadCompass.queue = microadCompass.queue || [];
 <li id="login">
 <a href="http://syosetu.com/user/top/">ホーム</a>
 </li>
-<li><a href="../testinfo.html">小説情報</a></li>
+<li><a href="../">小説情報</a></li>
 <li><a href="../">感想</a></li>
 <li><a href="../">レビュー</a></li>
 <li><a href="../" class="menu" target="_blank">縦書きPDF</a></li>
-
-
-
-<li>
-<a
-style="border-left:none;"
-
-
-href="https://twitter.com/intent/tweet?text=%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B2%E3%83%BC%E3%83%A0%E3%81%AB%E3%83%81%E3%83%BC%E3%83%88%E3%81%AF%E3%81%84%E3%82%89%E3%81%AA%E3%81%84%EF%BC%81&amp;url=http%3A%2F%2Fncode.syosetu.com%2F20160925%2F%2F&amp;hashtags=narou%2Cnarou20160925">
-
-<img src="http://static.syosetu.com/novelview/img/Twitter_logo_blue.png?nrkioy" class="menu" style="margin-left:7px; margin-right:7px;" height="20px" />
-</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-</li></ul>
+</ul>
 
 
 
@@ -80,6 +63,27 @@ sasieinit();
 <label><input type="radio" value="7" name="colorset" />おすすめ設定</label>
 </div>
 
+▼行間
+<ul class="novelview_menu">
+<li><input type="text" value="" name="lineheight" size="2" style="text-align:right;" readonly="readonly" />％</li>
+<li><a href="javascript:void(0);" name="lineheight_inc" class="size">+</a></li>
+<li><a href="javascript:void(0);" name="lineheight_dec" class="size">-</a></li>
+<li><a href="javascript:void(0);" name="lineheight_reset">リセット</a></li>
+</ul>
+
+<div class="size">
+▼文字サイズ
+<ul class="novelview_menu">
+<li><input type="text" value="" name="fontsize" size="2" style="text-align:right;" readonly="readonly" />％</li>
+<li><a href="javascript:void(0);" name="fontsize_inc" class="size">+</a></li>
+<li><a href="javascript:void(0);" name="fontsize_dec" class="size">-</a></li>
+<li><a href="javascript:void(0);" name="fontsize_reset">リセット</a></li>
+</ul>
+</div>
+
+<script type="text/javascript"><!--
+changeButtonView();
+//--></script>
 
 ▼メニューバー<br />
 <label><input type="checkbox" name="fix_menu_bar" />追従</label>
@@ -92,56 +96,38 @@ sasieinit();
 
 <div id="container">
 
-
 <div class="contents1">
-<span class="attention">＜R15＞</span>
-15歳未満の方は<a href="http://syosetu.com">移動</a>してください。<br />
+<a href="../" class="margin_r20">小説のタイトル</a>
+作者：<a href="../">作者名</a>
 
-この作品には
-
-〔残酷描写〕
-が含まれています。
 </div><!--contents1-->
+
+
 <div id="novel_contents">
 <div id="novel_color">
 
 
-<p class="novel_title">小説のタイトル2</p>
 
 
-<div class="novel_writername">
-作者：<a href="../">作者名2</a>
-</div><!--novel_writername-->
+<div class="novel_bn">
+<a href="./test01.html">&lt;&lt;&nbsp;前の話</a></div><!--novel_bn-->
 
 
-<div id="novel_ex">小説の説明2</div>
+
+<div id="novel_no">2/2</div>
 
 
-<div class="index_box">
 
-<dl class="novel_sublist2">
-<dd class="subtitle"><a href="test01.html">01.章のタイトル</a></dd>
-<dt class="long_update">
-2016/09/23 00:00
-</dt>
-</dl>
+<p class="novel_subtitle">02.章のタイトル</p>
 
-<dl class="novel_sublist2">
-<dd class="subtitle"><a href="test02.html">02.章のタイトル</a></dd>
-<dt class="long_update">
-2016/09/24 00:00
-<span title="2016/09/25 01:00 改稿">
-（<u>改</u>）</span>
-</dt>
-</dl>
 
-<dl class="novel_sublist2">
-<dd class="subtitle"><a href="test03.html">03.章のタイトル</a></dd>
-<dt class="long_update">
-2016/09/25 00:00
-</dt>
-</dl>
-</div><!--index_box-->
+
+<div id="novel_honbun" class="novel_view">小説の章の本文</div>
+
+
+
+<div class="novel_bn">
+<a href="./test01.html">&lt;&lt;&nbsp;前の話</a><a href="./test.html">目次</a></div>
 
 </div><!--novel_color-->
 
@@ -149,18 +135,11 @@ sasieinit();
 
 
 <div class="koukoku_auto">
-
-<div id="c4e490f82661b73da494d6f6a7b6bb39" >
-<script type="text/javascript">
-microadCompass.queue.push({
-"spot": "c4e490f82661b73da494d6f6a7b6bb39",
-"url": "${COMPASS_EXT_URL}",
-"referrer": "${COMPASS_EXT_REF}"
-});
-</script>
-</div>
-
 </div><!--koukoku_auto-->
+
+
+
+
 
 
 
@@ -198,20 +177,6 @@ microadCompass.queue.push({
 </div><!--koukoku_text-->
 
 </div><!--novel_contents-->
-
-<div id="recommend"></div><!--recommend-->
-
-
-
-
-
-
-
-
-
-<div id="deqwas-collection-k"></div>
-<div id="deqwas-k"></div>
-
 
 
 

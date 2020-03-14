@@ -5,14 +5,14 @@ import static org.mockito.BDDMockito.*;
 
 import org.junit.jupiter.api.Test;
 
-import crawler.dto.NovelSource;
 import crawler.entity.Novel;
+import crawler.mapping.yomou.syosetu.com.NovelSource;
 
 public class NovelInfoManagerImplTest {
 
     @Test
     public void testSaveNovelInfo() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/testInfo.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/testInfo.html").getPath();
 
         NovelSource novelSource = mock(NovelSource.class);
         when(novelSource.getNovelInfoUrl()).thenReturn("file://" + filePath);

@@ -1,13 +1,15 @@
-package crawler.dto;
+package crawler.mapping.yomou.syosetu.com;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import crawler.entity.NovelChapterInfo;
+import lombok.Getter;
 
 /**
  * 小説の目次に記載されている章の最終更新日時を保持するクラス.
  */
+@Getter
 public class NovelChapterModifiedDate {
 
     /** 最終更新日時のフォーマット */
@@ -76,9 +78,5 @@ public class NovelChapterModifiedDate {
         novelChapterModifiedDate.mapping();
 
         return novelChapterModifiedDate;
-    }
-
-    public NovelChapterInfo getNovelChapterInfo() {
-        return novelChapterInfo;
     }
 }

@@ -1,4 +1,4 @@
-package crawler.util;
+package crawler.mapping.yomou.syosetu.com;
 
 import java.util.Optional;
 

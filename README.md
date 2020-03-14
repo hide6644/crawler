@@ -28,7 +28,7 @@ MySQLでの動作を前提としている。
 ### DEPLOY
 ```console
 任意のフォルダ/crawler.jar
-    /lib/ビルドしたときにダウンロードされたその他のJarファイル
+    /lib/ビルドしたときにダウンロードしたJarファイル
 ```
 
 ## USAGE
