@@ -1,15 +1,19 @@
 package crawler.mapping.yomou.syosetu.com;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jsoup.nodes.Element;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * 小説の目次のhtml elementを保持するクラス.
  */
+@Getter
+@EqualsAndHashCode
 public class NovelIndexElement {
 
     /** 小説の目次に記載されている章のURL */
+    @EqualsAndHashCode.Exclude
     private final String chapterUrl;
 
     /** 小説の目次に記載されている章のリンク */
@@ -28,39 +32,5 @@ public class NovelIndexElement {
         chapterUrl = NovelElementsUtil.getChapterUrlByNovelBody(element);
         chapterLink = NovelElementsUtil.getChapterTitleByNovelBody(element);
         chapterModifiedDate = NovelElementsUtil.getChapterModifiedDate(element);
-    }
-
-    public String getChapterUrl() {
-        return chapterUrl;
-    }
-
-    public String getChapterLink() {
-        return chapterLink;
-    }
-
-    public String getChapterModifiedDate() {
-        return chapterModifiedDate;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(chapterLink)
-                .append(chapterModifiedDate).toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (!(obj instanceof NovelIndexElement)) {
-            return false;
-        }
-
-        NovelIndexElement castObj = (NovelIndexElement) obj;
-        return new EqualsBuilder()
-                .append(chapterLink, castObj.chapterLink)
-                .append(chapterModifiedDate, castObj.chapterModifiedDate)
-                .isEquals();
     }
 }

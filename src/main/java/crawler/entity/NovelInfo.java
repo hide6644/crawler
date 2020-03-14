@@ -36,9 +36,14 @@ import org.hibernate.search.annotations.NormalizerDef;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TokenFilterDef;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 小説の付随情報
  */
+@Setter
+@Getter
 @Entity
 @Table(name = "novel_info")
 @Indexed
@@ -49,30 +54,47 @@ public class NovelInfo extends BaseObject implements Serializable {
     private static final Logger log = LogManager.getLogger(NovelInfo.class);
 
     /** 最終確認日時 */
+    @Column(name = "checked_date")
     private LocalDateTime checkedDate;
 
     /** 最終更新日時 */
+    @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
     /** 完結フラグ */
+    @Column
     private boolean finished;
 
     /** キーワード */
+    @Column(length = 300)
+    @Analyzer(impl = WhitespaceAnalyzer.class)
+    @Field
+    @Field(name = "keywordSort", normalizer = @Normalizer(definition = "novelInfoSort"))
+    @SortableField(forField = "keywordSort")
     private String keyword;
 
     /** キーワードセット */
+    @Transient
+    @IndexedEmbedded
+    @OneToMany
     private Set<KeywordWrap> keywordSet = new HashSet<>();
 
     /** お気に入りフラグ */
+    @Column
     private boolean favorite;
 
     /** 評価 */
+    @Column
     private Integer rank;
 
     /** 更新確認有効 */
+    @Column(name = "check_enable")
     private boolean checkEnable;
 
     /** 小説 */
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "novel_id")
+    @ContainedIn
     private Novel novel;
 
     /**
@@ -105,42 +127,6 @@ public class NovelInfo extends BaseObject implements Serializable {
         return true;
     }
 
-    @Column(name = "checked_date")
-    public LocalDateTime getCheckedDate() {
-        return checkedDate;
-    }
-
-    public void setCheckedDate(LocalDateTime checkedDate) {
-        this.checkedDate = checkedDate;
-    }
-
-    @Column(name = "modified_date")
-    public LocalDateTime getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(LocalDateTime modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    @Column
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    @Column(length = 300)
-    @Analyzer(impl = WhitespaceAnalyzer.class)
-    @Field
-    @Field(name = "keywordSort", normalizer = @Normalizer(definition = "novelInfoSort"))
-    @SortableField(forField = "keywordSort")
-    public String getKeyword() {
-        return keyword;
-    }
-
     /**
      * キーワードを設定する.
      * スペースで分割したキーワードをKeywordWrapに設定する.
@@ -154,56 +140,13 @@ public class NovelInfo extends BaseObject implements Serializable {
         Stream.of(Optional.ofNullable(keyword).orElseGet(String::new).split(" "))
                 .collect(Collectors.toSet()).forEach(keywords -> keywordSet.add(new KeywordWrap(keywords)));
     }
-
-    @Transient
-    @IndexedEmbedded
-    @OneToMany
-    public Set<KeywordWrap> getKeywordSet() {
-        return keywordSet;
-    }
-
-    @Column
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
-    @Column
-    public Integer getRank() {
-        return rank;
-    }
-
-    public void setRank(Integer rank) {
-        this.rank = rank;
-    }
-
-    @Column(name = "check_enable")
-    public boolean getCheckEnable() {
-        return checkEnable;
-    }
-
-    public void setCheckEnable(boolean checkEnable) {
-        this.checkEnable = checkEnable;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "novel_id")
-    @ContainedIn
-    public Novel getNovel() {
-        return novel;
-    }
-
-    public void setNovel(Novel novel) {
-        this.novel = novel;
-    }
 }
 
 /**
  * 小説の付随情報のキーワード
  */
+@Setter
+@Getter
 class KeywordWrap implements Serializable {
 
     /** キーワード */
@@ -218,14 +161,6 @@ class KeywordWrap implements Serializable {
      *            小説の付随情報のキーワード
      */
     KeywordWrap(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
 }

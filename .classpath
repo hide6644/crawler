@@ -55,6 +55,7 @@
 	<classpathentry kind="lib" path="target/lib/log4j-core-2.13.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/log4j-jcl-2.13.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/log4j-slf4j-impl-2.13.1.jar"/>
+	<classpathentry kind="lib" path="target/lib/lombok-1.18.12.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-analyzers-common-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-analyzers-kuromoji-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-core-5.5.5.jar"/>
@@ -64,8 +65,8 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.5.4.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-core-3.3.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.3.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-core-3.3.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.3.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.30.jar"/>

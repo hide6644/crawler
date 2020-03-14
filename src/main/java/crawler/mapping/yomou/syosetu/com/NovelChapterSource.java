@@ -7,10 +7,14 @@ import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterHistory;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelManagerUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 小説の章の情報のhtmlを保持するクラス.
  */
+@Setter
+@Getter
 public class NovelChapterSource extends BaseSource {
 
     /** 小説の章の情報 */
@@ -72,7 +76,7 @@ public class NovelChapterSource extends BaseSource {
     /**
      * タイトルに差異があるか確認し、差異があれば小説の章の更新履歴を作成する.
      */
-    void checkTitleDiff() {
+    private void checkTitleDiff() {
         String chapterTitle = NovelElementsUtil.getChapterTitle(html);
 
         if (!novelChapter.getTitle().equals(chapterTitle)) {
@@ -84,7 +88,7 @@ public class NovelChapterSource extends BaseSource {
     /**
      * 本文に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
-    void checkBodyDiff() {
+    private void checkBodyDiff() {
         // 本文は常に変更ありとする
         createNovelChapterHistory().setBody(novelChapter.getBody());
         novelChapter.setBody(NovelElementsUtil.getChapterBody(html));
@@ -107,14 +111,6 @@ public class NovelChapterSource extends BaseSource {
         } else {
             return new NovelChapterSource(false, url,  novelChapter).mapping();
         }
-    }
-
-    public NovelChapter getNovelChapter() {
-        return novelChapter;
-    }
-
-    public NovelChapterHistory getNovelChapterHistory() {
-        return novelChapterHistory;
     }
 
     /**

@@ -16,14 +16,14 @@ public class NovelInfoSourceTest {
         NovelInfo novelInfo = novelInfoSource.getNovelInfo();
 
         assertNotNull(novelInfo);
-        assertFalse(novelInfo.getCheckEnable());
+        assertFalse(novelInfo.isCheckEnable());
 
         filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/testInfo_new.html").getPath();
         novelInfoSource = NovelInfoSource.newInstance("file://" + filePath, novelInfo);
         novelInfo = novelInfoSource.getNovelInfo();
 
         assertNotNull(novelInfo);
-        assertTrue(novelInfo.getCheckEnable());
+        assertTrue(novelInfo.isCheckEnable());
     }
 
     @Test

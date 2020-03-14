@@ -5,10 +5,12 @@ import java.time.format.DateTimeFormatter;
 
 import crawler.entity.NovelInfo;
 import crawler.exception.NovelNotFoundException;
+import lombok.Getter;
 
 /**
  * 小説の付随情報のhtmlを保持するクラス.
  */
+@Getter
 public class NovelInfoSource extends BaseSource {
 
     /** 最終更新日時のフォーマット */
@@ -74,9 +76,5 @@ public class NovelInfoSource extends BaseSource {
         } else {
             return new NovelInfoSource(false, url, novelInfo).mapping();
         }
-    }
-
-    public NovelInfo getNovelInfo() {
-        return novelInfo;
     }
 }
