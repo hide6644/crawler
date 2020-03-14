@@ -17,8 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
@@ -30,9 +28,16 @@ import org.hibernate.search.annotations.NormalizerDef;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TokenFilterDef;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 小説の情報
  */
+@Setter
+@Getter
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "novel")
 @Indexed
@@ -42,153 +47,70 @@ import org.hibernate.search.annotations.TokenFilterDef;
 public class Novel extends BaseObject implements Serializable {
 
     /** URL */
+    @Column(nullable = false, length = 64)
     private String url;
 
     /** タイトル */
-    private String title;
-
-    /** 作者名 */
-    private String writername;
-
-    /** 解説 */
-    private String description;
-
-    /** 本文 */
-    private String body;
-
-    /** 削除フラグ */
-    private boolean deleted;
-
-    /** 小説の付随情報 */
-    private NovelInfo novelInfo;
-
-    /** 小説の更新履歴セット */
-    private Set<NovelHistory> novelHistories = new HashSet<>();
-
-    /** 小説の章リスト */
-    private List<NovelChapter> novelChapters = new ArrayList<>();
-
-    @Column(nullable = false, length = 64)
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
+    @EqualsAndHashCode.Exclude
     @Column(length = 100)
     @Field
     @Field(name = "titleSort", normalizer = @Normalizer(definition = "novelSort"))
     @SortableField(forField = "titleSort")
-    public String getTitle() {
-        return title;
-    }
+    private String title;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    /** 作者名 */
+    @EqualsAndHashCode.Exclude
     @Column(length = 100)
     @Field
     @Field(name = "writernameSort", normalizer = @Normalizer(definition = "novelSort"))
     @SortableField(forField = "writernameSort")
-    public String getWritername() {
-        return writername;
-    }
+    private String writername;
 
-    public void setWritername(String writername) {
-        this.writername = writername;
-    }
-
+    /** 解説 */
+    @EqualsAndHashCode.Exclude
     @Column
     @Field
     @Field(name = "descriptionSort", normalizer = @Normalizer(definition = "novelSort"))
     @SortableField(forField = "descriptionSort")
-    public String getDescription() {
-        return description;
-    }
+    private String description;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    /** 本文 */
+    @EqualsAndHashCode.Exclude
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Field
     @Field(name = "bodySort", normalizer = @Normalizer(definition = "novelSort"))
     @SortableField(forField = "bodySort")
-    public String getBody() {
-        return body;
-    }
+    private String body;
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
+    /** 削除フラグ */
+    @EqualsAndHashCode.Exclude
     @Column
-    public boolean isDeleted() {
-        return deleted;
-    }
+    private boolean deleted;
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
+    /** 小説の付随情報 */
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "novel", cascade = CascadeType.ALL)
     @IndexedEmbedded
-    public NovelInfo getNovelInfo() {
-        return novelInfo;
-    }
+    private NovelInfo novelInfo;
 
-    public void setNovelInfo(NovelInfo novelInfo) {
-        this.novelInfo = novelInfo;
-    }
-
+    /** 小説の更新履歴セット */
+    @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
-    public Set<NovelHistory> getNovelHistories() {
-        return novelHistories;
-    }
+    private Set<NovelHistory> novelHistories = new HashSet<>();
 
-    public void setNovelHistories(Set<NovelHistory> novelHistories) {
-        this.novelHistories = novelHistories;
-    }
+    /** 小説の章リスト */
+    @EqualsAndHashCode.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
+    @IndexedEmbedded
+    private List<NovelChapter> novelChapters = new ArrayList<>();
 
     public void addNovelHistory(NovelHistory novelHistory) {
         getNovelHistories().add(novelHistory);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
-    @IndexedEmbedded
-    public List<NovelChapter> getNovelChapters() {
-        return novelChapters;
-    }
-
-    public void setNovelChapters(List<NovelChapter> novelChapters) {
-        this.novelChapters = novelChapters;
-    }
-
     public void addNovelChapter(NovelChapter novel) {
         getNovelChapters().add(novel);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(url).toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (!(obj instanceof Novel)) {
-            return false;
-        }
-
-        Novel castObj = (Novel) obj;
-        return new EqualsBuilder()
-                .append(url, castObj.url)
-                .isEquals();
     }
 }

@@ -131,7 +131,7 @@ public class NovelReportMail {
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
-        cfg.setObjectWrapper(new Java8ObjectWrapper(Configuration.VERSION_2_3_28));
+        cfg.setObjectWrapper(new Java8ObjectWrapper(Configuration.VERSION_2_3_30));
         return cfg;
     }
 }

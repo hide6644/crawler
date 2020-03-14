@@ -11,49 +11,30 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 小説の章の更新履歴
  */
+@Setter
+@Getter
 @Entity
 @Table(name = "novel_chapter_history")
 public class NovelChapterHistory extends BaseObject implements Serializable {
 
     /** タイトル */
+    @Column(length = 100)
     private String title;
 
     /** 本文 */
-    private String body;
-
-    /** 小説の章 */
-    private NovelChapter novelChapter;
-
-    @Column(length = 100)
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    public String getBody() {
-        return body;
-    }
+    private String body;
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
+    /** 小説の章 */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "novel_chapter_id")
-    public NovelChapter getNovelChapter() {
-        return novelChapter;
-    }
-
-    public void setNovelChapter(NovelChapter novelChapter) {
-        this.novelChapter = novelChapter;
-    }
+    private NovelChapter novelChapter;
 }

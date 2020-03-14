@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping.yomou.syosetu.com;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -14,12 +14,15 @@ import org.jsoup.select.Elements;
 import crawler.entity.Novel;
 import crawler.entity.NovelHistory;
 import crawler.exception.NovelNotFoundException;
-import crawler.util.NovelElementsUtil;
 import crawler.util.NovelManagerUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 小説のhtmlを保持するクラス.
  */
+@Setter
+@Getter
 public class NovelSource extends BaseSource {
 
     /** 小説の情報 */
@@ -91,7 +94,7 @@ public class NovelSource extends BaseSource {
     /**
      * タイトルに差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
-    void checkTitleDiff() {
+    private void checkTitleDiff() {
         String title = NovelElementsUtil.getTitle(html);
 
         if (!novel.getTitle().equals(title)) {
@@ -103,7 +106,7 @@ public class NovelSource extends BaseSource {
     /**
      * 作者名に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
-    void checkWriternameDiff() {
+    private void checkWriternameDiff() {
         String writername = NovelElementsUtil.getWritername(html);
 
         if (!novel.getWritername().equals(writername)) {
@@ -115,7 +118,7 @@ public class NovelSource extends BaseSource {
     /**
      * 解説に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
-    void checkDescriptionDiff() {
+    private void checkDescriptionDiff() {
         String description = NovelElementsUtil.getDescription(html);
 
         if (!novel.getDescription().equals(description)) {
@@ -127,7 +130,7 @@ public class NovelSource extends BaseSource {
     /**
      * 本文に差異があるか確認し、差異があれば小説の更新履歴を作成する.
      */
-    void checkBodyDiff() {
+    private void checkBodyDiff() {
         String body = NovelElementsUtil.getBody(html);
 
         if (!novel.getBody().equals(body)) {
@@ -180,25 +183,6 @@ public class NovelSource extends BaseSource {
     }
 
     /**
-     * 小説のUrlのホスト名を取得する.
-     *
-     * @return 小説のUrlのホスト名
-     */
-    public String getHostname() {
-        return hostname;
-    }
-
-    /**
-     * 小説のUrlのホスト名を設定する.
-     *
-     * @param hostname
-     *            小説のUrlのホスト名
-     */
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
-    /**
      * NovelSourceのインスタンスを生成する.
      *
      * @param url
@@ -228,14 +212,6 @@ public class NovelSource extends BaseSource {
         } else {
             return new NovelSource(false, url, novel).mapping();
         }
-    }
-
-    public Novel getNovel() {
-        return novel;
-    }
-
-    public NovelHistory getNovelHistory() {
-        return novelHistory;
     }
 
     /**

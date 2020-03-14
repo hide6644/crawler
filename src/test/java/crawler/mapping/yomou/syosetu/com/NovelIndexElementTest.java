@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping.yomou.syosetu.com;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ public class NovelIndexElementTest {
 
     @Test
     public void testEquals() throws Exception {
-        String filePath = this.getClass().getClassLoader().getResource("novel/20160924/test.html").getPath();
+        String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList().collect(Collectors.toList());

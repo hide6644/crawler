@@ -1,4 +1,4 @@
-package crawler.dto;
+package crawler.mapping.yomou.syosetu.com;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,10 +6,12 @@ import org.jsoup.nodes.Document;
 
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelManagerUtil;
+import lombok.Getter;
 
 /**
  * htmlを保持する基底クラス.
  */
+@Getter
 public abstract class BaseSource {
 
     /** ログ出力クラス */
@@ -45,17 +47,4 @@ public abstract class BaseSource {
      * @return htmlを保持するオブジェクト
      */
     protected abstract BaseSource mapping();
-
-    /**
-     * 新規か、更新か.
-     *
-     * @return true:新規、false:更新
-     */
-    public boolean isAdd() {
-        return add;
-    }
-
-    public Document getHtml() {
-        return html;
-    }
 }

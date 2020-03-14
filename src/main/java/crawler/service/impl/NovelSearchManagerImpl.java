@@ -27,11 +27,13 @@ public class NovelSearchManagerImpl implements NovelSearchManager {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
     public List<Novel> search(String searchTerm) {
-        return ((Stream<Novel>) novelSearch.search(searchTerm).getResultStream()).collect(Collectors.toList());
+        try (@SuppressWarnings("unchecked")
+        Stream<Novel> novels = (Stream<Novel>) novelSearch.search(searchTerm).getResultStream()) {
+            return novels.collect(Collectors.toList());
+        }
     }
 
     /**
