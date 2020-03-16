@@ -36,6 +36,7 @@ import org.hibernate.search.annotations.NormalizerDef;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.TokenFilterDef;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -145,6 +146,7 @@ public class NovelInfo extends BaseObject implements Serializable {
 /**
  * 小説の付随情報のキーワード
  */
+@AllArgsConstructor
 @Setter
 @Getter
 class KeywordWrap implements Serializable {
@@ -153,14 +155,4 @@ class KeywordWrap implements Serializable {
     @Field(analyze = Analyze.NO)
     @Facet(encoding = FacetEncodingType.STRING)
     String keyword;
-
-    /**
-     * コンストラクタ.
-     *
-     * @param keyword
-     *            小説の付随情報のキーワード
-     */
-    KeywordWrap(String keyword) {
-        this.keyword = keyword;
-    }
 }
