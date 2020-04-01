@@ -139,5 +139,6 @@ create table user_novel_info (
     update_user varchar(16) default null,
     update_date timestamp,
     primary key (id),
+    foreign key (username) references app_user (username),
     foreign key (novel_id) references novel (id)
 ) engine = InnoDB default character set utf8;
