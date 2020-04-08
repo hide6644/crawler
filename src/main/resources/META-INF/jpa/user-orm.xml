@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+    version="2.2">
+
+    <named-query name="User.findByUnreadTrueOrderByTitleAndNovelChapterId">
+        <query><![CDATA[
+            select u
+                from User u
+                    join fetch u.userNovelInfos uni
+                    join fetch uni.novel n
+                    join fetch n.novelChapters nc
+                    join fetch nc.novelChapterInfo nci
+                where nci.unread = true
+                order by u.username, n.title, nc.id
+        ]]></query>
+    </named-query>
+
+</entity-mappings>

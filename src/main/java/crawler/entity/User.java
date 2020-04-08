@@ -1,7 +1,10 @@
 package crawler.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -46,7 +49,7 @@ import lombok.ToString;
 @Table(name = "app_user")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class User {
+public class User implements Serializable {
 
     /** ユーザー名 */
     @NonNull
@@ -78,9 +81,10 @@ public class User {
     private List<Role> roles;
 
     /** ユーザーの小説の付随情報 */
+    @Builder.Default
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserNovelInfo> userNovelInfos;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserNovelInfo> userNovelInfos = new LinkedHashSet<>();
 
     /** 更新回数 */
     @EqualsAndHashCode.Exclude
@@ -111,4 +115,8 @@ public class User {
     @Column(name = "update_date")
     @XmlTransient
     private LocalDateTime updateDate;
+
+    public void addUserNovelInfo(UserNovelInfo userNovelInfo) {
+        userNovelInfos.add(userNovelInfo);
+    }
 }

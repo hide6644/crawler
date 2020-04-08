@@ -9,6 +9,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <mapping-file>META-INF/jpa/novel-orm.xml</mapping-file>
+        <mapping-file>META-INF/jpa/user-orm.xml</mapping-file>
 
         <class>crawler.entity.Novel</class>
         <class>crawler.entity.NovelChapter</class>
@@ -16,6 +17,9 @@
         <class>crawler.entity.NovelChapterInfo</class>
         <class>crawler.entity.NovelHistory</class>
         <class>crawler.entity.NovelInfo</class>
+        <class>crawler.entity.Role</class>
+        <class>crawler.entity.User</class>
+        <class>crawler.entity.UserNovelInfo</class>
 
         <validation-mode>NONE</validation-mode>
     </persistence-unit>

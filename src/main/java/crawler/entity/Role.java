@@ -6,5 +6,10 @@ import java.io.Serializable;
  * 権限
  */
 public enum Role implements Serializable {
-    ROLE_ADMIN, ROLE_USER;
+
+    /** 管理者 */
+    ROLE_ADMIN,
+
+    /** 一般 */
+    ROLE_USER;
 }

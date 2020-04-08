@@ -109,13 +109,17 @@ public class Novel extends BaseObject implements Serializable {
     /** ユーザーの小説の付随情報 */
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
-    private Set<UserNovelInfo> userNovelInfo = new HashSet<>();
+    private Set<UserNovelInfo> userNovelInfos = new HashSet<>();
 
     public void addNovelHistory(NovelHistory novelHistory) {
-        getNovelHistories().add(novelHistory);
+        novelHistories.add(novelHistory);
     }
 
-    public void addNovelChapter(NovelChapter novel) {
-        getNovelChapters().add(novel);
+    public void addNovelChapter(NovelChapter novelChapter) {
+        novelChapters.add(novelChapter);
+    }
+
+    public void addUserNovelInfo(UserNovelInfo userNovelInfo) {
+        userNovelInfos.add(userNovelInfo);
     }
 }
