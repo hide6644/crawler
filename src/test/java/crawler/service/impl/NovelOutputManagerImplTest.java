@@ -8,11 +8,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import crawler.dao.NovelDao;
+import crawler.dao.UserDao;
 
 public class NovelOutputManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
     private Logger log;
+
+    @Mock
+    private UserDao userDao;
 
     @Mock
     private NovelDao novelDao;

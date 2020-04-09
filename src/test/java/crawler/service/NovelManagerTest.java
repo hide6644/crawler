@@ -3,6 +3,7 @@ package crawler.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -17,12 +18,19 @@ import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
 import crawler.dao.NovelDao;
+import crawler.dao.UserDao;
 import crawler.entity.Novel;
 import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterInfo;
 import crawler.entity.NovelInfo;
+import crawler.entity.Role;
+import crawler.entity.User;
+import crawler.entity.UserNovelInfo;
 
 public class NovelManagerTest extends BaseManagerTestCase {
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     private NovelDao novelDao;
@@ -47,6 +55,13 @@ public class NovelManagerTest extends BaseManagerTestCase {
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) applicationContext.getBean("mailSender");
         mailSender.setPort(greenMail.getSmtp().getPort());
         mailSender.setHost("localhost");
+
+        User user = new User();
+        user.setUsername("hoge");
+        user.setPassword("hoge");
+        user.setEmail("hoge@foo.bar");
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(Role.ROLE_USER));
 
         Novel novel = new Novel();
         novel.setUrl("Url");
@@ -80,6 +95,15 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelChapter.setNovelChapterInfo(novelChapterInfo);
 
         novelDao.save(novel);
+
+        UserNovelInfo userNovelInfo = new UserNovelInfo();
+        userNovelInfo.setUser(user);
+        userNovelInfo.setNovel(novel);
+
+        user.addUserNovelInfo(userNovelInfo);
+        novel.addUserNovelInfo(userNovelInfo);
+
+        userDao.save(user);
     }
 
     @AfterAll
@@ -96,7 +120,7 @@ public class NovelManagerTest extends BaseManagerTestCase {
 
     @Test
     public void testGetUnreadNovels() {
-        List<Novel> unreadNovels = novelOutputManager.getUnreadNovels();
+        List<User> unreadNovels = novelOutputManager.getUnreadUserNovels();
 
         assertNotNull(unreadNovels);
     }

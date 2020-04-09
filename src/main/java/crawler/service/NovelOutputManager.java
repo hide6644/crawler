@@ -3,6 +3,7 @@ package crawler.service;
 import java.util.List;
 
 import crawler.entity.Novel;
+import crawler.entity.User;
 
 /**
  * 小説の情報の出力を管理する.
@@ -10,11 +11,11 @@ import crawler.entity.Novel;
 public interface NovelOutputManager {
 
     /**
-     * 未読小説の一覧を取得する.
+     * ユーザーの未読小説の一覧を取得する.
      *
-     * @return 未読小説の一覧
+     * @return ユーザーの未読小説の一覧
      */
-    List<Novel> getUnreadNovels();
+    List<User> getUnreadUserNovels();
 
     /**
      * 小説の最終更新日時一覧を取得する.

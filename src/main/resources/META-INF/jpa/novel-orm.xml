@@ -14,18 +14,6 @@
         ]]></query>
     </named-query>
 
-    <named-query name="Novel.findByUnreadTrueOrderByTitleAndNovelChapterId">
-        <query><![CDATA[
-            select distinct n
-                from Novel n
-                    join fetch n.novelInfo ni
-                    join fetch n.novelChapters nc
-                    join fetch nc.novelChapterInfo nci
-                where nci.unread = true
-                order by n.title, nc.id
-        ]]></query>
-    </named-query>
-
     <named-query name="Novel.findByDeletedFalseOrderByTitle">
         <query><![CDATA[
             from Novel n join fetch n.novelInfo ni

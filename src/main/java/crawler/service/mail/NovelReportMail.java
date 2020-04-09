@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import crawler.Constants;
 import crawler.entity.Novel;
+import crawler.entity.UserNovelInfo;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
@@ -45,18 +47,20 @@ public class NovelReportMail {
     /**
      * 未読小説の一覧のファイルを送信する.
      *
-     * @param unreadNovels
+     * @param to
+     *            送信先アドレス
+     * @param userNovelInfos
      *            未読小説の一覧
      */
-    public void sendUnreadReport(final List<Novel> unreadNovels) {
+    public void sendUnreadReport(String to, Set<UserNovelInfo> userNovelInfos) {
         Map<String, Object> dataModel = new HashMap<>();
-        dataModel.put("unreadNovels", unreadNovels);
+        dataModel.put("userNovelInfos", userNovelInfos);
 
         String yesterday = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(DATE_FORMAT));
         Path path = getPath("unread_novels_" + yesterday + ".html");
         String bodyText = yesterday + " updated.";
 
-        sendReport("unread_report.ftl", dataModel, bodyText, path);
+        sendReport("unread_report.ftl", dataModel, to, bodyText, path);
     }
 
     /**
@@ -65,7 +69,7 @@ public class NovelReportMail {
      * @param novels
      *            小説の一覧
      */
-    public void sendModifiedDateReport(final List<Novel> novels) {
+    public void sendModifiedDateReport(List<Novel> novels) {
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("novels", novels);
 
@@ -73,7 +77,7 @@ public class NovelReportMail {
         Path path = getPath("modified_date_of_novels_" + today + ".html");
         String bodyText = "modified date of novels.";
 
-        sendReport("modified_date_report.ftl", dataModel, bodyText, path);
+        sendReport("modified_date_report.ftl", dataModel, null, bodyText, path);
     }
 
     /**
@@ -103,18 +107,20 @@ public class NovelReportMail {
      *            テンプレート名
      * @param dataModel
      *            テンプレートの変数（名前と値のペア）
+     * @param to
+     *            送信先アドレス
      * @param bodyText
      *            メール本文
      * @param path
      *            Pathオブジェクト
      */
-    private void sendReport(String templateName, Map<String, Object> dataModel, String bodyText, Path path) {
+    private void sendReport(String templateName, Map<String, Object> dataModel, String to, String bodyText, Path path) {
         try (BufferedWriter bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8);) {
             // テンプレートとマージ
             getConfiguration().getTemplate(templateName).process(dataModel, bw);
 
             log.info("[send] report:{}", bodyText);
-            mailEngine.sendMail(bodyText, path.toFile());
+            mailEngine.sendMail(to, bodyText, path.toFile());
         } catch (IOException | TemplateException | MessagingException e) {
             log.error("[not send] report:", e);
         }
@@ -126,7 +132,7 @@ public class NovelReportMail {
      * @return Freemarkerの構成
      */
     private Configuration getConfiguration() {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
         cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import crawler.dao.NovelDao;
+import crawler.dao.UserDao;
 import crawler.entity.Novel;
+import crawler.entity.User;
 import crawler.service.NovelOutputManager;
 import crawler.service.mail.NovelReportMail;
 
@@ -19,6 +21,10 @@ import crawler.service.mail.NovelReportMail;
  */
 @Service("novelOutputManager")
 public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutputManager {
+
+    /** ユーザーのDAO. */
+    @Autowired
+    private UserDao userDao;
 
     /** 小説のDAO. */
     @Autowired
@@ -33,8 +39,8 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
      */
     @Override
     @Transactional
-    public List<Novel> getUnreadNovels() {
-        try (Stream<Novel> novels = novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId()) {
+    public List<User> getUnreadUserNovels() {
+        try (Stream<User> novels = userDao.findByUnreadTrueOrderByTitleAndNovelChapterId()) {
             return novels.collect(Collectors.toList());
         }
     }
@@ -56,22 +62,25 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Override
     @Transactional
     public void sendUnreadReport() {
-        List<Novel> unreadNovels = getUnreadNovels();
+        List<User> unreadUserNovels = getUnreadUserNovels();
 
-        if (unreadNovels.isEmpty()) {
+        if (unreadUserNovels.isEmpty()) {
             log.info("Not find unread novels.");
         } else {
-            // メール送信
-            reportMail.sendUnreadReport(unreadNovels);
+            unreadUserNovels.forEach(unreadUserNovel -> {
+                // メール送信
+                reportMail.sendUnreadReport(unreadUserNovel.getEmail(), unreadUserNovel.getUserNovelInfos());
 
-            // 小説のステータスを既読に更新
-            LocalDateTime now = LocalDateTime.now();
-            unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
-                    .forEach(unreadNovelChapter -> {
-                        unreadNovelChapter.getNovelChapterInfo().setUnread(false);
-                        unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
-                        unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
-                    });
+                // 小説のステータスを既読に更新
+                LocalDateTime now = LocalDateTime.now();
+                unreadUserNovel.getUserNovelInfos().stream()
+                        .flatMap(unreadNovel -> unreadNovel.getNovel().getNovelChapters().stream())
+                        .forEach(unreadNovelChapter -> {
+                            unreadNovelChapter.getNovelChapterInfo().setUnread(false);
+                            unreadNovelChapter.getNovelChapterInfo().setReadDate(now);
+                            unreadNovelChapter.getNovelChapterInfo().setUpdateDate(now);
+                        });
+            });
         }
     }
 

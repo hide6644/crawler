@@ -56,15 +56,6 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindByUnreadTrueOrderByTitleAndNovelChapterId() {
-        Stream<Novel> novelList = dao.findByUnreadTrueOrderByTitleAndNovelChapterId();
-
-        assertNotNull(novelList);
-
-        novelList.close();
-    }
-
-    @Test
     public void testFindByDeletedFalseOrderByTitle() {
         Stream<Novel> novelList = dao.findByDeletedFalseOrderByTitle();
 

@@ -7,12 +7,12 @@
 </head>
 <body>
 <dl>
-<#list unreadNovels as novel>
+<#list userNovelInfos as userNovelInfo>
     <dt>
-        <#if novel.novelInfo.favorite>★</#if>
-        <a href="${novel.url}">${novel.title}</a>
+        <#if userNovelInfo.favorite>★</#if>
+        <a href="${userNovelInfo.novel.url}">${userNovelInfo.novel.title}</a>
     </dt>
-  <#list novel.novelChapters as novelChapter>
+  <#list userNovelInfo.novel.novelChapters as novelChapter>
     <dd>
         ${novelChapter.novelChapterInfo.modifiedDate.format("yyyy/MM/dd")}
         <a href="${novelChapter.url}">${novelChapter.title}</a>

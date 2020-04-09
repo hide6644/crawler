@@ -39,13 +39,6 @@ public interface NovelDao extends JpaRepository<Novel, Long> {
     Stream<Novel> findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(@Param("checkedDate") LocalDateTime checkedDate);
 
     /**
-     * 未読小説の一覧を取得する.
-     *
-     * @return 小説の一覧
-     */
-    Stream<Novel> findByUnreadTrueOrderByTitleAndNovelChapterId();
-
-    /**
      * 小説の最終更新日時一覧を取得する.
      *
      * @return 小説の一覧
