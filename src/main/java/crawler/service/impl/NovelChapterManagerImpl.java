@@ -58,7 +58,6 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
 
             if (novelChapterSource.isAdd()) {
                 // URLが一致する小説の章がない場合、登録処理
-                novelChapterSource.getNovelChapter().setNovel(novelSource.getNovel());
                 novelSource.getNovel().addNovelChapter(novelChapterSource.getNovelChapter());
 
                 log.info("[add] chapter title:{}", () -> novelChapterSource.getNovelChapter().getTitle());

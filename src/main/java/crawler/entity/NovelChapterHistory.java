@@ -11,6 +11,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,4 +39,29 @@ public class NovelChapterHistory extends BaseObject implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "novel_chapter_id")
     private NovelChapter novelChapter;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        BaseObject castObj = (BaseObject) obj;
+        return new EqualsBuilder()
+                .append(getId(), castObj.getId())
+                .isEquals();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

@@ -31,7 +31,6 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
         novelChapter.setUrl("Url");
         novelChapter.setTitle("Title");
         novelChapter.setBody("Body");
-        novelChapter.setNovel(novel);
         novel.addNovelChapter(novelChapter);
 
         dao.save(novel);
