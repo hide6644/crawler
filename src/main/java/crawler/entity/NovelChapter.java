@@ -73,7 +73,7 @@ public class NovelChapter extends BaseObject implements Serializable {
 
     /** 小説の章の更新履歴セット */
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novelChapter", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novelChapter", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<NovelChapterHistory> novelChapterHistories = new HashSet<>();
 
     /** 小説 */
@@ -84,6 +84,12 @@ public class NovelChapter extends BaseObject implements Serializable {
     private Novel novel;
 
     public void addNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
-        getNovelChapterHistories().add(novelChapterHistory);
+        novelChapterHistories.add(novelChapterHistory);
+        novelChapterHistory.setNovelChapter(this);
+    }
+
+    public void removeNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
+        novelChapterHistories.remove(novelChapterHistory);
+        novelChapterHistory.setNovelChapter(null);
     }
 }
