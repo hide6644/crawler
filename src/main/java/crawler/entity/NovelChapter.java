@@ -62,8 +62,6 @@ public class NovelChapter extends BaseObject implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Field
-    @Field(name = "bodySort", normalizer = @Normalizer(definition = "novelChapterSort"))
-    @SortableField(forField = "bodySort")
     private String body;
 
     /** 小説の章の付随情報 */

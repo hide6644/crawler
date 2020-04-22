@@ -62,7 +62,7 @@ public class NovelChapterSource extends BaseSource {
 
             if (novelChapterHistory != null) {
                 // 小説の章の更新履歴が作成された場合
-                novelChapter.addNovelChapterHistory(novelChapterHistory);
+                novelChapterHistory.setNovelChapter(novelChapter);
             }
 
             // 更新日時を変更
