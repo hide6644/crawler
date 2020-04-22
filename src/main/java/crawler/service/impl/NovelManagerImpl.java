@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import crawler.dao.NovelDao;
+import crawler.dao.NovelHistoryDao;
 import crawler.entity.Novel;
 import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
@@ -28,6 +29,10 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
     /** 小説のDAO. */
     @Autowired
     private NovelDao novelDao;
+
+    /** 小説の履歴のDAO. */
+    @Autowired
+    private NovelHistoryDao novelHistoryDao;
 
     /** 小説の付随情報を管理する. */
     @Autowired
@@ -116,13 +121,17 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
             NovelSource currentNovelSource = NovelSource.newInstance(novel.getUrl(), novel);
 
             if (currentNovelSource.getNovelHistory() != null) {
-                // 小説の情報に差異があった場合、小説の付随情報を保存
-                novelInfoManager.saveNovelInfo(currentNovelSource);
-
+                // 小説の情報に差異があった場合
                 if (currentNovelSource.getNovelHistory().getBody() != null) {
                     // 小説の本文に差異があった場合、小説の章を保存
                     novelChapterManager.saveAllNovelChapter(currentNovelSource);
                 }
+
+                // 小説の履歴を永続化
+                novelHistoryDao.save(currentNovelSource.getNovelHistory());
+
+                // 小説の付随情報を保存
+                novelInfoManager.saveNovelInfo(currentNovelSource);
             }
         } catch (NovelConnectException e) {
             log.warn("[skip] title:{}", () -> novel.getTitle());

@@ -80,7 +80,7 @@ public class NovelSource extends BaseSource {
 
             if (novelHistory != null) {
                 // 小説の更新履歴が作成された場合
-                novel.addNovelHistory(novelHistory);
+                novelHistory.setNovel(novel);
             }
 
             // 更新日時を変更

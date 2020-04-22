@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
+import crawler.dao.NovelChapterHistoryDao;
 import crawler.exception.NovelNotFoundException;
 import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
 import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
@@ -22,6 +23,10 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
     /** 小説の章のDAO. */
     @Autowired
     private NovelChapterDao novelChapterDao;
+
+    /** 小説の章の履歴のDAO. */
+    @Autowired
+    private NovelChapterHistoryDao novelChapterHistoryDao;
 
     /** 小説の章の付随情報を管理する. */
     @Autowired
@@ -62,6 +67,9 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
 
                 log.info("[add] chapter title:{}", () -> novelChapterSource.getNovelChapter().getTitle());
             } else {
+                // 小説の章の履歴を永続化
+                novelChapterHistoryDao.save(novelChapterSource.getNovelChapterHistory());
+
                 // 更新処理
                 log.info("[update] chapter title:{}", () -> novelChapterSource.getNovelChapter().getTitle());
             }
