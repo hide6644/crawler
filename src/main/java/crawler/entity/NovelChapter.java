@@ -81,11 +81,21 @@ public class NovelChapter extends BaseObject implements Serializable {
     @ContainedIn
     private Novel novel;
 
+    /**
+     * 小説の章の更新履歴を追加する.
+     *
+     * @param novelChapterHistory 小説の章の更新履歴
+     */
     public void addNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
         novelChapterHistories.add(novelChapterHistory);
         novelChapterHistory.setNovelChapter(this);
     }
 
+    /**
+     * 小説の章の更新履歴を追加する.
+     *
+     * @param novelChapterHistory 小説の章の更新履歴
+     */
     public void removeNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
         novelChapterHistories.remove(novelChapterHistory);
         novelChapterHistory.setNovelChapter(null);
