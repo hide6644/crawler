@@ -489,7 +489,7 @@
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
         <jdbc.version>2.6.0</jdbc.version>
 
-        <byte-buddy.version>1.10.9</byte-buddy.version>
+        <byte-buddy.version>1.10.10</byte-buddy.version>
         <commons-lang3.version>3.10</commons-lang3.version>
         <ehcache.version>3.8.1</ehcache.version>
         <freemarker.version>2.3.30</freemarker.version>
@@ -508,8 +508,8 @@
         <mail.version>1.6.2</mail.version>
         <mockito.version>3.3.3</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <spring.version>5.2.5.RELEASE</spring.version>
-        <spring-data.version>2.2.6.RELEASE</spring-data.version>
+        <spring.version>5.2.6.RELEASE</spring.version>
+        <spring-data.version>2.2.7.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
