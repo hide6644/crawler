@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import crawler.dao.NovelChapterDao;
+import crawler.dao.NovelChapterHistoryDao;
 import crawler.entity.NovelChapter;
 import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterInfoManager;
@@ -22,6 +23,9 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
     private NovelChapterDao novelChapterDao;
+
+    @Mock
+    private NovelChapterHistoryDao novelChapterHistoryDao;
 
     @Mock
     private NovelChapterInfoManager novelChapterInfoManager;

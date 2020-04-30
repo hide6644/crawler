@@ -62,8 +62,6 @@ public class NovelChapter extends BaseObject implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Field
-    @Field(name = "bodySort", normalizer = @Normalizer(definition = "novelChapterSort"))
-    @SortableField(forField = "bodySort")
     private String body;
 
     /** 小説の章の付随情報 */
@@ -73,7 +71,7 @@ public class NovelChapter extends BaseObject implements Serializable {
 
     /** 小説の章の更新履歴セット */
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novelChapter", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novelChapter", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<NovelChapterHistory> novelChapterHistories = new HashSet<>();
 
     /** 小説 */
@@ -83,7 +81,23 @@ public class NovelChapter extends BaseObject implements Serializable {
     @ContainedIn
     private Novel novel;
 
+    /**
+     * 小説の章の更新履歴を追加する.
+     *
+     * @param novelChapterHistory 小説の章の更新履歴
+     */
     public void addNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
-        getNovelChapterHistories().add(novelChapterHistory);
+        novelChapterHistories.add(novelChapterHistory);
+        novelChapterHistory.setNovelChapter(this);
+    }
+
+    /**
+     * 小説の章の更新履歴を追加する.
+     *
+     * @param novelChapterHistory 小説の章の更新履歴
+     */
+    public void removeNovelChapterHistory(NovelChapterHistory novelChapterHistory) {
+        novelChapterHistories.remove(novelChapterHistory);
+        novelChapterHistory.setNovelChapter(null);
     }
 }

@@ -116,7 +116,23 @@ public class User implements Serializable {
     @XmlTransient
     private LocalDateTime updateDate;
 
+    /**
+     * ユーザーの小説の付随情報を追加する.
+     *
+     * @param userNovelInfo ユーザーの小説の付随情報
+     */
     public void addUserNovelInfo(UserNovelInfo userNovelInfo) {
         userNovelInfos.add(userNovelInfo);
+        userNovelInfo.setUser(this);
+    }
+
+    /**
+     * ユーザーの小説の付随情報を削除する.
+     *
+     * @param userNovelInfo ユーザーの小説の付随情報
+     */
+    public void removeUserNovelInfo(UserNovelInfo userNovelInfo) {
+        userNovelInfos.remove(userNovelInfo);
+        userNovelInfo.setUser(null);
     }
 }

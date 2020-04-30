@@ -24,5 +24,16 @@ public class NovelChapterModifiedDateTest {
 
         assertNotNull(novelChapterInfo);
         assertNotEquals(novelIndexElement, novelIndexList.get(1));
+
+        filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160925/test.html").getPath();
+
+        novelSource = NovelSource.newInstance("file://" + filePath);
+        novelIndexList = novelSource.getNovelIndexList().collect(Collectors.toList());
+        novelIndexElement = novelIndexList.get(0);
+
+        novelChapterModifiedDate = NovelChapterModifiedDate.newInstance(novelIndexElement, novelChapterInfo);
+
+        assertNotNull(novelChapterInfo);
+        assertNotEquals(novelIndexElement, novelIndexList.get(1));
     }
 }
