@@ -78,21 +78,41 @@ public class Novel extends BaseObject implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NovelChapter> novelChapters = new ArrayList<>();
 
+    /**
+     * 小説の更新履歴を追加する.
+     *
+     * @param novelHistory 小説の更新履歴
+     */
     public void addNovelHistory(NovelHistory novelHistory) {
         novelHistories.add(novelHistory);
         novelHistory.setNovel(this);
     }
 
+    /**
+     * 小説の更新履歴を削除する.
+     *
+     * @param novelHistory 小説の更新履歴
+     */
     public void removeNovelHistory(NovelHistory novelHistory) {
         novelHistories.remove(novelHistory);
         novelHistory.setNovel(null);
     }
 
+    /**
+     * 小説の章を追加する.
+     *
+     * @param novelChapter 小説の章
+     */
     public void addNovelChapter(NovelChapter novelChapter) {
         novelChapters.add(novelChapter);
         novelChapter.setNovel(this);
     }
 
+    /**
+     * 小説の章を削除する.
+     *
+     * @param novelChapter 小説の章
+     */
     public void removeNovelChapter(NovelChapter novelChapter) {
         novelChapters.remove(novelChapter);
         novelChapter.setNovel(null);
