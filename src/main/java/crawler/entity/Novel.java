@@ -80,8 +80,6 @@ public class Novel extends BaseObject implements Serializable {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Field
-    @Field(name = "bodySort", normalizer = @Normalizer(definition = "novelSort"))
-    @SortableField(forField = "bodySort")
     private String body;
 
     /** 削除フラグ */
@@ -97,20 +95,52 @@ public class Novel extends BaseObject implements Serializable {
 
     /** 小説の更新履歴セット */
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<NovelHistory> novelHistories = new HashSet<>();
 
     /** 小説の章リスト */
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "novel", cascade = CascadeType.ALL, orphanRemoval = true)
     @IndexedEmbedded
     private List<NovelChapter> novelChapters = new ArrayList<>();
 
+    /**
+     * 小説の更新履歴を追加する.
+     *
+     * @param novelHistory 小説の更新履歴
+     */
     public void addNovelHistory(NovelHistory novelHistory) {
-        getNovelHistories().add(novelHistory);
+        novelHistories.add(novelHistory);
+        novelHistory.setNovel(this);
     }
 
-    public void addNovelChapter(NovelChapter novel) {
-        getNovelChapters().add(novel);
+    /**
+     * 小説の更新履歴を削除する.
+     *
+     * @param novelHistory 小説の更新履歴
+     */
+    public void removeNovelHistory(NovelHistory novelHistory) {
+        novelHistories.remove(novelHistory);
+        novelHistory.setNovel(null);
+    }
+
+    /**
+     * 小説の章を追加する.
+     *
+     * @param novelChapter 小説の章
+     */
+    public void addNovelChapter(NovelChapter novelChapter) {
+        novelChapters.add(novelChapter);
+        novelChapter.setNovel(this);
+    }
+
+    /**
+     * 小説の章を削除する.
+     *
+     * @param novelChapter 小説の章
+     */
+    public void removeNovelChapter(NovelChapter novelChapter) {
+        novelChapters.remove(novelChapter);
+        novelChapter.setNovel(null);
     }
 }

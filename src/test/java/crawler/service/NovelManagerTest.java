@@ -69,7 +69,6 @@ public class NovelManagerTest extends BaseManagerTestCase {
         novelChapter.setBody("Body");
         novelChapter.setCreateDate(LocalDateTime.now());
         novelChapter.setUpdateDate(LocalDateTime.now());
-        novelChapter.setNovel(novel);
         novel.addNovelChapter(novelChapter);
 
         NovelChapterInfo novelChapterInfo = new NovelChapterInfo();

@@ -26,6 +26,21 @@ public class NovelChapterTest {
 
         assertTrue(novelChapter1.equals(novelChapter2));
     }
+    @Test
+    public void testNovelChapterHistories() {
+        NovelChapter novelChapter = new NovelChapter();
+        NovelChapterHistory novelChapterHistory1 = new NovelChapterHistory();
+        novelChapterHistory1.setId(1L);
+        novelChapter.addNovelChapterHistory(novelChapterHistory1);
+
+        assertEquals(1, novelChapter.getNovelChapterHistories().size());
+
+        NovelChapterHistory novelChapterHistory2 = new NovelChapterHistory();
+        novelChapterHistory2.setId(1L);
+        novelChapter.removeNovelChapterHistory(novelChapterHistory2);
+
+        assertEquals(0, novelChapter.getNovelChapterHistories().size());
+    }
 
     @Test
     public void testHashCode() {
