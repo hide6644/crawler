@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.32</version>
+                            <version>8.33</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -495,7 +495,7 @@
         <freemarker.version>2.3.30</freemarker.version>
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.5.13</greenmail.version>
-        <hibernate.version>5.4.16.Final</hibernate.version>
+        <hibernate.version>5.4.17.Final</hibernate.version>
         <hibernate-search.version>5.11.5.Final</hibernate-search.version>
         <HikariCP.version>3.4.5</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
