@@ -14,8 +14,8 @@
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.1.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjrt-1.9.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.10.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.10.12.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.10.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.10.13.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.5.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.10.jar"/>
@@ -26,9 +26,9 @@
 	<classpathentry kind="lib" path="target/lib/freemarker-java8-2.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/greenmail-1.5.13.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-commons-annotations-5.1.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-core-5.4.17.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.4.17.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-jcache-5.4.17.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-core-5.4.18.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.4.18.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-jcache-5.4.18.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-5.11.5.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-orm-5.11.5.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/HikariCP-3.4.5.jar"/>
@@ -65,7 +65,7 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queries-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.6.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-core-3.3.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.3.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>

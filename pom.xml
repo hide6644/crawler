@@ -140,7 +140,7 @@
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.0.4</version>
+                            <version>4.0.6</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.33</version>
+                            <version>8.34</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -487,15 +487,15 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>2.6.0</jdbc.version>
+        <jdbc.version>2.6.1</jdbc.version>
 
-        <byte-buddy.version>1.10.12</byte-buddy.version>
+        <byte-buddy.version>1.10.13</byte-buddy.version>
         <commons-lang3.version>3.10</commons-lang3.version>
         <ehcache.version>3.8.1</ehcache.version>
         <freemarker.version>2.3.30</freemarker.version>
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.5.13</greenmail.version>
-        <hibernate.version>5.4.17.Final</hibernate.version>
+        <hibernate.version>5.4.18.Final</hibernate.version>
         <hibernate-search.version>5.11.5.Final</hibernate-search.version>
         <HikariCP.version>3.4.5</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
