@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.34</version>
+                            <version>8.35</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -487,7 +487,7 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>2.6.1</jdbc.version>
+        <jdbc.version>2.6.2</jdbc.version>
 
         <byte-buddy.version>1.10.13</byte-buddy.version>
         <commons-lang3.version>3.11</commons-lang3.version>
@@ -508,8 +508,8 @@
         <mail.version>1.6.2</mail.version>
         <mockito.version>3.4.4</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <spring.version>5.2.7.RELEASE</spring.version>
-        <spring-data.version>2.3.1.RELEASE</spring-data.version>
+        <spring.version>5.2.8.RELEASE</spring.version>
+        <spring-data.version>2.3.2.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
