@@ -104,7 +104,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M4</version>
+                <version>3.0.0-M5</version>
                 <configuration>
                     <reuseForks>false</reuseForks>
                     <argLine>${argLine} -Dapp_home=${project.build.directory}</argLine>
@@ -135,19 +135,19 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.0.0</version>
+                    <version>4.0.4</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.0.3</version>
+                            <version>4.0.6</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.33</version>
+                            <version>8.35</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -188,7 +188,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.9.0</version>
+                    <version>3.9.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -222,7 +222,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <configuration>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
@@ -249,7 +249,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M4</version>
+                <version>3.0.0-M5</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -470,15 +470,15 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>2.6.0</jdbc.version>
+        <jdbc.version>2.6.2</jdbc.version>
 
-        <byte-buddy.version>1.10.10</byte-buddy.version>
-        <commons-lang3.version>3.10</commons-lang3.version>
+        <byte-buddy.version>1.10.13</byte-buddy.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
         <ehcache.version>3.8.1</ehcache.version>
         <freemarker.version>2.3.30</freemarker.version>
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
-        <greenmail.version>1.5.13</greenmail.version>
-        <hibernate.version>5.4.17.Final</hibernate.version>
+        <greenmail.version>1.5.14</greenmail.version>
+        <hibernate.version>5.4.18.Final</hibernate.version>
         <HikariCP.version>3.4.5</HikariCP.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
@@ -487,10 +487,10 @@
         <log4j.version>2.13.3</log4j.version>
         <lombok.version>1.18.12</lombok.version>
         <mail.version>1.6.2</mail.version>
-        <mockito.version>3.3.3</mockito.version>
+        <mockito.version>3.4.4</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <spring.version>5.2.6.RELEASE</spring.version>
-        <spring-data.version>2.3.0.RELEASE</spring-data.version>
+        <spring.version>5.2.8.RELEASE</spring.version>
+        <spring-data.version>2.3.2.RELEASE</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
