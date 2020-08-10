@@ -14,8 +14,8 @@
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.1.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjrt-1.9.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.10.13.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.10.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.10.14.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.10.14.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.5.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.11.jar"/>
@@ -66,8 +66,8 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.5.jar"/>
 	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.6.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-core-3.4.4.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.4.4.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-core-3.4.6.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.4.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-2.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.30.jar"/>
