@@ -23,7 +23,7 @@
 	<classpathentry kind="lib" path="target/lib/ehcache-3.9.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/freemarker-2.3.30.jar"/>
 	<classpathentry kind="lib" path="target/lib/freemarker-java8-2.0.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/greenmail-1.6.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/greenmail-1.6.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-commons-annotations-5.1.2.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-core-5.4.23.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.4.23.Final.jar"/>
