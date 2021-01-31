@@ -382,18 +382,18 @@
         <!-- Hibernate Search & Lucene -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-queryparser</artifactId>
-            <version>${lucene.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-analyzers-kuromoji</artifactId>
             <version>${lucene.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-orm</artifactId>
+            <groupId>org.hibernate.search</groupId>
+            <artifactId>hibernate-search-mapper-orm</artifactId>
             <version>${hibernate-search.version}</version>
+        </dependency>
+        <dependency>
+           <groupId>org.hibernate.search</groupId>
+           <artifactId>hibernate-search-backend-lucene</artifactId>
+           <version>${hibernate-search.version}</version>
         </dependency>
 
         <!-- Miscellaneous -->
@@ -491,14 +491,14 @@
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.6.1</greenmail.version>
         <hibernate.version>5.4.27.Final</hibernate.version>
-        <hibernate-search.version>5.11.8.Final</hibernate-search.version>
+        <hibernate-search.version>6.0.0.Final</hibernate-search.version>
         <HikariCP.version>3.4.5</HikariCP.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
         <jsoup.version>1.13.1</jsoup.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <log4j.version>2.14.0</log4j.version>
         <lombok.version>1.18.16</lombok.version>
-        <lucene.version>5.5.5</lucene.version>
+        <lucene.version>8.7.0</lucene.version>
         <mail.version>1.6.5</mail.version>
         <mockito.version>3.7.7</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
