@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import crawler.dao.HibernateSearch;
+import crawler.dao.NovelSearch;
 
 public class NovelSearchManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
-    private HibernateSearch novelSearch;
+    private NovelSearch novelSearch;
 
     @InjectMocks
     private NovelSearchManagerImpl novelSearchManager = new NovelSearchManagerImpl();

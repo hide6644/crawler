@@ -28,9 +28,13 @@
 	<classpathentry kind="lib" path="target/lib/hibernate-core-5.4.27.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.4.27.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-jcache-5.4.27.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-5.11.8.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-orm-5.11.8.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-backend-lucene-6.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-6.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-orm-6.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-pojo-base-6.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-util-common-6.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/HikariCP-3.4.5.jar"/>
+	<classpathentry kind="lib" path="target/lib/hppc-0.8.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/istack-commons-runtime-3.0.11.jar"/>
 	<classpathentry kind="lib" path="target/lib/jakarta.activation-1.2.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/jakarta.mail-1.6.5.jar"/>
@@ -56,14 +60,14 @@
 	<classpathentry kind="lib" path="target/lib/log4j-jcl-2.14.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/log4j-slf4j-impl-2.14.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/lombok-1.18.16.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-analyzers-common-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-analyzers-kuromoji-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-core-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-facet-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-misc-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-queries-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-queryparser-5.5.5.jar"/>
-	<classpathentry kind="lib" path="target/lib/lucene-sandbox-5.5.5.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-analyzers-common-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-analyzers-kuromoji-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-core-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-facet-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-join-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-queries-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-queryparser-8.7.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/lucene-sandbox-8.7.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.7.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-core-3.7.7.jar"/>
 	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-3.7.7.jar"/>
