@@ -62,7 +62,7 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
     @Test
     public void testSearch() {
         novelSearchManager.reindexAll(false);
-        List<Novel> novelList = novelSearchManager.search("*");
+        List<Novel> novelList = novelSearchManager.search(null);
         assertTrue(novelList.size() > 0);
 
         novelList = novelSearchManager.search("TEST");

@@ -16,16 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Normalizer;
-import org.hibernate.search.annotations.NormalizerDef;
-import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,8 +34,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "novel_chapter")
 @Indexed
-@Analyzer(impl = JapaneseAnalyzer.class)
-@NormalizerDef(name = "novelChapterSort", filters = @TokenFilterDef(factory = LowerCaseFilterFactory.class))
 public class NovelChapter extends BaseObject implements Serializable {
 
     /** URL */
@@ -51,9 +43,8 @@ public class NovelChapter extends BaseObject implements Serializable {
     /** タイトル */
     @EqualsAndHashCode.Exclude
     @Column(length = 100)
-    @Field
-    @Field(name = "titleSort", normalizer = @Normalizer(definition = "novelChapterSort"))
-    @SortableField(forField = "titleSort")
+    @FullTextField(analyzer = "japanese")
+    @KeywordField(name = "titleSort", sortable = Sortable.YES)
     private String title;
 
     /** 本文 */
@@ -61,7 +52,7 @@ public class NovelChapter extends BaseObject implements Serializable {
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Field
+    @FullTextField(analyzer = "japanese")
     private String body;
 
     /** 小説の章の付随情報 */
@@ -78,7 +69,6 @@ public class NovelChapter extends BaseObject implements Serializable {
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "novel_id")
-    @ContainedIn
     private Novel novel;
 
     /**
