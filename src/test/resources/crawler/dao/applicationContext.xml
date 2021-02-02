@@ -68,13 +68,6 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
                 <prop key="hibernate.show_sql">false</prop>
-                <!-- Hibernate Search -->
-                <prop key="hibernate.search.default.indexBase">#{systemProperties.app_home}/index</prop>
-                <prop key="hibernate.search.default.directory_provider">filesystem</prop>
-                <prop key="hibernate.search.default.locking_strategy">simple</prop>
-                <prop key="hibernate.search.default.exclusive_index_use">true</prop>
-                <prop key="hibernate.search.lucene_version">LUCENE_CURRENT</prop>
-                <prop key="hibernate.search.analyzer">org.apache.lucene.analysis.en.EnglishAnalyzer</prop>
             </props>
         </property>
     </bean>
