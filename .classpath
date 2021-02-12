@@ -28,11 +28,11 @@
 	<classpathentry kind="lib" path="target/lib/hibernate-core-5.4.27.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-5.4.27.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-jcache-5.4.27.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-backend-lucene-6.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-6.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-orm-6.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-pojo-base-6.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-search-util-common-6.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-backend-lucene-6.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-6.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-orm-6.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-pojo-base-6.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-search-util-common-6.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/HikariCP-4.0.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/hppc-0.8.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/istack-commons-runtime-3.0.11.jar"/>

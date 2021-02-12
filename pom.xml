@@ -491,7 +491,7 @@
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.6.2</greenmail.version>
         <hibernate.version>5.4.27.Final</hibernate.version>
-        <hibernate-search.version>6.0.0.Final</hibernate-search.version>
+        <hibernate-search.version>6.0.1.Final</hibernate-search.version>
         <HikariCP.version>4.0.1</HikariCP.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
         <jsoup.version>1.13.1</jsoup.version>
