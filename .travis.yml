@@ -8,5 +8,6 @@ before_script:
   - mysql -e "set global sql_mode = ''"
   - mysql -uroot -e "create database crawler"
   - mysql -uroot crawler < src/config/schema.sql
+  - mysql -uroot crawler < src/config/testdata.sql
 after_success:
   - mvn clean test jacoco:report coveralls:report

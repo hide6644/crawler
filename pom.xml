@@ -155,7 +155,7 @@
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.2.0</version>
+                            <version>4.2.1</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -499,18 +499,18 @@
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
         <jdbc.version>2.7.2</jdbc.version>
 
-        <byte-buddy.version>1.10.19</byte-buddy.version>
+        <byte-buddy.version>1.10.20</byte-buddy.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <ehcache.version>3.9.0</ehcache.version>
         <freemarker.version>2.3.30</freemarker.version>
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.6.2</greenmail.version>
         <hibernate.version>5.4.27.Final</hibernate.version>
-        <hibernate-search.version>6.0.0.Final</hibernate-search.version>
+        <hibernate-search.version>6.0.1.Final</hibernate-search.version>
         <HikariCP.version>4.0.1</HikariCP.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
         <jsoup.version>1.13.1</jsoup.version>
-        <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <junit-jupiter.version>5.7.1</junit-jupiter.version>
         <log4j.version>2.14.0</log4j.version>
         <lombok.version>1.18.18</lombok.version>
         <lucene.version>8.7.0</lucene.version>
