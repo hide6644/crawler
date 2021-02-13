@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +26,6 @@ public class NovelDaoTest extends BaseDaoTestCase {
         novel.setBody("Body");
         novel.setDeleted(false);
         dao.save(novel);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        dao.deleteAll();
     }
 
     @Test
