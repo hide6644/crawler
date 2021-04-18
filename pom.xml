@@ -140,7 +140,7 @@
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.2.2</version>
+                            <version>4.2.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -491,9 +491,9 @@
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.6.3</greenmail.version>
         <hibernate.version>5.4.30.Final</hibernate.version>
-        <hibernate-search.version>6.0.2.Final</hibernate-search.version>
+        <hibernate-search.version>6.0.3.Final</hibernate-search.version>
         <HikariCP.version>4.0.3</HikariCP.version>
-        <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
+        <jaxb-runtime.version>2.3.4</jaxb-runtime.version>
         <jsoup.version>1.13.1</jsoup.version>
         <junit-jupiter.version>5.7.1</junit-jupiter.version>
         <log4j.version>2.14.1</log4j.version>
@@ -502,8 +502,8 @@
         <mail.version>1.6.7</mail.version>
         <mockito.version>3.9.0</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <spring.version>5.3.5</spring.version>
-        <spring-data.version>2.4.7</spring-data.version>
+        <spring.version>5.3.6</spring.version>
+        <spring-data.version>2.5.0</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
