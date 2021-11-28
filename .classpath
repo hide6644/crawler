@@ -11,10 +11,9 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="target/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.1.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/aspectjrt-1.9.7.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.7.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.11.22.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.11.22.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.12.2.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.12.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.5.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.12.0.jar"/>
@@ -67,27 +66,27 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-8.7.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-sandbox-8.7.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/mariadb-java-client-2.7.4.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-core-4.0.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-4.0.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-core-4.1.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-4.1.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-3.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.32.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-aop-5.3.11.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-aspects-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-beans-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-context-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-context-support-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-core-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-data-commons-2.5.6.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-data-jpa-2.5.6.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-expression-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-instrument-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-jcl-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-jdbc-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-orm-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-oxm-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-test-5.3.12.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-tx-5.3.12.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-aop-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-aspects-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-beans-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-context-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-context-support-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-core-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-data-commons-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-data-jpa-2.6.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-expression-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-instrument-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-jcl-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-jdbc-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-orm-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-oxm-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-test-5.3.13.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-tx-5.3.13.jar"/>
 	<classpathentry kind="lib" path="target/lib/txw2-2.3.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

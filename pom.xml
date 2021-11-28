@@ -135,12 +135,12 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.4.1</version>
+                    <version>4.5.0.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.4.2</version>
+                            <version>4.5.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -484,7 +484,7 @@
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
         <jdbc.version>2.7.4</jdbc.version>
 
-        <byte-buddy.version>1.11.22</byte-buddy.version>
+        <byte-buddy.version>1.12.2</byte-buddy.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <ehcache.version>3.9.7</ehcache.version>
         <freemarker.version>2.3.31</freemarker.version>
@@ -500,10 +500,10 @@
         <lombok.version>1.18.22</lombok.version>
         <lucene.version>8.7.0</lucene.version>
         <mail.version>1.6.7</mail.version>
-        <mockito.version>4.0.0</mockito.version>
+        <mockito.version>4.1.0</mockito.version>
         <slf4j.version>1.7.32</slf4j.version>
-        <spring.version>5.3.12</spring.version>
-        <spring-data.version>2.5.6</spring-data.version>
+        <spring.version>5.3.13</spring.version>
+        <spring-data.version>2.6.0</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
