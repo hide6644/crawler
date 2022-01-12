@@ -517,7 +517,7 @@
         <mail.version>1.6.7</mail.version>
         <mockito.version>4.1.0</mockito.version>
         <slf4j.version>1.7.32</slf4j.version>
-        <spring.version>5.3.13</spring.version>
+        <spring.version>5.3.14</spring.version>
         <spring-data.version>2.6.0</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
