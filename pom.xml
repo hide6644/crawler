@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.6.8</version>
+    <version>1.6.9</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -58,7 +58,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -150,12 +150,12 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.5.0.0</version>
+                    <version>4.5.3.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.5.0</version>
+                            <version>4.5.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -172,7 +172,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>9.1</version>
+                            <version>9.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.2.2</version>
                     <configuration>
                         <archive>
                             <manifest>
@@ -198,12 +198,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.0-M4</version>
+                    <version>3.0.0-M5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.9.1</version>
+                    <version>3.11.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -497,28 +497,28 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>2.7.4</jdbc.version>
+        <jdbc.version>3.0.3</jdbc.version>
 
-        <byte-buddy.version>1.12.2</byte-buddy.version>
+        <byte-buddy.version>1.12.8</byte-buddy.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <ehcache.version>3.9.7</ehcache.version>
+        <ehcache.version>3.9.9</ehcache.version>
         <freemarker.version>2.3.31</freemarker.version>
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
         <greenmail.version>1.6.5</greenmail.version>
-        <hibernate.version>5.6.1.Final</hibernate.version>
-        <hibernate-search.version>6.0.7.Final</hibernate-search.version>
-        <HikariCP.version>5.0.0</HikariCP.version>
-        <jaxb-runtime.version>2.3.5</jaxb-runtime.version>
+        <hibernate.version>5.6.5.Final</hibernate.version>
+        <hibernate-search.version>6.1.1.Final</hibernate-search.version>
+        <HikariCP.version>5.0.1</HikariCP.version>
+        <jaxb-runtime.version>2.3.6</jaxb-runtime.version>
         <jsoup.version>1.14.3</jsoup.version>
-        <junit-jupiter.version>5.8.1</junit-jupiter.version>
-        <log4j.version>2.14.1</log4j.version>
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+        <log4j.version>2.17.1</log4j.version>
         <lombok.version>1.18.22</lombok.version>
-        <lucene.version>8.7.0</lucene.version>
+        <lucene.version>8.11.1</lucene.version>
         <mail.version>1.6.7</mail.version>
-        <mockito.version>4.1.0</mockito.version>
-        <slf4j.version>1.7.32</slf4j.version>
-        <spring.version>5.3.13</spring.version>
-        <spring-data.version>2.6.0</spring-data.version>
+        <mockito.version>4.3.1</mockito.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <spring.version>5.3.16</spring.version>
+        <spring-data.version>2.6.2</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
