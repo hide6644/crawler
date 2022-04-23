@@ -5,7 +5,7 @@ import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurationC
 import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurer;
 
 /**
- * マッピングから参照できるアナライザー等を定義するクラス.
+ * アナライザー等を定義するクラス.
  */
 public class CustomLuceneAnalysisConfigurer implements LuceneAnalysisConfigurer {
 
