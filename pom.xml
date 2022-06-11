@@ -29,8 +29,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/hide6644/crawler</url>
+        <system>circleci</system>
+        <url>https://app.circleci.com/pipelines/github/hide6644/crawler</url>
     </ciManagement>
 
     <licenses>
@@ -134,7 +134,7 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
                 <configuration>
-                    <repoToken>DnrNlDAZwWXAmucU9xHRdPd9IazOi8a8q</repoToken>
+                    <repoToken>${COVERALLS_REPO_TOKEN}</repoToken>
                 </configuration>
                 <dependencies>
                     <dependency>
