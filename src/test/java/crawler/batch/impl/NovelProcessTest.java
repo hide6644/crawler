@@ -15,7 +15,7 @@ import crawler.service.NovelOutputManager;
 import crawler.service.NovelSearchManager;
 
 @ExtendWith(MockitoExtension.class)
-public class NovelProcessTest {
+class NovelProcessTest {
 
     @Mock
     private MessageSourceAccessor messages;
@@ -33,7 +33,7 @@ public class NovelProcessTest {
     private NovelProcess novelProcess = new NovelProcess();
 
     @Test
-    public void testExecute() {
+    void testExecute() {
         when(messages.getMessage(anyString())).thenReturn(
                 "checkForUpdates", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
                 "checkForUpdates", "save", "sendUnreadReport", "sendModifiedDateReport", "reindexAll",
@@ -56,12 +56,12 @@ public class NovelProcessTest {
     }
 
     @Test
-    public void testExecuteNull() {
+    void testExecuteNull() {
         assertDoesNotThrow(() -> novelProcess.execute(null));
     }
 
     @Test
-    public void testExecuteInvalid() {
+    void testExecuteInvalid() {
         when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         // 不正な引数

@@ -15,7 +15,7 @@ import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterInfo;
 import crawler.entity.NovelInfo;
 
-public class NovelSearchManagerTest extends BaseManagerTestCase {
+class NovelSearchManagerTest extends BaseManagerTestCase {
 
     @Autowired
     private NovelDao novelDao;
@@ -24,7 +24,7 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
     private NovelSearchManager novelSearchManager;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         novelSearchManager.reindexAll(false);
         Novel novel = new Novel();
         novel.setUrl("Url");
@@ -60,12 +60,12 @@ public class NovelSearchManagerTest extends BaseManagerTestCase {
     }
 
     @Test
-    public void testSearch() {
+    void testSearch() {
         novelSearchManager.reindexAll(false);
         List<Novel> novelList = novelSearchManager.search(null);
         assertTrue(novelList.size() > 0);
 
         novelList = novelSearchManager.search("TEST");
-        assertTrue(novelList.size() == 0);
+        assertEquals(0, novelList.size());
     }
 }

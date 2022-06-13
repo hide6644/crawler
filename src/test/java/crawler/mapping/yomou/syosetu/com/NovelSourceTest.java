@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import crawler.entity.Novel;
 
-public class NovelSourceTest {
+class NovelSourceTest {
 
     @Test
-    public void testGetChapterElementList() throws Exception {
+    void testGetChapterElementList() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
@@ -24,7 +24,7 @@ public class NovelSourceTest {
 }
 
     @Test
-    public void testGetChapterHistoryElementSet() throws Exception {
+    void testGetChapterHistoryElementSet() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
@@ -50,7 +50,7 @@ public class NovelSourceTest {
     }
 
     @Test
-    public void testGetNovelInfoLink() throws Exception {
+    void testGetNovelInfoLink() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);

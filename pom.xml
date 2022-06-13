@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.6.12</version>
+    <version>1.6.13</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -29,8 +29,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/hide6644/crawler</url>
+        <system>circleci</system>
+        <url>https://app.circleci.com/pipelines/github/hide6644/crawler</url>
     </ciManagement>
 
     <licenses>
@@ -285,6 +285,11 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb-runtime.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
@@ -411,12 +416,6 @@
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>${ehcache.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>${jaxb-runtime.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>

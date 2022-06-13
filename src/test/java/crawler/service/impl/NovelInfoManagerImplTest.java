@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import crawler.entity.Novel;
 import crawler.mapping.yomou.syosetu.com.NovelSource;
 
-public class NovelInfoManagerImplTest {
+class NovelInfoManagerImplTest {
 
     @Test
-    public void testSaveNovelInfo() throws Exception {
+    void testSaveNovelInfo() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/testInfo.html").getPath();
 
         NovelSource novelSource = mock(NovelSource.class);

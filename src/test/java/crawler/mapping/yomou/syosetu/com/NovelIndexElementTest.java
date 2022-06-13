@@ -7,20 +7,20 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-public class NovelIndexElementTest {
+class NovelIndexElementTest {
 
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);
         List<NovelIndexElement> novelIndexList = novelSource.getNovelIndexList().collect(Collectors.toList());
 
-        assertTrue(novelIndexList.get(0).equals(novelIndexList.get(0)));
-        assertFalse(novelIndexList.get(0).equals(null));
+        assertEquals(novelIndexList.get(0), novelIndexList.get(0));
+        assertNotEquals(null, novelIndexList.get(0));
 
-        assertFalse(novelIndexList.get(0).equals(novelIndexList.get(1)));
+        assertNotEquals(novelIndexList.get(0), novelIndexList.get(1));
 
-        assertTrue(novelIndexList.get(0).equals(novelIndexList.get(0)));
+        assertEquals(novelIndexList.get(0), novelIndexList.get(0));
     }
 }

@@ -22,7 +22,7 @@ import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterInfo;
 import crawler.entity.NovelInfo;
 
-public class NovelManagerTest extends BaseManagerTestCase {
+class NovelManagerTest extends BaseManagerTestCase {
 
     @Autowired
     private NovelDao novelDao;
@@ -36,13 +36,13 @@ public class NovelManagerTest extends BaseManagerTestCase {
     private static GreenMail greenMail;
 
     @BeforeAll
-    public static void setUpClass() {
+    static void setUpClass() {
         greenMail = new GreenMail(ServerSetupTest.SMTP);
         greenMail.start();
     }
 
     @BeforeEach
-    public void setUp() throws FolderException {
+    void setUp() throws FolderException {
         greenMail.purgeEmailFromAllMailboxes();
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) applicationContext.getBean("mailSender");
         mailSender.setPort(greenMail.getSmtp().getPort());
@@ -82,42 +82,42 @@ public class NovelManagerTest extends BaseManagerTestCase {
     }
 
     @AfterAll
-    public static void tearDownClass() {
+    static void tearDownClass() {
         greenMail.stop();
     }
 
     @Test
-    public void testGetCheckTargetId() {
+    void testGetCheckTargetId() {
         List<Long> checkTargetId = novelManager.getCheckTargetId();
 
         assertNotNull(checkTargetId);
     }
 
     @Test
-    public void testGetUnreadNovels() {
+    void testGetUnreadNovels() {
         List<Novel> unreadNovels = novelOutputManager.getUnreadNovels();
 
         assertNotNull(unreadNovels);
     }
 
     @Test
-    public void testGetNovelsIncludingModifiedDate() {
+    void testGetNovelsIncludingModifiedDate() {
         List<Novel> novels = novelOutputManager.getModifiedDateOfNovels();
 
         assertNotNull(novels);
     }
 
     @Test
-    public void testSendUnreadReport() {
+    void testSendUnreadReport() {
         novelOutputManager.sendUnreadReport();
 
-        assertTrue(greenMail.getReceivedMessages().length == 1);
+        assertEquals(1, greenMail.getReceivedMessages().length);
     }
 
     @Test
-    public void testSendModifiedDateList() {
+    void testSendModifiedDateList() {
         novelOutputManager.sendModifiedDateReport();
 
-        assertTrue(greenMail.getReceivedMessages().length == 1);
+        assertEquals(1, greenMail.getReceivedMessages().length);
     }
 }

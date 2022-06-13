@@ -16,7 +16,7 @@ import crawler.entity.Novel;
 import crawler.service.NovelChapterManager;
 import crawler.service.NovelInfoManager;
 
-public class NovelManagerImplTest extends BaseManagerMockTestCase {
+class NovelManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
     private Logger log;
@@ -37,7 +37,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     private NovelManagerImpl novelManager = new NovelManagerImpl();
 
     @Test
-    public void testAddAndDelete() {
+    void testAddAndDelete() {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         // 登録対象有り
@@ -76,7 +76,7 @@ public class NovelManagerImplTest extends BaseManagerMockTestCase {
     }
 
     @Test
-    public void testCheckForUpdatesAndSaveHistory() {
+    void testCheckForUpdatesAndSaveHistory() {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         Novel novel = new Novel();

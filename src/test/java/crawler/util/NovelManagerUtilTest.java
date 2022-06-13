@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 
-public class NovelManagerUtilTest {
+class NovelManagerUtilTest {
 
     @Test
-    public void testGetUrl() throws Exception {
+    void testGetUrl() throws Exception {
         System.setProperty("http_proxy", "");
         assertThrows(NovelNotFoundException.class, () -> {
             NovelManagerUtil.getUrl("test");
@@ -18,7 +18,7 @@ public class NovelManagerUtilTest {
     }
 
     @Test
-    public void testGetSource() throws Exception {
+    void testGetSource() throws Exception {
         System.setProperty("http_proxy", "");
         assertThrows(NovelNotFoundException.class, () -> {
             NovelManagerUtil.getSource("http://localhost:19999/test");
@@ -26,7 +26,7 @@ public class NovelManagerUtilTest {
     }
 
     @Test
-    public void testProxyGetSource() throws Exception {
+    void testProxyGetSource() throws Exception {
         System.setProperty("http_proxy", "http://foo.bar:8080");
         assertThrows(NovelConnectException.class, () -> {
             NovelManagerUtil.getSource("http://localhost:19999/test");
@@ -34,7 +34,7 @@ public class NovelManagerUtilTest {
     }
 
     @Test
-    public void testProxyAuthGetSource() throws Exception {
+    void testProxyAuthGetSource() throws Exception {
         System.setProperty("http_proxy", "http://hoge:piyo@foo.bar:8080");
         assertThrows(NovelConnectException.class, () -> {
             NovelManagerUtil.getSource("http://localhost:19999/test");

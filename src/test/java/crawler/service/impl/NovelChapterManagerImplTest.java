@@ -16,7 +16,7 @@ import crawler.entity.NovelChapter;
 import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 
-public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
+class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
     private Logger log;
@@ -34,7 +34,7 @@ public class NovelChapterManagerImplTest extends BaseManagerMockTestCase {
     private NovelChapterManagerImpl novelChapterManager = new NovelChapterManagerImpl();
 
     @Test
-    public void testSaveAllNovelChapter() throws Exception {
+    void testSaveAllNovelChapter() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);

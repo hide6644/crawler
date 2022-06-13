@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import crawler.entity.Novel;
 
-public class NovelDaoTest extends BaseDaoTestCase {
+class NovelDaoTest extends BaseDaoTestCase {
 
     @Autowired
     private NovelDao dao;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         Novel novel = new Novel();
         novel.setUrl("Url");
         novel.setTitle("Title");
@@ -29,7 +29,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindByUrl() {
+    void testFindByUrl() {
         Novel novel = dao.findByUrl("Url");
 
         assertNotNull(novel);
@@ -41,7 +41,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue() {
+    void testFindByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue() {
         Stream<Novel> novelList = dao.findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(LocalDateTime.now());
 
         assertNotNull(novelList);
@@ -50,7 +50,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindByUnreadTrueOrderByTitleAndNovelChapterId() {
+    void testFindByUnreadTrueOrderByTitleAndNovelChapterId() {
         Stream<Novel> novelList = dao.findByUnreadTrueOrderByTitleAndNovelChapterId();
 
         assertNotNull(novelList);
@@ -59,7 +59,7 @@ public class NovelDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindByDeletedFalseOrderByTitle() {
+    void testFindByDeletedFalseOrderByTitle() {
         Stream<Novel> novelList = dao.findByDeletedFalseOrderByTitle();
 
         assertNotNull(novelList);

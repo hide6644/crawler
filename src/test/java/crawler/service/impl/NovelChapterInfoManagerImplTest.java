@@ -9,10 +9,10 @@ import crawler.entity.NovelChapter;
 import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
 import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
 
-public class NovelChapterInfoManagerImplTest {
+class NovelChapterInfoManagerImplTest {
 
     @Test
-    public void testSaveNovelInfo() throws Exception {
+    void testSaveNovelInfo() throws Exception {
         NovelIndexElement novelIndexElement = mock(NovelIndexElement.class);
         NovelChapterSource novelChapterSource = mock(NovelChapterSource.class);
         when(novelIndexElement.getChapterModifiedDate()).thenReturn("2016/09/23 00:00");

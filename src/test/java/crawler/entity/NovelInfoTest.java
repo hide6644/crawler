@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-public class NovelInfoTest {
+class NovelInfoTest {
 
     @Test
-    public void testNeedsCheckForUpdate() {
+    void testNeedsCheckForUpdate() {
         // 完結済み小説 => 更新チェック対象
         Novel novel = new Novel();
         NovelInfo novelInfo = new NovelInfo();

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import crawler.entity.Novel;
 import crawler.entity.NovelChapter;
 
-public class NovelChapterDaoTest extends BaseDaoTestCase {
+class NovelChapterDaoTest extends BaseDaoTestCase {
 
     @Autowired
     private NovelDao dao;
@@ -18,7 +18,7 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
     private NovelChapterDao cdao;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         Novel novel = new Novel();
         novel.setUrl("Url");
         novel.setTitle("Title");
@@ -37,7 +37,7 @@ public class NovelChapterDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindByUrl() {
+    void testFindByUrl() {
         NovelChapter novelChapter = cdao.findByUrl("Url");
 
         assertNotNull(novelChapter);
