@@ -3,7 +3,6 @@ package crawler.service.mail;
 import java.io.File;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -35,8 +34,8 @@ public class MailEngine {
      *             {@link MessagingException}
      */
     public void sendMail(String bodyText, File attachmentFile) throws MessagingException {
-        MimeMessage message = ((JavaMailSenderImpl) mailSender).createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        var message = ((JavaMailSenderImpl) mailSender).createMimeMessage();
+        var helper = new MimeMessageHelper(message, true);
 
         helper.setTo(mailMessage.getTo());
         helper.setFrom(mailMessage.getFrom());
@@ -44,7 +43,7 @@ public class MailEngine {
         helper.setText(bodyText);
         helper.setSubject(mailMessage.getSubject());
 
-        FileSystemResource file = new FileSystemResource(attachmentFile);
+        var file = new FileSystemResource(attachmentFile);
         helper.addAttachment(file.getFilename(), file);
 
         ((JavaMailSenderImpl) mailSender).send(message);

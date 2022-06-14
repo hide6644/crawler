@@ -9,7 +9,7 @@ import org.mockito.Mock;
 
 import crawler.dao.NovelDao;
 
-public class NovelOutputManagerImplTest extends BaseManagerMockTestCase {
+class NovelOutputManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
     private Logger log;
@@ -21,14 +21,14 @@ public class NovelOutputManagerImplTest extends BaseManagerMockTestCase {
     private NovelOutputManagerImpl novelOutputManager = new NovelOutputManagerImpl();
 
     @Test
-    public void testSendUnreadReport() {
+    void testSendUnreadReport() {
         assertDoesNotThrow(() -> {
             novelOutputManager.sendUnreadReport();
         });
     }
 
     @Test
-    public void testSendModifiedDateList() {
+    void testSendModifiedDateList() {
         assertDoesNotThrow(() -> {
             novelOutputManager.sendModifiedDateReport();;
         });

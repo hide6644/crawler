@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import crawler.entity.Novel;
 import crawler.entity.NovelInfo;
 
-public class NovelSearchTest extends BaseDaoTestCase {
+class NovelSearchTest extends BaseDaoTestCase {
 
     @Autowired
     private NovelDao dao;
@@ -20,12 +20,12 @@ public class NovelSearchTest extends BaseDaoTestCase {
     private NovelSearch novelSearch;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         novelSearch.reindexAll(false);
     }
 
     @Test
-    public void testSearch() {
+    void testSearch() {
         saveNovel();
 
         assertNotNull(novelSearch.search(null));
@@ -33,7 +33,7 @@ public class NovelSearchTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFacet() {
+    void testFacet() {
         saveNovel();
 
         Map<String, Long> userFacet = novelSearch.facet("novelInfo.keywordFacet", 2);

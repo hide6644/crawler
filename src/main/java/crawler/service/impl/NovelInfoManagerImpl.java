@@ -18,7 +18,7 @@ public class NovelInfoManagerImpl extends BaseManagerImpl implements NovelInfoMa
      */
     @Override
     public void saveNovelInfo(final NovelSource novelSource) throws NovelNotFoundException {
-        NovelInfoSource novelInfoSource = NovelInfoSource.newInstance(novelSource.getNovelInfoUrl(), novelSource.getNovel().getNovelInfo());
+        var novelInfoSource = NovelInfoSource.newInstance(novelSource.getNovelInfoUrl(), novelSource.getNovel().getNovelInfo());
 
         novelInfoSource.getNovelInfo().setNovel(novelSource.getNovel());
         novelSource.getNovel().setNovelInfo(novelInfoSource.getNovelInfo());

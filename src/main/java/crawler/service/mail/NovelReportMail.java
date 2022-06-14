@@ -1,6 +1,5 @@
 package crawler.service.mail;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -52,7 +51,7 @@ public class NovelReportMail {
         dataModel.put("unreadNovels", unreadNovels);
 
         String yesterday = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(DATE_FORMAT));
-        Path path = getPath("unread_novels_" + yesterday + ".html");
+        var path = getPath("unread_novels_" + yesterday + ".html");
         String bodyText = yesterday + " updated.";
 
         sendReport("unread_report.ftl", dataModel, bodyText, path);
@@ -69,8 +68,8 @@ public class NovelReportMail {
         dataModel.put("novels", novels);
 
         String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
-        Path path = getPath("modified_date_of_novels_" + today + ".html");
-        String bodyText = "modified date of novels.";
+        var path = getPath("modified_date_of_novels_" + today + ".html");
+        var bodyText = "modified date of novels.";
 
         sendReport("modified_date_report.ftl", dataModel, bodyText, path);
     }
@@ -83,7 +82,7 @@ public class NovelReportMail {
      * @return Pathオブジェクト
      */
     private Path getPath(String filePath) {
-        Path path = Path.of(Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + filePath);
+        var path = Path.of(Constants.APP_FOLDER_NAME + Constants.FILE_SEP + "report" + Constants.FILE_SEP + filePath);
 
         try {
             Files.createDirectories(path.getParent());
@@ -108,7 +107,7 @@ public class NovelReportMail {
      *            Pathオブジェクト
      */
     private void sendReport(String templateName, Map<String, Object> dataModel, String bodyText, Path path) {
-        try (BufferedWriter bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8);) {
+        try (var bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8);) {
             // テンプレートとマージ
             getConfiguration().getTemplate(templateName).process(dataModel, bw);
 
@@ -125,7 +124,7 @@ public class NovelReportMail {
      * @return Freemarkerの構成
      */
     private Configuration getConfiguration() {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
+        var cfg = new Configuration(Configuration.VERSION_2_3_29);
         cfg.setClassForTemplateLoading(getClass(), "/META-INF/freemarker/");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

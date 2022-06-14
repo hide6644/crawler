@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import crawler.entity.NovelChapterInfo;
 
-public class NovelChapterModifiedDateTest {
+class NovelChapterModifiedDateTest {
 
     @Test
-    public void testGetNovelChapterInfo() throws Exception {
+    void testGetNovelChapterInfo() throws Exception {
         String filePath = this.getClass().getClassLoader().getResource("crawler/mapping/yomou/syosetu/com/20160924/test.html").getPath();
 
         NovelSource novelSource = NovelSource.newInstance("file://" + filePath);

@@ -8,7 +8,7 @@ import org.mockito.Mock;
 
 import crawler.dao.NovelSearch;
 
-public class NovelSearchManagerImplTest extends BaseManagerMockTestCase {
+class NovelSearchManagerImplTest extends BaseManagerMockTestCase {
 
     @Mock
     private NovelSearch novelSearch;
@@ -17,7 +17,7 @@ public class NovelSearchManagerImplTest extends BaseManagerMockTestCase {
     private NovelSearchManagerImpl novelSearchManager = new NovelSearchManagerImpl();
 
     @Test
-    public void testReindexAll() {
+    void testReindexAll() {
         assertDoesNotThrow(() -> {
             novelSearchManager.reindexAll(true);
         });
