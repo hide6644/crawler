@@ -27,6 +27,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordFie
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +36,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "novel_info")
 @Indexed

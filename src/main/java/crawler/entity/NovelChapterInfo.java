@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "novel_chapter_info")
 public class NovelChapterInfo extends BaseObject implements Serializable {
