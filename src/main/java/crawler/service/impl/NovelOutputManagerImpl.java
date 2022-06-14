@@ -65,7 +65,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
             reportMail.sendUnreadReport(unreadNovels);
 
             // 小説のステータスを既読に更新
-            LocalDateTime now = LocalDateTime.now();
+            var now = LocalDateTime.now();
             unreadNovels.stream().flatMap(unreadNovel -> unreadNovel.getNovelChapters().stream())
                     .forEach(unreadNovelChapter -> {
                         unreadNovelChapter.getNovelChapterInfo().setUnread(false);

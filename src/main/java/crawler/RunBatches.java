@@ -24,9 +24,9 @@ public class RunBatches {
      *            プログラムの引数
      */
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(CONFIG_LOCATION);
+        var context = new ClassPathXmlApplicationContext(CONFIG_LOCATION);
 
-        try (PreventMultiInstance pmi = new PreventMultiInstance();) {
+        try (var pmi = new PreventMultiInstance();) {
             if (pmi.tryLock()) {
                 ((BatchProcess) context.getBean("novelProcess")).execute(args);
             } else {

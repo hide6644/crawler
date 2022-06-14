@@ -18,7 +18,7 @@ public class NovelChapterInfoManagerImpl extends BaseManagerImpl implements Nove
      */
     @Override
     public void saveNovelChapterInfo(final NovelIndexElement novelIndexElement, final NovelChapterSource novelChapterSource) {
-        NovelChapterModifiedDate novelChapterModifiedDate = NovelChapterModifiedDate.newInstance(novelIndexElement, novelChapterSource.getNovelChapter().getNovelChapterInfo());
+        var novelChapterModifiedDate = NovelChapterModifiedDate.newInstance(novelIndexElement, novelChapterSource.getNovelChapter().getNovelChapterInfo());
 
         novelChapterModifiedDate.getNovelChapterInfo().setNovelChapter(novelChapterSource.getNovelChapter());
         novelChapterSource.getNovelChapter().setNovelChapterInfo(novelChapterModifiedDate.getNovelChapterInfo());

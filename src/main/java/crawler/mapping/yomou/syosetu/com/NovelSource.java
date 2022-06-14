@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import crawler.entity.Novel;
 import crawler.entity.NovelHistory;
@@ -157,7 +156,7 @@ public class NovelSource extends BaseSource {
     public Set<NovelIndexElement> getNovelHistoryIndexSet() {
         if (novelHistory != null) {
             Document novelHistoryBodyHtml = Jsoup.parse(novelHistory.getBody());
-            Elements chapterHistoryElementList = novelHistoryBodyHtml.getElementsByTag("dl");
+            var chapterHistoryElementList = novelHistoryBodyHtml.getElementsByTag("dl");
 
             if (chapterHistoryElementList.isEmpty()) {
                 // 古いスタイルの場合

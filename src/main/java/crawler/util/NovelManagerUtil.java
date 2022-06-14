@@ -80,7 +80,7 @@ public class NovelManagerUtil {
                 Connection conn = Jsoup.connect(url);
 
                 if (StringUtils.isNotEmpty(PROXY)) {
-                    URL proxyUrl = new URL(PROXY);
+                    var proxyUrl = new URL(PROXY);
                     // プロキシ設定有りの場合
                     conn = conn.proxy(proxyUrl.getHost(), proxyUrl.getPort());
 

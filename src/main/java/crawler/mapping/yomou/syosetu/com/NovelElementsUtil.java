@@ -163,7 +163,7 @@ public class NovelElementsUtil {
      * @return 小説の付随情報の完結フラグ
      */
     public static boolean getFinished(final Document html) {
-        Element finishedElement = html.getElementById("noveltype");
+        var finishedElement = html.getElementById("noveltype");
 
         return finishedElement != null && finishedElement.text().equals("完結済");
     }
@@ -176,7 +176,7 @@ public class NovelElementsUtil {
      * @return 小説の章の最終更新日時
      */
     public static String getChapterModifiedDate(final Element element) {
-        Element updateElement = element.getElementsByClass("long_update").first();
+        var updateElement = element.getElementsByClass("long_update").first();
 
         if (updateElement.getElementsByTag("span").isEmpty()) {
             return updateElement.text();
