@@ -36,7 +36,7 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
 
         Set<Boolean> executeFlag = new HashSet<>();
 
-        for (int i = 0; i < args.length; i++) {
+        for (var i = 0; i < args.length; i++) {
             executeFlag.add(executeNovelManager(args[i]));
             executeFlag.add(executeNovelOutputManager(args[i]));
         }
@@ -55,7 +55,7 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
      * @return true:処理実行済み、false:処理未実行
      */
     private boolean executeNovelManager(String arg) {
-        boolean executeFlag = true;
+        var executeFlag = true;
 
         if (arg.equals(messages.getMessage("novelManager.getCheckTargetId"))) {
             // 更新チェック
@@ -81,7 +81,7 @@ public class NovelProcess extends BaseBatchProcess implements BatchProcess {
      * @return true:処理実行済み、false:処理未実行
      */
     private boolean executeNovelOutputManager(String arg) {
-        boolean executeFlag = true;
+        var executeFlag = true;
 
         if (arg.equals(messages.getMessage("novelOutputManager.sendUnreadReport"))) {
             // 未読小説の一覧をメールで送信

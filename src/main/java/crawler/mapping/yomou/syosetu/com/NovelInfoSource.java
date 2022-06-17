@@ -41,7 +41,7 @@ public class NovelInfoSource extends BaseSource {
      */
     @Override
     protected NovelInfoSource mapping() {
-        final LocalDateTime now = LocalDateTime.now();
+        final var now = LocalDateTime.now();
 
         if (!add) {
             // 更新の場合、更新日時を変更

@@ -48,7 +48,7 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
     @Override
     @Transactional
     public void save(final String url) {
-        Novel novel = novelDao.findByUrl(url);
+        var novel = novelDao.findByUrl(url);
 
         if (novel != null) {
             // 指定した小説が登録済みの場合
@@ -57,7 +57,7 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
         } else {
             try {
                 // 小説の情報を取得
-                NovelSource novelSource = NovelSource.newInstance(url);
+                var novelSource = NovelSource.newInstance(url);
                 log.info("[add] title:{}", () -> novelSource.getNovel().getTitle());
 
                 // 小説の付随情報を保存
@@ -118,7 +118,7 @@ public class NovelManagerImpl extends BaseManagerImpl implements NovelManager {
     @Transactional
     public void checkForUpdatesAndSaveHistory(final Novel novel) {
         try {
-            NovelSource currentNovelSource = NovelSource.newInstance(novel.getUrl(), novel);
+            var currentNovelSource = NovelSource.newInstance(novel.getUrl(), novel);
 
             if (currentNovelSource.getNovelHistory() != null) {
                 // 小説の情報に差異があった場合

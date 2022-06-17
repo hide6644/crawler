@@ -35,6 +35,9 @@ public class NovelManagerUtil {
     /** プロキシ設定 */
     public static final String PROXY = System.getProperty("http_proxy");
 
+    /** エラーメッセージテンプレート */
+    public static final String ERROR_MSG_TMPL = "url:{}";
+
     /**
      * プライベート・コンストラクタ.
      * Utilityクラスはインスタンス化禁止.
@@ -55,7 +58,7 @@ public class NovelManagerUtil {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
-            log.error("url:{}", url, e);
+            log.error(ERROR_MSG_TMPL, url, e);
             throw new NovelNotFoundException();
         }
     }
@@ -80,7 +83,7 @@ public class NovelManagerUtil {
                 Connection conn = Jsoup.connect(url);
 
                 if (StringUtils.isNotEmpty(PROXY)) {
-                    URL proxyUrl = new URL(PROXY);
+                    var proxyUrl = new URL(PROXY);
                     // プロキシ設定有りの場合
                     conn = conn.proxy(proxyUrl.getHost(), proxyUrl.getPort());
 
@@ -94,16 +97,16 @@ public class NovelManagerUtil {
                 return conn.get();
             }
         } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
-            log.error("url:{}", url, e);
+            log.error(ERROR_MSG_TMPL, url, e);
             throw new NovelConnectException();
         } catch (HttpStatusException e) {
-            log.error("url:{}", url, e);
+            log.error(ERROR_MSG_TMPL, url, e);
             if (e.getStatusCode() == 404) {
                 throw new NovelNotFoundException();
             }
             throw new NovelConnectException();
         } catch (IOException e) {
-            log.error("url:{}", url, e);
+            log.error(ERROR_MSG_TMPL, url, e);
             throw new NovelNotFoundException();
         }
     }

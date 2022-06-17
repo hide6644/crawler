@@ -4,31 +4,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class NovelTest {
+class NovelTest {
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         Novel novel1 = new Novel();
         novel1.setUrl("test1");
 
-        assertTrue(novel1.equals(novel1));
-        assertFalse(novel1.equals(null));
+        assertEquals(novel1, novel1);
+        assertNotEquals(null, novel1);
 
         Novel novel2 = new Novel();
 
-        assertFalse(novel1.equals(novel2));
+        assertNotEquals(novel1, novel2);
 
         novel2.setUrl("test2");
 
-        assertFalse(novel1.equals(novel2));
+        assertNotEquals(novel1, novel2);
 
         novel2.setUrl("test1");
 
-        assertTrue(novel1.equals(novel2));
+        assertEquals(novel1, novel2);
     }
 
     @Test
-    public void testNovelChapters() {
+    void testNovelChapters() {
         Novel novel = new Novel();
         NovelChapter novelChapter1 = new NovelChapter();
         novelChapter1.setUrl("test1");
@@ -44,7 +44,7 @@ public class NovelTest {
     }
 
     @Test
-    public void testNovelHistories() {
+    void testNovelHistories() {
         Novel novel = new Novel();
         NovelHistory novelHistory1 = new NovelHistory();
         novelHistory1.setId(1L);
@@ -60,10 +60,10 @@ public class NovelTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         Novel novel1 = new Novel();
         novel1.setUrl("test1");
 
-        assertTrue(novel1.hashCode() == novel1.hashCode());
+        assertEquals(novel1.hashCode(), novel1.hashCode());
     }
 }

@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.6.11</version>
+    <version>1.6.13</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -29,8 +29,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/hide6644/crawler</url>
+        <system>circleci</system>
+        <url>https://app.circleci.com/pipelines/github/hide6644/crawler</url>
     </ciManagement>
 
     <licenses>
@@ -58,12 +58,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.10.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -104,7 +104,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M6</version>
                 <configuration>
                     <reuseForks>false</reuseForks>
                     <argLine>${argLine} -Dapp_home=${project.build.directory}</argLine>
@@ -113,7 +113,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
+                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <goals>
@@ -135,12 +135,12 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.5.3.0</version>
+                    <version>4.7.0.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.6.0</version>
+                            <version>4.7.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -157,14 +157,14 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.1</version>
+                            <version>10.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -188,7 +188,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>3.12.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -283,6 +283,11 @@
                 <artifactId>byte-buddy-agent</artifactId>
                 <version>${byte-buddy.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb-runtime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -396,12 +401,6 @@
             <version>${ehcache.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>${jaxb-runtime.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
@@ -465,26 +464,26 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>3.0.4</jdbc.version>
+        <jdbc.version>3.0.5</jdbc.version>
 
-        <byte-buddy.version>1.12.9</byte-buddy.version>
+        <byte-buddy.version>1.12.10</byte-buddy.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <ehcache.version>3.10.0</ehcache.version>
         <freemarker.version>2.3.31</freemarker.version>
         <freemarker-java8.version>2.0.0</freemarker-java8.version>
-        <greenmail.version>1.6.8</greenmail.version>
-        <hibernate.version>5.6.8.Final</hibernate.version>
+        <greenmail.version>1.6.9</greenmail.version>
+        <hibernate.version>5.6.9.Final</hibernate.version>
         <HikariCP.version>5.0.1</HikariCP.version>
         <jaxb-runtime.version>2.3.6</jaxb-runtime.version>
-        <jsoup.version>1.14.3</jsoup.version>
+        <jsoup.version>1.15.1</jsoup.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <log4j.version>2.17.2</log4j.version>
         <lombok.version>1.18.24</lombok.version>
         <mail.version>1.6.7</mail.version>
-        <mockito.version>4.5.1</mockito.version>
+        <mockito.version>4.6.1</mockito.version>
         <slf4j.version>1.7.36</slf4j.version>
-        <spring.version>5.3.19</spring.version>
-        <spring-data.version>2.6.4</spring-data.version>
+        <spring.version>5.3.21</spring.version>
+        <spring-data.version>2.7.0</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>

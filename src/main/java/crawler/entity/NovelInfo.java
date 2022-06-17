@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "novel_info")
 public class NovelInfo extends BaseObject implements Serializable {
@@ -70,7 +72,7 @@ public class NovelInfo extends BaseObject implements Serializable {
      * @return true:確認必要、false:確認不要
      */
     public boolean needsCheckForUpdate() {
-        final LocalDateTime now = LocalDateTime.now();
+        final var now = LocalDateTime.now();
         if (finished && checkedDate.isAfter(now.minusDays(45))) {
             // 完了済み、かつ確認日が45日以内の場合
             log.info("[skip] finished title:{}", () -> novel.getTitle());

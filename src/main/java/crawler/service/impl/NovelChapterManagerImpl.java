@@ -59,7 +59,7 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
         try {
             // 小説の章を取得
             String url = novelSource.getHostname() + novelIndexElement.getChapterUrl();
-            NovelChapterSource novelChapterSource = NovelChapterSource.newInstance(url, novelChapterDao.findByUrl(url));
+            var novelChapterSource = NovelChapterSource.newInstance(url, novelChapterDao.findByUrl(url));
 
             if (novelChapterSource.isAdd()) {
                 // URLが一致する小説の章がない場合、登録処理
