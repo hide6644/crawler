@@ -508,7 +508,7 @@
         <hibernate-search.version>6.1.6.Final</hibernate-search.version>
         <HikariCP.version>5.0.1</HikariCP.version>
         <jaxb-runtime.version>2.3.6</jaxb-runtime.version>
-        <jsoup.version>1.15.2</jsoup.version>
+        <jsoup.version>1.15.3</jsoup.version>
         <junit-jupiter.version>5.9.0</junit-jupiter.version>
         <log4j.version>2.18.0</log4j.version>
         <lombok.version>1.18.24</lombok.version>
