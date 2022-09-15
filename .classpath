@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/classmate-1.5.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/commons-lang3-3.12.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/ehcache-3.10.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/freemarker-2.3.31.jar"/>
 	<classpathentry kind="lib" path="target/lib/freemarker-java8-2.1.0.jar"/>
@@ -51,11 +50,10 @@
 	<classpathentry kind="lib" path="target/lib/junit-jupiter-params-5.9.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/junit-platform-commons-1.9.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/junit-platform-engine-1.9.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/log4j-1.2-api-2.18.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/log4j-api-2.18.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/log4j-core-2.18.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/log4j-jcl-2.18.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/log4j-slf4j-impl-2.18.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/log4j-to-slf4j-2.18.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/logback-classic-1.4.1.jar"/>
+	<classpathentry kind="lib" path="target/lib/logback-core-1.4.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/lombok-1.18.24.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-analyzers-common-8.11.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-analyzers-kuromoji-8.11.1.jar"/>
@@ -69,7 +67,7 @@
 	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-4.8.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-3.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/slf4j-api-1.7.36.jar"/>
+	<classpathentry kind="lib" path="target/lib/slf4j-api-2.0.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aop-5.3.22.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aspects-5.3.22.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-beans-5.3.22.jar"/>
