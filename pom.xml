@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.3.3</version>
+                            <version>10.3.4</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -475,34 +475,34 @@
     </dependencies>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>3.0.7</jdbc.version>
+        <jdbc.version>3.0.8</jdbc.version>
 
-        <byte-buddy.version>1.12.16</byte-buddy.version>
+        <byte-buddy.version>1.12.18</byte-buddy.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <ehcache.version>3.10.1</ehcache.version>
+        <ehcache.version>3.10.2</ehcache.version>
         <freemarker.version>2.3.31</freemarker.version>
         <freemarker-java8.version>2.1.0</freemarker-java8.version>
         <greenmail.version>1.6.10</greenmail.version>
-        <hibernate.version>5.6.11.Final</hibernate.version>
-        <hibernate-search.version>6.1.6.Final</hibernate-search.version>
+        <hibernate.version>5.6.12.Final</hibernate.version>
+        <hibernate-search.version>6.1.7.Final</hibernate-search.version>
         <HikariCP.version>5.0.1</HikariCP.version>
         <jaxb-runtime.version>2.3.6</jaxb-runtime.version>
         <jsoup.version>1.15.3</jsoup.version>
-        <junit-jupiter.version>5.9.0</junit-jupiter.version>
-        <logback.version>1.4.1</logback.version>
-        <log4j.version>2.18.0</log4j.version>
+        <junit-jupiter.version>5.9.1</junit-jupiter.version>
+        <logback.version>1.4.4</logback.version>
+        <log4j.version>2.19.0</log4j.version>
         <lombok.version>1.18.24</lombok.version>
         <lucene.version>8.11.1</lucene.version>
         <mail.version>1.6.7</mail.version>
         <mockito.version>4.8.0</mockito.version>
-        <slf4j.version>2.0.1</slf4j.version>
-        <spring.version>5.3.22</spring.version>
-        <spring-data.version>2.7.2</spring-data.version>
+        <slf4j.version>2.0.3</slf4j.version>
+        <spring.version>5.3.23</spring.version>
+        <spring-data.version>2.7.5</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
