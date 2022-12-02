@@ -3,8 +3,8 @@ package crawler.dao;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

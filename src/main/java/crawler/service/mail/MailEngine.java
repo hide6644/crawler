@@ -2,7 +2,7 @@ package crawler.service.mail;
 
 import java.io.File;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
