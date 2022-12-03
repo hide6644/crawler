@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>1.6.14</version>
+    <version>2.0.0</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -135,12 +135,12 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.7.2.0</version>
+                    <version>4.7.3.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
                             <artifactId>spotbugs</artifactId>
-                            <version>4.7.2</version>
+                            <version>4.7.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -157,7 +157,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.3.3</version>
+                            <version>10.5.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -169,7 +169,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.3.0</version>
                     <configuration>
                         <archive>
                             <manifest>
@@ -183,7 +183,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.0-M6</version>
+                    <version>3.0.0-M7</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -238,7 +238,7 @@
                 <version>3.4.1</version>
                 <configuration>
                     <author>true</author>
-                    <source>11</source>
+                    <source>17</source>
                     <show>protected</show>
                     <encoding>UTF-8</encoding>
                     <charset>UTF-8</charset>
@@ -270,7 +270,13 @@
             <dependency>
                 <groupId>com.sun.mail</groupId>
                 <artifactId>jakarta.mail</artifactId>
-                <version>${mail.version}</version>
+                <version>${jakarta.mail.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.xml.bind-api.version}</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
@@ -362,18 +368,18 @@
 
         <!-- Hibernate -->
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-hikaricp</artifactId>
             <version>${hibernate.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jcache</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
@@ -458,32 +464,33 @@
     </dependencies>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>3.0.7</jdbc.version>
+        <jdbc.version>3.1.0</jdbc.version>
 
-        <byte-buddy.version>1.12.16</byte-buddy.version>
+        <byte-buddy.version>1.12.19</byte-buddy.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <ehcache.version>3.10.1</ehcache.version>
+        <ehcache.version>3.10.8</ehcache.version>
         <freemarker.version>2.3.31</freemarker.version>
         <freemarker-java8.version>2.1.0</freemarker-java8.version>
-        <greenmail.version>1.6.10</greenmail.version>
-        <hibernate.version>5.6.11.Final</hibernate.version>
+        <greenmail.version>2.0.0-alpha-2</greenmail.version>
+        <hibernate.version>6.1.5.Final</hibernate.version>
         <HikariCP.version>5.0.1</HikariCP.version>
-        <jaxb-runtime.version>2.3.6</jaxb-runtime.version>
+        <jakarta.mail.version>2.0.1</jakarta.mail.version>
+        <jakarta.xml.bind-api.version>3.0.1</jakarta.xml.bind-api.version>
+        <jaxb-runtime.version>3.0.2</jaxb-runtime.version>
         <jsoup.version>1.15.3</jsoup.version>
-        <junit-jupiter.version>5.9.0</junit-jupiter.version>
-        <logback.version>1.4.1</logback.version>
-        <log4j.version>2.18.0</log4j.version>
+        <junit-jupiter.version>5.9.1</junit-jupiter.version>
+        <logback.version>1.4.5</logback.version>
+        <log4j.version>2.19.0</log4j.version>
         <lombok.version>1.18.24</lombok.version>
-        <mail.version>1.6.7</mail.version>
-        <mockito.version>4.8.0</mockito.version>
-        <slf4j.version>2.0.1</slf4j.version>
-        <spring.version>5.3.22</spring.version>
-        <spring-data.version>2.7.2</spring-data.version>
+        <mockito.version>4.9.0</mockito.version>
+        <slf4j.version>2.0.5</slf4j.version>
+        <spring.version>6.0.2</spring.version>
+        <spring-data.version>3.0.0</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>

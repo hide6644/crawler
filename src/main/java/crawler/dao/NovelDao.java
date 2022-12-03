@@ -1,11 +1,11 @@
 package crawler.dao;
 
-import static org.hibernate.jpa.QueryHints.*;
+import static org.hibernate.jpa.HibernateHints.*;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
-import javax.persistence.QueryHint;
+import jakarta.persistence.QueryHint;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.QueryHints;
