@@ -35,7 +35,7 @@ public interface NovelDao extends JpaRepository<Novel, Long> {
      * @return 小説の一覧
      */
     @QueryHints(value = {
-        @QueryHint(name = HINT_FETCH_SIZE, value = "" + Integer.MIN_VALUE),
+        @QueryHint(name = HINT_FETCH_SIZE, value = "1000"),
         @QueryHint(name = HINT_CACHEABLE, value = "false")
     })
     Stream<Novel> findByDeletedFalseAndCheckedDateLessThanEqualAndCheckEnableTrue(@Param("checkedDate") LocalDateTime checkedDate);
