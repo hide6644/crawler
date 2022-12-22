@@ -12,8 +12,8 @@
 	<classpathentry kind="lib" path="target/lib/antlr4-runtime-4.10.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/apiguardian-api-1.1.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/aspectjweaver-1.9.9.1.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-1.12.19.jar"/>
-	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.12.19.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-1.12.20.jar"/>
+	<classpathentry kind="lib" path="target/lib/byte-buddy-agent-1.12.20.jar"/>
 	<classpathentry kind="lib" path="target/lib/cache-api-1.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/caffeine-2.9.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/checker-qual-3.23.0.jar"/>
@@ -25,9 +25,9 @@
 	<classpathentry kind="lib" path="target/lib/freemarker-java8-2.1.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/greenmail-2.0.0-alpha-2.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-commons-annotations-6.0.2.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-core-6.1.5.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-6.1.5.Final.jar"/>
-	<classpathentry kind="lib" path="target/lib/hibernate-jcache-6.1.5.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-core-6.1.6.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-hikaricp-6.1.6.Final.jar"/>
+	<classpathentry kind="lib" path="target/lib/hibernate-jcache-6.1.6.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-backend-lucene-6.1.7.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-engine-6.1.7.Final.jar"/>
 	<classpathentry kind="lib" path="target/lib/hibernate-search-mapper-orm-orm6-6.1.7.Final.jar"/>
@@ -71,27 +71,27 @@
 	<classpathentry kind="lib" path="target/lib/lucene-queries-8.11.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/lucene-queryparser-8.11.1.jar"/>
 	<classpathentry kind="lib" path="target/lib/mariadb-java-client-3.1.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-core-4.9.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-4.9.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-core-4.10.0.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-junit-jupiter-4.10.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/objenesis-3.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/opentest4j-1.2.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/slf4j-api-2.0.5.jar"/>
+	<classpathentry kind="lib" path="target/lib/slf4j-api-2.0.6.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-aop-6.0.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-aspects-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-beans-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-context-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-context-support-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-core-6.0.2.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-aspects-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-beans-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-context-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-context-support-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-core-6.0.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-data-commons-3.0.0.jar"/>
 	<classpathentry kind="lib" path="target/lib/spring-data-jpa-3.0.0.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-expression-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-instrument-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-jcl-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-jdbc-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-orm-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-oxm-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-test-6.0.2.jar"/>
-	<classpathentry kind="lib" path="target/lib/spring-tx-6.0.2.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-expression-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-instrument-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-jcl-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-jdbc-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-orm-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-oxm-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-test-6.0.3.jar"/>
+	<classpathentry kind="lib" path="target/lib/spring-tx-6.0.3.jar"/>
 	<classpathentry kind="lib" path="target/lib/txw2-3.0.2.jar"/>
 	<classpathentry kind="lib" path="target/lib/waffle-jna-3.2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
