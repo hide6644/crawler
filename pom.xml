@@ -8,7 +8,7 @@
     <artifactId>crawler</artifactId>
     <packaging>jar</packaging>
     <name>crawler</name>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://github.com/hide6644/crawler</url>
 
@@ -109,7 +109,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.2</version>
                 <configuration>
                     <reuseForks>false</reuseForks>
                     <argLine>${argLine} -Dapp_home=${project.build.directory}</argLine>
@@ -155,7 +155,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.7.3.4</version>
+                    <version>4.7.3.5</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.3.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -203,12 +203,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.0.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>4.0.0-M8</version>
+                    <version>4.0.0-M9</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -242,7 +242,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.4.3</version>
+                <version>3.4.5</version>
                 <configuration>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
@@ -269,7 +269,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.2</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -509,27 +509,27 @@
         <jdbc.version>3.1.4</jdbc.version>
 
         <byte-buddy.version>1.14.5</byte-buddy.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
         <ehcache.version>3.10.8</ehcache.version>
         <freemarker.version>2.3.32</freemarker.version>
         <freemarker-java8.version>2.1.0</freemarker-java8.version>
         <greenmail.version>2.0.0</greenmail.version>
-        <hibernate.version>6.2.6.Final</hibernate.version>
+        <hibernate.version>6.2.7.Final</hibernate.version>
         <hibernate-search.version>6.2.0.Final</hibernate-search.version>
         <HikariCP.version>5.0.1</HikariCP.version>
         <jakarta.mail.version>2.0.1</jakarta.mail.version>
         <jakarta.xml.bind-api.version>4.0.0</jakarta.xml.bind-api.version>
         <jaxb-runtime.version>4.0.3</jaxb-runtime.version>
         <jsoup.version>1.16.1</jsoup.version>
-        <junit-jupiter.version>5.9.3</junit-jupiter.version>
+        <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <logback.version>1.4.8</logback.version>
         <log4j.version>2.20.0</log4j.version>
         <lombok.version>1.18.28</lombok.version>
         <lucene.version>8.11.2</lucene.version>
         <mockito.version>5.4.0</mockito.version>
         <slf4j.version>2.0.7</slf4j.version>
-        <spring.version>6.0.10</spring.version>
-        <spring-data.version>3.1.1</spring-data.version>
+        <spring.version>6.0.11</spring.version>
+        <spring-data.version>3.1.2</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
