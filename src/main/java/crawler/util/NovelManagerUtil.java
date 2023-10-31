@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Base64;
@@ -56,8 +57,8 @@ public class NovelManagerUtil {
      */
     public static URL getUrl(final String url) throws NovelNotFoundException {
         try {
-            return new URL(url);
-        } catch (MalformedURLException e) {
+            return URI.create(url).toURL();
+        } catch (IllegalArgumentException | MalformedURLException e) {
             log.error(ERROR_MSG_TMPL, url, e);
             throw new NovelNotFoundException();
         }
@@ -83,7 +84,7 @@ public class NovelManagerUtil {
                 Connection conn = Jsoup.connect(url);
 
                 if (StringUtils.isNotEmpty(PROXY)) {
-                    var proxyUrl = new URL(PROXY);
+                    var proxyUrl = URI.create(PROXY).toURL();
                     // プロキシ設定有りの場合
                     conn = conn.proxy(proxyUrl.getHost(), proxyUrl.getPort());
 
