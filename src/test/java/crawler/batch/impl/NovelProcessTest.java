@@ -1,7 +1,8 @@
 package crawler.batch.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,7 +58,8 @@ class NovelProcessTest {
 
     @Test
     void testExecuteInvalid() {
-        when(messages.getMessage(anyString())).thenReturn("checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport");
+        String msg = messages.getMessage(anyString());
+        when(msg).thenReturn("checkForUpdates", "save", "del", "sendUnreadReport", "sendModifiedDateReport", "reindexAll");
 
         // 不正な引数
         assertThrows(IllegalArgumentException.class, () -> {
