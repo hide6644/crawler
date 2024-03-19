@@ -81,7 +81,7 @@ public class NovelElementsUtil {
      */
     public static String getNovelInfoUrl(final Document html) {
         return html.getElementById("novel_header").getElementsByTag("a").stream()
-                .filter(linkElement -> linkElement.text().equals("小説情報"))
+                .filter(linkElement -> (linkElement.text().equals("小説情報") || linkElement.text().equals("作品情報")))
                 .map(linkElement -> linkElement.attr("href"))
                 .findFirst().orElse(null);
     }
