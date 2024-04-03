@@ -11,8 +11,6 @@ import java.net.UnknownHostException;
 import java.util.Base64;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -21,14 +19,13 @@ import org.jsoup.nodes.Document;
 import crawler.Constants;
 import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 小説の情報のUtilityクラス.
  */
+@Log4j2
 public class NovelManagerUtil {
-
-    /** ログ出力クラス */
-    private static final Logger log = LogManager.getLogger(NovelManagerUtil.class);
 
     /** 一時停止時間 */
     public static final long DELAY_ACCESS_TIME = Long.parseLong(Constants.RB.getString("delay.access.time")) * 1000;

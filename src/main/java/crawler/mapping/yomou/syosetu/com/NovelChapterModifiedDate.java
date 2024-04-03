@@ -24,7 +24,7 @@ public class NovelChapterModifiedDate {
     /** 小説の章の付随情報 */
     private final NovelChapterInfo novelChapterInfo;
 
-    /** 新規フラグ */
+    /** 新規フラグ(true:新規、false:更新) */
     private final boolean add;
 
     /**
@@ -33,7 +33,7 @@ public class NovelChapterModifiedDate {
      * @param chapterModifiedDate
      *            小説の目次に記載されている章の最終更新日時
      * @param add
-     *            true:新規、false:更新
+     *            新規フラグ(true:新規、false:更新)
      * @param novelChapterInfo
      *            小説の章の付随情報
      */

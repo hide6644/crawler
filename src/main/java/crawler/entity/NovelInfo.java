@@ -17,8 +17,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.search.engine.backend.types.Aggregable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -30,6 +28,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyVa
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 小説の付随情報
@@ -40,10 +39,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "novel_info")
 @Indexed
+@Log4j2
 public class NovelInfo extends BaseObject implements Serializable {
-
-    /** ログ出力クラス */
-    private static final Logger log = LogManager.getLogger(NovelInfo.class);
 
     /** 最終確認日時 */
     @Column(name = "checked_date")
