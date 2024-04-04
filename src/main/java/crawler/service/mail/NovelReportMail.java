@@ -12,8 +12,6 @@ import java.util.Map;
 
 import jakarta.mail.MessagingException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +21,17 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import no.api.freemarker.java8.Java8ObjectWrapper;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Novel Reportメール処理クラス.
  */
 @Service("novelReportMail")
+@Log4j2
 public class NovelReportMail {
 
     /** 日付のフォーマット */
     public static final String DATE_FORMAT = "yyyy-MM-dd";
-
-    /** ログ出力クラス */
-    private final Logger log = LogManager.getLogger(this);
 
     /** メールを処理するクラス */
     @Autowired(required = false)
