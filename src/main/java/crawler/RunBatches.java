@@ -1,18 +1,15 @@
 package crawler;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import crawler.batch.BatchProcess;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 各処理を起動する.
  */
+@Log4j2
 public class RunBatches {
-
-    /** ログ出力クラス */
-    private static final Log log = LogFactory.getLog(RunBatches.class);
 
     /** Spring設定ファイルの参照先 */
     public static final String CONFIG_LOCATION = "applicationContext.xml";

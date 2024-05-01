@@ -12,12 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 小説の付随情報
@@ -27,10 +25,8 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "novel_info")
+@Log4j2
 public class NovelInfo extends BaseObject implements Serializable {
-
-    /** ログ出力クラス */
-    private static final Logger log = LogManager.getLogger(NovelInfo.class);
 
     /** 最終確認日時 */
     @Column(name = "checked_date")

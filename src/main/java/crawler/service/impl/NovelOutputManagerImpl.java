@@ -13,11 +13,13 @@ import crawler.dao.NovelDao;
 import crawler.entity.Novel;
 import crawler.service.NovelOutputManager;
 import crawler.service.mail.NovelReportMail;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 小説の情報の出力を管理する.
  */
 @Service("novelOutputManager")
+@Log4j2
 public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutputManager {
 
     /** 小説のDAO. */

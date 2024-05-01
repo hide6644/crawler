@@ -13,11 +13,13 @@ import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
 import crawler.mapping.yomou.syosetu.com.NovelSource;
 import crawler.service.NovelChapterInfoManager;
 import crawler.service.NovelChapterManager;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 小説の章を管理する.
  */
 @Service("novelChapterManager")
+@Log4j2
 public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelChapterManager {
 
     /** 小説の章のDAO. */
