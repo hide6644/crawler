@@ -141,7 +141,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.8.4.0</version>
+                    <version>4.8.5.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.spotbugs</groupId>
@@ -163,7 +163,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.16.0</version>
+                            <version>10.17.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -175,7 +175,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.4.0</version>
+                    <version>3.4.1</version>
                     <configuration>
                         <archive>
                             <manifest>
@@ -189,7 +189,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.6.3</version>
+                    <version>3.7.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -204,7 +204,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>4.0.0-M13</version>
+                    <version>4.0.0-M15</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -251,7 +251,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.4.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -497,15 +497,15 @@
 
         <jdbc.groupId>org.mariadb.jdbc</jdbc.groupId>
         <jdbc.artifactId>mariadb-java-client</jdbc.artifactId>
-        <jdbc.version>3.3.3</jdbc.version>
+        <jdbc.version>3.4.0</jdbc.version>
 
-        <byte-buddy.version>1.14.14</byte-buddy.version>
+        <byte-buddy.version>1.14.17</byte-buddy.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <ehcache.version>3.10.8</ehcache.version>
-        <freemarker.version>2.3.32</freemarker.version>
+        <freemarker.version>2.3.33</freemarker.version>
         <freemarker-java8.version>2.1.0</freemarker-java8.version>
         <greenmail.version>2.0.1</greenmail.version>
-        <hibernate.version>6.4.4.Final</hibernate.version>
+        <hibernate.version>6.5.2.Final</hibernate.version>
         <hibernate-search.version>7.1.1.Final</hibernate-search.version>
         <HikariCP.version>5.1.0</HikariCP.version>
         <jakarta.mail.version>2.0.1</jakarta.mail.version>
@@ -517,10 +517,10 @@
         <log4j.version>2.23.1</log4j.version>
         <lombok.version>1.18.32</lombok.version>
         <lucene.version>9.9.2</lucene.version>
-        <mockito.version>5.11.0</mockito.version>
+        <mockito.version>5.12.0</mockito.version>
         <slf4j.version>2.0.13</slf4j.version>
-        <spring.version>6.1.6</spring.version>
-        <spring-data.version>3.2.5</spring-data.version>
+        <spring.version>6.1.8</spring.version>
+        <spring-data.version>3.3.0</spring-data.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <copyright.year>2013</copyright.year>
