@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import crawler.entity.NovelInfo;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import lombok.Getter;
 
@@ -28,10 +29,12 @@ public class NovelInfoSource extends BaseSource {
      *            小説の付随情報のURL
      * @param novelInfo
      *            小説の付随情報
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             小説の付随情報が見つからない
+     *             URLで指定されたコンテンツが見つからない
      */
-    private NovelInfoSource(final boolean add, final String url, final NovelInfo novelInfo) throws NovelNotFoundException {
+    private NovelInfoSource(final boolean add, final String url, final NovelInfo novelInfo) throws NovelConnectException, NovelNotFoundException {
         super(url, add);
         this.novelInfo = novelInfo;
     }
@@ -67,10 +70,12 @@ public class NovelInfoSource extends BaseSource {
      * @param novelInfo
      *            小説の付随情報
      * @return NovelInfoSourceのインスタンス
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             指定されたURLが取得出来ない
+     *             URLで指定されたコンテンツが見つからない
      */
-    public static NovelInfoSource newInstance(final String url, final NovelInfo novelInfo) throws NovelNotFoundException {
+    public static NovelInfoSource newInstance(final String url, final NovelInfo novelInfo) throws NovelConnectException, NovelNotFoundException {
         if (novelInfo == null) {
             return new NovelInfoSource(true, url, new NovelInfo()).mapping();
         } else {

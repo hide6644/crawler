@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import crawler.entity.NovelChapter;
 import crawler.entity.NovelChapterHistory;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelManagerUtil;
 import lombok.Getter;
@@ -35,10 +36,12 @@ public class NovelChapterSource extends BaseSource {
      *            小説の章のURL
      * @param novelChapter
      *            小説の章の付随情報
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             小説の章が見つからない
+     *             URLで指定されたコンテンツが見つからない
      */
-    private NovelChapterSource(final boolean add, final String url, final NovelChapter novelChapter) throws NovelNotFoundException {
+    private NovelChapterSource(final boolean add, final String url, final NovelChapter novelChapter) throws NovelConnectException, NovelNotFoundException {
         super(url, add);
         this.url = NovelManagerUtil.getUrl(url);
         this.novelChapter = novelChapter;
@@ -101,10 +104,12 @@ public class NovelChapterSource extends BaseSource {
      * @param novelChapter
      *            小説の章の情報
      * @return NovelChapterSourceのインスタンス
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             指定されたURLが取得出来ない
+     *             URLで指定されたコンテンツが見つからない
      */
-    public static NovelChapterSource newInstance(final String url, final NovelChapter novelChapter) throws NovelNotFoundException {
+    public static NovelChapterSource newInstance(final String url, final NovelChapter novelChapter) throws NovelConnectException, NovelNotFoundException {
         if (novelChapter == null) {
             return new NovelChapterSource(true, url, new NovelChapter()).mapping();
         } else {

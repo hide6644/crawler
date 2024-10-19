@@ -2,6 +2,7 @@ package crawler.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.mapping.yomou.syosetu.com.NovelInfoSource;
 import crawler.mapping.yomou.syosetu.com.NovelSource;
@@ -17,7 +18,7 @@ public class NovelInfoManagerImpl extends BaseManagerImpl implements NovelInfoMa
      * {@inheritDoc}
      */
     @Override
-    public void saveNovelInfo(final NovelSource novelSource) throws NovelNotFoundException {
+    public void saveNovelInfo(final NovelSource novelSource) throws NovelConnectException, NovelNotFoundException {
         var novelInfoSource = NovelInfoSource.newInstance(novelSource.getNovelInfoUrl(), novelSource.getNovel().getNovelInfo());
 
         novelInfoSource.getNovelInfo().setNovel(novelSource.getNovel());

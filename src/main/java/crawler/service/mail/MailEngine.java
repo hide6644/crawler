@@ -1,6 +1,7 @@
 package crawler.service.mail;
 
 import java.io.File;
+import java.util.Optional;
 
 import jakarta.mail.MessagingException;
 
@@ -37,14 +38,13 @@ public class MailEngine {
         var message = ((JavaMailSenderImpl) mailSender).createMimeMessage();
         var helper = new MimeMessageHelper(message, true);
 
-        helper.setTo(mailMessage.getTo());
-        helper.setFrom(mailMessage.getFrom());
-
+        helper.setTo(Optional.ofNullable(mailMessage.getTo()).orElseThrow(() -> new NullPointerException()));
+        helper.setFrom(Optional.ofNullable(mailMessage.getFrom()).orElseThrow(() -> new NullPointerException()));
+        helper.setSubject(Optional.ofNullable(mailMessage.getSubject()).orElseThrow(() -> new NullPointerException()));
         helper.setText(bodyText);
-        helper.setSubject(mailMessage.getSubject());
 
         var file = new FileSystemResource(attachmentFile);
-        helper.addAttachment(file.getFilename(), file);
+        helper.addAttachment(Optional.ofNullable(file.getFilename()).orElseThrow(() -> new NullPointerException()), file);
 
         ((JavaMailSenderImpl) mailSender).send(message);
     }

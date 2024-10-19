@@ -1,5 +1,6 @@
 package crawler.service;
 
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.mapping.yomou.syosetu.com.NovelSource;
 
@@ -13,8 +14,10 @@ public interface NovelInfoManager {
      *
      * @param novelSource
      *            小説の情報
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             小説の情報が見つからない
+     *             URLで指定されたコンテンツが見つからない
      */
-    void saveNovelInfo(NovelSource novelSource) throws NovelNotFoundException;
+    void saveNovelInfo(NovelSource novelSource) throws NovelConnectException, NovelNotFoundException;
 }

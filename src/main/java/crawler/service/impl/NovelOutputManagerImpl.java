@@ -2,7 +2,6 @@ package crawler.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Transactional
     public List<Novel> getUnreadNovels() {
         try (Stream<Novel> novels = novelDao.findByUnreadTrueOrderByTitleAndNovelChapterId()) {
-            return novels.collect(Collectors.toList());
+            return novels.toList();
         }
     }
 
@@ -48,7 +47,7 @@ public class NovelOutputManagerImpl extends BaseManagerImpl implements NovelOutp
     @Transactional(readOnly = true)
     public List<Novel> getModifiedDateOfNovels() {
         try (Stream<Novel> novels = novelDao.findByDeletedFalseOrderByTitle()) {
-            return novels.collect(Collectors.toList());
+            return novels.toList();
         }
     }
 

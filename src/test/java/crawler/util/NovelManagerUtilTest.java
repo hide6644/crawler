@@ -20,7 +20,7 @@ class NovelManagerUtilTest {
     @Test
     void testGetSource() throws Exception {
         System.setProperty("http_proxy", "");
-        assertThrows(NovelNotFoundException.class, () -> {
+        assertThrows(NovelConnectException.class, () -> {
             NovelManagerUtil.getSource("http://localhost:19999/test");
         });
     }

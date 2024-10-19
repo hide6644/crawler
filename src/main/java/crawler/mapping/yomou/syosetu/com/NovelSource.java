@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 
 import crawler.entity.Novel;
 import crawler.entity.NovelHistory;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelManagerUtil;
 import lombok.Getter;
@@ -45,10 +46,12 @@ public class NovelSource extends BaseSource {
      *            小説のURL
      * @param novel
      *            小説の情報
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             小説が見つからない
+     *             URLで指定されたコンテンツが見つからない
      */
-    private NovelSource(final boolean add, final String url, final Novel novel) throws NovelNotFoundException {
+    private NovelSource(final boolean add, final String url, final Novel novel) throws NovelConnectException, NovelNotFoundException {
         super(url, add);
         this.url = NovelManagerUtil.getUrl(url);
         this.novel = novel;
@@ -186,10 +189,12 @@ public class NovelSource extends BaseSource {
      * @param url
      *            小説のURL
      * @return NovelSourceのインスタンス
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             指定されたURLが取得出来ない
+     *             URLで指定されたコンテンツが見つからない
      */
-    public static NovelSource newInstance(final String url) throws NovelNotFoundException {
+    public static NovelSource newInstance(final String url) throws NovelConnectException, NovelNotFoundException {
         return newInstance(url, null);
     }
 
@@ -201,10 +206,12 @@ public class NovelSource extends BaseSource {
      * @param novel
      *            小説の情報
      * @return NovelSourceのインスタンス
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             指定されたURLが取得出来ない
+     *             URLで指定されたコンテンツが見つからない
      */
-    public static NovelSource newInstance(final String url, final Novel novel) throws NovelNotFoundException {
+    public static NovelSource newInstance(final String url, final Novel novel) throws NovelConnectException, NovelNotFoundException {
         if (novel == null) {
             return new NovelSource(true, url, new Novel()).mapping();
         } else {

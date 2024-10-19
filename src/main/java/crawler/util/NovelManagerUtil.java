@@ -67,10 +67,12 @@ public class NovelManagerUtil {
      * @param url
      *            URLオブジェクト
      * @return htmlファイル
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
      *             URLで指定されたコンテンツが見つからない
      */
-    public static Document getSource(final String url) throws NovelNotFoundException {
+    public static Document getSource(final String url) throws NovelConnectException, NovelNotFoundException {
         // ネットワーク負荷低減のため、実行を一時停止
         delayAccess();
 
