@@ -2,6 +2,7 @@ package crawler.mapping.yomou.syosetu.com;
 
 import org.jsoup.nodes.Document;
 
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.util.NovelManagerUtil;
 import lombok.Getter;
@@ -27,10 +28,12 @@ public abstract class BaseSource {
      *            URL
      * @param add
      *            true:新規、false:更新
+     * @throws NovelConnectException
+     *             URLに繋がらない
      * @throws NovelNotFoundException
-     *             URLが見つからない
+     *             URLで指定されたコンテンツが見つからない
      */
-    protected BaseSource(String url, boolean add) throws NovelNotFoundException {
+    protected BaseSource(String url, boolean add) throws NovelConnectException, NovelNotFoundException {
         log.debug("[open] url:{}", url);
         // URLからhtmlを取得
         this.html = NovelManagerUtil.getSource(url);

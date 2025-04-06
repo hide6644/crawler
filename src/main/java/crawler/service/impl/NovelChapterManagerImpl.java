@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import crawler.dao.NovelChapterDao;
 import crawler.dao.NovelChapterHistoryDao;
+import crawler.exception.NovelConnectException;
 import crawler.exception.NovelNotFoundException;
 import crawler.mapping.yomou.syosetu.com.NovelChapterSource;
 import crawler.mapping.yomou.syosetu.com.NovelIndexElement;
@@ -78,7 +79,7 @@ public class NovelChapterManagerImpl extends BaseManagerImpl implements NovelCha
 
             // 小説の章の付随情報を設定
             novelChapterInfoManager.saveNovelChapterInfo(novelIndexElement, novelChapterSource);
-        } catch (NovelNotFoundException e) {
+        } catch (NovelConnectException | NovelNotFoundException e) {
             // 小説の章が取得出来ない場合、何もしない
             log.info("[not found] chapter url:{}", () -> novelIndexElement.getChapterUrl());
         }
